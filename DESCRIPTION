@@ -8,8 +8,8 @@ Description: Identify causal patterns using pairs of GWAS summary statistics.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-URL: http://github.com/jean997/sherlockAsh
-BugReports: http://github.com/jean997/sherlockAsh/issues
+URL: http://github.com/jean997/cause
+BugReports: http://github.com/jean997/cause/issues
 RoxygenNote: 6.1.0
 LinkingTo: Rcpp, RcppParallel
 Imports: 
