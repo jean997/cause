@@ -1,0 +1,26 @@
+Package: cause
+Type: Package
+Title: CAUSE: Causal Analysis Using Summary Effect Estimates
+Version: 0.1.0
+Author: Jean Morrison
+Maintainer: Jean Morrison <jeanm@uchicago.edu>
+Description: Identify causal patterns using pairs of GWAS summary statistics. 
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+URL: http://github.com/jean997/sherlockAsh
+BugReports: http://github.com/jean997/sherlockAsh/issues
+RoxygenNote: 6.1.0
+LinkingTo: Rcpp, RcppParallel
+Imports: 
+  Rcpp,
+  ashr,
+  dplyr, 
+  ggplot2, 
+  gridExtra, 
+  loo, 
+  matrixStats, 
+  parallel, 
+  purrr, 
+  tidyr,
+  intervals
