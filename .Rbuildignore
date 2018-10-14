@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^analysis$
+^docs$
+^data$
+^code$
+^output$
