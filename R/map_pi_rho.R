@@ -95,7 +95,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     pi_old <- pi
     ct <- ct + 1
   }
-  if(!all(diff(LLS) > -1e-7)) cat("Warning: This may not be a local maximum ", min(diff(LLS)), "\n")
+  if(!all(diff(LLS) > -1e-4)) cat("Warning: This may not be a local maximum ", min(diff(LLS)), "\n")
   mix_grid$pi <- pi
   fit <- list("rho"=rho, "pi"=pi, "mix_grid"=mix_grid,
               "loglik"=LLS[length(LLS)],
