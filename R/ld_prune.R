@@ -15,6 +15,7 @@ ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
     stop("ld should be a data frame with columns rowsnp, colsnp, r2")
   }
   if(!missing(pval_cols)){
+    stopifnot(inherits(variants, "data.frame"))
     if(missing(pval_thresh)) pval_thresh <- rep(Inf, length(pval_cols))
     else stopifnot(length(pval_cols)==length(pval_thresh))
   }
@@ -26,11 +27,23 @@ ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
     variant_name <- "snp"
     pval_thresh <- Inf
   }
+
   stopifnot(inherits(variants, "data.frame"))
-  stopifnot(all(pval_cols %in% names(variants)))
   stopifnot(variant_name %in% names(variants))
   n <- nrow(variants)
   cat("You have suppplied information for ", n, " variants.\n")
+
+  if(any(is.na(pval_cols))){
+    k <- sum(is.na(pval_cols))
+    cat("Producing ", k, " random sets of variants and ", length(pval_cols)-k,
+        " sets of variants using p-values in the data.\n")
+    nm <- paste0(sample(c(letters, LETTERS), size=4, replace=TRUE), collapse="")
+    nms <- paste0(nm, seq(k))
+    pval_cols[is.na(pval_cols)] <- nms
+    for(nm in nms) variants[[nm]] <- sample(seq(n), size=n, replace=FALSE)/n
+  }
+  stopifnot(all(pval_cols %in% names(variants)))
+
   variants <- variants %>% rename(snp = variant_name) %>%
               filter(snp %in% total_ld_variants )
   n <- nrow(variants)
