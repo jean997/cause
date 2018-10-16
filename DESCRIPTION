@@ -7,7 +7,7 @@ Maintainer: Jean Morrison <jeanm@uchicago.edu>
 Description: Identify causal patterns using pairs of GWAS summary statistics. 
 License: GPL (>= 2)
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 URL: http://github.com/jean997/cause
 BugReports: http://github.com/jean997/cause/issues
 RoxygenNote: 6.1.0
