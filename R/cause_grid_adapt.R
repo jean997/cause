@@ -48,6 +48,7 @@ cause_grid_adapt <-  function(X, param_ests,
 
 }
 
+#'@title Adaptive grid estimation of posteriors
 #'@description Workhorse for posterior adaptive grid approximation. Called from cause_grid_adapt.
 adapt2_grid <- function(params, ranges, priors, n_start,
                         range_fixed,
