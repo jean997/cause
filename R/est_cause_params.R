@@ -14,7 +14,11 @@ est_cause_params <- function(X, variants){
   }
   X <- filter(X, snp %in% variants)
   X <- new_cause_data(X)
-
+  if(nrow(X) < 1e5){
+    warning("Fewer than 100,000 variants are being used to estimate parametrs. ",
+            "This can cause problems and is not recomended. You are using ", nrow(X),
+            " variants.\n")
+  }
   mix_grid <- variance_pair_candidates(X)
 
   params <- map_pi_rho(X, mix_grid)
