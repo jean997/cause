@@ -230,7 +230,7 @@ class(res$full)
 
  In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The $z$-score is `r round(res$elpd$z[3], digits=2)` corresponding to a p-value of `r signif(pnorm(res$elpd$z[3]), digits=2)`.
 
-For each model (confounding and full) we can plot the posterior distributions of the parameters.
+For each model (confounding and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.
 
 ```{r, plot1, cache=FALSE}
 plot(res$conf)
