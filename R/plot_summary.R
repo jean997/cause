@@ -64,10 +64,8 @@ plot.cause_post <- function(fit){
     gather("dist", "pdf", -mid, -param, -width)
   marge_post$param <- factor(marge_post$param, levels =c("gamma", "eta", "q"))
   plt <- ggplot(marge_post) + geom_line(aes(x=mid, y=pdf/width, linetype=dist)) +
-          xlab("parameter value") +
-          theme_bw() + theme(legend.position="none",
-                       axis.title.y=element_blank(),
-                       axis.title.x=element_blank()) +
+          xlab("Parameter Value") + ylab("Density") +
+          theme_bw() + theme(legend.title = element_blank()) +
           facet_wrap(~param, scale="free")
   return(plt)
 }
