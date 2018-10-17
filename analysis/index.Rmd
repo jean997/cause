@@ -8,4 +8,6 @@ output:
 
 Weclome to the CAUSE website!
 
-10-14-18: This website is intended to supporting information for the CAUSE R package which you can find at github.com/jean997/cause. Ideally it will contain everything you need to get started with the package and also instructions for replicating the analyses in Morrsion et al 2018. Right at this moment it is just a place holder but that will change in the next day or so. 
+This website is intended to contain supporting information for the CAUSE R package which you can find at github.com/jean997/cause. We are currently adding to it frequently so check back for more. 
+
+Find a walk-through of how to use CAUSE with genome-wide summary statistics [here](ldl_cad.html)
