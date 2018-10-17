@@ -4,6 +4,30 @@
 #'@param variants Either a vector of SNP names or a data.frame. If a data.frame, provide pval_cols
 #'containing the names of pvalue columns to use for pruning. Results will contain one list per p-value
 #'column. If variants is a vector, LD pruning will be random.
+#'@param ld data.frame with three columns: colsnp, rowsnp, and r2. Each row corresponds to an entry
+#' of the LD matrix. If a pair of variants does not appear, they are assumed to have LD of 0 (or below the threshold).
+#' @param total_ld_variants vector of variant names used to construct 'ld'.
+#' @param pval_cols Vector of names of pval_cols. If not missing, variangs must be a data.frame.
+#' pval_cols may contain NA entries. NA's indicate that you desire a pruned set that is not
+#' prioritized by LD.
+#' @param pval_thresh A vector the same length as 'pval_cols'. Only variants with p-value
+#' below the threshold will be retained. Not required if variants is a vector. Entries of pval_thresh
+#' may be Inf.
+#' @param r2_thresh r^2 threshold for pruning. The final list will contain no pairs
+#' with r2 > r2_thresh
+#' @param variant_name If variants is a data.frame, the column name containing the variant id.
+#' @details ld_prune will generate any desired number of LD pruned variant lists. At minimum, it requires
+#' three arguments: 'variants' is the set of variants to be pruned, 'ld' is a data frame giving estimated
+#' LD from a reference panel and 'total_ld_variants' is the list of variants used to construct the ld data.
+#' Only variants ovlapping between 'variants' and 'total_ld_variants' will be considered.
+#'
+#' If only these three arguments are given, the returned object will be a vector of LD pruned variants.
+#' These will be pruned randomly as no p-value information has been supplied.
+#'
+#' Another option is to prune variants prefentially retaining those with small p-values.
+#' For this option, the 'variants' argument should be a data.frame that includes at minimum
+#' a column containing the variant name and a column containing the pvalue. You can prune on
+#' multiple p-values at once which can save time.
 #'@export
 ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
                      r2_thresh = 0.1,  variant_name="snp"){
@@ -79,5 +103,6 @@ ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
       #cat(length(o_c), " ", length(o_c[[j]]), "\n")
     }
   }
+  if(length(pval_cols)==1) return(unlist(k_c))
   return(k_c)
 }

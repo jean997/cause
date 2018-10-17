@@ -5,7 +5,8 @@
 \title{Format data for CAUSE}
 \usage{
 gwas_format_cause(X1, X2, snp_name_cols = c("snp", "snp"),
-  beta_hat_cols = c("beta_hat", "beta_hat"), se_cols = c("se", "se"))
+  beta_hat_cols = c("beta_hat", "beta_hat"), se_cols = c("se", "se"),
+  A1_cols = c("A1", "A1"), A2_cols = c("A2", "A2"))
 }
 \arguments{
 \item{X1}{data.frame with data for GWAS 1}
@@ -13,12 +14,18 @@ gwas_format_cause(X1, X2, snp_name_cols = c("snp", "snp"),
 \item{X2}{data.frame with data for GWAS 2}
 
 \item{snp_name_cols}{A vector of length 2 specifying the name of the snp column
-in X1 and X2 respectively. This is the column on which the data will be merged.
-#'@param beta_hat_col A vector of length 2 specifying the name of the snp column
-in X1 and X2 respectively. If effect sizes are provided as odds ratios they must be converted
-back into coeffecient estimates by taking the log.
-#'@param se_cols A vector of length 2 specifying the name of the snp column
+in X1 and X2 respectively. This is the column on which the data will be merged.}
+
+\item{se_cols}{A vector of length 2 specifying the name of the snp column
 in X1 and X2 respectively.}
+
+\item{A1_cols}{Column names for effect allele}
+
+\item{A2_cols}{Column names for other allele}
+
+\item{beta_hat_col}{A vector of length 2 specifying the name of the snp column
+in X1 and X2 respectively. If effect sizes are provided as odds ratios they must be converted
+back into coeffecient estimates by taking the log.}
 }
 \value{
 An object of class cause_data
