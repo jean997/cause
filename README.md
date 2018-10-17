@@ -1,12 +1,9 @@
 CAUSE: Causal Analysis Using Summary Effect Estimates
 ======
 
-This R package implements the CAUSE method described in Morrison et al 2018 (pre-print coming soon). This repository is actively being updated and is right at this moment not well documented but the package should work. Here is what to expect very soon:
+This R package implements the CAUSE method described in Morrison et al 2018 (pre-print coming soon).
 
-* Working vignettes
-* Summary of results in the paper and code for replicating
-* A pre-print!
-
+Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.html
 
 
 To install:
