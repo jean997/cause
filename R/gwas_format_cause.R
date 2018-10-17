@@ -102,7 +102,7 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
        rename(A1 = A1.x, A2 = A2.x) %>%
       select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
   cat("After merging and removing variants with inconsistent alleles, ",
-      "there are ", nrow(X), " variants overlapping which can be used with CAUSE.")
+      "there are ", nrow(X), " variants overlapping which can be used with CAUSE.\n")
   new_cause_data(X)
 
 }
