@@ -45,14 +45,14 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
   }
   li_func <- function(rho){
     z <- arctanh(rho)
-    loglik <- loglik(rho, 0, 0, 0,
+    ll <- loglik(rho, 0, 0, 0,
                     mix_grid$S1, mix_grid$S2,
                     pi,X$beta_hat_1,
                     X$beta_hat_2,
                     X$seb1,
                     X$seb2) +
       z_prior_func(z) + pi_prior
-    return(-loglik)
+    return(-ll)
   }
 
   converged <- FALSE
@@ -81,10 +81,10 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
                          prior=c(null_wt, rep(1, K-1)),
                          weights=rep(1, nrow(matrix_lik)))
     pi <- w_res$pihat
-    pi_prior <- ddirichlet1(pi, c(null_wt, rep(1, K-1)))
-    loglik <- li_func(rho)
+    pi_prior <- cause:::ddirichlet1(pi, c(null_wt, rep(1, K-1)))
+    ll <- li_func(rho)
 
-    LLS <- c(LLS, -1*loglik)
+    LLS <- c(LLS, -1*ll)
     PIS <- cbind(PIS, pi)
 
     #Test for convergence
@@ -109,7 +109,8 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
 
 }
 
-ddirichlet1 <- function(x, alpha) {
+ddirichlet1 <- function(x, alpha, minx = 1e-6) {
+  x <- pmax(x, minx)
   logD <- sum(lgamma(alpha)) - lgamma(sum(alpha))
   s <- sum((alpha - 1) * log(x))
   return(sum(s) - logD)
