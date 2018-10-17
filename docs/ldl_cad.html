@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jean Morrison" />
+
+<meta name="date" content="2018-10-16" />
+
+<title>Example Analysis with CAUSE: LDL -> CAD</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">cause</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Example Analysis with CAUSE: LDL -&gt; CAD</h1>
+<h4 class="author"><em>Jean Morrison</em></h4>
+<h4 class="date"><em>2018-10-16</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2018-10-17</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20181014)</code> </summary></p>
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/1a891e3b8f5e85ae882d7b6b31fb0f590825c34c" target="_blank">1a891e3</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    docs/figure/
+
+Untracked files:
+    Untracked:  X.RDS
+    Untracked:  analysis/ldl_cad_cache/
+    Untracked:  data/CAD_META.gz
+    Untracked:  data/genome_wide_pruned_vars.1.RDS
+    Untracked:  data/glg_ldl__vanderHarst_cad_cause.RDS
+    Untracked:  data/glg_ldl__vanderHarst_cad_data.RDS
+    Untracked:  data/glg_ldl__vanderHarst_cad_grid.RDS
+    Untracked:  data/jointGwasMc_LDL.txt.gz
+    Untracked:  data/ld_data.tar.gz
+    Untracked:  data/ld_data/
+    Untracked:  data/ldl_cad_cause.RDS
+    Untracked:  data/ldl_cad_cause.old_grid.RDS
+    Untracked:  data/ldl_cad_params.RDS
+    Untracked:  data/snp_overlap.txt
+    Untracked:  data/snp_overlap_ldpruned.txt
+    Untracked:  data/top_ldl_pruned_vars.1.RDS
+    Untracked:  ll_v7_notes.Rmd
+    Untracked:  matrix_lik.RDS
+    Untracked:  src/RcppExports.o
+    Untracked:  src/log_likelihood_functions.o
+    Untracked:  test_cause.R
+    Untracked:  test_data/
+    Untracked:  test_mixSQP.R
+
+Unstaged changes:
+    Modified:   src/cause.so
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/1a891e3b8f5e85ae882d7b6b31fb0f590825c34c/analysis/ldl_cad.Rmd" target="_blank">1a891e3</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+<td style="text-align:left;">
+wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/d10191f6c1e324ef6073a95893546ccd9474bed1/analysis/ldl_cad.Rmd" target="_blank">d10191f</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+<td style="text-align:left;">
+wflow_git_commit(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. The LD pruning steps will benefit from access to a cluster or multiple cores. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example.</p>
+<p>We will be analyzing GWAS data for LDL cholesterol and for coronary artery disease to test for a causal relationship of LDL on CAD. The analysis will have the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Download summary statistics</li>
+<li>Format the data for use with CAUSE</li>
+<li>LD pruning</li>
+<li>Calculate nuisance parameters</li>
+<li>Fit CAUSE</li>
+<li>Look at results</li>
+</ol>
+<p>Steps 4 and 5 require obtaining (different) LD pruned sets of variants. To do this you will need LD data in a specific format. We provide LD information estimated from the 1000 Genomes CEU population using LDshrink <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. LD data are about 11 Gb. The GWAS data we will use are about 320 Gb.</p>
+</div>
+<div id="step-0-install-cause" class="section level2">
+<h2>Step 0: Install CAUSE</h2>
+<p>In R</p>
+<pre class="r"><code>devtools::install_github(&quot;jean997/cause&quot;)</code></pre>
+</div>
+<div id="step-1-download-summary-statistics" class="section level2">
+<h2>Step 1: Download Summary Statistics</h2>
+<p>Depending on your internet speed, this might take several minutes. In this step we are downloading 318 Mb of data (57 for LDL, 261 for CAD). If you just want to download an R object with data formatted for CAUSE (24 Mb) skip down to step 2. For this example, we will put data files in a directory called <code>data/</code>.</p>
+<p>For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068].</p>
+<p>At the command line:</p>
+<pre class="bash"><code>wget http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz
+mv jointGwasMc_LDL.txt.gz data/</code></pre>
+<p>For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]</p>
+<pre class="bash"><code>wget ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005195/CAD_META.gz
+mv CAD_META.gz data/</code></pre>
+</div>
+<div id="step-2-format-data-for-cause" class="section level2">
+<h2>Step 2: Format Data for CAUSE</h2>
+<p>CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a <code>cause_data</code> object that can be used with later functions. This step and the rest of the analysis are done in R.</p>
+<p>The function <code>gwas_format_cause</code> will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).</p>
+<p>LDL column headers:</p>
+<ul>
+<li>SNP: rsid</li>
+<li>Effect: beta</li>
+<li>Standard Error: se</li>
+<li>Effect Allele: A1</li>
+<li>Other Allele: A2</li>
+</ul>
+<p>CAD column headers:</p>
+<ul>
+<li>SNP: oldID</li>
+<li>Effect: Effect</li>
+<li>Standard Error: StdErr</li>
+<li>Effect Allele: Allele1</li>
+<li>Other Allele: Allele2</li>
+</ul>
+<pre class="r"><code>library(readr)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(cause)</code></pre>
+<pre><code>Warning: replacing previous import &#39;dplyr::combine&#39; by &#39;gridExtra::combine&#39;
+when loading &#39;cause&#39;</code></pre>
+<pre><code>Warning: replacing previous import &#39;dplyr::count&#39; by &#39;matrixStats::count&#39;
+when loading &#39;cause&#39;</code></pre>
+<pre><code>Warning: replacing previous import &#39;intervals::reduce&#39; by &#39;purrr::reduce&#39;
+when loading &#39;cause&#39;</code></pre>
+<pre><code>Warning: replacing previous import &#39;intervals::expand&#39; by &#39;tidyr::expand&#39;
+when loading &#39;cause&#39;</code></pre>
+<pre class="r"><code>X1 &lt;- read_tsv(&quot;data/jointGwasMc_LDL.txt.gz&quot;)</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  SNP_hg18 = col_character(),
+  SNP_hg19 = col_character(),
+  rsid = col_character(),
+  A1 = col_character(),
+  A2 = col_character(),
+  beta = col_double(),
+  se = col_double(),
+  N = col_double(),
+  `P-value` = col_double(),
+  Freq.A1.1000G.EUR = col_double()
+)</code></pre>
+<pre class="r"><code>X2 &lt;- read_tsv(&quot;data/CAD_META.gz&quot;)</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  MarkerName = col_character(),
+  Allele1 = col_character(),
+  Allele2 = col_character(),
+  Freq1 = col_double(),
+  FreqSE = col_double(),
+  MinFreq = col_double(),
+  MaxFreq = col_double(),
+  Effect = col_double(),
+  StdErr = col_double(),
+  `P-value` = col_double(),
+  Direction = col_character(),
+  HetISq = col_double(),
+  HetChiSq = col_double(),
+  HetDf = col_integer(),
+  HetPVal = col_double(),
+  oldID = col_character(),
+  CHR = col_integer(),
+  BP = col_integer()
+)</code></pre>
+<pre class="r"><code>X &lt;- gwas_format_cause(X1, X2, snp_name_cols = c(&quot;rsid&quot;, &quot;oldID&quot;), 
+                       beta_hat_cols = c(&quot;beta&quot;, &quot;Effect&quot;), 
+                       se_cols = c(&quot;se&quot;, &quot;StdErr&quot;), 
+                       A1_cols = c(&quot;A1&quot;, &quot;Allele1&quot;), 
+                       A2_cols = c(&quot;A2&quot;, &quot;Allele2&quot;))</code></pre>
+<pre><code>There are  2437751  variants in GWAS 1 and  7947837  variants in GWAS2.
+After removing ambiguous SNPs, there are  2062006  variants in GWAS 1 and  6745108  variants in GWAS2.
+After merging and removing variants with inconsistent alleles,  there are  2023362  variants overlapping which can be used with CAUSE.</code></pre>
+<pre class="r"><code>head(X)</code></pre>
+<pre><code>        snp beta_hat_1   seb1 beta_hat_2   seb2 A1 A2
+1 rs4747841     0.0037 0.0052     0.0106 0.0056  a  G
+2 rs4749917    -0.0033 0.0052    -0.0108 0.0056  a  G
+3  rs737656     0.0099 0.0054     0.0196 0.0058  a  G
+4  rs737657     0.0084 0.0054     0.0195 0.0058  a  G
+5 rs7086391    -0.0075 0.0067     0.0115 0.0072  a  G
+6  rs878177    -0.0073 0.0055    -0.0225 0.0059  a  G</code></pre>
+<p>Alternatively, you can download already formatted data <a href="https://github.com/jean997/cause/blob/master/data/LDL_CAD_merged.RDS">here</a> and read it in using <code>readRDS</code>.</p>
+<p>There are likely more efficient ways to do this merge. If you would like to process the data yourself, you can construct a <code>cause_data</code> object from a data frame using the constructor <code>new_cause_data(X)</code> where <code>X</code> is any data frame that includes the columns <code>snp</code>, <code>beta_hat_1</code>, <code>seb1</code>, <code>beta_hat_2</code>, and <code>seb2</code>.</p>
+</div>
+<div id="step-3-ld-pruning" class="section level2">
+<h2>Step 3: LD Pruning</h2>
+<p>Both steps 4 and 5 will require LD pruned sets of variants which we obtain in this step. Importantly, the sets are different. In Step 4, nuisance parameter estimation, we need a random set of variants that are not in LD with each other. In step 5, fitting the CAUSE model, we would like to retain the variants that are most strongly associated with the mediator (LDL) because these are the most informative about the distribution of the parameters. In order to do that we use a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. In step 5, only variants associated with the mediator are informative so we can speed up computation by excluding variants with large p-values. We use a threshold of 0.001 here.</p>
+<p>In this step we will obtain both sets of variants simultaneously using the <code>cause::ld_prune</code> function. This is the most computationally intensive step of the analysis and requires LD estimates from a reference panel as input data. LD estimates made in the 1000 Genomes CEU population can be downloaded <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
+<pre class="r"><code>ld &lt;- readRDS(&quot;data/ld_data/chr22_AF0.05_0.1.RDS&quot;)
+snp_info &lt;- readRDS(&quot;data/ld_data/chr22_AF0.05_snpdata.RDS&quot;)
+
+head(ld)</code></pre>
+<pre><code>      rowsnp      colsnp        r2
+1 rs62224609 rs376238049 0.9012642
+2 rs62224609  rs62224614 0.9907366
+3 rs62224609   rs7286962 0.9907366
+4 rs62224609  rs55926024 0.1103000
+5 rs62224609 rs117246541 0.9012642
+6 rs62224609  rs62224618 0.9907366</code></pre>
+<pre class="r"><code>head(snp_info)</code></pre>
+<pre><code># A tibble: 6 x 9
+     AF SNP        allele    chr     pos  snp_id region_id   map ld_snp_id
+  &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;     &lt;int&gt;
+1 0.884 rs62224609 T,C        22  1.61e7  7.98e7        22     0  79758556
+2 0.904 rs4965031  G,A        22  1.61e7  7.98e7        22     0  79758578
+3 0.646 rs3756846… A,AAAAC    22  1.61e7  7.98e7        22     0  79758584
+4 0.894 rs3762380… C,T        22  1.61e7  7.98e7        22     0  79758602
+5 0.934 rs2007775… C,A        22  1.61e7  7.98e7        22     0  79758604
+6 0.934 rs80167676 A,T        22  1.61e7  7.98e7        22     0  79758627</code></pre>
+<p>The format of the <code>ld</code> data frame is important in that it should contain the column names <code>rowsnp</code>, <code>colsnp</code>, and <code>r2</code>. The <code>snp_info</code> data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants <code>snp_info$SNP</code> which provides the total list of variants used in the LD calculations.</p>
+<div id="ld-pruning-for-one-chromosome" class="section level3">
+<h3>LD pruning for one chromosome</h3>
+<p>The <code>ld_prune</code> function is somewhat flexible in its arguments, see <code>help(ld_prune)</code>.</p>
+<pre class="r"><code>set.seed(5)
+variants &lt;- X %&gt;% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
+pruned &lt;- ld_prune(variants = variants, 
+                            ld = ld, total_ld_variants = snp_info$SNP, 
+                            pval_cols = c(NA, &quot;pval1&quot;), 
+                            pval_thresh = c(Inf, 1e-3))</code></pre>
+<pre><code>You have suppplied information for  2023362  variants.
+Producing  1  random sets of variants and  1  sets of variants using p-values in the data.
+Of these,  22835  have LD information.</code></pre>
+<pre class="r"><code>length(pruned)</code></pre>
+<pre><code>[1] 2</code></pre>
+<pre class="r"><code>sapply(pruned, length)</code></pre>
+<pre><code>[1] 1791   15</code></pre>
+<p><code>ld_prune</code> retunrs a list of vectors of length equal to the length of the <code>pval_cols</code> argument. In this case <code>pval_cols= c(NA, &quot;pval1&quot;)</code> meaning that the first element of <code>pruned</code> will be a randomly pruned list and the second will be pruned preferentially choosing variants with low values of <code>pval1</code>. We also apply a threshold specified by the <code>pval_thresh</code> argument. For the first list there is no threshold. For the second, the threshold is 0.001.</p>
+</div>
+<div id="parallelizing-over-chromosomes" class="section level3">
+<h3>Parallelizing over chromosomes</h3>
+<p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge.</p>
+<pre class="r"><code>library(parallel)
+cores &lt;- parallel::detectCores()-1
+set.seed(5)
+ld_files &lt;- paste0(&quot;data/ld_data/chr&quot;, 1:22, &quot;_AF0.05_0.1.RDS&quot;)
+snp_info_files &lt;- paste0(&quot;data/ld_data/chr&quot;, 1:22, &quot;_AF0.05_snpdata.RDS&quot;)
+
+cl &lt;- makeCluster(cores, type=&quot;PSOCK&quot;)
+clusterExport(cl, varlist=c(&quot;variants&quot;, &quot;ld_files&quot;, &quot;snp_info_files&quot;))
+clusterEvalQ(cl, library(cause))
+system.time(
+pruned &lt;- parLapply(cl, seq_along(ld_files[20:22]), fun=function(i){
+  ld &lt;- readRDS(ld_files[i])
+  snp_info &lt;- readRDS(snp_info_files[i])
+  ld_prune(variants = variants, 
+          ld = ld, total_ld_variants = snp_info$SNP, 
+          pval_cols = c(NA, &quot;pval1&quot;), 
+          pval_thresh = c(Inf, 1e-3))
+})
+)
+stopCluster(cl)
+
+random_pruned_vars &lt;- unlist(purrr:map(pruned, 1))
+top_ldl_pruned_vars &lt;- unlist(purrr::map(pruned, 2))</code></pre>
+<p>You could also do it using a compute cluster by submitting different jobs for each chromosoome and then collecting the results.</p>
+<p>Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and then LD prune this list. You can use it to estimate nuisance parameters for every pair.</p>
+<p>Download the resulting variant lists: <a href="https://github.com/jean997/cause/blob/master/data/genome_wide_pruned_vars.RDS">genome wide list</a>, <a href="https://github.com/jean997/cause/blob/master/data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
+</div>
+</div>
+<div id="step-4-calculate-nuisance-parameters" class="section level2">
+<h2>Step 4: Calculate nuisance parameters</h2>
+<p>The next step is to estimate the mixture proportions that define the bivariate distribution of effect sizes and to estimate <span class="math inline">\(\rho\)</span>, the correlation between summary statistics that is due to sample overlap or population structure. To do this, we need the data set and the genome-wide set of LD pruned variants obtained in Step 3. This step takes a few minutes. <code>est_cause_params</code> estimates the nuisance parameters by finding the maximum a posteriori estimate of <span class="math inline">\(\rho\)</span> and the mixing parameters when <span class="math inline">\(\gamma = \eta = 0\)</span>.</p>
+<pre class="r"><code>varlist &lt;- readRDS(&quot;data/genome_wide_pruned_vars.RDS&quot;)
+params &lt;- est_cause_params(X, varlist)</code></pre>
+<pre><code>1 0.04264659 
+2 0.0001154791 
+3 7.645724e-07 
+4 5.229598e-09 </code></pre>
+<p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
+<pre class="r"><code>class(params)</code></pre>
+<pre><code>[1] &quot;cause_params&quot;</code></pre>
+<pre class="r"><code>names(params)</code></pre>
+<pre><code> [1] &quot;rho&quot;       &quot;pi&quot;        &quot;mix_grid&quot;  &quot;loglik&quot;    &quot;PIS&quot;      
+ [6] &quot;RHO&quot;       &quot;LLS&quot;       &quot;converged&quot; &quot;prior&quot;     &quot;var&quot;      </code></pre>
+<pre class="r"><code>params$rho</code></pre>
+<pre><code>[1] 0.04276284</code></pre>
+<pre class="r"><code>head(params$mix_grid)</code></pre>
+<pre><code>           S1 S2           pi
+1 0.000000000  0 5.607670e-01
+2 0.003257738  0 5.819598e-11
+3 0.004607137  0 3.878706e-11
+4 0.013030951  0 1.616762e-12
+5 0.026061902  0 1.954018e-13
+6 0.036857095  0 9.067119e-14</code></pre>
+<p>So, for example, in this case, we have estimated that 56% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
+<p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model fits in step 5.</p>
+</div>
+<div id="step-5-fit-cause" class="section level2">
+<h2>Step 5: Fit CAUSE</h2>
+<p>Now that we have formatted data, LD pruned SNP sets, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause::cause</code> will estimate posterior distributions under the confounding and causal models and calculate the elpd for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes.</p>
+<p>Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don’t add any information about the relationship between the traits. When we LD pruned, we used a <span class="math inline">\(p\)</span>-value threshold of 0.001. The exact value of this threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
+<pre class="r"><code>top_vars &lt;- readRDS(&quot;data/top_ldl_pruned_vars.RDS&quot;)
+res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
+<pre><code>Estimating CAUSE posteriors using  1215  variants.</code></pre>
+<pre><code>Warning: replacing previous import &#39;dplyr::combine&#39; by &#39;gridExtra::combine&#39;
+when loading &#39;sherlockAsh&#39;</code></pre>
+<pre><code>Warning: replacing previous import &#39;dplyr::count&#39; by &#39;matrixStats::count&#39;
+when loading &#39;sherlockAsh&#39;</code></pre>
+</div>
+<div id="step-6-look-at-results" class="section level2">
+<h2>Step 6: Look at Results</h2>
+<p>The resulting <code>cause</code> object contains an object for the confounding only model fit (<code>conf</code>), and object for the causal model fit (<code>full</code>) and a table of ELPD results.</p>
+<pre class="r"><code>class(res)</code></pre>
+<pre><code>[1] &quot;cause&quot;</code></pre>
+<pre class="r"><code>names(res)</code></pre>
+<pre><code>[1] &quot;conf&quot; &quot;full&quot; &quot;elpd&quot;</code></pre>
+<pre class="r"><code>res$elpd</code></pre>
+<pre><code>  model1 model2 delta_elpd se_delta_elpd         z
+1   null   conf -85.823907     10.020113 -8.565164
+2   null   full -93.951810     11.101309 -8.463129
+3   conf   full  -8.127903      1.231842 -6.598169</code></pre>
+<pre class="r"><code>class(res$conf)</code></pre>
+<pre><code>[1] &quot;cause_post&quot;</code></pre>
+<pre class="r"><code>class(res$full)</code></pre>
+<pre><code>[1] &quot;cause_post&quot;</code></pre>
+<p>The <code>elpd</code> table has the following columns:</p>
+<ul>
+<li>model1, model2: The models being compared</li>
+<li>delta_elpd: Estimated difference in elpd. If delta_elpd is negative, model 2 is a better fit</li>
+<li>se_delta_elpd: Estimated standard error of delta_elpd</li>
+<li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
+</ul>
+<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.6 corresponding to a p-value of 2.110^{-11}.</p>
+<p>For each model (confounding and full) we can plot the posterior distributions of the parameters.</p>
+<pre class="r"><code>plot(res$conf)</code></pre>
+<p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(res$full)</code></pre>
+<p><img src="figure/ldl_cad.Rmd/plot1-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <code>summary</code> method will summarize the posterior medians and credible intervals.</p>
+<pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
+<pre><code>p-value testing that causal model is a better fit:  2.1e-11 
+Posterior medians and  95 % credible intervals:
+     model              gamma               eta               
+[1,] &quot;Confounding Only&quot; NA                  &quot;0.4 (0.34, 0.47)&quot;
+[2,] &quot;Causal&quot;           &quot;0.36 (0.31, 0.42)&quot; &quot;0 (-0.52, 0.5)&quot;  
+     q                 
+[1,] &quot;0.8 (0.68, 0.89)&quot;
+[2,] &quot;0.04 (0, 0.25)&quot;  </code></pre>
+<p>The <code>plot</code> method applied to a <code>cause</code> object will arrange all of this information on one spread.</p>
+<pre class="r"><code>plot(res)</code></pre>
+<p><img src="figure/ldl_cad.Rmd/plot2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.1 LTS
+
+Matrix products: default
+BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.7.1
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.7.1
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] bindrcpp_0.2.2 cause_0.1.0    dplyr_0.7.6    readr_1.1.1   
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.19       lattice_0.20-35    tidyr_0.8.1       
+ [4] Rmosek_7.1.3       assertthat_0.2.0   rprojroot_1.3-2   
+ [7] digest_0.6.17      foreach_1.4.4      utf8_1.1.4        
+[10] truncnorm_1.0-8    R6_2.3.0           plyr_1.8.4        
+[13] backports_1.1.2    evaluate_0.11      ggplot2_3.0.0     
+[16] pillar_1.3.0       rlang_0.2.2        lazyeval_0.2.1    
+[19] sherlockAsh_0.3.1  pscl_1.5.2         whisker_0.3-2     
+[22] R.utils_2.7.0      R.oo_1.22.0        Matrix_1.2-14     
+[25] rmarkdown_1.10     labeling_0.3       stringr_1.3.1     
+[28] REBayes_1.3        loo_2.0.0          munsell_0.5.0     
+[31] mixsqp_0.1-58      compiler_3.5.1     numDeriv_2016.8-1 
+[34] pkgconfig_2.0.2    SQUAREM_2017.10-1  htmltools_0.3.6   
+[37] tidyselect_0.2.4   tibble_1.4.2       gridExtra_2.3     
+[40] workflowr_1.1.1    intervals_0.15.1   codetools_0.2-15  
+[43] matrixStats_0.54.0 fansi_0.3.0        crayon_1.3.4      
+[46] MASS_7.3-50        R.methodsS3_1.7.1  grid_3.5.1        
+[49] gtable_0.2.0       git2r_0.23.0       magrittr_1.5      
+[52] scales_1.0.0       RcppParallel_4.4.1 cli_1.0.1         
+[55] stringi_1.2.4      doParallel_1.0.14  iterators_1.0.10  
+[58] tools_3.5.1        glue_1.3.0         purrr_0.2.5       
+[61] hms_0.4.2          parallel_3.5.1     yaml_2.2.0        
+[64] colorspace_1.3-2   ashr_2.2-19        knitr_1.20        
+[67] bindr_0.1.1       </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
