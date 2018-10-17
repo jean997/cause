@@ -22,6 +22,8 @@ est_cause_params <- function(X, variants){
   mix_grid <- variance_pair_candidates(X)
 
   params <- map_pi_rho(X, mix_grid)
+  #Filter out grid points with low mixing proportion
+  params$mix_grid <- dplyr::filter(params$mix_grid, zapsmall(pi) > 0)
 
   return(params)
 }
@@ -41,7 +43,9 @@ variance_pair_candidates <- function(X, optmethod = c("mixIP", "mixSQP",
                       optmethod = optmethod))
 
   sigma1 <- with(fit1$fitted_g, sd[!zapsmall(pi)==0])
+  sigma1 <- c(sigma1, 2*max(sigma1), 4*max(sigma1))
   sigma2 <- with(fit2$fitted_g, sd[!zapsmall(pi)==0])
+  sigma2 <- c(sigma2, 2*max(sigma2), 4*max(sigma2))
   mix_grid <- expand.grid("S1"=sigma1, "S2"=sigma2, "pi"=0)
   new_cause_grid(mix_grid)
 }
