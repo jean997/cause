@@ -25,7 +25,7 @@ q ~ Beta(qalpha, qbeta)}
 A list with items conf, full, elpd, summary, and plot.
 }
 \description{
-Fit CAUSE confounding only and full models,
+Fit CAUSE confounding only and full (causal) models,
 calculate ELPD test statistic and estimate posteriors
 
 Implementation of CAUSE described in Morrison et al. (2018)

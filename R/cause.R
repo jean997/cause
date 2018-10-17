@@ -1,6 +1,6 @@
 
 #'@title CAUSE
-#'@description Fit CAUSE confounding only and full models,
+#'@description Fit CAUSE confounding only and full (causal) models,
 #'calculate ELPD test statistic and estimate posteriors
 #'@param X An object of class cause_data containing data for the two traits.
 #'@param param_ests Object of class cause_params output by est_cause_params.

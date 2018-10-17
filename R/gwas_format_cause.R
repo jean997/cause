@@ -11,7 +11,12 @@
 #'in X1 and X2 respectively.
 #'@param A1_cols Column names for effect allele
 #'@param A2_cols Column names for other allele
-#'@return An object of class cause_data
+#'@details This function will try to merge data sets X1 and X2 on the specified columns. Where
+#'necessary, it will flip the sign of effects so that the effect allele is the same in both
+#'data sets. It will remove variants with ambiguous alleles or where the alleles (G/C or A/T) or
+#'with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other).
+#'It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).
+#'@return An object of class cause_data and data.frame.
 #'@export
 gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
                               beta_hat_cols = c("beta_hat", "beta_hat"),
