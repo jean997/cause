@@ -95,7 +95,7 @@ X <- gwas_format_cause(X1, X2, snp_name_cols = c("rsid", "oldID"),
 head(X)
 ```
 
-Alternatively, you can download already formatted data [here](https://github.com/jean997/cause/data/LDL_CAD_merged.RDS) and read it in using `readRDS`. 
+Alternatively, you can download already formatted data [here](https://github.com/jean997/cause/blob/master/data/LDL_CAD_merged.RDS) and read it in using `readRDS`. 
 
 There are likely more efficient ways to do this merge. 
 If you would like to process the data yourself, you can construct a `cause_data` object from a data frame using the constructor `new_cause_data(X)` where `X` is any data frame that includes the columns `snp`, `beta_hat_1`, `seb1`, `beta_hat_2`, and `seb2`.
@@ -171,7 +171,7 @@ You could also do it using a compute cluster by submitting different jobs for ea
 
 Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and then LD prune this list. You can use it to estimate nuisance parameters for every pair.
 
-Download the resulting variant lists: [genome wide list](https://github.com/jean997/cause/data/genome_wide_pruned_vars.RDS), [top LDL list](https://github.com/jean997/cause/data/top_ldl_pruned_vars.RDS)
+Download the resulting variant lists: [genome wide list](https://github.com/jean997/cause/blob/master/data/genome_wide_pruned_vars.RDS), [top LDL list](https://github.com/jean997/cause/blob/master/data/top_ldl_pruned_vars.RDS)
 
 ## Step 4: Calculate nuisance parameters
 
