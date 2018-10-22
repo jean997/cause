@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-10-17</p>
+<p><strong>Last updated:</strong> 2018-10-22</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -347,12 +347,13 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/558cd32e08be455b3a9cca07c0caf5515b3a8ca2" target="_blank">558cd32</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/01b00b78dc9290089237d1473c9a80fedce3ca91" target="_blank">01b00b7</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  X.RDS
@@ -372,6 +373,7 @@ Untracked files:
     Untracked:  data/snp_overlap_ldpruned.txt
     Untracked:  data/top_ldl_pruned_vars.1.RDS
     Untracked:  ll_v7_notes.Rmd
+    Untracked:  man/new_cause_data.Rd
     Untracked:  matrix_lik.RDS
     Untracked:  quantile_sampling.R
     Untracked:  src/RcppExports.o
@@ -381,9 +383,8 @@ Untracked files:
     Untracked:  test_mixSQP.R
 
 Unstaged changes:
-    Modified:   R/est_cause_params.R
-    Modified:   R/map_pi_rho.R
-    Modified:   R/plot_summary.R
+    Modified:   man/plot.cause.Rd
+    Modified:   man/plot.cause_post.Rd
     Modified:   src/cause.so
 
 </code></pre>
@@ -413,6 +414,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/ldl_cad.html" target="_blank">bbe4901</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -504,6 +522,7 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 <h2>Step 0: Install CAUSE</h2>
 <p>In R</p>
 <pre class="r"><code>devtools::install_github(&quot;jean997/cause&quot;)</code></pre>
+<p>If its not already installed, you will need to install <a href="https://github.com/stephens999/ashr">ashr</a>, <a href="https://www.mosek.com/products/mosek/">MOSEK</a> and the <a href="http://rmosek.r-forge.r-project.org">Rmosek package</a>. Instructions for installing MOSEK on Mac and Linux are available in the <code>ashr</code> installation instructions.</p>
 </div>
 <div id="step-1-download-summary-statistics" class="section level2">
 <h2>Step 1: Download Summary Statistics</h2>
@@ -547,14 +566,6 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(cause)</code></pre>
-<pre><code>Warning: replacing previous import &#39;dplyr::combine&#39; by &#39;gridExtra::combine&#39;
-when loading &#39;cause&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;dplyr::count&#39; by &#39;matrixStats::count&#39;
-when loading &#39;cause&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;intervals::reduce&#39; by &#39;purrr::reduce&#39;
-when loading &#39;cause&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;intervals::expand&#39; by &#39;tidyr::expand&#39;
-when loading &#39;cause&#39;</code></pre>
 <pre class="r"><code>X1 &lt;- read_tsv(&quot;data/jointGwasMc_LDL.txt.gz&quot;)</code></pre>
 <pre><code>Parsed with column specification:
 cols(
@@ -776,6 +787,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">bbe4901</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/73690eb831172fcd7130e9b4d2620f85b0c528c1/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">73690eb</a>
 </td>
 <td style="text-align:left;">
@@ -806,6 +828,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">bbe4901</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/73690eb831172fcd7130e9b4d2620f85b0c528c1/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">73690eb</a>
@@ -851,6 +884,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">bbe4901</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/73690eb831172fcd7130e9b4d2620f85b0c528c1/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">73690eb</a>
 </td>
 <td style="text-align:left;">
@@ -887,31 +931,31 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] bindrcpp_0.2.2 cause_0.1.0    dplyr_0.7.6    readr_1.1.1   
+[1] bindrcpp_0.2.2   cause_0.1.0.0044 dplyr_0.7.6      readr_1.1.1     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.4   ashr_2.2-19        purrr_0.2.5       
- [4] lattice_0.20-35    Rmosek_7.1.3       colorspace_1.3-2  
- [7] htmltools_0.3.6    loo_2.0.0          yaml_2.2.0        
-[10] utf8_1.1.4         rlang_0.2.2        R.oo_1.22.0       
-[13] pillar_1.3.0       glue_1.3.0         R.utils_2.7.0     
-[16] REBayes_1.3        matrixStats_0.54.0 foreach_1.4.4     
-[19] bindr_0.1.1        plyr_1.8.4         stringr_1.3.1     
-[22] munsell_0.5.0      gtable_0.2.0       workflowr_1.1.1   
-[25] R.methodsS3_1.7.1  codetools_0.2-15   evaluate_0.11     
-[28] labeling_0.3       knitr_1.20         doParallel_1.0.14 
-[31] pscl_1.5.2         sherlockAsh_0.3.1  parallel_3.5.1    
-[34] fansi_0.3.0        Rcpp_0.12.19       backports_1.1.2   
-[37] scales_1.0.0       RcppParallel_4.4.1 truncnorm_1.0-8   
-[40] gridExtra_2.3      ggplot2_3.0.0      hms_0.4.2         
-[43] digest_0.6.17      stringi_1.2.4      numDeriv_2016.8-1 
-[46] grid_3.5.1         rprojroot_1.3-2    cli_1.0.1         
-[49] tools_3.5.1        magrittr_1.5       lazyeval_0.2.1    
-[52] tibble_1.4.2       tidyr_0.8.1        crayon_1.3.4      
-[55] whisker_0.3-2      pkgconfig_2.0.2    MASS_7.3-50       
-[58] Matrix_1.2-14      SQUAREM_2017.10-1  assertthat_0.2.0  
-[61] rmarkdown_1.10     iterators_1.0.10   R6_2.3.0          
-[64] intervals_0.15.1   git2r_0.23.0       compiler_3.5.1    </code></pre>
+ [1] Rcpp_0.12.19       lattice_0.20-35    tidyr_0.8.1       
+ [4] Rmosek_7.1.3       assertthat_0.2.0   rprojroot_1.3-2   
+ [7] digest_0.6.17      foreach_1.4.4      utf8_1.1.4        
+[10] truncnorm_1.0-8    R6_2.3.0           plyr_1.8.4        
+[13] backports_1.1.2    evaluate_0.11      ggplot2_3.0.0     
+[16] pillar_1.3.0       rlang_0.2.2        lazyeval_0.2.1    
+[19] sherlockAsh_0.3.1  pscl_1.5.2         whisker_0.3-2     
+[22] R.utils_2.7.0      R.oo_1.22.0        Matrix_1.2-14     
+[25] rmarkdown_1.10     labeling_0.3       stringr_1.3.1     
+[28] REBayes_1.3        loo_2.0.0          munsell_0.5.0     
+[31] compiler_3.5.1     numDeriv_2016.8-1  pkgconfig_2.0.2   
+[34] SQUAREM_2017.10-1  htmltools_0.3.6    tidyselect_0.2.4  
+[37] tibble_1.4.2       gridExtra_2.3      workflowr_1.1.1   
+[40] intervals_0.15.1   codetools_0.2-15   matrixStats_0.54.0
+[43] fansi_0.3.0        crayon_1.3.4       MASS_7.3-50       
+[46] R.methodsS3_1.7.1  grid_3.5.1         gtable_0.2.0      
+[49] git2r_0.23.0       magrittr_1.5       scales_1.0.0      
+[52] RcppParallel_4.4.1 cli_1.0.1          stringi_1.2.4     
+[55] doParallel_1.0.14  iterators_1.0.10   tools_3.5.1       
+[58] glue_1.3.0         purrr_0.2.5        hms_0.4.2         
+[61] parallel_3.5.1     yaml_2.2.0         colorspace_1.3-2  
+[64] ashr_2.2-19        knitr_1.20         bindr_0.1.1       </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
