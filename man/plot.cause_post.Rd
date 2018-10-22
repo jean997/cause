@@ -4,7 +4,7 @@
 \alias{plot.cause_post}
 \title{Plot posteriors for one CAUSE fit}
 \usage{
-plot.cause_post(fit)
+\method{plot}{cause_post}(fit)
 }
 \arguments{
 \item{fit}{object of class cause_post `}

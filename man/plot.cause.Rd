@@ -4,7 +4,7 @@
 \alias{plot.cause}
 \title{Plot CAUSE}
 \usage{
-plot.cause(res)
+\method{plot}{cause}(res, intern = FALSE)
 }
 \arguments{
 \item{res}{object of class cause}
