@@ -9,7 +9,7 @@
 #' @importFrom matrixStats logSumExp
 #' @importFrom numDeriv hessian
 #' @importFrom intervals Intervals interval_overlap
-#' @importFrom gridExtra arrangeGrob
+#' @importFrom gridExtra arrangeGrob tableGrob
 #' @importFrom loo loo compare
 #' @importFrom Rcpp sourceCpp
 #' @importFrom RcppParallel RcppParallelLibs
