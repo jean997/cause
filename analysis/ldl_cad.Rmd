@@ -35,6 +35,9 @@ In R
 devtools::install_github("jean997/cause")
 ```
 
+If its not already installed, you will need to install [ashr](https://github.com/stephens999/ashr), [MOSEK](https://www.mosek.com/products/mosek/) and the 
+[Rmosek package](http://rmosek.r-forge.r-project.org). Instructions for installing MOSEK on Mac and Linux are available in the `ashr` installation instructions. 
+
 ## Step 1: Download Summary Statistics
 
 Depending on your internet speed, this might take several minutes. In this step we are downloading 318 Mb of data (57 for LDL, 261 for CAD). If you just want to download an R object with data formatted for CAUSE (24 Mb) skip down to step 2. For this example, we will put data files in a directory called `data/`. 

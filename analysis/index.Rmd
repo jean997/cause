@@ -10,4 +10,4 @@ Weclome to the CAUSE website!
 
 This website is intended to contain supporting information for the CAUSE R package which you can find at github.com/jean997/cause. We are currently adding to it frequently so check back for more. 
 
-Find a walk-through of how to use CAUSE with genome-wide summary statistics [here](ldl_cad.html)
+Find a walk-through of how to use CAUSE with genome-wide summary statistics [here](ldl_cad.html).
