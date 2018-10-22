@@ -151,6 +151,11 @@ align_beta <- function(X, beta_hat_name, upper=TRUE){
   return(X)
 }
 
+#'@title Create a new cause_data object
+#'@param x a data.frame that includes columns snp, beta_hat_1, seb1, beta_hat_2, seb2 in any order.
+#'x may also contain other columns
+#'@return and object of class cause_data and data.frame.
+#'@export
 new_cause_data <- function(x = data.frame()){
   stopifnot(inherits(x, "data.frame"))
   stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
