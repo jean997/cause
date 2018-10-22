@@ -74,7 +74,7 @@ plot.cause_post <- function(fit){
 #'@description Plot posteriors for confounding and causal models, display summary tables
 #'@param res object of class cause
 #'@export
-plot.cause <- function(res){
+plot.cause <- function(res, intern=FALSE){
   plts <- lapply(c("conf", "full"), function(i){
     plt <- plot(res[[i]])
     return(plt)})
@@ -91,5 +91,6 @@ plot.cause <- function(res){
                    layout_matrix = rbind(c(4, 4, 4, 3, 3, 3),
                                          c(NA, NA, 1, 1, 1, 1),
                                          c(2, 2, 2, 2,2,2)))
+  if(intern) return(h)
   plot(h)
 }
