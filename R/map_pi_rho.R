@@ -102,7 +102,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
               "PIS"=PIS, "RHO"= RHO, "LLS"=LLS,
               "converged" = converged)
   fit$prior <- z_prior_func(arctanh(rho)) + pi_prior
-  hes <- hessian(li_func, rho)
+  hes <- numDeriv::hessian(li_func, rho)
   fit$var <- solve(hes)
   class(fit) <- "cause_params"
   return(fit)

@@ -4,8 +4,12 @@
 #'
 #' @docType package
 #' @author Jean Morrison <jeanm@uchicago.edu>
-#' @import Rcpp ashr dplyr ggplot2 gridExtra matrixStats parallel
-#' @import purrr tidyr intervals numDeriv
+#' @import Rcpp ashr dplyr ggplot2
+#' @import purrr tidyr
+#' @importFrom matrixStats logSumExp
+#' @importFrom numDeriv hessian
+#' @importFrom intervals Intervals interval_overlap
+#' @importFrom gridExtra arrangeGrob
 #' @importFrom loo loo compare
 #' @importFrom Rcpp sourceCpp
 #' @importFrom RcppParallel RcppParallelLibs
