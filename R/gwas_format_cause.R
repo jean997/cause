@@ -38,7 +38,7 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
                       A2 = A2_cols[2]) %>%
         select(snp, beta_hat_2, seb2, A1, A2)
   cat("There are ", nrow(X1), " variants in GWAS 1 and ", nrow(X2),
-      " variants in GWAS2.\n")
+      " variants in GWAS 2.\n")
   #Check case of allele coding
   upper1 <- X1$A1[1] == toupper(X1$A1[1])
   upper2 <- X2$A1[1] == toupper(X2$A1[1])
@@ -82,7 +82,7 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
 
   cat("After removing ambiguous SNPs, there are ",
       nrow(X1), " variants in GWAS 1 and ", nrow(X2),
-      " variants in GWAS2.\n")
+      " variants in GWAS 2.\n")
 
 
   X <-  inner_join(X1, X2, by="snp") %>%
@@ -102,7 +102,8 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
        rename(A1 = A1.x, A2 = A2.x) %>%
       select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
   cat("After merging and removing variants with inconsistent alleles, ",
-      "there are ", nrow(X), " variants overlapping which can be used with CAUSE.\n")
+      "there are ", nrow(X),
+      " variants that are present in both studies and can be used with CAUSE.\n")
   new_cause_data(X)
 
 }
