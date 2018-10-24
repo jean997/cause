@@ -164,7 +164,7 @@ Download the resulting variant lists: [genome wide list](https://github.com/jean
 
 The next step is to estimate the mixture proportions that define the bivariate distribution of effect sizes and to estimate $\rho$, the correlation between summary statistics that is due to sample overlap or population structure. To do this, we need the data set and the genome-wide set of LD pruned variants obtained in Step 3. This step takes a few minutes. `est_cause_params` estimates the nuisance parameters by finding the maximum a posteriori estimate of $\rho$ and the mixing parameters when $\gamma = \eta = 0$. 
 
-```{r, cache=TRUE, params}
+```{r, params}
 varlist <- readRDS("example_data/genome_wide_pruned_vars.RDS")
 params <- est_cause_params(X, varlist)
 ```
@@ -188,7 +188,7 @@ Now that we have formatted data, LD pruned SNP sets, and nuisance parameters est
 
 Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don't add any information about the relationship between the traits. When we LD pruned, we used a $p$-value threshold of 0.001. The exact value of this threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
 
-```{r, cache=TRUE}
+```{r, cause}
 top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
 res <- cause(X=X, variants = top_vars, param_ests = params)
 ```
@@ -226,12 +226,12 @@ plot(res$full)
  
 The `summary` method will summarize the posterior medians and credible intervals.
 
-```{r, summary, cache=FALSE}
+```{r, summary}
 summary(res, ci_size=0.95)
 ```
 
 The  `plot` method applied to a `cause` object will arrange all of this information on one spread.
 
-```{r, plot2, cache=FALSE}
+```{r, plot2}
 plot(res)
 ```
