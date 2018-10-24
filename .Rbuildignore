@@ -2,6 +2,6 @@
 ^\.Rproj\.user$
 ^analysis$
 ^docs$
-^data$
+^example_data$
 ^code$
 ^output$
