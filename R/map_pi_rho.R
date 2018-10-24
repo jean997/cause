@@ -10,10 +10,14 @@
 #'@export
 map_pi_rho <- function(X, mix_grid, rho_start=0,
                        tol=1e-7, n.iter=20, null_wt = 10,
-                       z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)}){
+                       z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)},
+                       optmethod = c("mixSQP", "mixIP")){
 
   stopifnot(inherits(X, "cause_data"))
   stopifnot(inherits(mix_grid, "cause_grid"))
+  optmethod <- match.arg(optmethod)
+  if(optmethod=="mixSQP") optfun <- ashr:::mixSQP
+    else optfun <- ashr:::mixIP
   if(!any(mix_grid$S1 == 0 & mix_grid$S2==0)){
     stop("Grid is invalid. It doesn't contain (0, 0).")
   }
@@ -31,7 +35,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
                               X$seb2)
     matrix_llik = matrix_llik1 - apply(matrix_llik1, 1, max)
     matrix_lik = exp(matrix_llik)
-    w_res = ashr:::mixIP(matrix_lik =matrix_lik,
+    w_res = optfun(matrix_lik =matrix_lik,
                           prior=c(null_wt, rep(1, K-1)),
                           weights=rep(1, nrow(matrix_lik)))
     pi <- pi_old <- w_res$pihat
@@ -77,7 +81,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
                               X$seb2)
     matrix_llik = matrix_llik1 - apply(matrix_llik1, 1, max)
     matrix_lik = exp(matrix_llik)
-    w_res = ashr:::mixIP(matrix_lik =matrix_lik,
+    w_res = optfun(matrix_lik =matrix_lik,
                          prior=c(null_wt, rep(1, K-1)),
                          weights=rep(1, nrow(matrix_lik)))
     pi <- w_res$pihat

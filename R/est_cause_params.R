@@ -7,7 +7,8 @@
 #'pruned and include variants genome wide.
 #'@return An object of class cause_params
 #'@export
-est_cause_params <- function(X, variants){
+est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP")){
+  optmethod <- match.arg(optmethod)
   stopifnot(inherits(X, "cause_data"))
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
@@ -19,9 +20,9 @@ est_cause_params <- function(X, variants){
             "This can cause problems and is not recomended. You are using ", nrow(X),
             " variants.\n")
   }
-  mix_grid <- variance_pair_candidates(X)
+  mix_grid <- variance_pair_candidates(X, optmethod=optmethod)
 
-  params <- map_pi_rho(X, mix_grid)
+  params <- map_pi_rho(X, mix_grid, optmethod=optmethod)
   #Filter out grid points with low mixing proportion
   params$mix_grid <- dplyr::filter(params$mix_grid, zapsmall(pi) > 0)
 
@@ -30,7 +31,7 @@ est_cause_params <- function(X, variants){
 
 
 #'@export
-variance_pair_candidates <- function(X, optmethod = c("mixIP", "mixSQP",
+variance_pair_candidates <- function(X, optmethod = c("mixSQP", "mixIP",
                                                       "cxxMixSquarem", "mixEM",
                                                       "mixVBEM", "w_mixEM")){
   stopifnot(inherits(X, "cause_data"))
