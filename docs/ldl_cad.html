@@ -346,12 +346,13 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/cdcabe1854ca00dd7651f2c22eba95251386c2ec" target="_blank">cdcabe1</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/0f9268677c31d5eeb1405280a3e16685b4ca4452" target="_blank">0f92686</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  X.RDS
@@ -409,6 +410,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/a34393dedf81051e37783951c9e3b74aba80de65/analysis/ldl_cad.Rmd" target="_blank">a34393d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+build website
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/a34393dedf81051e37783951c9e3b74aba80de65/docs/ldl_cad.html" target="_blank">a34393d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+build website
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -521,14 +556,13 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 <p>This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. The LD pruning steps will benefit from access to a cluster or multiple cores. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example.</p>
 <p>We will be analyzing GWAS data for LDL cholesterol and for coronary artery disease to test for a causal relationship of LDL on CAD. The analysis will have the following steps:</p>
 <ol style="list-style-type: decimal">
-<li>Download summary statistics</li>
 <li>Format the data for use with CAUSE</li>
 <li>LD pruning</li>
 <li>Calculate nuisance parameters</li>
 <li>Fit CAUSE</li>
 <li>Look at results</li>
 </ol>
-<p>Steps 4 and 5 require obtaining (different) LD pruned sets of variants. To do this you will need LD data in a specific format. We provide LD information estimated from the 1000 Genomes CEU population using LDshrink <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. LD data are about 11 Gb. The GWAS data we will use are about 320 Gb.</p>
+<p>Steps 3 and 4 require obtaining (different) LD pruned sets of variants. To do this you will need LD data in a specific format. We provide LD information estimated from the 1000 Genomes CEU population using LDshrink <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. LD data are about 11 Gb. The GWAS data we will use are about 320 Gb.</p>
 </div>
 <div id="step-0-install-cause" class="section level2">
 <h2>Step 0: Install CAUSE</h2>
@@ -626,8 +660,8 @@ After merging and removing variants with inconsistent alleles,  there are  20233
 <p>Alternatively, you can download already formatted data <a href="https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS">here</a> and read it in using <code>readRDS</code>.</p>
 <p>There are likely more efficient ways to do this merge. If you would like to process the data yourself, you can construct a <code>cause_data</code> object from a data frame using the constructor <code>new_cause_data(X)</code> where <code>X</code> is any data frame that includes the columns <code>snp</code>, <code>beta_hat_1</code>, <code>seb1</code>, <code>beta_hat_2</code>, and <code>seb2</code>.</p>
 </div>
-<div id="step-3-ld-pruning" class="section level2">
-<h2>Step 3: LD Pruning</h2>
+<div id="step-2-ld-pruning" class="section level2">
+<h2>Step 2: LD Pruning</h2>
 <p>Both steps 4 and 5 will require LD pruned sets of variants which we obtain in this step. Importantly, the sets are different. In Step 4, nuisance parameter estimation, we need a random set of variants that are not in LD with each other. In step 5, fitting the CAUSE model, we would like to retain the variants that are most strongly associated with the mediator (LDL) because these are the most informative about the distribution of the parameters. In order to do that we use a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. In step 5, only variants associated with the mediator are informative so we can speed up computation by excluding variants with large p-values. We use a threshold of 0.001 here.</p>
 <p>In this step we will obtain both sets of variants simultaneously using the <code>cause::ld_prune</code> function. This is the most computationally intensive step of the analysis and requires LD estimates from a reference panel as input data. LD estimates made in the 1000 Genomes CEU population can be downloaded <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
 <pre class="r"><code>ld &lt;- readRDS(&quot;example_data/ld_data/chr22_AF0.05_0.1.RDS&quot;)
@@ -696,13 +730,13 @@ stopCluster(cl)
 
 random_pruned_vars &lt;- unlist(purrr:map(pruned, 1))
 top_ldl_pruned_vars &lt;- unlist(purrr::map(pruned, 2))</code></pre>
-<p>A better option is to parallelize over the nodes of a cluster and then combine results.</p>
-<p>Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and then LD prune this list. You can use it to estimate nuisance parameters for every pair.</p>
+<p>A better option is to parallelize over the nodes of a compute cluster and then combine results.</p>
+<p>Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and then LD prune this list. You can use this single set of variants estimate nuisance parameters for every pair as long as there are enough of them.</p>
 <p>Download the resulting variant lists: <a href="https://github.com/jean997/cause/blob/master/example_data/genome_wide_pruned_vars.RDS">genome wide list</a>, <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
 </div>
 </div>
-<div id="step-4-calculate-nuisance-parameters" class="section level2">
-<h2>Step 4: Calculate nuisance parameters</h2>
+<div id="step-3-calculate-nuisance-parameters" class="section level2">
+<h2>Step 3: Calculate nuisance parameters</h2>
 <p>The next step is to estimate the mixture proportions that define the bivariate distribution of effect sizes and to estimate <span class="math inline">\(\rho\)</span>, the correlation between summary statistics that is due to sample overlap or population structure. To do this, we need the data set and the genome-wide set of LD pruned variants obtained in Step 3. This step takes a few minutes. <code>est_cause_params</code> estimates the nuisance parameters by finding the maximum a posteriori estimate of <span class="math inline">\(\rho\)</span> and the mixing parameters when <span class="math inline">\(\gamma = \eta = 0\)</span>.</p>
 <pre class="r"><code>varlist &lt;- readRDS(&quot;example_data/genome_wide_pruned_vars.RDS&quot;)
 params &lt;- est_cause_params(X, varlist)</code></pre>
@@ -729,8 +763,8 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <p>So, for example, in this case, we have estimated that 58% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
 <p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model comparisons.</p>
 </div>
-<div id="step-5-fit-cause" class="section level2">
-<h2>Step 5: Fit CAUSE</h2>
+<div id="step-4-fit-cause" class="section level2">
+<h2>Step 4: Fit CAUSE</h2>
 <p>Now that we have formatted data, LD pruned SNP sets, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause::cause</code> will estimate posterior distributions under the confounding and causal models and calculate the elpd for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes.</p>
 <p>Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don’t add any information about the relationship between the traits. When we LD pruned, we used a <span class="math inline">\(p\)</span>-value threshold of 0.001. The exact value of this threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
 <pre class="r"><code>top_vars &lt;- readRDS(&quot;example_data/top_ldl_pruned_vars.RDS&quot;)
@@ -745,8 +779,8 @@ when loading &#39;sherlockAsh&#39;</code></pre>
 <pre><code>Warning: replacing previous import &#39;intervals::expand&#39; by &#39;tidyr::expand&#39;
 when loading &#39;sherlockAsh&#39;</code></pre>
 </div>
-<div id="step-6-look-at-results" class="section level2">
-<h2>Step 6: Look at Results</h2>
+<div id="step-5-look-at-results" class="section level2">
+<h2>Step 5: Look at Results</h2>
 <p>The resulting <code>cause</code> object contains an object for the confounding only model fit (<code>conf</code>), and object for the causal model fit (<code>full</code>) and a table of ELPD results.</p>
 <pre class="r"><code>class(res)</code></pre>
 <pre><code>[1] &quot;cause&quot;</code></pre>
@@ -790,6 +824,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/a34393dedf81051e37783951c9e3b74aba80de65/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">a34393d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">bbe4901</a>
 </td>
 <td style="text-align:left;">
@@ -831,6 +876,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/a34393dedf81051e37783951c9e3b74aba80de65/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">a34393d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">bbe4901</a>
@@ -887,6 +943,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/a34393dedf81051e37783951c9e3b74aba80de65/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">a34393d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/bbe49018f1c79ea1f2bfb1c1c4ac2228722dac60/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">bbe4901</a>
 </td>
 <td style="text-align:left;">
@@ -934,33 +1001,32 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] bindrcpp_0.2.2   dplyr_0.7.7      readr_1.1.1      cause_0.2.0.0049
-[5] workflowr_1.1.1 
+[1] workflowr_1.1.1  bindrcpp_0.2.2   cause_0.2.0.0049 dplyr_0.7.7     
+[5] readr_1.1.1     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_0.12.19       lattice_0.20-35    tidyr_0.8.1       
- [4] assertthat_0.2.0   rprojroot_1.3-2    digest_0.6.18     
- [7] foreach_1.4.4      utf8_1.1.4         truncnorm_1.0-8   
-[10] R6_2.3.0           plyr_1.8.4         backports_1.1.2   
-[13] evaluate_0.11      ggplot2_3.0.0      pillar_1.3.0      
-[16] rlang_0.2.2        lazyeval_0.2.1     curl_3.2          
-[19] sherlockAsh_0.3.1  pscl_1.5.2         rstudioapi_0.8    
-[22] whisker_0.3-2      R.utils_2.7.0      R.oo_1.22.0       
-[25] Matrix_1.2-14      rmarkdown_1.10     labeling_0.3      
-[28] devtools_1.13.6    stringr_1.3.1      loo_2.0.0         
-[31] munsell_0.5.0      mixsqp_0.1-62      compiler_3.5.1    
-[34] numDeriv_2016.8-1  pkgconfig_2.0.2    SQUAREM_2017.10-1 
-[37] htmltools_0.3.6    tidyselect_0.2.5   tibble_1.4.2      
-[40] gridExtra_2.3      intervals_0.15.1   codetools_0.2-15  
-[43] matrixStats_0.54.0 fansi_0.3.0        crayon_1.3.4      
-[46] withr_2.1.2        MASS_7.3-50        R.methodsS3_1.7.1 
-[49] grid_3.5.1         gtable_0.2.0       git2r_0.23.0      
-[52] magrittr_1.5       scales_1.0.0       RcppParallel_4.4.1
-[55] cli_1.0.1          stringi_1.2.4      doParallel_1.0.14 
-[58] iterators_1.0.10   tools_3.5.1        glue_1.3.0        
-[61] purrr_0.2.5        hms_0.4.2          parallel_3.5.1    
-[64] yaml_2.2.0         colorspace_1.3-2   ashr_2.2-21       
-[67] memoise_1.1.0      knitr_1.20         bindr_0.1.1       </code></pre>
+ [1] tidyselect_0.2.5   ashr_2.2-21        purrr_0.2.5       
+ [4] lattice_0.20-35    colorspace_1.3-2   htmltools_0.3.6   
+ [7] loo_2.0.0          yaml_2.2.0         utf8_1.1.4        
+[10] rlang_0.2.2        R.oo_1.22.0        mixsqp_0.1-62     
+[13] pillar_1.3.0       glue_1.3.0         R.utils_2.7.0     
+[16] matrixStats_0.54.0 foreach_1.4.4      bindr_0.1.1       
+[19] plyr_1.8.4         stringr_1.3.1      munsell_0.5.0     
+[22] gtable_0.2.0       R.methodsS3_1.7.1  codetools_0.2-15  
+[25] evaluate_0.11      labeling_0.3       knitr_1.20        
+[28] doParallel_1.0.14  pscl_1.5.2         sherlockAsh_0.3.1 
+[31] curl_3.2           parallel_3.5.1     fansi_0.3.0       
+[34] Rcpp_0.12.19       backports_1.1.2    scales_1.0.0      
+[37] RcppParallel_4.4.1 truncnorm_1.0-8    gridExtra_2.3     
+[40] ggplot2_3.0.0      hms_0.4.2          digest_0.6.18     
+[43] stringi_1.2.4      numDeriv_2016.8-1  grid_3.5.1        
+[46] rprojroot_1.3-2    cli_1.0.1          tools_3.5.1       
+[49] magrittr_1.5       lazyeval_0.2.1     tibble_1.4.2      
+[52] crayon_1.3.4       whisker_0.3-2      tidyr_0.8.1       
+[55] pkgconfig_2.0.2    MASS_7.3-50        Matrix_1.2-14     
+[58] SQUAREM_2017.10-1  assertthat_0.2.0   rmarkdown_1.10    
+[61] iterators_1.0.10   R6_2.3.0           intervals_0.15.1  
+[64] git2r_0.23.0       compiler_3.5.1    </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
