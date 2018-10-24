@@ -327,7 +327,8 @@ div.section {
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
-<p><details> <summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </details>
 </li>
 <li>
@@ -346,13 +347,12 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/0f9268677c31d5eeb1405280a3e16685b4ca4452" target="_blank">0f92686</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/48bdf215b8c526c53cc9a0308677675ef231b2e9" target="_blank">48bdf21</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  X.RDS
@@ -381,7 +381,7 @@ Untracked files:
     Untracked:  test_mixSQP.R
 
 Unstaged changes:
-    Modified:   analysis/ldl_cad.Rmd
+    Modified:   R/cause_grid_adapt.R
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -410,6 +410,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/48bdf215b8c526c53cc9a0308677675ef231b2e9/analysis/ldl_cad.Rmd" target="_blank">48bdf21</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+fixing warnings
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/8c57c8a3cc8b0faa204a5dfa1a89336039622947/analysis/ldl_cad.Rmd" target="_blank">8c57c8a</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+build website
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/8c57c8a3cc8b0faa204a5dfa1a89336039622947/docs/ldl_cad.html" target="_blank">8c57c8a</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+build website
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -770,14 +821,6 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre class="r"><code>top_vars &lt;- readRDS(&quot;example_data/top_ldl_pruned_vars.RDS&quot;)
 res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <pre><code>Estimating CAUSE posteriors using  1215  variants.</code></pre>
-<pre><code>Warning: replacing previous import &#39;dplyr::combine&#39; by &#39;gridExtra::combine&#39;
-when loading &#39;sherlockAsh&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;dplyr::count&#39; by &#39;matrixStats::count&#39;
-when loading &#39;sherlockAsh&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;intervals::reduce&#39; by &#39;purrr::reduce&#39;
-when loading &#39;sherlockAsh&#39;</code></pre>
-<pre><code>Warning: replacing previous import &#39;intervals::expand&#39; by &#39;tidyr::expand&#39;
-when loading &#39;sherlockAsh&#39;</code></pre>
 </div>
 <div id="step-5-look-at-results" class="section level2">
 <h2>Step 5: Look at Results</h2>
@@ -1001,8 +1044,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.1.1  bindrcpp_0.2.2   cause_0.2.0.0049 dplyr_0.7.7     
-[5] readr_1.1.1     
+[1] bindrcpp_0.2.2   cause_0.2.0.0054 dplyr_0.7.7      readr_1.1.1     
 
 loaded via a namespace (and not attached):
  [1] tidyselect_0.2.5   ashr_2.2-21        purrr_0.2.5       
@@ -1012,21 +1054,21 @@ loaded via a namespace (and not attached):
 [13] pillar_1.3.0       glue_1.3.0         R.utils_2.7.0     
 [16] matrixStats_0.54.0 foreach_1.4.4      bindr_0.1.1       
 [19] plyr_1.8.4         stringr_1.3.1      munsell_0.5.0     
-[22] gtable_0.2.0       R.methodsS3_1.7.1  codetools_0.2-15  
-[25] evaluate_0.11      labeling_0.3       knitr_1.20        
-[28] doParallel_1.0.14  pscl_1.5.2         sherlockAsh_0.3.1 
-[31] curl_3.2           parallel_3.5.1     fansi_0.3.0       
-[34] Rcpp_0.12.19       backports_1.1.2    scales_1.0.0      
-[37] RcppParallel_4.4.1 truncnorm_1.0-8    gridExtra_2.3     
-[40] ggplot2_3.0.0      hms_0.4.2          digest_0.6.18     
-[43] stringi_1.2.4      numDeriv_2016.8-1  grid_3.5.1        
-[46] rprojroot_1.3-2    cli_1.0.1          tools_3.5.1       
-[49] magrittr_1.5       lazyeval_0.2.1     tibble_1.4.2      
-[52] crayon_1.3.4       whisker_0.3-2      tidyr_0.8.1       
-[55] pkgconfig_2.0.2    MASS_7.3-50        Matrix_1.2-14     
-[58] SQUAREM_2017.10-1  assertthat_0.2.0   rmarkdown_1.10    
-[61] iterators_1.0.10   R6_2.3.0           intervals_0.15.1  
-[64] git2r_0.23.0       compiler_3.5.1    </code></pre>
+[22] gtable_0.2.0       workflowr_1.1.1    R.methodsS3_1.7.1 
+[25] codetools_0.2-15   evaluate_0.11      labeling_0.3      
+[28] knitr_1.20         doParallel_1.0.14  pscl_1.5.2        
+[31] parallel_3.5.1     fansi_0.3.0        Rcpp_0.12.19      
+[34] backports_1.1.2    scales_1.0.0       RcppParallel_4.4.1
+[37] truncnorm_1.0-8    gridExtra_2.3      ggplot2_3.0.0     
+[40] hms_0.4.2          digest_0.6.18      stringi_1.2.4     
+[43] numDeriv_2016.8-1  grid_3.5.1         rprojroot_1.3-2   
+[46] cli_1.0.1          tools_3.5.1        magrittr_1.5      
+[49] lazyeval_0.2.1     tibble_1.4.2       crayon_1.3.4      
+[52] whisker_0.3-2      tidyr_0.8.1        pkgconfig_2.0.2   
+[55] MASS_7.3-50        Matrix_1.2-14      SQUAREM_2017.10-1 
+[58] assertthat_0.2.0   rmarkdown_1.10     iterators_1.0.10  
+[61] R6_2.3.0           intervals_0.15.1   git2r_0.23.0      
+[64] compiler_3.5.1    </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
