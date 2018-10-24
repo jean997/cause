@@ -64,7 +64,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
 
   vals <- get_vals2(ranges, n_start, priors)
   res <- post_from_vals(vals, params, X, mix_grid, rho)
-  post_marge <- sherlockAsh:::marge_dists(res, params, priors, ranges)
+  post_marge <- marge_dists(res, params, priors, ranges)
   range_set <- FALSE
   widths <- sapply(seq_along(params), function(i){(ranges[[i]][2]-ranges[[i]][1])/n_start[i]})
   n_add <- ceiling(n_start/2)
@@ -119,7 +119,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
       for(j in seq_along(params)){
         new_ranges[[j]] <- as.numeric(res[i, paste0(params[j], c("start", "stop"))])
       }
-      vals <- sherlockAsh:::get_vals2(new_ranges, rep(n, length(params)), priors)
+      vals <- get_vals2(new_ranges, rep(n, length(params)), priors)
       new_res <-post_from_vals(vals, params, X, mix_grid, rho)
       return(new_res)
     })
