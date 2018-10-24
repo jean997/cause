@@ -8,9 +8,12 @@ Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.ht
 
 To install:
 ```{r}
-devtools::install_git("https://github.com/jean997/cause.git")
+devtools::install_github("jean997/cause")
 ```
-
-
-If its not already installed, you will need to install [ashr](https://github.com/stephens999/ashr), [MOSEK](https://www.mosek.com/products/mosek/) and the 
-[Rmosek package](http://rmosek.r-forge.r-project.org). Instructions for installing MOSEK on Mac and Linux are available in the `ashr` installation instructions. 
+ You will need up to date version of `mixsqp` and `ashr`
+ 
+ 
+```{r, eval=FALSE}
+devtools::install_github("stephenslab/mixsqp")
+devtools::install_github("stephens999/ashr")
+```
