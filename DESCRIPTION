@@ -12,9 +12,10 @@ URL: http://github.com/jean997/cause
 BugReports: http://github.com/jean997/cause/issues
 RoxygenNote: 6.1.0
 LinkingTo: Rcpp, RcppParallel
-Remotes: stephenslab/mixsqp, stephens999/ashr
 Imports: 
   Rcpp,
+  ashr,
+  mixsqp
   dplyr, 
   ggplot2, 
   gridExtra, 
@@ -23,3 +24,4 @@ Imports:
   purrr, 
   tidyr,
   intervals
+Remotes: stephenslab/mixsqp, stephens999/ashr
