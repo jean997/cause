@@ -11,7 +11,8 @@ LazyData: false
 URL: http://github.com/jean997/cause
 BugReports: http://github.com/jean997/cause/issues
 RoxygenNote: 6.1.0
-LinkingTo: Rcpp, RcppParallel
+LinkingTo: Rcpp, RcppParalle
+Remotes: stephenslab/mixsqp, stephens999/ashr
 Imports: 
   Rcpp,
   dplyr, 
@@ -22,4 +23,3 @@ Imports:
   purrr, 
   tidyr,
   intervals
-Remotes: stephenslab/mixsqp,stephens999/ashr
