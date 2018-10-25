@@ -14,8 +14,8 @@ RoxygenNote: 6.1.0
 LinkingTo: Rcpp, RcppParallel
 Imports: 
   Rcpp,
+  mixsqp,
   ashr,
-  mixsqp
   dplyr, 
   ggplot2, 
   gridExtra, 
