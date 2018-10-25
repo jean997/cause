@@ -15,6 +15,7 @@ LinkingTo: Rcpp, RcppParallel
 Imports: 
   Rcpp,
   mixsqp,
+  numDeriv,
   ashr,
   dplyr, 
   ggplot2, 
