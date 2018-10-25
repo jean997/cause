@@ -14,6 +14,8 @@ RoxygenNote: 6.1.0
 LinkingTo: Rcpp, RcppParallel
 Imports: 
   Rcpp,
+  mixsqp,
+  numDeriv,
   ashr,
   dplyr, 
   ggplot2, 
@@ -23,3 +25,4 @@ Imports:
   purrr, 
   tidyr,
   intervals
+Remotes: stephenslab/mixsqp, stephens999/ashr
