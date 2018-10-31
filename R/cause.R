@@ -39,7 +39,27 @@ cause <- function(X, variants, param_ests,
   fit0 <- structure(list("joint_post"=NULL, rho = param_ests$rho, mix_grid=param_ests$mix_grid), class="cause_post")
   fits <- list("null"=fit0, "conf"=fit2, "full" = fit3)
   elpd <- in_sample_elpd_loo(X, fits)
-  res <- list("conf"=fit2, "full" = fit3, elpd=elpd)
+
+  X$delta_elpd <- with(elpd, loos[[2]]$pointwise[,1] - loos[[3]]$pointwise[,1])
+
+  X$prob_Z1_conf <- prob_confounding(X, fit2)
+  X$prob_Z1_full <- prob_confounding(X, fit3)
+  class(X) <- c("cause_data_fit", "cause_data", "data.frame")
+
+  res <- list("conf"=fit2, "full" = fit3, elpd=elpd$mods, "loos" = elpd$loos, "data"=X)
   class(res) <- "cause"
   return(res)
+}
+
+#'@title Create a new cause_data_fit object
+#'@param x a data.frame that includes columns snp, beta_hat_1, seb1, beta_hat_2, seb2, delta_elpd,
+#'prob_Z1_conf, prob_Z1_full in any order.
+#'x may also contain other columns
+#'@return and object of class cause_data and data.frame.
+#'@export
+new_cause_data_fit <- function(x = data.frame()){
+  stopifnot(inherits(x, "data.frame"))
+  stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2",
+                  "delta_elpd", "prob_Z1_conf", "prob_Z1_full") %in% names(x)))
+  structure(x, class = c("cause_data_fit", "cause_data", "data.frame"))
 }
