@@ -53,8 +53,8 @@ cause_grid_adapt <-  function(X, param_ests,
 adapt2_grid <- function(params, ranges, priors, n_start,
                         range_fixed,
                         mix_grid, rho,
-                        X, max_post_per_bin,
-                        end_bin_thresh=1e-8){
+                        X, max_post_per_bin){
+                        #end_bin_thresh=1e-8){
 
   k <- length(params)
   stopifnot(length(ranges) == k)
@@ -68,6 +68,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
   range_set <- FALSE
   widths <- sapply(seq_along(params), function(i){(ranges[[i]][2]-ranges[[i]][1])/n_start[i]})
   n_add <- ceiling(n_start/2)
+  end_bin_thresh <- sapply(post_marge, function(x){1/(nrow(x)*1000)})
   #Set range first then refine the grid
   while(!range_set){
     range_set <- TRUE
@@ -75,7 +76,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
       if(range_fixed[i]) next
       n_new <- n_start
       n_new[i] <- n_add[i]
-      if(with(post_marge[[i]], post[which.min(mid)]) > end_bin_thresh){
+      if(with(post_marge[[i]], post[which.min(mid)]) > end_bin_thresh[i]){
         new_ranges <- ranges
         new_ranges[[i]][1] <- ranges[[i]][1]- n_add[i]*widths[i]
         new_ranges[[i]][2] <- ranges[[i]][1]
@@ -90,7 +91,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
         range_set <- FALSE
 	      n_start[i] <- n_start[i] + n_add[i]
       }
-      if(with(post_marge[[i]], post[which.max(mid)]) > end_bin_thresh ){
+      if(with(post_marge[[i]], post[which.max(mid)]) > end_bin_thresh[i] ){
         new_ranges <- ranges
         new_ranges[[i]][2] <- ranges[[i]][2] +  n_add[i]*widths[i]
         new_ranges[[i]][1] <- ranges[[i]][2]
@@ -106,6 +107,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
       }
     }
     post_marge <-marge_dists(res, params, priors, ranges)
+    end_bin_thresh <- sapply(post_marge, function(x){1/(nrow(x)*1000)})
   }
   #Refine grid
   thresh <- log(max_post_per_bin)
