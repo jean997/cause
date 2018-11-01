@@ -6,6 +6,7 @@
 #' @author Jean Morrison <jeanm@uchicago.edu>
 #' @import Rcpp ashr dplyr ggplot2
 #' @import purrr tidyr mixsqp
+#' @importFrom scalse muted
 #' @importFrom matrixStats logSumExp
 #' @importFrom numDeriv hessian
 #' @importFrom intervals Intervals interval_overlap

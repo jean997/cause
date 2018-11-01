@@ -41,6 +41,13 @@ summary.cause <- function(res, ci_size=0.95, digits=2){
   return(ans)
 }
 
+#'@title Summarize CAUSE Results for a single fit
+#'@description Summarize posterior
+#'medians and credible intervals for parameters
+#'@param fit object of class cause_post.
+#'@param ci_size size of posterior credible intervals.
+#'@param digits significant digits to report.
+#'@export
 summary.cause_post <- function(fit, ci_size = 0.95, digits=2){
   ans <- list()
 
@@ -79,7 +86,10 @@ print.cause_summary <- function(x, digits=2){
   print(x$tab, row.names=FALSE)
 }
 
-
+#'@title Print CAUSE fit Summary
+#'@description Print a CAUSE fit summary
+#'@param x object of class cause_summary_post
+#'@export
 print.summary_cause_post <- function(x){
   ix <- is.na(x$quants[1,])
   if(all(ix == FALSE)) cat("Full Model:\n")
