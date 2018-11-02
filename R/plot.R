@@ -96,7 +96,7 @@ plot.cause <- function(res, intern=FALSE, type=c("posteriors", "data"), pval_thr
         geom_errorbar(aes(ymin = beta_hat_2 -1.96*seb2, ymax = beta_hat_2 + 1.96*seb2, x = beta_hat_1 ), color="grey") +
         geom_errorbarh(aes(y = beta_hat_2, xmin = beta_hat_1 - 1.96*seb1, xmax = beta_hat_1 + 1.96*seb1), color="grey") +
         geom_point(aes(x=beta_hat_1, y=beta_hat_2, col=delta_elpd, size = -log10(pval1))) +
-        scale_color_gradient2(name = "Delta ELPD") +
+        scale_color_gradient2(name = "Delta ELPD", mid = "grey") +
         ggtitle("ELPD Contribution") +
         theme_bw()
     if(intern) return(plts)
