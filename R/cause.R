@@ -13,7 +13,8 @@
 #'@return A list with items conf, full, elpd, summary, and plot.
 #'@export
 cause <- function(X, variants, param_ests,
-                  sigma_g = 0.6, qalpha = 1, qbeta=10){
+                  sigma_g = 0.6, qalpha = 1, qbeta=10,
+                  max_q = 1){
   stopifnot(inherits(X, "cause_data"))
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
@@ -23,18 +24,25 @@ cause <- function(X, variants, param_ests,
   cat("Estimating CAUSE posteriors using ", nrow(X), " variants.\n")
   stopifnot(inherits(param_ests, "cause_params"))
 
+  m <- pbeta(max_q, qalpha, qbeta)
+  qprior <- function(q){
+    ret <- rep(0, length(q))
+    ret[q > 0 & q < max_q] <- dbeta(q[q > 0 & q < max_q], qalpha, qbeta)/m
+    return(ret)
+  }
+
   fit2 <- cause_grid_adapt(X, param_ests,
                            max_post_per_bin = 0.001,
                            params = c("eta", "q"),
                            priors = list(function(b){dnorm(b, 0, sigma_g)},
-                                             function(q){dbeta(q, qalpha, qbeta)}),
+                                         qprior),
                            n_start = c(20, 10))
   fit3 <- cause_grid_adapt(X, param_ests,
                                max_post_per_bin = 0.001,
                                params = c("gamma", "eta", "q"),
                                priors = list(function(b){dnorm(b, 0, sigma_g)},
                                              function(b){dnorm(b, 0, sigma_g)},
-                                             function(q){dbeta(q, qalpha, qbeta)}),
+                                             qprior),
                                n_start = c(20, 20, 10))
   fit0 <- structure(list("joint_post"=NULL, rho = param_ests$rho, mix_grid=param_ests$mix_grid), class="cause_post")
   fits <- list("null"=fit0, "conf"=fit2, "full" = fit3)
