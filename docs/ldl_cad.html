@@ -323,7 +323,7 @@ div.section {
 </div>
 
 
-<p><strong>Last updated:</strong> 2018-10-24</p>
+<p><strong>Last updated:</strong> 2018-11-06</p>
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
@@ -347,7 +347,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/48bdf215b8c526c53cc9a0308677675ef231b2e9" target="_blank">48bdf21</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/2652be12bb63e67611ef6eee0647254b790ba52a" target="_blank">2652be1</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -372,6 +372,8 @@ Untracked files:
     Untracked:  example_data/snp_overlap_ldpruned.txt
     Untracked:  example_data/top_ldl_pruned_vars.1.RDS
     Untracked:  ll_v7_notes.Rmd
+    Untracked:  man/print.summary_cause_post.Rd
+    Untracked:  man/summary.cause_post.Rd
     Untracked:  matrix_lik.RDS
     Untracked:  quantile_sampling.R
     Untracked:  src/RcppExports.o
@@ -381,7 +383,7 @@ Untracked files:
     Untracked:  test_mixSQP.R
 
 Unstaged changes:
-    Modified:   R/cause_grid_adapt.R
+    Modified:   R/cause.R
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -410,6 +412,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/2652be12bb63e67611ef6eee0647254b790ba52a/analysis/ldl_cad.Rmd" target="_blank">2652be1</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-11-06
+</td>
+<td style="text-align:left;">
+wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/6ae7a60c30167592b1328cc1ee64958f29086ee1/docs/ldl_cad.html" target="_blank">6ae7a60</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2018-10-24
+</td>
+<td style="text-align:left;">
+build website
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -792,9 +828,9 @@ top_ldl_pruned_vars &lt;- unlist(purrr::map(pruned, 2))</code></pre>
 <pre class="r"><code>varlist &lt;- readRDS(&quot;example_data/genome_wide_pruned_vars.RDS&quot;)
 params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code>1 0.04269384 
-2 9.226364e-05 
-3 4.889476e-07 
-4 2.369153e-09 </code></pre>
+2 9.226389e-05 
+3 4.890611e-07 
+4 8.099619e-09 </code></pre>
 <p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
 <pre class="r"><code>class(params)</code></pre>
 <pre><code>[1] &quot;cause_params&quot;</code></pre>
@@ -806,9 +842,9 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre class="r"><code>head(params$mix_grid)</code></pre>
 <pre><code>           S1          S2           pi
 1 0.000000000 0.000000000 0.5775164448
-2 0.000000000 0.003844598 0.0671561630
+2 0.000000000 0.003844598 0.0671561629
 3 0.000000000 0.005437082 0.1814078269
-4 0.004607137 0.005437082 0.1496411493
+4 0.004607137 0.005437082 0.1496411494
 5 0.000000000 0.015378390 0.0123144988
 6 0.004607137 0.015378390 0.0002248187</code></pre>
 <p>So, for example, in this case, we have estimated that 58% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
@@ -828,12 +864,12 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <pre class="r"><code>class(res)</code></pre>
 <pre><code>[1] &quot;cause&quot;</code></pre>
 <pre class="r"><code>names(res)</code></pre>
-<pre><code>[1] &quot;conf&quot; &quot;full&quot; &quot;elpd&quot;</code></pre>
+<pre><code>[1] &quot;conf&quot; &quot;full&quot; &quot;elpd&quot; &quot;loos&quot; &quot;data&quot;</code></pre>
 <pre class="r"><code>res$elpd</code></pre>
 <pre><code>  model1 model2 delta_elpd se_delta_elpd         z
-1   null   conf -85.707878     10.152051 -8.442420
-2   null   full -93.680331     11.277130 -8.307108
-3   conf   full  -7.972453      1.285898 -6.199910</code></pre>
+1   null   conf -85.707877     10.152051 -8.442420
+2   null   full -93.539833     11.253681 -8.311932
+3   conf   full  -7.831956      1.265622 -6.188229</code></pre>
 <pre class="r"><code>class(res$conf)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <pre class="r"><code>class(res$full)</code></pre>
@@ -845,7 +881,7 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.2 corresponding to a p-value of 2.810^{-10}.</p>
+<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.19 corresponding to a p-value of 310^{-10}.</p>
 <p>For each model (confounding and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
 <pre class="r"><code>plot(res$conf)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -957,7 +993,7 @@ Jean Morrison
 <p></details></p>
 <p>The <code>summary</code> method will summarize the posterior medians and credible intervals.</p>
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
-<pre><code>p-value testing that causal model is a better fit:  2.8e-10 
+<pre><code>p-value testing that causal model is a better fit:  3e-10 
 Posterior medians and  95 % credible intervals:
      model              gamma              eta               
 [1,] &quot;Confounding Only&quot; NA                 &quot;0.4 (0.34, 0.47)&quot;
@@ -1020,13 +1056,16 @@ Jean Morrison
 </tbody>
 </table>
 <p></details></p>
+<p>The <code>plot</code> method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the confounder and the contribution of each variant to the ELPD test statistic.</p>
+<pre class="r"><code>plot(res, type=&quot;data&quot;)</code></pre>
+<p><img src="figure/ldl_cad.Rmd/plot3-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.5.1 (2018-07-02)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Linux Mint 19
+Running under: Ubuntu 18.04.1 LTS
 
 Matrix products: default
 BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.7.1
@@ -1044,13 +1083,13 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] bindrcpp_0.2.2   cause_0.2.0.0054 dplyr_0.7.7      readr_1.1.1     
+[1] bindrcpp_0.2.2   cause_0.2.0.0073 dplyr_0.7.6      readr_1.1.1     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5   ashr_2.2-21        purrr_0.2.5       
+ [1] tidyselect_0.2.4   ashr_2.2-19        purrr_0.2.5       
  [4] lattice_0.20-35    colorspace_1.3-2   htmltools_0.3.6   
  [7] loo_2.0.0          yaml_2.2.0         utf8_1.1.4        
-[10] rlang_0.2.2        R.oo_1.22.0        mixsqp_0.1-62     
+[10] rlang_0.2.2        R.oo_1.22.0        mixsqp_0.1-58     
 [13] pillar_1.3.0       glue_1.3.0         R.utils_2.7.0     
 [16] matrixStats_0.54.0 foreach_1.4.4      bindr_0.1.1       
 [19] plyr_1.8.4         stringr_1.3.1      munsell_0.5.0     
@@ -1060,7 +1099,7 @@ loaded via a namespace (and not attached):
 [31] parallel_3.5.1     fansi_0.3.0        Rcpp_0.12.19      
 [34] backports_1.1.2    scales_1.0.0       RcppParallel_4.4.1
 [37] truncnorm_1.0-8    gridExtra_2.3      ggplot2_3.0.0     
-[40] hms_0.4.2          digest_0.6.18      stringi_1.2.4     
+[40] hms_0.4.2          digest_0.6.17      stringi_1.2.4     
 [43] numDeriv_2016.8-1  grid_3.5.1         rprojroot_1.3-2   
 [46] cli_1.0.1          tools_3.5.1        magrittr_1.5      
 [49] lazyeval_0.2.1     tibble_1.4.2       crayon_1.3.4      
