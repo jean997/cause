@@ -235,3 +235,10 @@ The  `plot` method applied to a `cause` object will arrange all of this informat
 ```{r, plot2}
 plot(res)
 ```
+
+The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the confounder and the contribution of each variant to the ELPD test statistic.
+
+
+```{r, plot3}
+plot(res, type="data")
+```
