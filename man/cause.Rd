@@ -6,7 +6,8 @@
 \alias{cause-package}
 \title{CAUSE}
 \usage{
-cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10)
+cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10,
+  max_q = 1)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
