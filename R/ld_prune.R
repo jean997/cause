@@ -46,7 +46,9 @@ ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
   if(is.vector(variants)){
     cat("Pruning for LD randomly (no p-values supplied)\n")
     n <- length(variants)
-    variants <- data.frame(snp = variants, pval = sample(seq(n), size=n, replace=FALSE)/n)
+    variants <- data.frame(snp = variants, 
+			   pval = sample(seq(n), size=n, replace=FALSE)/n,
+			   stringsAsFactors=FALSE)
     pval_cols <- c("pval")
     variant_name <- "snp"
     pval_thresh <- Inf
