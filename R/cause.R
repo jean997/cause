@@ -13,7 +13,7 @@
 #'@return A list with items conf, full, elpd, summary, and plot.
 #'@export
 cause <- function(X, variants, param_ests,
-                  sigma_g = 0.6, qalpha = 1, qbeta=10,
+                  sigma_g, qalpha = 1, qbeta=10,
                   max_q = 1){
   stopifnot(inherits(X, "cause_data"))
   if(!all(variants %in% X$snp)){
@@ -29,6 +29,10 @@ cause <- function(X, variants, param_ests,
     ret <- rep(0, length(q))
     ret[q > 0 & q < max_q] <- dbeta(q[q > 0 & q < max_q], qalpha, qbeta)/m
     return(ret)
+  }
+
+  if(missing(sigma_g)){
+    sigma_g <- eta_gamma_prior(X)
   }
 
   fit2 <- cause_grid_adapt(X, param_ests,
@@ -54,7 +58,8 @@ cause <- function(X, variants, param_ests,
   X$prob_Z1_full <- prob_confounding(X, fit3)
   class(X) <- c("cause_data_fit", "cause_data", "data.frame")
 
-  res <- list("conf"=fit2, "full" = fit3, elpd=elpd$mods, "loos" = elpd$loos, "data"=X)
+  res <- list("conf"=fit2, "full" = fit3, elpd=elpd$mods, "loos" = elpd$loos, "data"=X,
+              "sigma_g" = sigma_g, "qalpha" = qalpha, "qbeta" = qbeta)
   class(res) <- "cause"
   return(res)
 }
