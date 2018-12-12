@@ -88,6 +88,7 @@ plot.cause <- function(res, intern=FALSE, type=c("posteriors", "data"), pval_thr
     plts <- lapply(c("conf", "full"), function(i){
       plt <- plot(res[[i]], type="data", data=res$data, pval_thresh=pval_thresh)
       return(plt)})
+    max_delta_elpd <- max(abs(res$data$delta_elpd))
     plts[[3]] <-  res$data %>%
       mutate(pval1 = 2*pnorm(-abs(beta_hat_1/seb1))) %>%
       filter(pval1 < pval_thresh) %>%
@@ -96,7 +97,7 @@ plot.cause <- function(res, intern=FALSE, type=c("posteriors", "data"), pval_thr
         geom_errorbar(aes(ymin = beta_hat_2 -1.96*seb2, ymax = beta_hat_2 + 1.96*seb2, x = beta_hat_1 ), color="grey") +
         geom_errorbarh(aes(y = beta_hat_2, xmin = beta_hat_1 - 1.96*seb1, xmax = beta_hat_1 + 1.96*seb1), color="grey") +
         geom_point(aes(x=beta_hat_1, y=beta_hat_2, col=delta_elpd, size = -log10(pval1))) +
-        scale_color_gradient2(name = "Delta ELPD", mid = "grey") +
+        scale_color_gradient2(name = "Contribution\nto test statisitc", mid = "grey", limits=c(-1, 1)*max_delta_elpd) +
         ggtitle("ELPD Contribution") +
         theme_bw()
     if(intern) return(plts)
