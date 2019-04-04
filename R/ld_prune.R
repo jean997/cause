@@ -7,9 +7,9 @@
 #'@param ld data.frame with three columns: colsnp, rowsnp, and r2. Each row corresponds to an entry
 #' of the LD matrix. If a pair of variants does not appear, they are assumed to have LD of 0 (or below the threshold).
 #' @param total_ld_variants vector of variant names used to construct 'ld'.
-#' @param pval_cols Vector of names of pval_cols. If not missing, variangs must be a data.frame.
+#' @param pval_cols Vector of names of pval_cols. If not missing, variants must be a data.frame.
 #' pval_cols may contain NA entries. NA's indicate that you desire a pruned set that is not
-#' prioritized by LD.
+#' prioritized by p-value.
 #' @param pval_thresh A vector the same length as 'pval_cols'. Only variants with p-value
 #' below the threshold will be retained. Not required if variants is a vector. Entries of pval_thresh
 #' may be Inf.
@@ -46,7 +46,7 @@ ld_prune <- function(variants, ld, total_ld_variants, pval_cols, pval_thresh,
   if(is.vector(variants)){
     cat("Pruning for LD randomly (no p-values supplied)\n")
     n <- length(variants)
-    variants <- data.frame(snp = variants, 
+    variants <- data.frame(snp = variants,
 			   pval = sample(seq(n), size=n, replace=FALSE)/n,
 			   stringsAsFactors=FALSE)
     pval_cols <- c("pval")
