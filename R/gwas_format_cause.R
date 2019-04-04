@@ -90,7 +90,7 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
                  !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
         filter(is.finite(seb1) & is.finite(seb2) &
                  is.finite(beta_hat_1) & is.finite(beta_hat_2)) %>%
-        filter(seb1 >= 0 & seb2 >= 0)
+        filter(seb1 > 0 & seb2 > 0)
   if(!upper1){
     X  <- X %>% mutate(A2.x = toupper(A2.x))
   }
@@ -160,6 +160,15 @@ align_beta <- function(X, beta_hat_name, upper=TRUE){
 new_cause_data <- function(x = data.frame()){
   stopifnot(inherits(x, "data.frame"))
   stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
+  if(any(is.na(x[, c("beta_hat_1", "beta_hat_2", "seb1", "seb2")]))){
+    stop("Error: Some values are missing.\n")
+  }
+  if(any(!is.finite(x[, c("beta_hat_1", "beta_hat_2", "seb1", "seb2")]))){
+    stop("Error: Some values are not finite.\n")
+  }
+  if(any(x$seb1<=0 | x$seb2 <=0)){
+    stop("Error: Some standard errors are not strictly positive.\n")
+  }
   structure(x, class = c("cause_data", "data.frame"))
 }
 
