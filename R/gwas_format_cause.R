@@ -174,10 +174,10 @@ validate_cause_data <- function(x){
          call.=FALSE)
   }
   for(n in req_names[-1]){
-    if(any(is.na(X[[n]]))){
+    if(any(is.na(x[[n]]))){
       stop(paste0("Missing values in ", n), call.=FALSE)
     }
-    if(any(!is.finite(X[[n]]))){
+    if(any(!is.finite(x[[n]]))){
       stop(paste0("Infinite values in ", n), call.=FALSE)
     }
   }
