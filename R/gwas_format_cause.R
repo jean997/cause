@@ -159,16 +159,8 @@ align_beta <- function(X, beta_hat_name, upper=TRUE){
 #'@export
 new_cause_data <- function(x = data.frame()){
   stopifnot(inherits(x, "data.frame"))
-  stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
-  if(any(is.na(x[, c("beta_hat_1", "beta_hat_2", "seb1", "seb2")]))){
-    stop("Error: Some values are missing.\n")
-  }
-  if(any(!is.finite(x[, c("beta_hat_1", "beta_hat_2", "seb1", "seb2")]))){
-    stop("Error: Some values are not finite.\n")
-  }
-  if(any(x$seb1<=0 | x$seb2 <=0)){
-    stop("Error: Some standard errors are not strictly positive.\n")
-  }
+  x <- validate_cause_data(x)
+  #stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
   structure(x, class = c("cause_data", "data.frame"))
 }
 
