@@ -6,8 +6,8 @@
 \alias{cause-package}
 \title{CAUSE}
 \usage{
-cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10,
-  max_q = 1)
+cause(X, param_ests, variants = X$snp, sigma_g, qalpha = 1,
+  qbeta = 10, max_q = 1)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
@@ -15,6 +15,8 @@ cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10,
 \item{param_ests}{Object of class cause_params output by est_cause_params.
 This contains estimates of the mixing proportions and an estimate of rho,
 the correlation in test statistics that is due to overlapping samples or population structure.}
+
+\item{variants}{A vector of variants to include in the analysis.}
 
 \item{sigma_g}{Parameter specifying the prior distribution of gamma and eta.
 gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).}

@@ -17,9 +17,9 @@ of the LD matrix. If a pair of variants does not appear, they are assumed to hav
 
 \item{total_ld_variants}{vector of variant names used to construct 'ld'.}
 
-\item{pval_cols}{Vector of names of pval_cols. If not missing, variangs must be a data.frame.
+\item{pval_cols}{Vector of names of pval_cols. If not missing, variants must be a data.frame.
 pval_cols may contain NA entries. NA's indicate that you desire a pruned set that is not
-prioritized by LD.}
+prioritized by p-value.}
 
 \item{pval_thresh}{A vector the same length as 'pval_cols'. Only variants with p-value
 below the threshold will be retained. Not required if variants is a vector. Entries of pval_thresh

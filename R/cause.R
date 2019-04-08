@@ -6,13 +6,14 @@
 #'@param param_ests Object of class cause_params output by est_cause_params.
 #'This contains estimates of the mixing proportions and an estimate of rho,
 #'the correlation in test statistics that is due to overlapping samples or population structure.
+#'@param variants A vector of variants to include in the analysis.
 #'@param sigma_g Parameter specifying the prior distribution of gamma and eta.
 #'gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).
 #'@param qalpha,qbeta Parameters defining the prior distribution of q.
 #'q ~ Beta(qalpha, qbeta)
 #'@return A list with items conf, full, elpd, summary, and plot.
 #'@export
-cause <- function(X, variants, param_ests,
+cause <- function(X, param_ests, variants = X$snp,
                   sigma_g, qalpha = 1, qbeta=10,
                   max_q = 1){
   stopifnot(inherits(X, "cause_data"))
