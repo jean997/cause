@@ -11,7 +11,7 @@ est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"), null
   optmethod <- match.arg(optmethod)
   stopifnot(inherits(X, "cause_data"))
   if(!all(variants %in% X$snp)){
-    stop("Not all `variants` are in data.", call.=FALSE)
+    warning("Warning: Not all `variants` are in data.", call.=FALSE)
   }
   X <- filter(X, snp %in% variants)
   X <- new_cause_data(X)
@@ -20,6 +20,7 @@ est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"), null
             "This can cause problems and is not recomended. You are using ", nrow(X),
             " variants.\n")
   }
+  cat("Estimating CAUSE parameters with ", nrow(X), " variants.\n")
   mix_grid <- variance_pair_candidates(X, optmethod=optmethod)
 
   params <- map_pi_rho(X, mix_grid, optmethod=optmethod, null_wt = null_wt)
