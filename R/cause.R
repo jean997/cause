@@ -19,7 +19,7 @@ cause <- function(X, param_ests, variants = X$snp,
                   sigma_g, qalpha = 1, qbeta=10,
                   max_q = 1, force=FALSE){
   stopifnot(inherits(X, "cause_data"))
-  stopifnot(inherits(X, "cause_params"))
+  stopifnot(inherits(param_ests, "cause_params"))
   if(!params$converged){
     if(!force){
       stop("The parameter estimates you are using did not converge.
