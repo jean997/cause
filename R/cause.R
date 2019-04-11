@@ -11,12 +11,23 @@
 #'gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).
 #'@param qalpha,qbeta Parameters defining the prior distribution of q.
 #'q ~ Beta(qalpha, qbeta)
+#'@param max_q Largest value of q to be allowed. If max_q < 1 then the prior will be truncated.
+#'@param force If true, do not give an error if parameter estimates did not converge.
 #'@return A list with items conf, full, elpd, summary, and plot.
 #'@export
 cause <- function(X, param_ests, variants = X$snp,
                   sigma_g, qalpha = 1, qbeta=10,
-                  max_q = 1){
+                  max_q = 1, force=FALSE){
   stopifnot(inherits(X, "cause_data"))
+  stopifnot(inherits(X, "cause_params"))
+  if(!params$converged){
+    if(!force){
+      stop("The parameter estimates you are using did not converge.
+           If you are sure you want to use them anyway, rerun with force=TRUE\n")
+    }else{
+      warning("Parameter estimates are not converged but we are going forward anyway.\n")
+    }
+  }
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
   }

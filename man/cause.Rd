@@ -7,7 +7,7 @@
 \title{CAUSE}
 \usage{
 cause(X, param_ests, variants = X$snp, sigma_g, qalpha = 1,
-  qbeta = 10, max_q = 1)
+  qbeta = 10, max_q = 1, force = FALSE)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
@@ -23,6 +23,10 @@ gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).}
 
 \item{qalpha, qbeta}{Parameters defining the prior distribution of q.
 q ~ Beta(qalpha, qbeta)}
+
+\item{max_q}{Largest value of q to be allowed. If max_q < 1 then the prior will be truncated.}
+
+\item{force}{If true, do not give an error if parameter estimates did not converge.}
 }
 \value{
 A list with items conf, full, elpd, summary, and plot.
