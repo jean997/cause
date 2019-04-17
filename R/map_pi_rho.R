@@ -38,7 +38,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     w_res = optfun(matrix_lik =matrix_lik,
                           prior=c(null_wt, rep(1, K-1)),
                           weights=rep(1, nrow(matrix_lik)))
-    pi <- pi_old <- w_res$pihat
+    pi <- pi_old <- pmax(w_res$pihat, 0)
   }else{
     pi <- pi_old <- mix_grid$pi
   }
@@ -84,8 +84,8 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     w_res = optfun(matrix_lik =matrix_lik,
                          prior=c(null_wt, rep(1, K-1)),
                          weights=rep(1, nrow(matrix_lik)))
-    pi <- w_res$pihat
-    pi_prior <- cause:::ddirichlet1(pi, c(null_wt, rep(1, K-1)))
+    pi <- pmax(w_res$pihat, 0)
+    pi_prior <- ddirichlet1(pi, c(null_wt, rep(1, K-1)))
     ll <- li_func(rho)
 
     LLS <- c(LLS, -1*ll)
