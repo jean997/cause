@@ -20,7 +20,7 @@ cause <- function(X, param_ests, variants = X$snp,
                   max_q = 1, force=FALSE){
   stopifnot(inherits(X, "cause_data"))
   stopifnot(inherits(param_ests, "cause_params"))
-  if(!params$converged){
+  if(!param_ests$converged){
     if(!force){
       stop("The parameter estimates you are using did not converge.
            If you are sure you want to use them anyway, rerun with force=TRUE\n")
