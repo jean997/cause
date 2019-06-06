@@ -10,10 +10,14 @@ To install:
 ```{r}
 devtools::install_github("jean997/cause")
 ```
- You will need up to date version of `mixsqp` and `ashr`
+ You will need both `mixsqp` and `ashr`. Please use `mixsqp-0.1-97` which is currently the version available through CRAN. 
  
+
+To install development versions you can use 
  
 ```{r, eval=FALSE}
 devtools::install_github("stephenslab/mixsqp")
 devtools::install_github("stephens999/ashr")
 ```
+
+However, right now it is most advisable to use the versions available through CRAN.
