@@ -33,9 +33,9 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
                               X$beta_hat_2,
                               X$seb1,
                               X$seb2)
-    matrix_llik = matrix_llik1 - apply(matrix_llik1, 1, max)
-    matrix_lik = exp(matrix_llik)
-    w_res = optfun(matrix_lik =matrix_lik,
+    matrix_llik <- matrix_llik1 - apply(matrix_llik1, 1, max)
+    matrix_lik <- exp(matrix_llik)
+    w_res <- optfun(matrix_lik =matrix_lik,
                           prior=c(null_wt, rep(1, K-1)),
                           weights=rep(1, nrow(matrix_lik)))
     pi <- pi_old <- pmax(w_res$pihat, 0)
