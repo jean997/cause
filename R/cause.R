@@ -13,11 +13,14 @@
 #'q ~ Beta(qalpha, qbeta)
 #'@param max_q Largest value of q to be allowed. If max_q < 1 then the prior will be truncated.
 #'@param force If true, do not give an error if parameter estimates did not converge.
+#'@param n_start_gamma_eta,n_start_q Number of starting bins for grid approximation.
+#'You should not need to change these but if you are suspicious about your results, try increasing them.
 #'@return A list with items conf, full, elpd, summary, and plot.
 #'@export
 cause <- function(X, param_ests, variants = X$snp,
                   sigma_g, qalpha = 1, qbeta=10,
-                  max_q = 1, force=FALSE){
+                  max_q = 1, force=FALSE,
+                  n_start_gamma_eta = 21, n_start_q = 11){
   stopifnot(inherits(X, "cause_data"))
   stopifnot(inherits(param_ests, "cause_params"))
   if(!param_ests$converged){
@@ -52,14 +55,14 @@ cause <- function(X, param_ests, variants = X$snp,
                            params = c("eta", "q"),
                            priors = list(function(b){dnorm(b, 0, sigma_g)},
                                          qprior),
-                           n_start = c(21, 11))
+                           n_start = c(n_start_gamma_eta, n_start_q))
   fit3 <- cause_grid_adapt(X, param_ests,
                                max_post_per_bin = 0.001,
                                params = c("gamma", "eta", "q"),
                                priors = list(function(b){dnorm(b, 0, sigma_g)},
                                              function(b){dnorm(b, 0, sigma_g)},
                                              qprior),
-                               n_start = c(21, 21, 11))
+                               n_start = c(n_start_gamma_eta, n_start_gamma_eta, n_start_q))
   fit0 <- structure(list("joint_post"=NULL, rho = param_ests$rho, mix_grid=param_ests$mix_grid), class="cause_post")
   fits <- list("null"=fit0, "conf"=fit2, "full" = fit3)
   elpd <- in_sample_elpd_loo(X, fits)
