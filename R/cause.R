@@ -52,14 +52,14 @@ cause <- function(X, param_ests, variants = X$snp,
                            params = c("eta", "q"),
                            priors = list(function(b){dnorm(b, 0, sigma_g)},
                                          qprior),
-                           n_start = c(20, 10))
+                           n_start = c(21, 11))
   fit3 <- cause_grid_adapt(X, param_ests,
                                max_post_per_bin = 0.001,
                                params = c("gamma", "eta", "q"),
                                priors = list(function(b){dnorm(b, 0, sigma_g)},
                                              function(b){dnorm(b, 0, sigma_g)},
                                              qprior),
-                               n_start = c(20, 20, 10))
+                               n_start = c(21, 21, 11))
   fit0 <- structure(list("joint_post"=NULL, rho = param_ests$rho, mix_grid=param_ests$mix_grid), class="cause_post")
   fits <- list("null"=fit0, "conf"=fit2, "full" = fit3)
   elpd <- in_sample_elpd_loo(X, fits)
