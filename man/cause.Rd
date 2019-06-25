@@ -7,7 +7,8 @@
 \title{CAUSE}
 \usage{
 cause(X, param_ests, variants = X$snp, sigma_g, qalpha = 1,
-  qbeta = 10, max_q = 1, force = FALSE)
+  qbeta = 10, max_q = 1, force = FALSE, n_start_gamma_eta = 21,
+  n_start_q = 11)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
@@ -27,6 +28,9 @@ q ~ Beta(qalpha, qbeta)}
 \item{max_q}{Largest value of q to be allowed. If max_q < 1 then the prior will be truncated.}
 
 \item{force}{If true, do not give an error if parameter estimates did not converge.}
+
+\item{n_start_gamma_eta, n_start_q}{Number of starting bins for grid approximation.
+You should not need to change these but if you are suspicious about your results, try increasing them.}
 }
 \value{
 A list with items conf, full, elpd, summary, and plot.
