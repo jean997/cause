@@ -9,9 +9,11 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Jean Morrison" />
 
+<meta name="date" content="2019-06-24" />
 
-<title>License</title>
+<title>Simulations</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -169,6 +174,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -222,7 +322,9 @@ div.section {
 
 
 
-<h1 class="title toc-ignore">License</h1>
+<h1 class="title toc-ignore">Simulations</h1>
+<h4 class="author"><em>Jean Morrison</em></h4>
+<h4 class="date"><em>2019-06-24</em></h4>
 
 </div>
 
@@ -305,7 +407,7 @@ Message
 Rmd
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/jean997/cause/blob/8f3b82e734b124b6d4d9d28b9defcce8d3726410/analysis/license.Rmd" target="_blank">8f3b82e</a>
+<a href="https://github.com/jean997/cause/blob/8f3b82e734b124b6d4d9d28b9defcce8d3726410/analysis/simulations.Rmd" target="_blank">8f3b82e</a>
 </td>
 <td style="text-align:left;">
 Jean Morrison
@@ -317,46 +419,18 @@ Jean Morrison
 wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “analysis/ldl_cad.Rmd”, “analysis/license.Rmd”,
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-html
-</td>
-<td style="text-align:left;">
-<a href="https://cdn.rawgit.com/jean997/cause/f15238b6e5b2e1f07f8846e5c56618a8ba28b62a/docs/license.html" target="_blank">f15238b</a>
-</td>
-<td style="text-align:left;">
-Jean Morrison
-</td>
-<td style="text-align:left;">
-2018-10-14
-</td>
-<td style="text-align:left;">
-Build site.
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rmd
-</td>
-<td style="text-align:left;">
-<a href="https://github.com/jean997/cause/blob/efc43ef89c766d22c038de5cb2b980fd1a7402c2/analysis/license.Rmd" target="_blank">efc43ef</a>
-</td>
-<td style="text-align:left;">
-Jean Morrison
-</td>
-<td style="text-align:left;">
-2018-10-14
-</td>
-<td style="text-align:left;">
-Start workflowr project.
-</td>
-</tr>
 </tbody>
 </table>
 </ul>
 <p></details></p>
 <hr />
-<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Simulations are run using the <code>causeSims</code> R package. The package can be downloaded using</p>
+<pre><code>devtools::install_github(&quot;jean997/causeSims&quot;)</code></pre>
+<p>This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see <a href="https://github.com/jean997/causeSims">here</a>.</p>
+<p>We also use the <a href="https://stephenslab.github.io/dsc-wiki/overview">Dynamical Statisical Comparisons</a> software.</p>
+</div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -379,6 +453,8 @@ footer is added to webpages before the MathJax javascript. -->
 <hr>
 
 
+</div>
+</div>
 
 </div>
 
