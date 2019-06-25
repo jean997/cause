@@ -353,7 +353,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/8f3b82e734b124b6d4d9d28b9defcce8d3726410" target="_blank">8f3b82e</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/0e352686c547156d6b4f7085d5779325717090c9" target="_blank">0e35268</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -385,11 +385,6 @@ Untracked files:
     Untracked:  src/log_likelihood_functions.o
     Untracked:  test_data/
 
-Unstaged changes:
-    Modified:   R/map_pi_rho.R
-    Modified:   README.md
-    Modified:   analysis/_site.yml
-
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
 </li>
@@ -417,6 +412,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/0e352686c547156d6b4f7085d5779325717090c9/analysis/ldl_cad.Rmd" target="_blank">0e35268</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+wflow_publish(files = c(“analysis/ldl_cad.Rmd”))
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/ldl_cad.html" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -745,14 +774,13 @@ head(X)</code></pre>
 <h2>Step 3: Calculate nuisance parameters</h2>
 <p>The next step is to estimate the parameters that define the prior distribution of <span class="math inline">\(\beta_{M}\)</span> and <span class="math inline">\(\theta\)</span> and to estimate <span class="math inline">\(\rho\)</span>, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. This step takes a few minutes. <code>est_cause_params</code> estimates the nuisance parameters by finding the maximum a posteriori estimate of <span class="math inline">\(\rho\)</span> and the mixing parameters when <span class="math inline">\(\gamma = \eta = 0\)</span>.</p>
 <pre class="r"><code>set.seed(100)
-varlist &lt;- with(X, sample(snp, size=1000, replace=FALSE))
+varlist &lt;- with(X, sample(snp, size=100000, replace=FALSE))
 params &lt;- est_cause_params(X, varlist)</code></pre>
-<pre><code>Warning in est_cause_params(X, varlist): Fewer than 100,000 variants are being used to estimate parametrs. This can cause problems and is not recomended. You are using 1000 variants.</code></pre>
-<pre><code>Estimating CAUSE parameters with  1000  variants.
-1 0.06576737 
-2 0.0001628123 
-3 1.356755e-06 
-4 1.137657e-08 </code></pre>
+<pre><code>Estimating CAUSE parameters with  100000  variants.
+1 0.06583041 
+2 0.0003043269 
+3 3.807672e-06 
+4 4.757768e-08 </code></pre>
 <p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
 <pre class="r"><code>class(params)</code></pre>
 <pre><code>[1] &quot;cause_params&quot;</code></pre>
@@ -760,16 +788,16 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code> [1] &quot;rho&quot;       &quot;pi&quot;        &quot;mix_grid&quot;  &quot;loglik&quot;    &quot;PIS&quot;      
  [6] &quot;RHO&quot;       &quot;LLS&quot;       &quot;converged&quot; &quot;prior&quot;     &quot;var&quot;      </code></pre>
 <pre class="r"><code>params$rho</code></pre>
-<pre><code>[1] 0.06593155</code></pre>
+<pre><code>[1] 0.0661386</code></pre>
 <pre class="r"><code>head(params$mix_grid)</code></pre>
-<pre><code>           S1          S2          pi
-1 0.000000000 0.000000000 0.815753781
-2 0.013908181 0.000000000 0.002105476
-3 0.000000000 0.007844385 0.057657635
-4 0.000000000 0.011093636 0.024880545
-5 0.006954091 0.011093636 0.089703755
-6 0.006954091 0.044374542 0.003608351</code></pre>
-<p>So, for example, in this case, we have estimated that 82% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
+<pre><code>           S1          S2           pi
+1 0.000000000 0.000000000 0.3633618165
+2 0.018428547 0.000000000 0.0002364998
+3 0.000000000 0.003844598 0.2331996101
+4 0.000000000 0.005437082 0.0660832658
+5 0.003257738 0.005437082 0.2505817165
+6 0.004607137 0.010874164 0.0472852839</code></pre>
+<p>So, for example, in this case, we have estimated that 36% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
 <p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model comparisons.</p>
 </div>
 <div id="step-3-ld-pruning" class="section level2">
@@ -858,9 +886,9 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 [8] &quot;qbeta&quot;  </code></pre>
 <pre class="r"><code>res$elpd</code></pre>
 <pre><code>  model1 model2 delta_elpd se_delta_elpd         z
-1   null   conf -88.612698     11.536941 -7.680780
-2   null   full -96.261665     12.918901 -7.451227
-3   conf   full  -7.648967      2.367442 -3.230900</code></pre>
+1   null   conf -63.085956      8.041388 -7.845157
+2   null   full -71.201974      9.222390 -7.720555
+3   conf   full  -8.116018      1.272459 -6.378216</code></pre>
 <pre class="r"><code>class(res$conf)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <pre class="r"><code>class(res$full)</code></pre>
@@ -872,7 +900,7 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -3.23 corresponding to a p-value of 6.210^{-4}.</p>
+<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.38 corresponding to a p-value of 910^{-11}.</p>
 <p>For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
 <pre class="r"><code>plot(res$conf)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -892,6 +920,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/4a8f76ccd2554d1f46985507b41899ced9e02a3e/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">4a8f76c</a>
@@ -959,6 +998,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/4a8f76ccd2554d1f46985507b41899ced9e02a3e/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">4a8f76c</a>
 </td>
 <td style="text-align:left;">
@@ -1006,14 +1056,14 @@ Jean Morrison
 <p></details></p>
 <p>The <code>summary</code> method will summarize the posterior medians and credible intervals.</p>
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
-<pre><code>p-value testing that causal model is a better fit:  0.00062 
+<pre><code>p-value testing that causal model is a better fit:  9e-11 
 Posterior medians and  95 % credible intervals:
-     model              gamma               eta                 
-[1,] &quot;Confounding Only&quot; NA                  &quot;0.41 (0.34, 0.48)&quot; 
-[2,] &quot;Causal&quot;           &quot;0.35 (0.29, 0.42)&quot; &quot;0.13 (-0.49, 0.95)&quot;
+     model              gamma               eta                  
+[1,] &quot;Confounding Only&quot; NA                  &quot;0.37 (0.31, 0.44)&quot;  
+[2,] &quot;Causal&quot;           &quot;0.33 (0.28, 0.39)&quot; &quot;-0.01 (-0.62, 0.53)&quot;
      q                  
-[1,] &quot;0.77 (0.65, 0.88)&quot;
-[2,] &quot;0.04 (0, 0.3)&quot;    </code></pre>
+[1,] &quot;0.77 (0.63, 0.88)&quot;
+[2,] &quot;0.03 (0, 0.25)&quot;   </code></pre>
 <p>The <code>plot</code> method applied to a <code>cause</code> object will arrange all of this information on one spread.</p>
 <pre class="r"><code>plot(res)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot2-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1033,6 +1083,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/4a8f76ccd2554d1f46985507b41899ced9e02a3e/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">4a8f76c</a>
@@ -1101,6 +1162,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/4a8f76ccd2554d1f46985507b41899ced9e02a3e/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">4a8f76c</a>
 </td>
 <td style="text-align:left;">
@@ -1137,7 +1209,8 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] bindrcpp_0.2.2   cause_0.2.0.0097 dplyr_0.7.6      readr_1.1.1     
+[1] workflowr_1.1.1  bindrcpp_0.2.2   cause_0.2.0.0097 dplyr_0.7.6     
+[5] readr_1.1.1     
 
 loaded via a namespace (and not attached):
  [1] tidyselect_0.2.4   ashr_2.2-32        purrr_0.2.5       
@@ -1147,21 +1220,20 @@ loaded via a namespace (and not attached):
 [13] pillar_1.3.1       glue_1.3.1         R.utils_2.7.0     
 [16] matrixStats_0.54.0 foreach_1.4.4      bindr_0.1.1       
 [19] plyr_1.8.4         stringr_1.3.1      munsell_0.5.0     
-[22] gtable_0.2.0       workflowr_1.1.1    R.methodsS3_1.7.1 
-[25] codetools_0.2-15   evaluate_0.11      labeling_0.3      
-[28] knitr_1.20         doParallel_1.0.14  pscl_1.5.2        
-[31] parallel_3.5.2     fansi_0.4.0        Rcpp_1.0.0        
-[34] backports_1.1.2    scales_1.0.0       RcppParallel_4.4.1
-[37] truncnorm_1.0-8    gridExtra_2.3      ggplot2_3.1.0     
-[40] hms_0.4.2          digest_0.6.18      stringi_1.2.4     
-[43] numDeriv_2016.8-1  grid_3.5.2         rprojroot_1.3-2   
-[46] cli_1.0.1          tools_3.5.2        magrittr_1.5      
-[49] lazyeval_0.2.1     tibble_2.0.0       crayon_1.3.4      
-[52] whisker_0.3-2      tidyr_0.8.1        pkgconfig_2.0.2   
-[55] MASS_7.3-50        Matrix_1.2-14      SQUAREM_2017.10-1 
-[58] assertthat_0.2.1   rmarkdown_1.10     iterators_1.0.10  
-[61] R6_2.4.0           intervals_0.15.1   git2r_0.23.0      
-[64] compiler_3.5.2    </code></pre>
+[22] gtable_0.2.0       R.methodsS3_1.7.1  codetools_0.2-15  
+[25] evaluate_0.11      labeling_0.3       knitr_1.20        
+[28] doParallel_1.0.14  pscl_1.5.2         parallel_3.5.2    
+[31] fansi_0.4.0        Rcpp_1.0.0         backports_1.1.2   
+[34] scales_1.0.0       RcppParallel_4.4.1 truncnorm_1.0-8   
+[37] gridExtra_2.3      ggplot2_3.1.0      hms_0.4.2         
+[40] digest_0.6.18      stringi_1.2.4      numDeriv_2016.8-1 
+[43] grid_3.5.2         rprojroot_1.3-2    cli_1.0.1         
+[46] tools_3.5.2        magrittr_1.5       lazyeval_0.2.1    
+[49] tibble_2.0.0       crayon_1.3.4       whisker_0.3-2     
+[52] tidyr_0.8.1        pkgconfig_2.0.2    MASS_7.3-50       
+[55] Matrix_1.2-14      SQUAREM_2017.10-1  assertthat_0.2.1  
+[58] rmarkdown_1.10     iterators_1.0.10   R6_2.4.0          
+[61] intervals_0.15.1   git2r_0.25.2       compiler_3.5.2    </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
