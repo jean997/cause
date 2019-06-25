@@ -353,7 +353,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/e0a6df4a672d4a6b6db130fe9f937792351cf567" target="_blank">e0a6df4</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/a55827daf376aec55b6708d8797e67e62bb11fa3" target="_blank">a55827d</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -412,6 +412,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/a55827daf376aec55b6708d8797e67e62bb11fa3/analysis/ldl_cad.Rmd" target="_blank">a55827d</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+wflow_publish(files = c(“analysis/index.Rmd”, “analysis/ldl_cad.Rmd”))
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/ldl_cad.html" target="_blank">d8d1486</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -804,9 +838,9 @@ head(X)</code></pre>
 <pre class="r"><code>X &lt;- readRDS(&quot;example_data/LDL_CAD_merged.RDS&quot;)</code></pre>
 <p>There are likely more efficient ways to do this merge. If you would like to process the data yourself, you can construct a <code>cause_data</code> object from a data frame using the constructor <code>new_cause_data(X)</code> where <code>X</code> is any data frame that includes the columns <code>snp</code>, <code>beta_hat_1</code>, <code>seb1</code>, <code>beta_hat_2</code>, and <code>seb2</code>.</p>
 </div>
-<div id="step-3-calculate-nuisance-parameters" class="section level2">
-<h2>Step 3: Calculate nuisance parameters</h2>
-<p>The next step is to estimate the parameters that define the prior distribution of <span class="math inline">\(\beta_{M}\)</span> and <span class="math inline">\(\theta\)</span> and to estimate <span class="math inline">\(\rho\)</span>, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. This step takes a few minutes. <code>est_cause_params</code> estimates the nuisance parameters by finding the maximum a posteriori estimate of <span class="math inline">\(\rho\)</span> and the mixing parameters when <span class="math inline">\(\gamma = \eta = 0\)</span>.</p>
+<div id="step-2-calculate-nuisance-parameters" class="section level2">
+<h2>Step 2: Calculate nuisance parameters</h2>
+<p>The next step is to estimate the parameters that define the prior distribution of <span class="math inline">\(\beta_{M}\)</span> and <span class="math inline">\(\theta\)</span> and to estimate <span class="math inline">\(\rho\)</span>, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. <code>est_cause_params</code> estimates the nuisance parameters by finding the maximum a posteriori estimate of <span class="math inline">\(\rho\)</span> and the mixing parameters when <span class="math inline">\(\gamma = \eta = 0\)</span>. This step takes a several minutes.</p>
 <pre class="r"><code>set.seed(100)
 varlist &lt;- with(X, sample(snp, size=1000000, replace=FALSE))
 params &lt;- est_cause_params(X, varlist)</code></pre>
@@ -957,6 +991,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">d8d1486</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">33b3732</a>
 </td>
 <td style="text-align:left;">
@@ -1042,6 +1087,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">d8d1486</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">33b3732</a>
@@ -1142,6 +1198,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">d8d1486</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">33b3732</a>
 </td>
 <td style="text-align:left;">
@@ -1230,6 +1297,17 @@ Date
 <tbody>
 <tr>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">d8d1486</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">33b3732</a>
 </td>
 <td style="text-align:left;">
@@ -1288,8 +1366,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.1.1  bindrcpp_0.2.2   cause_0.2.0.0097 dplyr_0.7.6     
-[5] readr_1.1.1     
+[1] bindrcpp_0.2.2   cause_0.2.0.0097 dplyr_0.7.6      readr_1.1.1     
 
 loaded via a namespace (and not attached):
  [1] tidyselect_0.2.4   ashr_2.2-32        purrr_0.2.5       
@@ -1299,20 +1376,21 @@ loaded via a namespace (and not attached):
 [13] pillar_1.3.1       glue_1.3.1         R.utils_2.7.0     
 [16] matrixStats_0.54.0 foreach_1.4.4      bindr_0.1.1       
 [19] plyr_1.8.4         stringr_1.3.1      munsell_0.5.0     
-[22] gtable_0.2.0       R.methodsS3_1.7.1  codetools_0.2-15  
-[25] evaluate_0.11      labeling_0.3       knitr_1.20        
-[28] doParallel_1.0.14  pscl_1.5.2         parallel_3.5.2    
-[31] fansi_0.4.0        Rcpp_1.0.0         backports_1.1.2   
-[34] scales_1.0.0       RcppParallel_4.4.1 truncnorm_1.0-8   
-[37] gridExtra_2.3      ggplot2_3.1.0      hms_0.4.2         
-[40] digest_0.6.18      stringi_1.2.4      numDeriv_2016.8-1 
-[43] grid_3.5.2         rprojroot_1.3-2    cli_1.0.1         
-[46] tools_3.5.2        magrittr_1.5       lazyeval_0.2.1    
-[49] tibble_2.0.0       crayon_1.3.4       whisker_0.3-2     
-[52] tidyr_0.8.1        pkgconfig_2.0.2    MASS_7.3-50       
-[55] Matrix_1.2-14      SQUAREM_2017.10-1  assertthat_0.2.1  
-[58] rmarkdown_1.10     iterators_1.0.10   R6_2.4.0          
-[61] intervals_0.15.1   git2r_0.25.2       compiler_3.5.2    </code></pre>
+[22] gtable_0.2.0       workflowr_1.1.1    R.methodsS3_1.7.1 
+[25] codetools_0.2-15   evaluate_0.11      labeling_0.3      
+[28] knitr_1.20         doParallel_1.0.14  pscl_1.5.2        
+[31] parallel_3.5.2     fansi_0.4.0        Rcpp_1.0.0        
+[34] backports_1.1.2    scales_1.0.0       RcppParallel_4.4.1
+[37] truncnorm_1.0-8    gridExtra_2.3      ggplot2_3.1.0     
+[40] hms_0.4.2          digest_0.6.18      stringi_1.2.4     
+[43] numDeriv_2016.8-1  grid_3.5.2         rprojroot_1.3-2   
+[46] cli_1.0.1          tools_3.5.2        magrittr_1.5      
+[49] lazyeval_0.2.1     tibble_2.0.0       crayon_1.3.4      
+[52] whisker_0.3-2      tidyr_0.8.1        pkgconfig_2.0.2   
+[55] MASS_7.3-50        Matrix_1.2-14      SQUAREM_2017.10-1 
+[58] assertthat_0.2.1   rmarkdown_1.10     iterators_1.0.10  
+[61] R6_2.4.0           intervals_0.15.1   git2r_0.25.2      
+[64] compiler_3.5.2    </code></pre>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
