@@ -338,7 +338,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/8f3b82e734b124b6d4d9d28b9defcce8d3726410" target="_blank">8f3b82e</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/b78e77f8d72199464465a98e0b3cfe2a6f9503c5" target="_blank">b78e77f</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -371,9 +371,8 @@ Untracked files:
     Untracked:  test_data/
 
 Unstaged changes:
-    Modified:   R/map_pi_rho.R
-    Modified:   README.md
-    Modified:   analysis/_site.yml
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/ldl_cad.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -407,6 +406,40 @@ Message
 Rmd
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/jean997/cause/blob/b78e77f8d72199464465a98e0b3cfe2a6f9503c5/analysis/simulations.Rmd" target="_blank">b78e77f</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+wflow_publish(files = c(“analysis/simulations.Rmd”))
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/jean997/cause/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/simulations.html" target="_blank">286f4e9</a>
+</td>
+<td style="text-align:left;">
+Jean Morrison
+</td>
+<td style="text-align:left;">
+2019-06-25
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
 <a href="https://github.com/jean997/cause/blob/8f3b82e734b124b6d4d9d28b9defcce8d3726410/analysis/simulations.Rmd" target="_blank">8f3b82e</a>
 </td>
 <td style="text-align:left;">
@@ -424,12 +457,22 @@ wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “a
 </ul>
 <p></details></p>
 <hr />
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<div id="simulated-data-experiments" class="section level2">
+<h2>Simulated Data Experiments</h2>
 <p>Simulations are run using the <code>causeSims</code> R package. The package can be downloaded using</p>
 <pre><code>devtools::install_github(&quot;jean997/causeSims&quot;)</code></pre>
-<p>This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see <a href="https://github.com/jean997/causeSims">here</a>.</p>
-<p>We also use the <a href="https://stephenslab.github.io/dsc-wiki/overview">Dynamical Statisical Comparisons</a> software.</p>
+<p>This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see <a href="https://github.com/jean997/causeSims">here</a>. There you can also find a detailed walk through of a single simulation and explanations of the functions contained in the package.</p>
+<p>We conduct simulations using the <a href="https://stephenslab.github.io/dsc-wiki/overview">Dynamical Statisical Comparisons</a> software. DSC files for executing the experiments presented in the paper can be found here: <a href="https://github.com/jean997/causeSims/blob/master/power.dsc">power</a>, <a href="https://github.com/jean997/causeSims/blob/master/false_positives.dsc">false positives</a></p>
+<p>To execute them, use the following commands (on a compute cluster)</p>
+<pre><code>nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc &gt; pwr_dsc.out &amp;
+nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc &gt; fp_dsc.out &amp;</code></pre>
+<p>You will need to modify the <code>config.yml</code> file to be specific to your compute cluster.</p>
+</div>
+<div id="coming-soon" class="section level1">
+<h1>Coming Soon</h1>
+<ul>
+<li>Plotting</li>
+</ul>
 </div>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
