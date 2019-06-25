@@ -1,0 +1,19 @@
+---
+title: "Simulations"
+author: "Jean Morrison"
+date: "2019-06-24"
+output: workflowr::wflow_html
+---
+
+## Introduction
+
+Simulations are run using the `causeSims` R package. The package can be downloaded using
+
+```
+devtools::install_github("jean997/causeSims")
+```
+
+This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. 
+For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see [here](https://github.com/jean997/causeSims).
+
+We also use the [Dynamical Statisical Comparisons](https://stephenslab.github.io/dsc-wiki/overview) software. 
