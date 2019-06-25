@@ -90,9 +90,10 @@ X <- readRDS("example_data/LDL_CAD_merged.RDS")
 There are likely more efficient ways to do this merge. 
 If you would like to process the data yourself, you can construct a `cause_data` object from a data frame using the constructor `new_cause_data(X)` where `X` is any data frame that includes the columns `snp`, `beta_hat_1`, `seb1`, `beta_hat_2`, and `seb2`.
 
-## Step 3: Calculate nuisance parameters
+## Step 2: Calculate nuisance parameters
 
-The next step is to estimate the parameters that define the prior distribution of $\beta_{M}$ and $\theta$ and to estimate $\rho$, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. This step takes a few minutes. `est_cause_params` estimates the nuisance parameters by finding the maximum a posteriori estimate of $\rho$ and the mixing parameters when $\gamma = \eta = 0$. 
+The next step is to estimate the parameters that define the prior distribution of $\beta_{M}$ and $\theta$ and to estimate $\rho$, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. `est_cause_params` estimates the nuisance parameters by finding the maximum a posteriori estimate of $\rho$ and the mixing parameters when $\gamma = \eta = 0$. 
+This step takes a several minutes. 
 
 ```{r, cache=TRUE, params}
 set.seed(100)
