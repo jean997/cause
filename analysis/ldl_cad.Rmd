@@ -96,7 +96,7 @@ The next step is to estimate the parameters that define the prior distribution o
 
 ```{r, cache=TRUE, params}
 set.seed(100)
-varlist <- with(X, sample(snp, size=1000, replace=FALSE))
+varlist <- with(X, sample(snp, size=100000, replace=FALSE))
 params <- est_cause_params(X, varlist)
 ```
 
