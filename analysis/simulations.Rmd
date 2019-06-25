@@ -5,7 +5,7 @@ date: "2019-06-24"
 output: workflowr::wflow_html
 ---
 
-## Introduction
+## Simulated Data Experiments
 
 Simulations are run using the `causeSims` R package. The package can be downloaded using
 
@@ -14,6 +14,19 @@ devtools::install_github("jean997/causeSims")
 ```
 
 This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. 
-For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see [here](https://github.com/jean997/causeSims).
+For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see [here](https://github.com/jean997/causeSims). There you can also find
+a detailed walk through of a single simulation and explanations of the functions contained in the package.
 
-We also use the [Dynamical Statisical Comparisons](https://stephenslab.github.io/dsc-wiki/overview) software. 
+
+We conduct simulations using the [Dynamical Statisical Comparisons](https://stephenslab.github.io/dsc-wiki/overview) software.  DSC files for executing the experiments presented in the paper can be found here: [power](https://github.com/jean997/causeSims/blob/master/power.dsc), [false positives](https://github.com/jean997/causeSims/blob/master/false_positives.dsc)
+
+To execute them, use the following commands (on a compute cluster)
+```
+nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc > pwr_dsc.out &
+nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp_dsc.out &
+```
+You will need to modify the `config.yml` file to be specific to your compute cluster.
+
+
+# Coming Soon
++ Plotting
