@@ -7,7 +7,8 @@ output:
 
 Weclome to the CAUSE website!
 
-Find a pre-print of the paper [here](url coming).
+ [Pre-print](url coming)
+ [R package](https://github.com/jean997/cause)
 
 CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. 
 
