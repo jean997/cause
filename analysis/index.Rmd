@@ -7,9 +7,11 @@ output:
 
 # Weclome to the CAUSE website!
 
- [Pre-print](url coming)
+ [Pre-print](https://www.biorxiv.org/content/10.1101/682237v1)
  
  [R package](https://github.com/jean997/cause)
+ 
+ [Slides!](WNAR_2019.pdf) from WNAR 2019
 
 CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. 
 
