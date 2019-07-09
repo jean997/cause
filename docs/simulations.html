@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jean Morrison" />
+
+<meta name="date" content="2019-06-24" />
+
+<title>Simulations</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CAUSE: Cauasl Analysis Using Summary Effects</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="ldl_cad.html">R Package Tutorial</a>
+</li>
+<li>
+  <a href="simulations.html">Simulations</a>
+</li>
+<li>
+  <a href="gwas_pairs.html">Analyze Pairs of GWAS Traits</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jean997/cause">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Simulations</h1>
+<h4 class="author">Jean Morrison</h4>
+<h4 class="date">2019-06-24</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-07-09
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.4.0.9000). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c171b2cc9a8d040138d79e1b404a65de9f2b75dtargetblank6c171b2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/6c171b2cc9a8d040138d79e1b404a65de9f2b75d" target="_blank">6c171b2</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c171b2cc9a8d040138d79e1b404a65de9f2b75dtargetblank6c171b2a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
+    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
+    Untracked:  analysis/figure/
+    Untracked:  analysis/gwas_pairs.Rmd
+    Untracked:  analysis/ldl_cad_cache/
+    Untracked:  docs/WNAR_2019.pdf
+    Untracked:  example_data/chr22_AF0.05_0.1.RDS
+    Untracked:  example_data/chr22_AF0.05_snpdata.RDS
+    Untracked:  gwas_data/
+    Untracked:  ll_v7_notes.Rmd
+    Untracked:  src/RcppExports.o
+    Untracked:  src/log_likelihood_functions.o
+    Untracked:  temp.txt
+
+Unstaged changes:
+    Modified:   R/map_pi_rho.R
+    Deleted:    test_mixSQP.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/6c171b2cc9a8d040138d79e1b404a65de9f2b75d/analysis/simulations.Rmd" target="_blank">6c171b2</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+<td>
+wflow_publish(“analysis/simulations.Rmd”)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="software-installation" class="section level2">
+<h2>Software Installation</h2>
+<p>Simulations are run using the <code>causeSims</code> R package. The package can be downloaded using</p>
+<pre><code>devtools::install_github(&quot;jean997/causeSims&quot;)</code></pre>
+<p>This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see <a href="https://github.com/jean997/causeSims">here</a>. There you can also find a walk through of a single simulation and explanations of the functions contained in the package.</p>
+<p>We conduct simulations using the <a href="https://stephenslab.github.io/dsc-wiki/overview">Dynamical Statisical Comparisons</a> software. You will need to <a href="https://stephenslab.github.io/dsc-wiki/installation.html">have DSC installed</a> and it will be helpful to take a look at <a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC">the tutorial</a>.</p>
+</div>
+<div id="set-up-the-analysis-directory" class="section level1">
+<h1>Set Up The Analysis Directory</h1>
+<p>These instructions specifically generate the results presented in <a href="https://www.biorxiv.org/content/10.1101/682237v1">our paper</a>. However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.</p>
+<p>Download the LD data that we will use <a href="">here</a>. Put the two files into a subdirectory of the working directory named <code>data/</code>. Download two DSC files: <a href="https://github.com/jean997/causeSims/blob/master/dsc_files/power.dsc">power</a> and <a href="https://github.com/jean997/causeSims/blob/master/dsc_files/false_positives.dsc">false positives</a>. Put these into the working directory.</p>
+<p>If you are running on a compute cluster (highly recomended) you will also need a config file. <a href="https://github.com/jean997/causeSims/blob/master/dsc_files/config.yml">This file</a> is set up to run on the University of Chicago research computing cluster. You will need to modify it to work with your cluster set up. Even if you are running on the University of Chicago cluster, you will need to modify the file to use your own account and home directory. Read about using DSC with a compute cluster <a href="https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations">here</a> (We are using the “On Host” option). Put your modified config file in the working directory.</p>
+</div>
+<div id="run-dsc" class="section level1">
+<h1>Run DSC</h1>
+<p>To generate the results in the paper, from your working directory use the following commands</p>
+<pre><code>nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc &gt; pwr_dsc.out &amp;
+nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc &gt; fp_dsc.out &amp;</code></pre>
+</div>
+<div id="make-plots" class="section level1">
+<h1>Make Plots</h1>
+<p>Coming Soon!</p>
+</div>
+<div id="whats-in-the-dsc-files" class="section level1">
+<h1>What’s in the DSC Files?</h1>
+<p>We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. We will look at <code>false_positives.dsc</code> but <code>power.dsc</code> is very similar.</p>
+<p>The DSC statement is at the top:</p>
+<pre><code>DSC:
+    define:
+        mr: ivw, egger, mrp, wm, twas, wm, gsmr
+    run: simulate*gw_sig,
+         simulate*LCV,
+         simulate*mr,
+         simulate*cause_params*cause
+    replicate: 100
+    output: fp</code></pre>
+<p>This statement tells DSC what to run. In <code>define</code> we define a group of modules. These will turn up later in the file. In <code>run</code> we tell DSC what to run. For example, <code>simulate*gw_sig</code> means that DSC should run the <code>simulate</code> module followed by the <code>gw_sig</code> module which will use the results of the <code>simulate</code> module. <code>replicate</code> indicates the number of replicates to run (though this is over-ridden by the <code>--replicate</code> flag in the DSC call above) and <code>output</code> names the output directory.</p>
+<p>The rest of the document defines modules. All of our modules use R code and most of them rely on the <code>causeSims</code> R package.</p>
+<div id="simulation-modules" class="section level2">
+<h2>Simulation Modules</h2>
+<p>The simulation module:</p>
+<pre><code>simulate: R(library(causeSims);
+            snps &lt;- readRDS(&quot;data/chr19_snpdata_hm3only.RDS&quot;);
+            evd_list &lt;- readRDS(&quot;data/evd_list_chr19_hm3.RDS&quot;);
+            dat &lt;- sum_stats(snps, evd_list,
+                  n_copies = 30,
+                  n1 = n1, n2=n2,
+                  h1=h1, h2=h1,
+                  neffect1 = neffect1, neffect2 = neffect2,
+                  tau = tau, omega = omega, q = q,
+                  cores = 4, ld_prune_pval_thresh = 0.01,
+                  r2_thresh = 0.1))
+
+     q: 0.1, 0.2, 0.3, 0.4, 0.5
+     omega: 0.02, 0.05
+     tau: 0
+     n1: 12000, 40000
+     n2: 12000, 40000
+     neffect1: 1000
+     neffect2: 1000
+     h1: 0.25
+     h2: 0.25
+     $sim_params: c(q = q, omega = omega, tau = tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
+     $dat: dat</code></pre>
+<p>The R code contained in <code>R()</code> is the guts of this module. A data object named <code>dat</code> is generated using the <code>sum_stats</code> function from the <code>causeSims</code> R pacakge. Below this, we specify parameters used to simulate the data. Most important are <code>q</code>, <code>omega</code>, and <code>tau</code>. <code>q</code> is the proportion of variants acting through <span class="math inline">\(U\)</span> while <code>omega</code> and <code>tau</code> are standardized versions of <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span> in the paper. <code>tau</code> is the proportion of <span class="math inline">\(Y\)</span> heritability explained by the causal effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> times the sign of <span class="math inline">\(\gamma\)</span>, <span class="math display">\[
+\tau = sign(\gamma)\frac{\gamma^2 h^2_{M}}{h^{2}_{Y}},
+\]</span> and <code>omega</code> is the proportion of <span class="math inline">\(Y\)</span> heritability explained by <span class="math inline">\(U\)</span>, divided by <span class="math inline">\(q\)</span> and multiplied by the sign of <span class="math inline">\(\eta\)</span>. <span class="math display">\[
+\omega = sign(\eta)\frac{\eta^2 h^2_{M}}{h^{2}_{Y}}
+\]</span> This parameterization is sometimes more convenient for running simulations that using <span class="math inline">\(\eta\)</span> and <span class="math inline">\(\gamma\)</span>. However, the <code>sum_stats</code> function will accept either <code>omega</code> and <code>tau</code> arguments or <code>eta</code> and <code>gamma</code>. Note that here we have specified that the function can use 4 cores. This should match the <code>n_cpu</code> parameter in the <code>simulate</code> section of the config file. The <code>sum_stats</code> function generates data both with and without LD. In this file we only analyze the “with LD” data but we will describe how to make modifications to analyze both or only the “no LD” data.</p>
+<p>The <code>gw_sig</code> module is a helper module. This module computes the GCP (a parameter defined by LCV (O’Connor and Price 2019)) and computes the number of genome-wide significant variants. It also stores all the simulation parameters which makes it easier to extract them. Extracting parameters from the <code>simulate</code> module will require reading in the entire data set, objects created by the <code>gw_sig</code> module are smaller and faster to read.</p>
+<pre><code>gw_sig: R(library(causeSims);
+           m_sig_nold &lt;- with($(dat), sum(p_value_nold &lt; thresh ));
+           y_sig_nold &lt;- with($(dat), sum(2*pnorm(-abs(beta_hat_2_nold/seb2)) &lt; thresh ));
+           m_sig &lt;- with($(dat), sum(p_value &lt; thresh &amp; ld_prune==TRUE));
+
+          params &lt;- $(sim_params);
+          tau &lt;- as.numeric(params[&quot;tau&quot;]);
+          omega &lt;- as.numeric(params[&quot;omega&quot;]);
+          q &lt;- as.numeric(params[&quot;q&quot;]);
+          h1 &lt;- as.numeric(params[&quot;h1&quot;]);
+          h2 &lt;- as.numeric(params[&quot;h2&quot;]);
+          neffect1 &lt;- as.numeric(params[&quot;neffect1&quot;]);
+          neffect2 &lt;- as.numeric(params[&quot;neffect2&quot;]);
+          gamma &lt;- sqrt(tau*sum(h2)/sum(h1))*sign(tau);
+          eta &lt;- sqrt(abs(omega)*sum(h2)/sum(h1))*sign(omega);
+
+          #LCV parameters
+          if(q == 0 &amp; tau == 0){
+            q.1 &lt;- q.2 &lt;- 0;
+            gcp &lt;- 0;
+          }else if(q == 0){
+            q.1 &lt;- 1;
+            q.2 &lt;- 0;
+            gcp &lt;- 1;
+          }else{
+            q.1 &lt;- sqrt(q);
+            q.2 &lt;- eta * sqrt(q) * sqrt(h1) / sqrt(h2);
+            gcp = (log(q.2^2) - log(q.1^2)) / (log(q.2^2) + log(q.1^2));
+          };
+          gcp_mom &lt;- gcp_moments($(dat), h1, h2)
+          )
+    thresh: 5e-8
+    $m_sig: m_sig
+    $m_sig_nold: m_sig_nold
+    $y_sig_nold: y_sig_nold
+    $q: q
+    $omega: omega
+    $tau: tau
+    $gamma: gamma
+    $eta: eta
+    $h1: h1
+    $h2: h2
+    $n1: as.numeric(params[&quot;n1&quot;])
+    $n2: as.numeric(params[&quot;n2&quot;])
+    $neffect1: as.numeric(params[&quot;neffect1&quot;])
+    $neffect2: as.numeric(params[&quot;neffect2&quot;])
+    $lcv_q1: q.1
+    $lcv_q2: q.2
+    $lcv_gcp: gcp
+    $lcv_gcp_mom: gcp_mom$gcp</code></pre>
+</div>
+<div id="cause-modules" class="section level2">
+<h2>CAUSE Modules</h2>
+<p>We have divided CAUSE analysis into parameter estimation and model fitting steps. This makes it easier to experiment with changes only to the parameter estimation step.</p>
+<pre><code>cause_params: R(library(causeSims);
+                p1 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
+                )
+    null_wt: 10
+    $cause_params_ld: p1
+
+cause: R(library(causeSims);
+         library(cause);
+         cause_res &lt;- cause_sims($(dat), $(cause_params_ld), no_ld = FALSE);
+         z &lt;- -1*summary(cause_res)$z;
+         p &lt;- pnorm(-z);
+         quants &lt;- summary(cause_res)$quants)
+    $cause_res: cause_res
+    $sigma_g: cause_res$sigma_g
+    $eta_med_2: quants[[1]][1,2]
+    $q_med_2: quants[[1]][1,3]
+    $eta_med_3: quants[[2]][1,2]
+    $gamma_med_3: quants[[2]][1,1]
+    $q_med_3: quants[[2]][1,3]
+    $z: z
+    $p: p</code></pre>
+<p>Both modules use wrapper functions from the <code>causeSims</code> package. These are very simple wrappers that make it easy to run CAUSE on the simulated data format. Note that here we use <code>no_ld = FALSE</code> in both modules. If you want to use the data that is simulated without LD instead you can change <code>no_ld = TRUE</code>. You could get results for both using the following set of modules.</p>
+<pre><code>cause_params: R(library(causeSims);
+                p1 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
+                p2 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=TRUE);
+                )
+    null_wt: 10
+    $cause_params_ld: p1
+    $cause_params_nold: p2
+
+cause: R(library(causeSims);
+         library(cause);
+         if(no_ld==FALSE){
+          cause_res &lt;- cause_sims($(dat), $(cause_params_ld), no_ld = no_ld);
+         else{
+          cause_res &lt;- cause_sims($(dat), $(cause_params_nold), no_ld = no_ld);
+         }
+         z &lt;- -1*summary(cause_res)$z;
+         p &lt;- pnorm(-z);
+         quants &lt;- summary(cause_res)$quants)
+    $no_ld: TRUE, FALSE
+    $cause_res: cause_res
+    $sigma_g: cause_res$sigma_g
+    $eta_med_2: quants[[1]][1,2]
+    $q_med_2: quants[[1]][1,3]
+    $eta_med_3: quants[[2]][1,2]
+    $gamma_med_3: quants[[2]][1,1]
+    $q_med_3: quants[[2]][1,3]
+    $z: z
+    $p: p</code></pre>
+</div>
+<div id="alternative-mr-modules" class="section level2">
+<h2>Alternative MR Modules</h2>
+<p>There are many modules for alternative MR methods. Modules for IVW regression, Egger regression, MR-PRESSO, and the weighted median method are very similar and rely on wrappers from <code>causeSims</code>. We can just look at one of these.</p>
+<pre><code>ivw: R(library(causeSims);
+       res &lt;- ivw($(dat), p_val_thresh=thresh, no_ld = no_ld);
+       )
+    thresh: 5e-8
+    no_ld: FALSE
+    $z: res$z
+    $p: res$p</code></pre>
+<p>To run on the data without LD change the <code>no_ld</code> parameter to <code>no_ld: TRUE</code> or <code>no_ld: TRUE, FALSE</code> to run both.</p>
+<p>The GSMR module is a little more complicated</p>
+<pre><code>gsmr: R(library(causeSims);
+        evd_list &lt;- readRDS(&quot;data/evd_list_chr19_hm3.RDS&quot;);
+        res &lt;- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
+        if(!is.null(res)){
+           z &lt;- res$bxy/res$bxy_se;
+           est &lt;- res$bxy;
+           p &lt;- res$bxy_pval;
+        }else{
+           z &lt;- est &lt;- p &lt;-  NA;
+        }
+      )
+    thresh: 5e-8
+    $z: z
+    $p: p
+    $est_gsmr: est
+    $gsmr: res</code></pre>
+<p>GSMR requires the LD structure and sometimes returns errors. In this case the <code>gsmr_sims</code> wrapper returns NULL and we set results to missing. If <code>no_ld = TRUE</code> the LD data in <code>evd_list</code> is simply ignored.</p>
+</div>
+<div id="lcv-module" class="section level2">
+<h2>LCV Module</h2>
+<p>Results from LCV are not compared with CAUSE in the paper because LCV is performing a different test than other MR methods. However, we have implemented wrappers and a module to run LCV.</p>
+<pre><code>LCV: R(library(causeSims);
+       res &lt;- try(lcv_sims($(dat),no_ld = no_ld, sig.thresh = thresh));
+       if(class(res) == &quot;try-error&quot;){
+            res &lt;- list(pval.gcpzero.2tailed=NA, gcp.pm = NA, gcp.pse = NA);
+        };
+       )
+    thresh: 30
+    no_ld: FALSE
+    $p: res$pval.gcpzero.2tailed
+    $gcp_mean: res$gcp.pm
+    $gcp_pse: res$gcp.pse
+    $gcp_obj: res</code></pre>
+<p>When LCV returns errors, we set results to missing.</p>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
