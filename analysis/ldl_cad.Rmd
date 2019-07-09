@@ -159,44 +159,17 @@ pruned <- ld_prune(variants = variants,
 length(pruned)
 ```
 
-`ld_prune` retunrs a list of vectors of length equal to the length of the `pval_cols` argument. In this case `pval_cols= c(NA, "pval1")` meaning that the first
-element of `pruned` will be a randomly pruned list and the second will be pruned preferentially choosing variants with low values of `pval1`. We also apply
-a threshold specified by the `pval_thresh` argument. For the first list there is no threshold. For the second, the threshold is 0.001. 
+
+If `length(pval_cols) =1`, `ld_prune` returns a vector of selected variants. If There are multipld $p$-value columns provided, `ld_prune` will return a list of vectors, one for each column. The length of `pval_thresh` should be equal to the length of `pval_cols` and provides a threshold for each column. Excluding variants with high $p$-values speeds up the pruning step. We can fit CAUSE without high $p$-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
 
 ### Parallelizing over chromosomes 
 
 We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
+A better option is to submit separate jobs to nodes of a compute cluster and then combine results. 
 
-```{r, eval=FALSE}
-library(parallel)
-cores <- parallel::detectCores()-1
-ld_files <- paste0("example_data/ld_data/chr", 1:22, "_AF0.05_0.1.RDS")
-snp_info_files <- paste0("example_data/ld_data/chr", 1:22, "_AF0.05_snpdata.RDS")
+If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low $p$-values for each traits ($N$ lists if there are $N$ phenotypes). In any analysis, you will use the list of variants prioritized for the trait $M$ phenotype.
 
-cl <- makeCluster(cores, type="PSOCK")
-clusterExport(cl, varlist=c("variants", "ld_files", "snp_info_files"))
-clusterEvalQ(cl, library(cause))
-system.time(
-pruned <- parLapply(cl, seq_along(ld_files[20:22]), fun=function(i){
-  ld <- readRDS(ld_files[i])
-  snp_info <- readRDS(snp_info_files[i])
-  ld_prune(variants = variants, 
-          ld = ld, total_ld_variants = snp_info$SNP, 
-          pval_cols = c("pval1"), 
-          pval_thresh = c( 1e-3))
-})
-)
-stopCluster(cl)
-
-top_ldl_pruned_vars <- unlist(pruned)
-
-```
-
-A better option is to parallelize over the nodes of a compute cluster and then combine results. 
-
-Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and use only these variants in your analysis. This will allow you to do only $N$ LD pruning steps where $N$ is the number of phenotypes rather than $N$ choose 2. 
-
-Download the resulting variant list: [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
+Download the LD-pruned variant list for our example analysis: [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
 
 ```{r, eval=FALSE}
 download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
@@ -205,9 +178,7 @@ download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl
 
 ## Step 4: Fit CAUSE
 
-Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause::cause` will estimate posterior distributions under the confounding and causal models and calculate the elpd for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes. 
-
-Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don't add any information about the relationship between the traits. When we LD pruned, we used a $p$-value threshold of 0.001. The exact value of this threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
+Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes. 
 
 ```{r, cause}
 top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
