@@ -1,13 +1,23 @@
 ---
-title: "Home"
-site: workflowr::wflow_site
+title: "CAUSE: Causal Analysis Using Summary Statistics"
 output:
   workflowr::wflow_html:
     toc: false
 ---
 
-Weclome to the CAUSE website!
+# Weclome to the CAUSE website!
 
-This website is intended to contain supporting information for the CAUSE R package which you can find at github.com/jean997/cause. We are currently adding to it frequently so check back for more. 
+ [Pre-print](https://www.biorxiv.org/content/10.1101/682237v1)
+ 
+ [R package](https://github.com/jean997/cause)
+ 
+ [Slides!](WNAR_2019.pdf) from WNAR 2019
 
-Find a walk-through of how to use CAUSE with genome-wide summary statistics [here](ldl_cad.html).
+CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. 
+
+In this website you will find:
+
++ A tutorial on how to use the cause R package
++ Instructions for replicating simulations in the paper
++ Instructions for replicating data analysis in the paper (coming soon)
+
