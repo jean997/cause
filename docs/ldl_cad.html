@@ -453,7 +453,7 @@ div.section {
 <strong>Last updated:</strong> 2019-07-09
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 2
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -561,69 +561,12 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
-<div id="strongCachestrongdetected" class="panel-collapse collapse">
+<div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-The following chunks had caches available:
-<ul>
-<li>
-look
-</li>
-<li>
-params
-</li>
-<li>
-plot1
-</li>
-<li>
-plot2
-</li>
-<li>
-readdata
-</li>
-<li>
-session-info-chunk-inserted-by-workflowr
-</li>
-<li>
-summary
-</li>
-<li>
-unnamed-chunk-10
-</li>
-<li>
-unnamed-chunk-11
-</li>
-<li>
-unnamed-chunk-12
-</li>
-<li>
-unnamed-chunk-2
-</li>
-<li>
-unnamed-chunk-3
-</li>
-<li>
-unnamed-chunk-4
-</li>
-<li>
-unnamed-chunk-5
-</li>
-<li>
-unnamed-chunk-6
-</li>
-<li>
-unnamed-chunk-7
-</li>
-<li>
-unnamed-chunk-8
-</li>
-<li>
-unnamed-chunk-9
-</li>
-</ul>
-<p>To ensure reproducibility of the results, delete the cache directory <code>ldl_cad_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
 </div>
 </div>
 </div>
@@ -642,10 +585,10 @@ unnamed-chunk-9
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed8f89fc6d0b98cfb193685a5aa3eba2f92d5a3a2targetblankd8f89fca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/d8f89fc6d0b98cfb193685a5aa3eba2f92d5a3a2" target="_blank">d8f89fc</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree28d211f5a11dd01b2b326d301864fc464cba1ba6targetblank28d211fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/28d211f5a11dd01b2b326d301864fc464cba1ba6" target="_blank">28d211f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed8f89fc6d0b98cfb193685a5aa3eba2f92d5a3a2targetblankd8f89fca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree28d211f5a11dd01b2b326d301864fc464cba1ba6targetblank28d211fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -659,10 +602,6 @@ Ignored files:
 Untracked files:
     Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
     Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
-    Untracked:  analysis/gwas_pairs.Rmd
-    Untracked:  analysis/ldl_cad_cache/
-    Untracked:  analysis/simulations.Rmd
-    Untracked:  docs/WNAR_2019.pdf
     Untracked:  example_data/chr22_AF0.05_0.1.RDS
     Untracked:  example_data/chr22_AF0.05_snpdata.RDS
     Untracked:  gwas_data/
@@ -670,13 +609,6 @@ Untracked files:
     Untracked:  src/RcppExports.o
     Untracked:  src/log_likelihood_functions.o
     Untracked:  temp.txt
-
-Unstaged changes:
-    Modified:   R/map_pi_rho.R
-    Modified:   analysis/about.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/license.Rmd
-    Deleted:    test_mixSQP.R
 
 </code></pre>
 <p>
@@ -720,6 +652,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/jean997/cause/blob/28d211f5a11dd01b2b326d301864fc464cba1ba6/analysis/ldl_cad.Rmd" target="_blank">28d211f</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+<td>
+wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/ldl_cad.html" target="_blank">bfa7d28</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/jean997/cause/blob/d8f89fc6d0b98cfb193685a5aa3eba2f92d5a3a2/analysis/ldl_cad.Rmd" target="_blank">d8f89fc</a>
 </td>
 <td>
@@ -730,6 +696,142 @@ Jean Morrison
 </td>
 <td>
 wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/3b5c7e24db65f87044fb22570dc9331fdbf4601a/docs/ldl_cad.html" target="_blank">3b5c7e2</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/a55827daf376aec55b6708d8797e67e62bb11fa3/analysis/ldl_cad.Rmd" target="_blank">a55827d</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+wflow_publish(files = c(“analysis/index.Rmd”, “analysis/ldl_cad.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/ldl_cad.html" target="_blank">d8d1486</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/e0a6df4a672d4a6b6db130fe9f937792351cf567/analysis/ldl_cad.Rmd" target="_blank">e0a6df4</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+wflow_publish(files = c(“analysis/ldl_cad.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/ldl_cad.html" target="_blank">33b3732</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/0e352686c547156d6b4f7085d5779325717090c9/analysis/ldl_cad.Rmd" target="_blank">0e35268</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+wflow_publish(files = c(“analysis/ldl_cad.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/ldl_cad.html" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/8f3b82e734b124b6d4d9d28b9defcce8d3726410/analysis/ldl_cad.Rmd" target="_blank">8f3b82e</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “analysis/ldl_cad.Rmd”, “analysis/license.Rmd”,
 </td>
 </tr>
 <tr>
@@ -1186,42 +1288,19 @@ pruned &lt;- ld_prune(variants = variants,
 Of these,  22835  have LD information.</code></pre>
 <pre class="r"><code>length(pruned)</code></pre>
 <pre><code>[1] 15</code></pre>
-<p><code>ld_prune</code> retunrs a list of vectors of length equal to the length of the <code>pval_cols</code> argument. In this case <code>pval_cols= c(NA, &quot;pval1&quot;)</code> meaning that the first element of <code>pruned</code> will be a randomly pruned list and the second will be pruned preferentially choosing variants with low values of <code>pval1</code>. We also apply a threshold specified by the <code>pval_thresh</code> argument. For the first list there is no threshold. For the second, the threshold is 0.001.</p>
+<p>If <code>length(pval_cols) =1</code>, <code>ld_prune</code> returns a vector of selected variants. If There are multipld <span class="math inline">\(p\)</span>-value columns provided, <code>ld_prune</code> will return a list of vectors, one for each column. The length of <code>pval_thresh</code> should be equal to the length of <code>pval_cols</code> and provides a threshold for each column. Excluding variants with high <span class="math inline">\(p\)</span>-values speeds up the pruning step. We can fit CAUSE without high <span class="math inline">\(p\)</span>-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
 </div>
 <div id="parallelizing-over-chromosomes" class="section level3">
 <h3>Parallelizing over chromosomes</h3>
-<p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory.</p>
-<pre class="r"><code>library(parallel)
-cores &lt;- parallel::detectCores()-1
-ld_files &lt;- paste0(&quot;example_data/ld_data/chr&quot;, 1:22, &quot;_AF0.05_0.1.RDS&quot;)
-snp_info_files &lt;- paste0(&quot;example_data/ld_data/chr&quot;, 1:22, &quot;_AF0.05_snpdata.RDS&quot;)
-
-cl &lt;- makeCluster(cores, type=&quot;PSOCK&quot;)
-clusterExport(cl, varlist=c(&quot;variants&quot;, &quot;ld_files&quot;, &quot;snp_info_files&quot;))
-clusterEvalQ(cl, library(cause))
-system.time(
-pruned &lt;- parLapply(cl, seq_along(ld_files[20:22]), fun=function(i){
-  ld &lt;- readRDS(ld_files[i])
-  snp_info &lt;- readRDS(snp_info_files[i])
-  ld_prune(variants = variants, 
-          ld = ld, total_ld_variants = snp_info$SNP, 
-          pval_cols = c(&quot;pval1&quot;), 
-          pval_thresh = c( 1e-3))
-})
-)
-stopCluster(cl)
-
-top_ldl_pruned_vars &lt;- unlist(pruned)</code></pre>
-<p>A better option is to parallelize over the nodes of a compute cluster and then combine results.</p>
-<p>Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and use only these variants in your analysis. This will allow you to do only <span class="math inline">\(N\)</span> LD pruning steps where <span class="math inline">\(N\)</span> is the number of phenotypes rather than <span class="math inline">\(N\)</span> choose 2.</p>
-<p>Download the resulting variant list: <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
+<p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. A better option is to submit separate jobs to nodes of a compute cluster and then combine results.</p>
+<p>If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low <span class="math inline">\(p\)</span>-values for each traits (<span class="math inline">\(N\)</span> lists if there are <span class="math inline">\(N\)</span> phenotypes). In any analysis, you will use the list of variants prioritized for the trait <span class="math inline">\(M\)</span> phenotype.</p>
+<p>Download the LD-pruned variant list for our example analysis: <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
 <pre class="r"><code>download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS&quot;, destfile = &quot;example_data/top_ldl_pruned_vars.RDS&quot;)</code></pre>
 </div>
 </div>
 <div id="step-4-fit-cause" class="section level2">
 <h2>Step 4: Fit CAUSE</h2>
-<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause::cause</code> will estimate posterior distributions under the confounding and causal models and calculate the elpd for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes.</p>
-<p>Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don’t add any information about the relationship between the traits. When we LD pruned, we used a <span class="math inline">\(p\)</span>-value threshold of 0.001. The exact value of this threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
+<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause</code> estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes.</p>
 <pre class="r"><code>top_vars &lt;- readRDS(&quot;example_data/top_ldl_pruned_vars.RDS&quot;)
 res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <pre><code>Estimating CAUSE posteriors using  1215  variants.</code></pre>
@@ -1276,6 +1355,50 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">bfa7d28</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">d8d1486</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">33b3732</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/1753b227154a949d80ae0ece3d13ef18f92f29b7/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">1753b22</a>
@@ -1370,6 +1493,50 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">bfa7d28</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">d8d1486</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">33b3732</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/1753b227154a949d80ae0ece3d13ef18f92f29b7/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">1753b22</a>
@@ -1477,6 +1644,50 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">bfa7d28</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">d8d1486</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">33b3732</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/1753b227154a949d80ae0ece3d13ef18f92f29b7/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">1753b22</a>
 </td>
 <td>
@@ -1570,6 +1781,50 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">bfa7d28</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/d8d148608a68c9fd853964a999d3ac3e216978cc/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">d8d1486</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/33b373230107121d24eb71d1d4a7bdd70488f4c4/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">33b3732</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/1cc48608917d72a60217a93bfb658e467af6c3ed/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">1cc4860</a>
