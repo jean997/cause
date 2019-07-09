@@ -1,17 +1,21 @@
 name: "cause"
 output_dir: "../docs"
 navbar:
-  title: "cause"
+  title: "CAUSE: Cauasl Analysis Using Summary Effects"
   left:
     - text: "Home"
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: "R Package Tutorial"
+      href: ldl_cad.html
+    - text: "Simulations"
+      href: simulations.html
+    - text: "Analyze Pairs of GWAS Traits"
+      href: gwas_pairs.html
     - text: "License"
       href: license.html
   right:
     - icon: fa-github
-      href: https://github.com/jdblischak/workflowr
+      href: https://github.com/jean997/cause
 output:
   workflowr::wflow_html:
     toc: true
