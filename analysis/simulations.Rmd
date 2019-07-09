@@ -5,7 +5,7 @@ date: "2019-06-24"
 output: workflowr::wflow_html
 ---
 
-## Simulated Data Experiments
+## Software Installation
 
 Simulations are run using the `causeSims` R package. The package can be downloaded using
 
@@ -15,18 +15,260 @@ devtools::install_github("jean997/causeSims")
 
 This package relies on multiple R packages that are not on CRAN, so you will need to download these separately. 
 For detailed installation instructions including installation of supporting R packages for other methods and a detailed description of the package see [here](https://github.com/jean997/causeSims). There you can also find
-a detailed walk through of a single simulation and explanations of the functions contained in the package.
+a walk through of a single simulation and explanations of the functions contained in the package.
 
 
-We conduct simulations using the [Dynamical Statisical Comparisons](https://stephenslab.github.io/dsc-wiki/overview) software.  DSC files for executing the experiments presented in the paper can be found here: [power](https://github.com/jean997/causeSims/blob/master/power.dsc), [false positives](https://github.com/jean997/causeSims/blob/master/false_positives.dsc)
+We conduct simulations using the [Dynamical Statisical Comparisons](https://stephenslab.github.io/dsc-wiki/overview) software. You will need to [have DSC installed](https://stephenslab.github.io/dsc-wiki/installation.html) and it will be helpful to take a look at [the tutorial](https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC).
 
-To execute them, use the following commands (on a compute cluster)
+# Set Up The Analysis Directory
+
+These instructions specifically generate the results presented in [our paper](https://www.biorxiv.org/content/10.1101/682237v1). However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.
+
+Download the LD data that we will use [here](). Put the two files into a subdirectory of the working directory named `data/`.
+Download two DSC files:  [power](https://github.com/jean997/causeSims/blob/master/dsc_files/power.dsc) and [false positives](https://github.com/jean997/causeSims/blob/master/dsc_files/false_positives.dsc). Put these into the working directory. 
+
+If you are running on a compute cluster (highly recomended) you will also need a config file. [This file](https://github.com/jean997/causeSims/blob/master/dsc_files/config.yml) is set up to run on the University of Chicago research computing cluster. You will need to modify it to work with your cluster set up. Even if you are running on the University of Chicago cluster, you will need to modify the file to use your own account and home directory. Read about using DSC with a compute cluster [here](https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations) (We are using the "On Host" option). Put your modified config file in the working directory. 
+
+# Run DSC
+
+To generate the results in the paper, from your working directory use the following commands
+
 ```
 nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc > pwr_dsc.out &
 nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp_dsc.out &
 ```
-You will need to modify the `config.yml` file to be specific to your compute cluster.
+
+# Make Plots
+
+Coming Soon!
+
+# What's in the DSC Files?
+
+We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. We will look at `false_positives.dsc` but `power.dsc` is very similar.
 
 
-# Coming Soon
-+ Plotting
+The DSC statement is at the top:
+```
+DSC:
+    define:
+        mr: ivw, egger, mrp, wm, twas, wm, gsmr
+    run: simulate*gw_sig,
+         simulate*LCV,
+         simulate*mr,
+         simulate*cause_params*cause
+    replicate: 100
+    output: fp
+```
+This statement tells DSC what to run. In `define` we define a group of modules. These will turn up later in the file. In `run` we tell DSC what to run. For example, `simulate*gw_sig` means that DSC should run the `simulate` module followed by the `gw_sig` module which will use the results of the `simulate` module. `replicate` indicates the number of replicates to run (though this is over-ridden by the `--replicate` flag in the DSC call above) and `output` names the output directory.
+
+The rest of the document defines modules. All of our modules use `R` code and most of them rely on the `causeSims` R package.
+
+## Simulation Modules 
+
+The simulation module:
+```
+simulate: R(library(causeSims);
+            snps <- readRDS("data/chr19_snpdata_hm3only.RDS");
+            evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
+            dat <- sum_stats(snps, evd_list,
+                  n_copies = 30,
+                  n1 = n1, n2=n2,
+                  h1=h1, h2=h1,
+                  neffect1 = neffect1, neffect2 = neffect2,
+                  tau = tau, omega = omega, q = q,
+                  cores = 4, ld_prune_pval_thresh = 0.01,
+                  r2_thresh = 0.1))
+
+     q: 0.1, 0.2, 0.3, 0.4, 0.5
+     omega: 0.02, 0.05
+     tau: 0
+     n1: 12000, 40000
+     n2: 12000, 40000
+     neffect1: 1000
+     neffect2: 1000
+     h1: 0.25
+     h2: 0.25
+     $sim_params: c(q = q, omega = omega, tau = tau,  h1 = h1, h2 = h2, n1 = n1, n2 = n2, neffect1 = neffect1, neffect2 =neffect2)
+     $dat: dat
+```
+
+The R code contained in `R()` is the guts of this module. A data object named `dat` is generated using the `sum_stats` function from the `causeSims` R pacakge. Below this, we specify parameters used to simulate the data. Most important are `q`, `omega`, and `tau`. `q` is the proportion of variants acting through $U$ while `omega` and `tau` are standardized versions of $\gamma$ and $\eta$ in the paper. `tau` is the proportion of $Y$ heritability explained by the causal effect of $M$ on $Y$ times the sign of $\gamma$, 
+$$
+\tau = sign(\gamma)\frac{\gamma^2 h^2_{M}}{h^{2}_{Y}},
+$$
+and `tau` is the proportion of $Y$ heritability explained by $U$, divided by $q$ and multiplied by the sign of $\eta$.
+$$
+\omega = sign(\eta)\frac{\eta^2 h^2_{M}}{h^{2}_{Y}}
+$$
+This parameterization is sometimes more convenient for running simulations that using $\eta$ and $\gamma$. However, the `sum_stats` function will accept either `omega` and `tau` arguments or `eta` and `gamma`. Note that here we have specified that the function can use 4 cores. This should match the `n_cpu` parameter in the `simulate` section of the config file. The `sum_stats` function generates data both with and without LD. In this file we only analyze the "with LD" data but we will describe how to make modifications to analyze both or only the "no LD" data. 
+
+The `gw_sig` module is a helper module. This module computes the GCP (a parameter defined by LCV (O'Connor and Price 2019)) and computes the number of genome-wide significant variants. It also stores all the simulation parameters which makes it easier to extract them. Extracting parameters from the `simulate` module will require reading in the entire data set, objects created by the `gw_sig` module are smaller and faster to read.
+```
+gw_sig: R(library(causeSims);
+           m_sig_nold <- with($(dat), sum(p_value_nold < thresh ));
+           y_sig_nold <- with($(dat), sum(2*pnorm(-abs(beta_hat_2_nold/seb2)) < thresh ));
+           m_sig <- with($(dat), sum(p_value < thresh & ld_prune==TRUE));
+
+          params <- $(sim_params);
+          tau <- as.numeric(params["tau"]);
+          omega <- as.numeric(params["omega"]);
+          q <- as.numeric(params["q"]);
+          h1 <- as.numeric(params["h1"]);
+          h2 <- as.numeric(params["h2"]);
+          neffect1 <- as.numeric(params["neffect1"]);
+          neffect2 <- as.numeric(params["neffect2"]);
+          gamma <- sqrt(tau*sum(h2)/sum(h1))*sign(tau);
+          eta <- sqrt(abs(omega)*sum(h2)/sum(h1))*sign(omega);
+
+          #LCV parameters
+          if(q == 0 & tau == 0){
+            q.1 <- q.2 <- 0;
+            gcp <- 0;
+          }else if(q == 0){
+            q.1 <- 1;
+            q.2 <- 0;
+            gcp <- 1;
+          }else{
+            q.1 <- sqrt(q);
+            q.2 <- eta * sqrt(q) * sqrt(h1) / sqrt(h2);
+            gcp = (log(q.2^2) - log(q.1^2)) / (log(q.2^2) + log(q.1^2));
+          };
+          gcp_mom <- gcp_moments($(dat), h1, h2)
+          )
+    thresh: 5e-8
+    $m_sig: m_sig
+    $m_sig_nold: m_sig_nold
+    $y_sig_nold: y_sig_nold
+    $q: q
+    $omega: omega
+    $tau: tau
+    $gamma: gamma
+    $eta: eta
+    $h1: h1
+    $h2: h2
+    $n1: as.numeric(params["n1"])
+    $n2: as.numeric(params["n2"])
+    $neffect1: as.numeric(params["neffect1"])
+    $neffect2: as.numeric(params["neffect2"])
+    $lcv_q1: q.1
+    $lcv_q2: q.2
+    $lcv_gcp: gcp
+    $lcv_gcp_mom: gcp_mom$gcp
+```
+
+## CAUSE Modules
+
+We have divided CAUSE analysis into parameter estimation and model fitting steps. This makes it easier to experiment with changes only to the parameter estimation step. 
+
+```
+cause_params: R(library(causeSims);
+                p1 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
+                )
+    null_wt: 10
+    $cause_params_ld: p1
+
+cause: R(library(causeSims);
+         library(cause);
+         cause_res <- cause_sims($(dat), $(cause_params_ld), no_ld = FALSE);
+         z <- -1*summary(cause_res)$z;
+         p <- pnorm(-z);
+         quants <- summary(cause_res)$quants)
+    $cause_res: cause_res
+    $sigma_g: cause_res$sigma_g
+    $eta_med_2: quants[[1]][1,2]
+    $q_med_2: quants[[1]][1,3]
+    $eta_med_3: quants[[2]][1,2]
+    $gamma_med_3: quants[[2]][1,1]
+    $q_med_3: quants[[2]][1,3]
+    $z: z
+    $p: p
+```
+
+Both modules use wrapper functions from the `causeSims` package. These are very simple wrappers that make it easy to run CAUSE on the simulated data format. Note that here we use `no_ld = FALSE` in both modules. If you want to use the data that is simulated without LD instead you can change `no_ld = TRUE`. You could get results for both using the following set of modules.
+
+```
+cause_params: R(library(causeSims);
+                p1 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
+                p2 <- cause_params_sims($(dat), null_wt = null_wt, no_ld=TRUE);
+                )
+    null_wt: 10
+    $cause_params_ld: p1
+    $cause_params_nold: p2
+
+cause: R(library(causeSims);
+         library(cause);
+         if(no_ld==FALSE){
+          cause_res <- cause_sims($(dat), $(cause_params_ld), no_ld = no_ld);
+         else{
+          cause_res <- cause_sims($(dat), $(cause_params_nold), no_ld = no_ld);
+         }
+         z <- -1*summary(cause_res)$z;
+         p <- pnorm(-z);
+         quants <- summary(cause_res)$quants)
+    $no_ld: TRUE, FALSE
+    $cause_res: cause_res
+    $sigma_g: cause_res$sigma_g
+    $eta_med_2: quants[[1]][1,2]
+    $q_med_2: quants[[1]][1,3]
+    $eta_med_3: quants[[2]][1,2]
+    $gamma_med_3: quants[[2]][1,1]
+    $q_med_3: quants[[2]][1,3]
+    $z: z
+    $p: p
+```
+
+## Alternative MR Modules
+
+There are many modules for alternative MR methods. Modules for IVW regression, Egger regression, MR-PRESSO, and the weighted median method are very similar and rely on wrappers from `causeSims`. We can just look at one of these.
+
+```
+ivw: R(library(causeSims);
+       res <- ivw($(dat), p_val_thresh=thresh, no_ld = no_ld);
+       )
+    thresh: 5e-8
+    no_ld: FALSE
+    $z: res$z
+    $p: res$p
+```
+To run on the data without LD change the `no_ld` parameter to `no_ld: TRUE` or `no_ld: TRUE, FALSE` to run both. 
+
+The GSMR module is a little more complicated 
+```
+gsmr: R(library(causeSims);
+        evd_list <- readRDS("data/evd_list_chr19_hm3.RDS");
+        res <- gsmr_sims($(dat), evd_list, p_val_thresh  = 5e-8, no_ld = FALSE);
+        if(!is.null(res)){
+           z <- res$bxy/res$bxy_se;
+           est <- res$bxy;
+           p <- res$bxy_pval;
+        }else{
+           z <- est <- p <-  NA;
+        }
+      )
+    thresh: 5e-8
+    $z: z
+    $p: p
+    $est_gsmr: est
+    $gsmr: res
+```
+GSMR requires the LD structure and sometimes returns errors. In this case the `gsmr_sims` wrapper returns NULL and we set results to missing. If `no_ld = TRUE` the LD data in `evd_list` is simply ignored.
+
+## LCV Module
+
+Results from LCV are not compared with CAUSE in the paper because LCV is performing a different test than other MR methods. However, we have implemented wrappers and a module to run LCV.
+
+```
+LCV: R(library(causeSims);
+       res <- try(lcv_sims($(dat),no_ld = no_ld, sig.thresh = thresh));
+       if(class(res) == "try-error"){
+            res <- list(pval.gcpzero.2tailed=NA, gcp.pm = NA, gcp.pse = NA);
+        };
+       )
+    thresh: 30
+    no_ld: FALSE
+    $p: res$pval.gcpzero.2tailed
+    $gcp_mean: res$gcp.pm
+    $gcp_pse: res$gcp.pse
+    $gcp_obj: res
+```
+When LCV returns errors, we set results to missing. 
