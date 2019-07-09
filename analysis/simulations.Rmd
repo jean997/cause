@@ -61,7 +61,7 @@ DSC:
 ```
 This statement tells DSC what to run. In `define` we define a group of modules. These will turn up later in the file. In `run` we tell DSC what to run. For example, `simulate*gw_sig` means that DSC should run the `simulate` module followed by the `gw_sig` module which will use the results of the `simulate` module. `replicate` indicates the number of replicates to run (though this is over-ridden by the `--replicate` flag in the DSC call above) and `output` names the output directory.
 
-The rest of the document defines modules. All of our modules use `R` code and most of them rely on the `causeSims` R package.
+The rest of the document defines modules. All of our modules use R code and most of them rely on the `causeSims` R package.
 
 ## Simulation Modules 
 
@@ -96,7 +96,7 @@ The R code contained in `R()` is the guts of this module. A data object named `d
 $$
 \tau = sign(\gamma)\frac{\gamma^2 h^2_{M}}{h^{2}_{Y}},
 $$
-and `tau` is the proportion of $Y$ heritability explained by $U$, divided by $q$ and multiplied by the sign of $\eta$.
+and `omega` is the proportion of $Y$ heritability explained by $U$, divided by $q$ and multiplied by the sign of $\eta$.
 $$
 \omega = sign(\eta)\frac{\eta^2 h^2_{M}}{h^{2}_{Y}}
 $$
