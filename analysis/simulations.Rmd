@@ -24,27 +24,104 @@ We conduct simulations using the [Dynamical Statisical Comparisons](https://step
 
 These instructions specifically generate the results presented in [our paper](https://www.biorxiv.org/content/10.1101/682237v1). However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.
 
-Download the LD data that we will use [here](). Put the two files into a subdirectory of the working directory named `data/`.
-Download two DSC files:  [power](https://github.com/jean997/causeSims/blob/master/dsc_files/power.dsc) and [false positives](https://github.com/jean997/causeSims/blob/master/dsc_files/false_positives.dsc). Put these into the working directory. 
+From inside this working directory use the R command 
+```{r, eval=FALSE}
+library(causeSims)
+setup_sims()
+```
 
-If you are running on a compute cluster (highly recomended) you will also need a config file. [This file](https://github.com/jean997/causeSims/blob/master/dsc_files/config.yml) is set up to run on the University of Chicago research computing cluster. You will need to modify it to work with your cluster set up. Even if you are running on the University of Chicago cluster, you will need to modify the file to use your own account and home directory. Read about using DSC with a compute cluster [here](https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations) (We are using the "On Host" option). Put your modified config file in the working directory. 
+This function downloads the following files:
+
++ LD data: This is used for simulating summary statistics and is placed into a sub-directory `data`. The LD data are downloaded from [here](https://zenodo.org/record/3235780/) and contain data for HapMap3 SNPs on chromosome 19 estimated from the CEU 1000 Genomes samples.
+
++ DSC files: These contain instructions for DSC on how to simulate data and analyze it. These are discussed later on this page. There are three DSC files downloaded. One is for evaluating false positives in the presence of different levels of correlated pleiotropy, one is for evaluating power when there is a true causal effect, and one is for evaluating the robustness of CAUSE to different prior distributions on $\gamma$ and $\eta$ (see supplementary note of the paper). 
+
++ A configuration file for running DSC on a cluster. This file is set up for the University of Chicago Research Computing Cluster so you will need to change it to match your cluster set up. Even if you are using the U of C cluster, you will need to change the home directory and account lines of this file. 
+ Read about using DSC with a compute cluster [here](https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations) (We are using the "On Host" option) and modify `config.yml` as needed.
+ 
++ Some code for plotting and results summarization
+
+
 
 # Run DSC
 
-To generate the results in the paper, from your working directory use the following commands
+To run DSC use the following commands at the command line
 
 ```
-nohup dsc --replicate 100 --host config.yml -c 4 pwr.dsc > pwr_dsc.out &
+nohup dsc --replicate 100 --host config.yml -c 4 power.dsc > pwr_dsc.out &
 nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp_dsc.out &
+nohup dsc --replicate 100 --host config.yml -c 4 sigma_g.dsc > sg_dsc.out &
 ```
+Depending on your computing resources, this could take several hours for each command. We have made the results available as R objects, so if you don't want to run the simulations you can skip straight to plotting. Or you can modify the DSC files and run your own experiments!
+
+Running these commands will generate lots of `*.err` and `*.out` files all of which can be safely deleted. Results are in the `fp`, `pwr` and `sigma_g` directories respectively. 
+
 
 # Make Plots
 
-Coming Soon!
+## False positive and power results
+
+The script `extract_results_main.R` will use the `dscrutils` package to extract results from the false positive and power analyses. If you are modifying the analysis and have changed the names of the output directories, you will need to change them in this file also. Depending on the changes you have made, you may need to make other modifications. Read more about [dscrutils here](https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC.html#query-the-results) and in the `dscrutils` documentation. This script will save R objects containing CAUSE, LCV, and other MR method results for both analyses. It will append the date so it won't over-write the results downloaded by `setup_sims()`. Run it at the command line using
+```
+Rscript extract_results_main.R
+```
+or from inside R using `source(extract_results_main.R)`. It will take several minutes to extract all of the results. If you would like to use your own files to plot, change the file names in the code below.
+
+
+
+
+
+## Prior robustness results
+
+The `sigma_g` anlaysis is intended to evaluate how sensitive CAUSE is to changes in the prior on $\gamma$ and $\eta$. These parameters have the same $N(0, \sigma_{\gamma, \eta})$ prior distribution.  By default, $\sigma_{\gamma \eta}$ is chosen guided by the data. These results dmeonstrate that, within a wide range, CAUSE is insensitive to the value of $\sigma_{\gamma \eta}$. 
+
+The R script `extract_sigma_g.R` will use `dscrutils` to extract simulation results and store them in a data frame. 
+Run it at the command line with 
+```
+Rscript extract_sigma_g.R
+```
+or from inside an R session using `source`. 
+
+This code will append the date to the file it saves so it won't save over the results downloaded by `setup_sims()`. If you want to use your own data frame, change the file name in the commands below.
+
+```{r, lookatresults}
+library(tidyverse)
+causedf <- readRDS("sim_results/sg_causedf.RDS")
+head(causedf)
+```
+
+The results data frame contains simulation parameters and file information (columns 1-22), the CAUSE $z$-score (column 25) 
+ and $p$-value (column 31), and the posterior median for each simulation for parameters $\eta$ and $q$ in the sharing model and parameters $\eta$, $q$, and $\gamma$ in the causal model. Each simulation was analyzed by CAUSE three times using different values of $\sigma_{\gamma \eta}$ (column `sigma_g`). These are large, medium and small values which are chosen so that $\sqrt{0.05}$ is the 51st, 65th and 80th quantile of the $N(0, \sigma_{\gamma \eta})$ distribution respectively. 
+ 
+There are three sets of parameters used in simulations. Below we calculate the correlation in $p$-value and posterior median for each parameter in each setting across the three values of $\sigma_{\gamma \eta}$. The following code only reports the minimum correlation for each parameter-simulation setting combination and the correlation between the medium and small values of $\sigma_{\gamma \eta}$.
+ 
+```{r}
+vars <- c("z", "p", "eta_sharing", "q_sharing",
+          "eta_causal", "q_causal", "gamma_causal")
+
+min_cor <- expand.grid(variable = vars,
+                       params = unique(causedf$params), stringsAsFactors=F)
+min_cor$min_cor <- NA
+min_cor$cor_med_small <- NA
+for(i in seq(nrow(min_cor))){
+    v <- min_cor$variable[i]
+    X <- select(causedf, simulate.output.file, params, quant, one_of(v)) %>%
+         spread(quant, get(v))  %>%
+         filter(params==min_cor$params[i]) %>%
+         select(one_of(c("0.51", "0.65", "0.8")))
+
+    min_cor$min_cor[i] <- min(cor(X))
+    min_cor$cor_med_small[i] <- cor(X[,"0.65"], X[,"0.8"])
+
+}
+min_cor
+```
+
+This code is also contained in `summarize_sigma_g.R`.
 
 # What's in the DSC Files?
 
-We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. We will look at `false_positives.dsc` but `power.dsc` is very similar.
+We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. We will look at `false_positives.dsc` but `power.dsc` and `sigma_g.dsc` are similar.
 
 
 The DSC statement is at the top:
