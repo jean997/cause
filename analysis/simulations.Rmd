@@ -1,7 +1,7 @@
 ---
 title: "Simulations"
 author: "Jean Morrison"
-date: "2019-06-24"
+date: "2019-07-10"
 output: workflowr::wflow_html
 ---
 
@@ -52,7 +52,7 @@ nohup dsc --replicate 100 --host config.yml -c 4 power.dsc > pwr_dsc.out &
 nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc > fp_dsc.out &
 nohup dsc --replicate 100 --host config.yml -c 4 sigma_g.dsc > sg_dsc.out &
 ```
-Depending on your computing resources, this could take several hours for each command. We have made the results available as R objects, so if you don't want to run the simulations you can skip straight to plotting. Or you can modify the DSC files and run your own experiments!
+Depending on your computing resources, this could take several hours for each command. Errors can occur that stop DSC, for example, it may have errors communicating with the host. If this happens, simply restart using the same command. DSC will pick up where it left off. We have made the results available as R objects, so if you don't want to run the simulations you can skip straight to plotting. Or you can modify the DSC files and run your own experiments!
 
 Running these commands will generate lots of `*.err` and `*.out` files all of which can be safely deleted. Results are in the `fp`, `pwr` and `sigma_g` directories respectively. 
 
@@ -68,7 +68,197 @@ Rscript extract_results_main.R
 or from inside R using `source(extract_results_main.R)`. It will take several minutes to extract all of the results. If you would like to use your own files to plot, change the file names in the code below.
 
 
+We first summarize results grouping by sample size and simulation setting. Here we are leaving out results of LCV but these are computed in the simulations and available (see `plot_results_main.R` for code).
 
+```{r, packages}
+library(tidyverse)
+library(gridExtra)
+library(pROC)
+library(jcolors)
+```
+
+```{r, eval=FALSE, summ_main}
+causedf <- readRDS("sim_results/main_causedf.RDS")
+
+mrdf <- readRDS("sim_results/main_mrdf.RDS")
+                                     
+######### Summaries
+cause_summ <- causedf %>% 
+              group_by(q, tau, omega,  n1, n2) %>%
+              summarize(n_sig = sum(cause.p < 0.05, na.rm=T),
+                        missing = sum(is.na(cause.p))) %>% 
+              mutate(analysis = "cause")
+
+mr_summ <- mrdf %>%
+           group_by(q, tau, omega,  n1, n2, mr) %>%
+           summarize(n_sig = sum(mr.p < 0.05, na.rm=T),
+                     missing = sum(is.na(mr.p))) %>%
+           rename(analysis = "mr")
+
+
+res <- bind_rows(cause_summ, mr_summ) %>%
+        ungroup() %>%
+        mutate(label = fct_recode(analysis, "CAUSE"="cause",
+                                     "Egger" = "egger", "GSMR"="gsmr",
+                                     "IVW"="ivw", 
+                                     "MR-PRESSO"="mrp", "Wtd. Median" = "wm"),
+                 n1 = factor(paste0("N[M]==", n1)),
+                 n2 = factor(paste0("N[Y]==", n2)))
+```
+
+
+Plotting power:
+```{r, eval=FALSE, plot_power}
+#colors
+cc <- as.character(jcolors("default"))
+cols <- c(cc[3], cc[1:2], cc[4:5],  "#D590DA")
+#plot
+pwr <- res %>%
+       filter(q == 0) %>%
+       ggplot(.) + 
+          geom_line(aes(x=tau, y=n_sig/100, color=label)) +  
+          geom_point(aes(x=tau, y=n_sig/100, color=label, shape=label)) +
+          scale_color_manual(values=cols) + 
+          scale_shape_manual(values= c(16, 3, 4, 0, 2, 6:8)) +
+          geom_hline(yintercept=0.05, linetype=2) +
+          xlab(expression("Percentage of Y heritability explained by M (" ~ tau ~ "=" ~ gamma^2 ~ h[M]^2/h[Y]^2 ~ ")")) +
+          ylab("Percent Significant") + 
+          theme_bw() + 
+          theme(legend.title = element_blank(), 
+                strip.text = element_text(size=14),
+                axis.title = element_text(size=16),
+                legend.text = element_text(size=12),
+                legend.position = "bottom") +  
+          guides(color=guide_legend(nrow=1),  
+                 linetype=guide_legend(nrow=1),
+                 shape=guide_legend(nrow=1) )  + 
+          facet_wrap(~n1*n2, nrow=2, labeller = label_parsed)
+
+```
+
+Plotting false positives. The false positive simulations include two values of $\eta$ (encoded through the `omega` parameter) though only the larger one is presented in the paper. Here we make plots for both. For convenience, in extracting results, we copy the results for $q=0$. 
+
+```{r, eval=FALSE, copy_zero}
+z1 <-  filter(res, omega == 0 & tau == 0 & q == 0) %>% mutate(omega = 0.05)
+z2 <-  filter(res, omega == 0 & tau == 0 & q == 0) %>% mutate(omega = 0.02)
+res2 <- bind_rows(res, z1, z2) %>%
+        filter(!(q == 0 & omega == 0 & tau == 0))
+```
+
+```{r, eval=FALSE, plot_fp}
+fp <- res2 %>%
+      filter(tau == 0) %>%
+      ggplot(.) +
+        geom_line(aes(x=q, y=n_sig/100, color=label)) +
+        geom_point(aes(x=q, y=n_sig/100, color=label, shape=label)) +
+        geom_hline(yintercept=0.05, linetype=2) +
+        scale_color_manual(values=cols) +
+        scale_shape_manual(values= c(16, 3, 4, 0, 2, 6:8)) +
+        geom_hline(yintercept=0.05, linetype=2) +
+        xlab("Proportion of variants acting through U (q)") +
+        ylab("Percent Significant") +
+        theme_bw() +
+        theme(legend.title = element_blank(),
+            strip.text = element_text(size=14),
+            axis.title = element_text(size=16),
+            legend.text = element_text(size=12),
+            legend.position = "bottom") +
+        guides(color=guide_legend(nrow=1),
+             linetype=guide_legend(nrow=1),
+             shape=guide_legend(nrow=1) )  +
+        facet_wrap(~omega*n1*n2, nrow=1, labeller=label_parsed)
+```
+
+
+ROC curves are a little more complicated to make. We want to evaluate how well each method is able to distinguish simulations with a causal effect of size $\gamma = \sqrt{0.05}$ from simulations with a shared factor with an equal effect acconting for 30\% of the trait $M$ vairants. Both of these parameters can be modified. The first step is to combine the CAUSE and alternative MR results into a single data frame
+
+```{r, eval=FALSE, combine}
+x1 <- causedf %>%
+      mutate(analysis = "cause", stat = -log10(cause.p)) %>%
+      select(tag, q, omega, tau, n1, n2, analysis, stat)
+
+x2 <- mrdf %>%
+      mutate(stat = -log10(mr.p)) %>%
+      rename(analysis = mr) %>%
+      select(tag, q, omega, tau, n1, n2, analysis, stat)
+
+full_results <- bind_rows(x1, x2)
+
+full_results <- full_results %>% 
+                mutate(label = fct_recode(analysis, "CAUSE"="cause",
+                                     "Egger" = "egger", "GSMR"="gsmr",
+                                     "IVW"="ivw",
+                                     "MR-PRESSO"="mrp", "Wtd. Median" = "wm"))
+
+```
+
+Next we use the `pROC` package. 
+
+```{r, eval=FALSE, roc_curves}
+eff <- 0.05
+q <- 0.3
+n1s <- c(12000, 12000, 40000, 40000)
+n2s <- c(12000, 40000, 12000, 40000)
+
+methods <- with(full_results, unique(label)) %>%
+            as.vector(.)
+
+cc <- as.character(jcolors("default"))
+cols <- c(cc[3], cc[1:2], cc[4:5],  "#D590DA")
+
+
+roc_df <-lapply(seq_along(n1s), function(i){
+                    my_n1 <- n1s[i]
+                    my_n2 <- n2s[i]
+                    rocs <- lapply(methods, function(m){
+                       cat(m, " ")
+                       xx <- filter(full_results, n1 == my_n1 & n2 == my_n2 & label == m &
+                                 ( tau == eff | (omega == eff & q == my_q & tau == 0)))
+                       xx$stat[is.na(xx$stat)] <- 0
+                       with(xx, roc(predictor = stat, response = tau !=0)) %>%
+                            with(., data.frame(thresh = thresholds, spec = specificities,
+                                            sens = sensitivities, method = m,
+                                            n1 = my_n1, n2 = my_n2,
+                                            stringsAsFactors=F)) %>% 
+                            return()
+
+                })
+                do.call(rbind, rocs)
+            })
+head(roc_df)
+
+# A data frame with points to add to the curve
+pw <- filter(res, tau == eff ) 
+f <- filter(res, omega == eff2 & q == my_q & tau ==0)
+df <- select(pw, label, n_sig, n1, n2) %>%
+      rename(power = n_sig) %>%
+      full_join(., f, c("label", "n1", "n2")) %>%
+      rename(fp = n_sig) %>%
+      select(label, power, fp, n1, n2) %>%
+      filter(label %in% methods) %>%
+      rename(method=label)
+
+## Plotting!
+plt <- roc_df %>% 
+       arrange(sens) %>%
+       ggplot(.) +
+          geom_line(aes(x=1-spec, y=sens, col=method, group=method, linetype=method)) +
+          geom_point(aes(x=fp/100, y = power/100, col=method, shape=method), size =4 , data=df) +
+          scale_color_manual(values=cols) +
+          scale_linetype_manual(values = rep(1, 6)) +
+          scale_shape_manual(values = c(rep(16, 6))) +
+          xlab("1 - Specificity (False Positive Rate)") + ylab("Sensitivity (Power)") +
+          theme_bw() +
+          theme(legend.title = element_blank(),
+                strip.text = element_text(size=14),
+                axis.title = element_text(size=16),
+                legend.text = element_text(size=12),
+                legend.position = "bottom") +
+          guides(color=guide_legend(nrow=1),
+                 linetype=guide_legend(nrow=1),
+                 shape=guide_legend(nrow=1))  +
+          facet_wrap(~n1*n2, ncol=4, labeller= label_parsed)
+```
 
 
 ## Prior robustness results
@@ -85,7 +275,6 @@ or from inside an R session using `source`.
 This code will append the date to the file it saves so it won't save over the results downloaded by `setup_sims()`. If you want to use your own data frame, change the file name in the commands below.
 
 ```{r, lookatresults}
-library(tidyverse)
 causedf <- readRDS("sim_results/sg_causedf.RDS")
 head(causedf)
 ```
