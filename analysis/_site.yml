@@ -4,7 +4,7 @@ navbar:
   title: "CAUSE: Cauasl Analysis Using Summary Effects"
   left:
     - text: "Introduction"
-      href: introduction.html
+      href: index.html
     - text: "Software Tutorial"
       href: ldl_cad.html
     - text: "Simulations"
