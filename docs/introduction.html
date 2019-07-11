@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jean Morrison" />
+
+<meta name="date" content="2019-07-11" />
+
+<title>Introduction to CAUSE</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CAUSE: Cauasl Analysis Using Summary Effects</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="introduction.html">Introduction</a>
+</li>
+<li>
+  <a href="ldl_cad.html">Software Tutorial</a>
+</li>
+<li>
+  <a href="simulations.html">Simulations</a>
+</li>
+<li>
+  <a href="gwas_pairs.html">Analyze Pairs of GWAS Traits</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jean997/cause">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction to CAUSE</h1>
+<h4 class="author">Jean Morrison</h4>
+<h4 class="date">2019-07-11</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-07-11
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.4.0.9000). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongobjectspresent"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Environment:</strong> objects present </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongobjectspresent" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+The global environment had objects present when the code in the R Markdown file was run. These objects can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment. Use <code>wflow_publish</code> or <code>wflow_build</code> to ensure that the code is always run in an empty environment.
+</p>
+<p>
+The following objects were defined in the global environment when these results were created:
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:left;">
+Class
+</th>
+<th style="text-align:left;">
+Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+data
+</td>
+<td style="text-align:left;">
+environment
+</td>
+<td style="text-align:left;">
+56 bytes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+env
+</td>
+<td style="text-align:left;">
+environment
+</td>
+<td style="text-align:left;">
+56 bytes
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20181014code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20181014)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20181014code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5d2593cd7610167758faba2b7ebd578028340d11targetblank5d2593ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/5d2593cd7610167758faba2b7ebd578028340d11" target="_blank">5d2593c</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5d2593cd7610167758faba2b7ebd578028340d11targetblank5d2593ca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
+    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
+    Untracked:  analysis/figure/
+    Untracked:  docs/cause.bib
+    Untracked:  docs/cause_figure_3_standalone.pdf
+    Untracked:  docs/figure/cause_figure_1_standalone.pdf
+    Untracked:  example_data/chr22_AF0.05_0.1.RDS
+    Untracked:  example_data/chr22_AF0.05_snpdata.RDS
+    Untracked:  gwas_data/
+    Untracked:  ll_v7_notes.Rmd
+    Untracked:  sim_results/
+    Untracked:  src/RcppExports.o
+    Untracked:  src/log_likelihood_functions.o
+    Untracked:  temp.txt
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/5d2593cd7610167758faba2b7ebd578028340d11/analysis/introduction.Rmd" target="_blank">5d2593c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+<td>
+wflow_publish(“analysis/introduction.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/96a4bf7d26fedfceeb53d1c9c691f12828e4e73a/analysis/introduction.Rmd" target="_blank">96a4bf7</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+<td>
+add introduction
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="weclome-to-the-cause-website" class="section level1">
+<h1>Weclome to the CAUSE website!</h1>
+<p>Here are some useful links</p>
+<p><a href="https://www.biorxiv.org/content/10.1101/682237v1">Pre-print</a></p>
+<p><a href="https://github.com/jean997/cause">R package</a></p>
+<p><a href="WNAR_2019.pdf">Slides!</a> from WNAR 2019</p>
+<p>CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysi.</p>
+</div>
+<div id="introduction-to-cause" class="section level1">
+<h1>Introduction to CAUSE</h1>
+<div id="summary-statistic-mendelian-randomizatoin-basics" class="section level2">
+<h2>Summary Statistic Mendelian Randomizatoin Basics</h2>
+<p>Mendelian randomization (MR) is a method for inferring causal effects from observational data by using genetic variants as insturmental variables. The key idea of MR is to treat genotypes as naturally occurring “randomizations” (<span class="citation">Smith and Hemani (2014)</span>,<span class="citation">Boef, Dekkers, and Le Cessie (2015)</span>,<span class="citation">J. Zheng et al. (2017)</span>). Suppose we are interested in the causal effect of trait <span class="math inline">\(M\)</span> (for “Mediator”) on trait <span class="math inline">\(Y\)</span>. The simplest MR methods assume that we can identify a genetic variant <span class="math inline">\(G_j\)</span>, that meets two assumptions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(G_j\)</span> causally affects <span class="math inline">\(M\)</span></li>
+<li><span class="math inline">\(G_j\)</span> has no affects on <span class="math inline">\(Y\)</span> that are not mediated through <span class="math inline">\(M\)</span></li>
+</ol>
+<p>These assumptions are illustrated in the following figure:</p>
+<p><img src="cause_figure_1_standalone.png" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cause_figure_1_standalone">
+Past versions of cause_figure_1_standalone.png
+</button>
+</p>
+<div id="fig-cause_figure_1_standalone" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/96a4bf7d26fedfceeb53d1c9c691f12828e4e73a/docs/cause_figure_1_standalone.png" target="_blank">96a4bf7</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Here we have divided assumption 2 into two parts. First the variant may not affect any confounders/shared factors that act on both <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> (correlated pleiotropy) and second, the variant cannot have any affects on <span class="math inline">\(Y\)</span> through a non-shared mechanism (uncorrelated pleiotropy).</p>
+<p>If these assumptions hold thenthe associations of <span class="math inline">\(G_j\)</span> with traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> will satisfy</p>
+<p><span class="math display">\[
+\beta_{Y,j} = \gamma \beta_{M,j},
+\]</span> where <span class="math inline">\(\beta_{Y,j}\)</span> is the association of <span class="math inline">\(G_j\)</span> with <span class="math inline">\(Y\)</span>, <span class="math inline">\(\beta_{M,j}\)</span> is the association of <span class="math inline">\(G_j\)</span> with <span class="math inline">\(M\)</span> and <span class="math inline">\(\gamma\)</span> is the causal effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span>. This relationship is the core of simple MR methods. Many methods based on Equation , including the commonly used inverse variance weighted (IVW) regression, first obtain estimates of <span class="math inline">\(\beta_{Y,j}\)</span> and <span class="math inline">\(\beta_{M,j}\)</span> for several genetic variants <span class="math inline">\(G_j\)</span>, and then estimate <span class="math inline">\(\gamma\)</span> by regressing the estimates of <span class="math inline">\(\beta_{Y,j}\)</span> on the estimates of <span class="math inline">\(\beta_{M,j}\)</span> (<span class="citation">Burgess, Dudbridge, and Thompson (2016)</span>).</p>
+</div>
+<div id="violating-mr-assumptions" class="section level2">
+<h2>Violating MR Assumptions</h2>
+<p>Correlated and uncorrelated pleiotropy are both forms of what has been previously termed horizontal pleiotropy. However, they have different effects on MR estimators. In uncorrelated pleiotropy, horizontal pleiotropic effects of variants are uncorrelated with effects on <span class="math inline">\(M\)</span>. Thas adds a noise term to the relationship above. On the other hand, when some variants exhibit correlated pleiotropy, this can induce an average correaltion between effect estimates even when the causal effect is equal to zero. This makes correlated pleiotropy more difficult to account for.</p>
+<p>Several proposals have been made for accounting for horizontal pleiotropy in MR. However, most of these rely on the assumption that all horizontal pleiotropy is uncorrelated. These include Egger regression (<span class="citation">Bowden, Smith, and Burgess (2015)</span>,<span class="citation">Barfield et al. (2018)</span>) which adds an intercept term to the regression of <span class="math inline">\(\hat{\beta}_{Y,j}\)</span> on <span class="math inline">\(\hat{\beta}_{M,j}\)</span>, and several methods that rely on outlier removal including GSMR (<span class="citation">Zhu et al. (2018)</span>) and MR-PRESSO (<span class="citation">Verbanck et al. (2018)</span>). Another proposal, the weighted median estimator(<span class="citation">Bowden et al. (2016)</span>), makes no assumptions about the form of horizontal pleiotropy but assumes that fewer than half the variants exhibit horizontal pleiotropy.</p>
+<p>The figures below demonstrate how correlated pleiotropy can lead to false positives using simple MR methods. On the left we have simulated data with no causal effect but 15% of the variants have correlated pleiotropic effecgts on <span class="math inline">\(Y\)</span> (blue triangles). Even though there are many variants with strong association with <span class="math inline">\(M\)</span> and no association with <span class="math inline">\(Y\)</span> (evidence against a causal effect) IVW regression obtains a <span class="math inline">\(p\)</span>-value of 0.01. We would like to be able to distinguish this scenario from the scenario on the right. On the right, we have simulated data with a true causal effect. Effect estimates are correlated for all varaints.</p>
+<p><img src="scatter4_updlegend.png" style="width:48.0%" /> <img src="scatter5_updlegend.png" style="width:48.0%" /> The purpose of CASUE is to distinguish the patterns created by correlated pleiotropy from those created by a causal effect while still accounting for uncorrelated horizontal pleiotropy. We can also account for sample overlap in the GWAS of traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> and we can avoid some other probelems encountered by simple MR by modeling uncertainty in effect sizes rather than pre-selecting variants with strong evidence of affecting trait <span class="math inline">\(M\)</span>.</p>
+</div>
+<div id="cause-model-overview" class="section level2">
+<h2>CAUSE Model overview</h2>
+<p>CAUSE uses a mixture model for variants included in the analysis. We assume that a proportion <span class="math inline">\(q\)</span> of variants exhibit correlated pleiotropy (the blue triangles in the figure above) while the rest do not. Correlated pleiotropic variants have the causal diagram on the right in the figure below. The remaining variants have the causal diagram on the left.</p>
+<p><img src="cause_figure_3_standalone.png" style="display: block; margin: auto;" /></p>
+<p>Note that we allow all variants to have uncorrelated pleiotropic effects (<span class="math inline">\(\theta_j\)</span>). To make the model identifiable and to encourage parsimoniuos solutions, we assume that <span class="math inline">\(q\)</span> is small. This assumption is encoded in a prior on <span class="math inline">\(q\)</span> that places most of its weight on small values (<span class="math inline">\(q\sim~\)</span>Beta<span class="math inline">\((1, 10)\)</span> by default). If <span class="math inline">\(Z_j\)</span> is an indicator that variant <span class="math inline">\(G_j\)</span> is a correlated pleiotropic variant then the model above implies that</p>
+<p><span class="math display">\[
+  \beta_{Y,j} = \underbrace{\gamma \beta_{M,j}}_{\text{causal effect}} + \underbrace{Z_j \eta \beta_{M,j}}_{\substack{\text{correlated}\\ \text{pleiotropy}}} + \underbrace{\theta_j}_{\substack{\text{uncorrelated}\\ \text{pleiotropy}}}.
+\]</span> This relationship is the core idea of CAUSE. We estimate posterior distributions of <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(q\)</span> and compare the fit of posteriors from models with and without a causal effect. Our software provides posterior distribution estimates under two models: The sharing model in which <span class="math inline">\(\gamma\)</span> is fixed at 0 and the causal model, which allows <span class="math inline">\(\gamma\)</span> to be a free parameter. It also provides a test that the posteriors estimated under the causal model fit the data significantly better than posteriors estimated under the sharing model. If this is the case, we conclude that the data are consistent with a causal effect, or in other words, show the pattern of the right hand scatter plot above. For more details on model fitting and comparison, check out the paper! For details on running the software, look at the tutorial tab above.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div id="refs">
+<div id="ref-Barfield2017">
+<p>Barfield, Richard, Helian Feng, Alexander Gusev, Lang Wu, and Wei Zheng. 2018. “Transcriptome-wide association studies accounting for co- localization using Egger regression.” <em>Genetic Epidemiology</em> 42: 418–33.</p>
+</div>
+<div id="ref-Boef2015">
+<p>Boef, Anna G.C., Olaf M. Dekkers, and Saskia Le Cessie. 2015. “Mendelian randomization studies: A review of the approaches used and the quality of reporting.” <em>International Journal of Epidemiology</em> 44 (2): 496–511. doi:<a href="https://doi.org/10.1093/ije/dyv071">10.1093/ije/dyv071</a>.</p>
+</div>
+<div id="ref-Bowden2016">
+<p>Bowden, Jack, M. Fabiola Del Greco, Cosetta Minelli, George Davey Smith, Nuala A. Sheehan, and John R. Thompson. 2016. “Assessing the suitability of summary data for two-sample mendelian randomization analyses using MR-Egger regression: The role of the I2statistic.” <em>International Journal of Epidemiology</em> 45 (6): 1961–74. doi:<a href="https://doi.org/10.1093/ije/dyw220">10.1093/ije/dyw220</a>.</p>
+</div>
+<div id="ref-Bowden2015">
+<p>Bowden, Jack, George Davey Smith, and Stephen Burgess. 2015. “Mendelian Randomization Methodology Mendelian randomization with invalid instruments : effect estimation and bias detection through Egger regression.” <em>International Journal of Epidemiology</em>, no. June: 512–25. doi:<a href="https://doi.org/10.1093/ije/dyv080">10.1093/ije/dyv080</a>.</p>
+</div>
+<div id="ref-Burgess2016">
+<p>Burgess, Stephen, Frank Dudbridge, and Simon G. Thompson. 2016. “Combining information on multiple instrumental variables in Mendelian randomization: Comparison of allele score and summarized data methods.” <em>Statistics in Medicine</em> 35 (11): 1880–1906. doi:<a href="https://doi.org/10.1002/sim.6835">10.1002/sim.6835</a>.</p>
+</div>
+<div id="ref-Smith2014">
+<p>Smith, George Davey, and Gibran Hemani. 2014. “Mendelian randomization: genetic anchors for causal inference in epidemiological studies.” <em>Human Molecular Genetics</em> 23 (1): 89–98. doi:<a href="https://doi.org/10.1093/hmg/ddu328">10.1093/hmg/ddu328</a>.</p>
+</div>
+<div id="ref-Verbanck2018">
+<p>Verbanck, Marie, Chia-yen Chen, Benjamin Neale, and Ron Do. 2018. “Detection of widespread horizontal pleiotropy in causal relationships inferred from Mendelian randomization between complex traits and diseases.” <em>Nature Genetics</em> 50 (May). Springer US. doi:<a href="https://doi.org/10.1038/s41588-018-0099-7">10.1038/s41588-018-0099-7</a>.</p>
+</div>
+<div id="ref-Zheng2017">
+<p>Zheng, Jie, Denis Baird, Maria-Carolina Borges, Jack Bowden, Gibran Hemani, Philip Haycock, David M. Evans, and George Davey Smith. 2017. “Recent Developments in Mendelian Randomization Studies.” <em>Current Epidemiology Reports</em> 4 (4). Current Epidemiology Reports: 330–45. doi:<a href="https://doi.org/10.1007/s40471-017-0128-6">10.1007/s40471-017-0128-6</a>.</p>
+</div>
+<div id="ref-Zhu2018">
+<p>Zhu, Zhihong, Zhili Zheng, Futao Zhang, Yang Wu, Maciej Trzaskowski, Robert Maier, Matthew R. Robinson, et al. 2018. “Causal associations between risk factors and common diseases inferred from GWAS summary data.” <em>Nature Communications</em> 9 (1). Springer US: 224. doi:<a href="https://doi.org/10.1038/s41467-017-02317-2">10.1038/s41467-017-02317-2</a>.</p>
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.2 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.4.0.9000 Rcpp_1.0.1           digest_0.6.20       
+ [4] rprojroot_1.3-2      backports_1.1.4      git2r_0.26.1        
+ [7] magrittr_1.5         evaluate_0.14        highr_0.8           
+[10] stringi_1.4.3        fs_1.3.1             whisker_0.3-2       
+[13] rmarkdown_1.13       tools_3.6.1          stringr_1.4.0       
+[16] glue_1.3.1           xfun_0.8             yaml_2.2.0          
+[19] compiler_3.6.1       htmltools_0.3.6      knitr_1.23          </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
