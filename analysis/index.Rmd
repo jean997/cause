@@ -1,11 +1,16 @@
 ---
-title: "CAUSE: Causal Analysis Using Summary Statistics"
-output:
-  workflowr::wflow_html:
-    toc: false
+title: "Introduction to CAUSE"
+author: "Jean Morrison"
+date: "2019-07-11"
+output: workflowr::wflow_html
+bibliography: cause.bib
+editor_options:
+  chunk_output_type: console
 ---
 
+
 # Weclome to the CAUSE website!
+Here are some useful links
 
  [Pre-print](https://www.biorxiv.org/content/10.1101/682237v1)
  
@@ -13,11 +18,68 @@ output:
  
  [Slides!](WNAR_2019.pdf) from WNAR 2019
 
-CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. 
+CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models both horizontal and correlated pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysi.
 
-In this website you will find:
+# Introduction to CAUSE
 
-+ A tutorial on how to use the cause R package
-+ Instructions for replicating simulations in the paper
-+ Instructions for replicating data analysis in the paper (coming soon)
 
+## Summary Statistic Mendelian Randomizatoin Basics
+
+Mendelian randomization (MR) is a method for inferring causal effects from observational data by using genetic variants as insturmental variables. 
+The key idea of MR is to treat genotypes as naturally occurring "randomizations" (@Smith2014,@Boef2015,@Zheng2017).
+Suppose we are interested in the causal effect of trait $M$ (for "Mediator") on trait $Y$.
+The simplest MR methods assume that we can identify a genetic variant $G_j$, that meets two assumptions:
+
+1. $G_j$ causally affects $M$
+2. $G_j$ has no affects on $Y$ that are not mediated through $M$
+
+These assumptions are illustrated in the following figure:
+
+```{r, echo=FALSE}
+knitr::include_graphics("cause_figure_1_standalone.png", dpi=NA)
+```
+
+Here we have divided assumption 2 into two parts. First the variant may not affect any confounders/shared factors that act on both $M$ and $Y$ (correlated pleiotropy) and second, the variant cannot have any affects on $Y$ through a non-shared mechanism (uncorrelated pleiotropy). 
+
+If  these assumptions hold thenthe associations of $G_j$ with traits $M$ and $Y$ will satisfy
+
+$$
+\beta_{Y,j} = \gamma \beta_{M,j},
+$$
+where $\beta_{Y,j}$ is the association of $G_j$ with $Y$, $\beta_{M,j}$ is the association of $G_j$ with $M$ and $\gamma$ is the causal effect of $M$ on $Y$. This relationship is the core of simple MR methods. Many methods based on Equation \eqref{eq:mr}, including the commonly used inverse variance weighted (IVW) regression, first obtain estimates
+of $\beta_{Y,j}$ and $\beta_{M,j}$ for several genetic variants $G_j$, and then 
+estimate $\gamma$ by regressing the estimates of $\beta_{Y,j}$ on the estimates of $\beta_{M,j}$ (@Burgess2016).
+
+
+## Violating MR Assumptions
+
+Correlated and uncorrelated pleiotropy are both forms of what has been previously termed horizontal pleiotropy. However, they have different effects on MR estimators. In uncorrelated pleiotropy, horizontal pleiotropic effects of variants are uncorrelated with effects on $M$. Thas adds a noise term to the relationship above. On the other hand, when some variants exhibit correlated pleiotropy, this can induce an average correaltion between effect estimates even when the causal effect is equal to zero. This makes correlated pleiotropy more difficult to account for. 
+
+Several proposals have been made for accounting for horizontal pleiotropy in MR. However, most of these rely on the assumption that all horizontal pleiotropy is uncorrelated. These include 
+ Egger regression (@Bowden2015,@Barfield2017) which adds an intercept term to the regression of $\hat{\beta}_{Y,j}$ on $\hat{\beta}_{M,j}$, 
+and several methods that rely on outlier removal including GSMR (@Zhu2018) and MR-PRESSO (@Verbanck2018).
+Another proposal, 
+the weighted median estimator(@Bowden2016), makes no assumptions about the form of horizontal pleiotropy but assumes that fewer than half the variants exhibit horizontal pleiotropy.
+
+The figures below demonstrate how correlated pleiotropy can lead to false positives using simple MR methods. On the left we have simulated data with no causal effect but 15% of the variants have correlated pleiotropic effecgts on $Y$ (blue triangles). Even though there are many variants with strong association with $M$ and no association with $Y$ (evidence against a causal effect) IVW regression obtains a $p$-value of 0.01. We would like to be able to distinguish this scenario from the scenario on the right. On the right, we have simulated data with a true causal effect. Effect estimates are correlated for all varaints.
+
+![](scatter4_updlegend.png){ width=48% } 
+![](scatter5_updlegend.png){ width=48% } 
+The purpose of CASUE is to distinguish the patterns created by correlated pleiotropy from those created by a causal effect while still accounting for uncorrelated horizontal pleiotropy. We can also account for sample overlap in the GWAS of traits $M$ and $Y$ and we can avoid some other probelems encountered by simple MR by modeling uncertainty in effect sizes rather than pre-selecting variants with strong evidence of affecting trait $M$.
+
+## CAUSE Model overview
+
+CAUSE uses a mixture model for variants included in the analysis. We assume that a proportion $q$ of variants exhibit correlated pleiotropy (the blue triangles in the figure above) while the rest do not. Correlated pleiotropic variants have the causal diagram on the right in the figure below. The remaining variants have the causal diagram on the left. 
+
+```{r, echo=FALSE}
+knitr::include_graphics("cause_figure_3_standalone.png", dpi=NA)
+```
+
+Note that we allow all variants to have uncorrelated pleiotropic effects ($\theta_j$). To make the model identifiable and to encourage parsimoniuos solutions, we assume that $q$ is small. This assumption is encoded in a prior on $q$ that places most of its weight on small values ($q\sim~$Beta$(1, 10)$ by default). If $Z_j$ is an indicator that variant $G_j$ is a correlated pleiotropic variant then the model above implies that
+
+$$
+  \beta_{Y,j} = \underbrace{\gamma \beta_{M,j}}_{\text{causal effect}} + \underbrace{Z_j \eta \beta_{M,j}}_{\substack{\text{correlated}\\ \text{pleiotropy}}} + \underbrace{\theta_j}_{\substack{\text{uncorrelated}\\ \text{pleiotropy}}}.
+$$
+This relationship is the core idea of CAUSE. We estimate posterior distributions of $\gamma$, $\eta$ and $q$ and compare the fit of posteriors from models with and without a causal effect. Our software provides posterior distribution estimates under two models: The sharing model in which $\gamma$ is fixed at 0 and the causal model, which allows $\gamma$ to be a free parameter. It also provides a test that the posteriors estimated under the causal model fit the data significantly better than posteriors estimated under the sharing model. If this is the case, we conclude that the data are consistent with a causal effect, or in other words, show the pattern of the right hand scatter plot above. For more details on model fitting and comparison, check out the paper! For details on running the software, look at the tutorial tab above.
+
+## References
