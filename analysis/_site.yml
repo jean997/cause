@@ -3,9 +3,9 @@ output_dir: "../docs"
 navbar:
   title: "CAUSE: Cauasl Analysis Using Summary Effects"
   left:
-    - text: "Home"
-      href: index.html
-    - text: "R Package Tutorial"
+    - text: "Introduction"
+      href: introduction.html
+    - text: "Software Tutorial"
       href: ldl_cad.html
     - text: "Simulations"
       href: simulations.html
