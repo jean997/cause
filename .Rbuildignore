@@ -7,3 +7,4 @@
 ^output$
 ^gwas_pairs_code$
 ^sim_results$
+^\.travis\.yml$
