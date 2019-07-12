@@ -4,7 +4,7 @@
 \alias{prob_confounding}
 \title{Posterior probability of association with confounder}
 \usage{
-prob_confounding(X, fit, nsamps = 1000)
+prob_confounding(X, fit, nsamps = 1000, name_post = "")
 }
 \arguments{
 \item{X}{object of class cause_data. This need not be the same data used to compute 'fit'.}
@@ -14,8 +14,7 @@ prob_confounding(X, fit, nsamps = 1000)
 \item{nsamps}{Number of samples to take from the posterior (see Details).}
 }
 \value{
-an object of class cause_data and data.frame. The returned object is identical to X
-but contains additional columns ll_Z1, ll_Z0, and prob_Z1.
+A vector of probabilities corresponding to the rows of X
 }
 \description{
 For a set of data, X, calculate the probability that each variant

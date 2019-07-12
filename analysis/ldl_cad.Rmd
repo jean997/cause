@@ -6,6 +6,10 @@ output: workflowr::wflow_html
 ---
 
 
+```{r options, include = FALSE}
+#knitr::opts_chunk$set(eval=FALSE)
+```
+
 ## Introduction
 
 This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. The LD pruning steps will benefit from access to a cluster or multiple cores. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example. 
@@ -13,28 +17,22 @@ This document will walk through a real genome-sized example of how to use CAUSE.
 We will be analyzing GWAS data for LDL cholesterol and for coronary artery disease to test for a causal relationship of LDL on CAD. The analysis will have the following steps:
 
 1. Format the data for use with CAUSE
-2. LD pruning
-3. Calculate nuisance parameters
+2. Calculate nuisance parameters
+3. LD pruning
 4. Fit CAUSE
 5. Look at results
 
-Steps 3 and 4 require obtaining (different) LD pruned sets of variants. To do this you will need LD data in a specific format. We provide LD information estimated from the 1000 Genomes CEU population using LDshrink [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). LD data are about 11 Gb. The GWAS data we will use are about 320 Gb.  
+Step 3 will require LD information estimated from the 1000 Genomes CEU population using LDshrink [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). LD data are about 11 Gb. The GWAS data we will use are about 320 Gb. However, in this tutorial you will be able to skip the large data steps and simply download the results.
 
 ## Step 0: Install CAUSE
 
 In R
 
-First install the most up to date versions of  `mixsqp` and `ashr`
-```{r, eval=FALSE}
-devtools::install_github("stephenslab/mixsqp")
-devtools::install_github("stephens999/ashr")
-```
-
-then install CAUSE:
 ```{r, eval=FALSE}
 devtools::install_github("jean997/cause")
 ```
 
+Please be sure you are using `mixsqp-0-97` which is currently the version available in CRAN *not the latest version available on GitHub.
 
 ## Step 1: Format Data for CAUSE
 
@@ -47,9 +45,9 @@ library(cause)
 ```
 
 
-```{r,cache=TRUE, readdata}
+```{r, readdata, eval=FALSE}
 X1 <- read_tsv("http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz")
-X2 <- read_tsv("ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005195/CAD_META.gz")
+X2 <- read_tsv("ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005194/CAD_META.gz")
 ```
 
 CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a `cause_data` object that can be used with later functions. This step and the rest of the analysis are done in R.
@@ -72,106 +70,48 @@ CAD column headers:
 + Effect Allele: Allele1
 + Other Allele: Allele2
 
-```{r, cache=TRUE}
+```{r, eval=FALSE}
 X <- gwas_format_cause(X1, X2, snp_name_cols = c("rsid", "oldID"), 
                        beta_hat_cols = c("beta", "Effect"), 
                        se_cols = c("se", "StdErr"), 
                        A1_cols = c("A1", "Allele1"), 
                        A2_cols = c("A2", "Allele2"))
 
-head(X)
 ```
 
 Alternatively, you can download already formatted data [here](https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS) and read it in using `readRDS`. 
 
+```{r, eval=FALSE}
+system("mkdir example_data/")
+download.file("https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS", destfile = "example_data/LDL_CAD_merged.RDS")
+```
+
+```{r, readdata2}
+X <- readRDS("example_data/LDL_CAD_merged.RDS")
+```
+
+```{r, lookatdata}
+head(X)
+```
+
+
 There are likely more efficient ways to do this merge. 
 If you would like to process the data yourself, you can construct a `cause_data` object from a data frame using the constructor `new_cause_data(X)` where `X` is any data frame that includes the columns `snp`, `beta_hat_1`, `seb1`, `beta_hat_2`, and `seb2`.
 
-## Step 2: LD Pruning
+## Step 2: Calculate nuisance parameters
 
-Both steps 4 and 5 will require LD pruned sets of variants which we obtain in this step. Importantly, the sets are different. In Step 4, nuisance parameter estimation, we need a random set of variants that are not in LD with each other. In step 5, fitting the CAUSE model, we would like to retain the variants that are most strongly associated with the mediator (LDL) because these are the most informative about the distribution of the parameters. In order to do that we use a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. In step 5, only variants associated with the mediator are informative so we can speed up computation by excluding variants with large p-values. We use a threshold of 0.001 here. 
-
-In this step we will obtain both sets of variants simultaneously using the `cause::ld_prune` function. This is the most computationally intensive step of the analysis and requires LD estimates from a reference panel as input data. LD estimates made in the 1000 Genomes CEU population can be downloaded [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.  
-
-```{r}
-ld <- readRDS("example_data/ld_data/chr22_AF0.05_0.1.RDS")
-snp_info <- readRDS("example_data/ld_data/chr22_AF0.05_snpdata.RDS")
-
-head(ld)
-head(snp_info)
-
-```
-
-The format of the `ld` data frame is important in that it should contain the column names `rowsnp`, `colsnp`, and `r2`. The `snp_info` data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants `snp_info$SNP` which provides the total list of variants used in the LD calculations. 
-
-### LD pruning for one chromosome
-
-The `ld_prune` function is somewhat flexible in its arguments, see `help(ld_prune)`. 
-
-```{r, cache=TRUE}
-set.seed(5)
-variants <- X %>% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
-pruned <- ld_prune(variants = variants, 
-                            ld = ld, total_ld_variants = snp_info$SNP, 
-                            pval_cols = c(NA, "pval1"), 
-                            pval_thresh = c(Inf, 1e-3))
-length(pruned)
-sapply(pruned, length)
-```
-
-`ld_prune` retunrs a list of vectors of length equal to the length of the `pval_cols` argument. In this case `pval_cols= c(NA, "pval1")` meaning that the first
-element of `pruned` will be a randomly pruned list and the second will be pruned preferentially choosing variants with low values of `pval1`. We also apply
-a threshold specified by the `pval_thresh` argument. For the first list there is no threshold. For the second, the threshold is 0.001. 
-
-### Parallelizing over chromosomes 
-
-We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
-
-```{r, eval=FALSE}
-library(parallel)
-cores <- parallel::detectCores()-1
-set.seed(5)
-ld_files <- paste0("example_data/ld_data/chr", 1:22, "_AF0.05_0.1.RDS")
-snp_info_files <- paste0("example_data/ld_data/chr", 1:22, "_AF0.05_snpdata.RDS")
-
-cl <- makeCluster(cores, type="PSOCK")
-clusterExport(cl, varlist=c("variants", "ld_files", "snp_info_files"))
-clusterEvalQ(cl, library(cause))
-system.time(
-pruned <- parLapply(cl, seq_along(ld_files[20:22]), fun=function(i){
-  ld <- readRDS(ld_files[i])
-  snp_info <- readRDS(snp_info_files[i])
-  ld_prune(variants = variants, 
-          ld = ld, total_ld_variants = snp_info$SNP, 
-          pval_cols = c(NA, "pval1"), 
-          pval_thresh = c(Inf, 1e-3))
-})
-)
-stopCluster(cl)
-
-random_pruned_vars <- unlist(purrr:map(pruned, 1))
-top_ldl_pruned_vars <- unlist(purrr::map(pruned, 2))
-
-```
-
-A better option is to parallelize over the nodes of a compute cluster and then combine results. 
-
-Tip: If you are analyzing many phenotypes first obtain a list of variants present in all data sets and then LD prune this list. You can use this single set of variants estimate nuisance parameters for every pair as long as there are enough of them.
-
-Download the resulting variant lists: [genome wide list](https://github.com/jean997/cause/blob/master/example_data/genome_wide_pruned_vars.RDS), [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
-
-## Step 3: Calculate nuisance parameters
-
-The next step is to estimate the mixture proportions that define the bivariate distribution of effect sizes and to estimate $\rho$, the correlation between summary statistics that is due to sample overlap or population structure. To do this, we need the data set and the genome-wide set of LD pruned variants obtained in Step 3. This step takes a few minutes. `est_cause_params` estimates the nuisance parameters by finding the maximum a posteriori estimate of $\rho$ and the mixing parameters when $\gamma = \eta = 0$. 
+The next step is to estimate the parameters that define the prior distribution of $\beta_{M}$ and $\theta$ and to estimate $\rho$, the correlation between summary statistics that is due to sample overlap or population structure. We will do this with a random subset of 1,000,000 variants since our data set is large. `est_cause_params` estimates the nuisance parameters by finding the maximum a posteriori estimate of $\rho$ and the mixing parameters when $\gamma = \eta = 0$. 
+This step takes a several minutes. 
 
 ```{r, params}
-varlist <- readRDS("example_data/genome_wide_pruned_vars.RDS")
+set.seed(100)
+varlist <- with(X, sample(snp, size=1000000, replace=FALSE))
 params <- est_cause_params(X, varlist)
 ```
 
 The object `params` is of class `cause_params` and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters ($\pi$) and $\rho$. The object `params$mix_grid` is a data frame defining the distribution of summary statistics. The column `S1` is the variance for trait 1 ($M$), the column `S2` is the variance for trait 2 ($Y$) and the column `pi` is the mixture proportion assigned to that variance combination. 
 
-```{r}
+```{r, lookatparams}
 class(params)
 names(params)
 params$rho
@@ -182,11 +122,63 @@ So, for example, in this case, we have estimated that `r round(params$mix_grid$p
 Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters
 whih leads to bad model comparisons. 
 
+
+
+## Step 3: LD Pruning
+
+We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait $M$ (LDL) $p$-values. The CAUSE R package contains a function to help do this.
+The function `ld_prune` uses a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. 
+This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.  
+
+```{r, eval=FALSE}
+download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1", destfile = "example_data/chr22_AF0.05_0.1.RDS")
+download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1", destfile="example_data/chr22_AF0.05_snpdata.RDS")
+```
+
+```{r, lookatlddata}
+ld <- readRDS("example_data/chr22_AF0.05_0.1.RDS")
+snp_info <- readRDS("example_data/chr22_AF0.05_snpdata.RDS")
+
+head(ld)
+head(snp_info)
+
+```
+
+The `ld` data frame should contain the column names `rowsnp`, `colsnp`, and `r2`. The `snp_info` data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants `snp_info$SNP` which provides the total list of variants used in the LD calculations. 
+
+### LD pruning for one chromosome
+
+The `ld_prune` function is somewhat flexible in its arguments, see `help(ld_prune)`. 
+
+```{r, ldprune1}
+variants <- X %>% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
+pruned <- ld_prune(variants = variants, 
+                            ld = ld, total_ld_variants = snp_info$SNP, 
+                            pval_cols = c("pval1"), 
+                            pval_thresh = c(1e-3))
+length(pruned)
+```
+
+
+If `length(pval_cols) =1`, `ld_prune` returns a vector of selected variants. If There are multipld $p$-value columns provided, `ld_prune` will return a list of vectors, one for each column. The length of `pval_thresh` should be equal to the length of `pval_cols` and provides a threshold for each column. Excluding variants with high $p$-values speeds up the pruning step. We can fit CAUSE without high $p$-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
+
+### Parallelizing over chromosomes 
+
+We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
+A better option is to submit separate jobs to nodes of a compute cluster and then combine results. 
+
+If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low $p$-values for each traits ($N$ lists if there are $N$ phenotypes). In any analysis, you will use the list of variants prioritized for the trait $M$ phenotype.
+
+Download the LD-pruned variant list for our example analysis: [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
+
+```{r, eval=FALSE}
+download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
+```
+
+
 ## Step 4: Fit CAUSE
 
-Now that we have formatted data, LD pruned SNP sets, and nuisance parameters estimated, we can fit CAUSE! The function `cause::cause` will estimate posterior distributions under the confounding and causal models and calculate the elpd for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes. 
-
-Note: To estimate the posterior distributions, we only need the variants that are most associated with the mediator. This is because other variants don't add any information about the relationship between the traits. When we LD pruned, we used a $p$-value threshold of 0.001. The exact value of this threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
+Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes. 
 
 ```{r, cause}
 top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
@@ -197,9 +189,9 @@ res <- cause(X=X, variants = top_vars, param_ests = params)
 
 ## Step 5: Look at Results 
 
-The resulting `cause` object contains an object for the confounding only model fit (`conf`), and object for the causal model fit (`full`) and a table of ELPD results. 
+The resulting `cause` object contains an object for the partial sharing model fit (`conf`), and object for the causal model fit (`full`) and a table of ELPD results. 
 
-```{r, cache=FALSE, look}
+```{r, look}
 class(res)
 names(res)
 res$elpd
@@ -217,9 +209,9 @@ class(res$full)
 
  In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The $z$-score is `r round(res$elpd$z[3], digits=2)` corresponding to a p-value of `r signif(pnorm(res$elpd$z[3]), digits=2)`.
 
-For each model (confounding and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.
+For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.
 
-```{r, plot1, cache=FALSE}
+```{r, plot1}
 plot(res$conf)
 plot(res$full)
 ```
@@ -234,4 +226,11 @@ The  `plot` method applied to a `cause` object will arrange all of this informat
 
 ```{r, plot2}
 plot(res)
+```
+
+The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the confounder and the contribution of each variant to the ELPD test statistic.
+
+
+```{r, plot3}
+plot(res, type="data")
 ```

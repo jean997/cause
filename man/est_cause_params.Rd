@@ -4,7 +4,8 @@
 \alias{est_cause_params}
 \title{Estimate CAUSE Nuisance Parameters}
 \usage{
-est_cause_params(X, variants, optmethod = c("mixSQP", "mixIP"))
+est_cause_params(X, variants, optmethod = c("mixSQP", "mixIP"),
+  null_wt = 10)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}

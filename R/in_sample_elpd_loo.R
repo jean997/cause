@@ -74,5 +74,6 @@ in_sample_elpd_loo <- function(X, fits, variants, nsamps=1000){
   mods <- mods %>% mutate(z = delta_elpd/se_delta_elpd) %>%
           select(model1, model2, delta_elpd, se_delta_elpd, z)
   class(mods) <- c("cause_elpd", "data.frame")
-  return(mods)
+  ret <- list(mods = mods, loos = loos)
+  return(ret)
 }

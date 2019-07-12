@@ -5,4 +5,4 @@ output:
     toc: false
 ---
 
-This website should contain supporting information for the CAUSE R package which you can find at github.com/jean997/cause. Ideally it will contain everything you need to get started with the package and also instructions for replicating the analyses in Morrsion et al 2018. Right at this moment it is just a place holder but that will change in the next day or so. 
+This website should contain supporting information for the CAUSE R package which you can find at github.com/jean997/cause. Ideally it will contain everything you need to get started with the package and also instructions for replicating the analyses in the accompanying paper. Its still a work in progress.  

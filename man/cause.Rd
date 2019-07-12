@@ -6,7 +6,9 @@
 \alias{cause-package}
 \title{CAUSE}
 \usage{
-cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10)
+cause(X, param_ests, variants = X$snp, sigma_g, qalpha = 1,
+  qbeta = 10, max_q = 1, force = FALSE, n_start_gamma_eta = 21,
+  n_start_q = 11)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
@@ -15,11 +17,20 @@ cause(X, variants, param_ests, sigma_g = 0.6, qalpha = 1, qbeta = 10)
 This contains estimates of the mixing proportions and an estimate of rho,
 the correlation in test statistics that is due to overlapping samples or population structure.}
 
+\item{variants}{A vector of variants to include in the analysis.}
+
 \item{sigma_g}{Parameter specifying the prior distribution of gamma and eta.
 gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).}
 
 \item{qalpha, qbeta}{Parameters defining the prior distribution of q.
 q ~ Beta(qalpha, qbeta)}
+
+\item{max_q}{Largest value of q to be allowed. If max_q < 1 then the prior will be truncated.}
+
+\item{force}{If true, do not give an error if parameter estimates did not converge.}
+
+\item{n_start_gamma_eta, n_start_q}{Number of starting bins for grid approximation.
+You should not need to change these but if you are suspicious about your results, try increasing them.}
 }
 \value{
 A list with items conf, full, elpd, summary, and plot.

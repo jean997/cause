@@ -11,10 +11,9 @@
 #'posteriors refers to the posterior parameter distributions contained in  'fit'.
 #' We compute l(x_i | posteriors, Z=1) and l(x_i | posteriors, Z_i = 0) where l denotes the likelihood.
 #' We then comput P(Z_i = 1 | posteriors) = l(x_i | posteriors, Z_i = 1)/(l(x_i | posteriors, Z_i = 1) + l(x_i | posteriors, Z_i = 0))
-#' @return an object of class cause_data and data.frame. The returned object is identical to X
-#' but contains additional columns ll_Z1, ll_Z0, and prob_Z1.
+#' @return A vector of probabilities corresponding to the rows of X
 #'@export
-prob_confounding <- function(X, fit, nsamps=1000){
+prob_confounding <- function(X, fit, nsamps=1000, name_post = ""){
   if(!inherits(X, "cause_data")){
     warning("Converting X to cause_data.")
     X <- new_cause_data(X)
@@ -33,8 +32,8 @@ prob_confounding <- function(X, fit, nsamps=1000){
                               mix_grid$S1, mix_grid$S2, mix_grid$pi,
                               X$beta_hat_1, X$beta_hat_2,
                               X$seb1, X$seb2)
-  X$ll_Z1 = rowMeans(ll_mat_Z1)
-  X$ll_Z0 = rowMeans(ll_mat_Z0)
-  X$prob_Z1 <- with(X, exp(ll_Z1)/(exp(ll_Z1) + exp(ll_Z0)))
-  return(X)
+  ll_Z1 = rowMeans(ll_mat_Z1)
+  ll_Z0 = rowMeans(ll_mat_Z0)
+  prob_Z1 <- exp(ll_Z1)/(exp(ll_Z1) + exp(ll_Z0))
+  return(prob_Z1)
 }

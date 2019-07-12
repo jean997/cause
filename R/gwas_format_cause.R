@@ -90,7 +90,7 @@ gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
                  !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
         filter(is.finite(seb1) & is.finite(seb2) &
                  is.finite(beta_hat_1) & is.finite(beta_hat_2)) %>%
-        filter(seb1 >= 0 & seb2 >= 0)
+        filter(seb1 > 0 & seb2 > 0)
   if(!upper1){
     X  <- X %>% mutate(A2.x = toupper(A2.x))
   }
@@ -159,7 +159,8 @@ align_beta <- function(X, beta_hat_name, upper=TRUE){
 #'@export
 new_cause_data <- function(x = data.frame()){
   stopifnot(inherits(x, "data.frame"))
-  stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
+  x <- validate_cause_data(x)
+  #stopifnot(all(c("snp", "beta_hat_1", "seb1", "beta_hat_2", "seb2") %in% names(x)))
   structure(x, class = c("cause_data", "data.frame"))
 }
 
@@ -173,10 +174,10 @@ validate_cause_data <- function(x){
          call.=FALSE)
   }
   for(n in req_names[-1]){
-    if(any(is.na(X[[n]]))){
+    if(any(is.na(x[[n]]))){
       stop(paste0("Missing values in ", n), call.=FALSE)
     }
-    if(any(!is.finite(X[[n]]))){
+    if(any(!is.finite(x[[n]]))){
       stop(paste0("Infinite values in ", n), call.=FALSE)
     }
   }
