@@ -2,8 +2,8 @@ CAUSE: Causal Analysis Using Summary Effect Estimates
 ======
 
 [![Travis build status](https://travis-ci.com/jean997/cause.svg?branch=master)](https://travis-ci.com/jean997/cause)
-
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/jean997/cause?branch=master&svg=true)](https://ci.appveyor.com/project/jean997/cause)
+[![CircleCI build status](https://circleci.com/gh/jean997/cause.svg?style=svg)](https://circleci.com/gh/jean997/cause)
 
 This R package implements the CAUSE method described in Morrison et al 2018 (pre-print coming soon).
 

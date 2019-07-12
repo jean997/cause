@@ -9,3 +9,4 @@
 ^sim_results$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^\.circleci/config\.yml$
