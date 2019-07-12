@@ -3,6 +3,8 @@ CAUSE: Causal Analysis Using Summary Effect Estimates
 
 [![Travis build status](https://travis-ci.com/jean997/cause.svg?branch=master)](https://travis-ci.com/jean997/cause)
 
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/jean997/cause?branch=master&svg=true)](https://ci.appveyor.com/project/jean997/cause)
+
 This R package implements the CAUSE method described in Morrison et al 2018 (pre-print coming soon).
 
 Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.html
