@@ -12,7 +12,7 @@ editor_options:
 # Weclome to the CAUSE website!
 Here are some useful links
 
- [Pre-print](https://www.biorxiv.org/content/10.1101/682237v1)
+ [Pre-print](https://www.biorxiv.org/content/10.1101/682237v2)
  
  [R package](https://github.com/jean997/cause)
  
