@@ -1,0 +1,101 @@
+---
+title: "Small analysis for testing the package"
+author: "Jean Morrison"
+date: "2019-07-15"
+output: workflowr::wflow_html
+---
+
+
+```{r options, include = FALSE}
+#knitr::opts_chunk$set(eval=FALSE)
+```
+
+## Introduction
+This is a mini version of the package walk through that runs quickly for doing tests. Right now the only difference is that we use fewer variants to compute the nuisance praameters and there is no supporting text. 
+
+## Step 1: Format Data for CAUSE
+
+```{r}
+library(readr)
+library(dplyr)
+library(cause)
+```
+
+
+
+```{r, eval=FALSE}
+system("mkdir example_data/")
+download.file("https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS", destfile = "example_data/LDL_CAD_merged.RDS")
+```
+
+```{r, readdata2}
+X <- readRDS("example_data/LDL_CAD_merged.RDS")
+```
+
+```{r, lookatdata}
+head(X)
+```
+
+
+
+## Step 2: Calculate nuisance parameters
+
+
+```{r, params}
+set.seed(100)
+varlist <- with(X, sample(snp, size=10000, replace=FALSE))
+params <- est_cause_params(X, varlist)
+```
+
+
+## Step 3: LD Pruning
+
+
+```{r, eval=FALSE}
+download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
+```
+
+
+## Step 4: Fit CAUSE
+
+
+```{r, cause}
+top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
+res <- cause(X=X, variants = top_vars, param_ests = params)
+```
+
+
+
+## Step 5: Look at Results 
+
+
+```{r, look}
+class(res)
+names(res)
+res$elpd
+
+class(res$sharing)
+class(res$causal)
+```
+ 
+
+```{r, plot1}
+plot(res$sharing)
+plot(res$causal)
+```
+ 
+The `summary` method will summarize the posterior medians and credible intervals.
+
+```{r, summary}
+summary(res, ci_size=0.95)
+```
+
+The  `plot` method applied to a `cause` object will arrange all of this information on one spread.
+
+```{r, plot2}
+plot(res)
+```
+
+```{r, plot3}
+plot(res, type="data")
+```
