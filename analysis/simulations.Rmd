@@ -22,7 +22,7 @@ We conduct simulations using the [Dynamical Statisical Comparisons](https://step
 
 # Set Up The Analysis Directory
 
-These instructions specifically generate the results presented in [our paper](https://www.biorxiv.org/content/10.1101/682237v1). However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.
+These instructions specifically generate the results presented in [our paper](https://www.biorxiv.org/content/10.1101/682237v3). However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.
 
 From inside this working directory use the R command 
 ```{r, eval=FALSE}
