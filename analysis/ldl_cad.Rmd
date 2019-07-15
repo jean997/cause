@@ -178,7 +178,7 @@ download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl
 
 ## Step 4: Fit CAUSE
 
-Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes. 
+Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes. 
 
 ```{r, cause}
 top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
@@ -189,15 +189,15 @@ res <- cause(X=X, variants = top_vars, param_ests = params)
 
 ## Step 5: Look at Results 
 
-The resulting `cause` object contains an object for the partial sharing model fit (`conf`), and object for the causal model fit (`full`) and a table of ELPD results. 
+The resulting `cause` object contains an object for the partial sharing model fit (`sharing`), and object for the causal model fit (`causal`) and a table of ELPD results. 
 
 ```{r, look}
 class(res)
 names(res)
 res$elpd
 
-class(res$conf)
-class(res$full)
+class(res$sharing)
+class(res$causal)
 ```
  
  The `elpd` table has the following columns: 
@@ -207,13 +207,13 @@ class(res$full)
  + se_delta_elpd: Estimated standard error of delta_elpd
  + z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant. 
 
- In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The $z$-score is `r round(res$elpd$z[3], digits=2)` corresponding to a p-value of `r signif(pnorm(res$elpd$z[3]), digits=2)`.
+ In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The $z$-score is `r round(res$elpd$z[3], digits=2)` corresponding to a p-value of `r signif(pnorm(res$elpd$z[3]), digits=2)`.
 
 For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.
 
 ```{r, plot1}
-plot(res$conf)
-plot(res$full)
+plot(res$sharing)
+plot(res$causal)
 ```
  
 The `summary` method will summarize the posterior medians and credible intervals.
@@ -228,7 +228,7 @@ The  `plot` method applied to a `cause` object will arrange all of this informat
 plot(res)
 ```
 
-The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the confounder and the contribution of each variant to the ELPD test statistic.
+The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor ($U$) and the contribution of each variant to the ELPD test statistic.
 
 
 ```{r, plot3}
