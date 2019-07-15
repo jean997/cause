@@ -385,7 +385,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="introduction.html">Introduction</a>
+  <a href="index.html">Introduction</a>
 </li>
 <li>
   <a href="ldl_cad.html">Software Tutorial</a>
@@ -450,7 +450,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-11
+<strong>Last updated:</strong> 2019-07-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -585,10 +585,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreec2d37323b52a89f01ed0091d8e5a2e93a29ce72ftargetblankc2d3732a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/c2d37323b52a89f01ed0091d8e5a2e93a29ce72f" target="_blank">c2d3732</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree86ffddd20efe2d2834dc5b682ada896f97c55bddtargetblank86ffddda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/86ffddd20efe2d2834dc5b682ada896f97c55bdd" target="_blank">86ffddd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreec2d37323b52a89f01ed0091d8e5a2e93a29ce72ftargetblankc2d3732a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree86ffddd20efe2d2834dc5b682ada896f97c55bddtargetblank86ffddda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,11 +599,10 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
-    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
     Untracked:  analysis/figure/
+    Untracked:  cause.Rcheck/
+    Untracked:  cause_0.2.0.0161.tar.gz
     Untracked:  docs/cause.bib
-    Untracked:  docs/cause_figure_3_standalone.pdf
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  example_data/chr22_AF0.05_0.1.RDS
     Untracked:  example_data/chr22_AF0.05_snpdata.RDS
@@ -651,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/86ffddd20efe2d2834dc5b682ada896f97c55bdd/analysis/simulations.Rmd" target="_blank">86ffddd</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-15
+</td>
+<td>
+wflow_publish(c(“analysis/index.Rmd”, “analysis/simulations.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/1074c6128db95e1abb96fa5697c39ef469e1d266/docs/simulations.html" target="_blank">1074c61</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -888,7 +921,7 @@ wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “a
 </div>
 <div id="set-up-the-analysis-directory" class="section level1">
 <h1>Set Up The Analysis Directory</h1>
-<p>These instructions specifically generate the results presented in <a href="https://www.biorxiv.org/content/10.1101/682237v1">our paper</a>. However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.</p>
+<p>These instructions specifically generate the results presented in <a href="https://www.biorxiv.org/content/10.1101/682237v3">our paper</a>. However, by modifying the dsc files, you can run your own experiments. We will describe the dsc files later on this page. To set up the analysis create a working directory that you will run the simulations in. Make sure all the software in the previous section is installed.</p>
 <p>From inside this working directory use the R command</p>
 <pre class="r"><code>library(causeSims)
 setup_sims()</code></pre>

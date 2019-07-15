@@ -450,7 +450,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-12
+<strong>Last updated:</strong> 2019-07-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -585,10 +585,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree8fbc50cf34adcd19c0b122f56b639f7c5e238003targetblank8fbc50ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/8fbc50cf34adcd19c0b122f56b639f7c5e238003" target="_blank">8fbc50c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree86ffddd20efe2d2834dc5b682ada896f97c55bddtargetblank86ffddda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/86ffddd20efe2d2834dc5b682ada896f97c55bdd" target="_blank">86ffddd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree8fbc50cf34adcd19c0b122f56b639f7c5e238003targetblank8fbc50ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree86ffddd20efe2d2834dc5b682ada896f97c55bddtargetblank86ffddda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,9 +599,9 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
-    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
     Untracked:  analysis/figure/
+    Untracked:  cause.Rcheck/
+    Untracked:  cause_0.2.0.0161.tar.gz
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  example_data/chr22_AF0.05_0.1.RDS
@@ -612,9 +612,6 @@ Untracked files:
     Untracked:  src/RcppExports.o
     Untracked:  src/log_likelihood_functions.o
     Untracked:  temp.txt
-
-Unstaged changes:
-    Modified:   analysis/simulations.Rmd
 
 </code></pre>
 <p>
@@ -653,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/86ffddd20efe2d2834dc5b682ada896f97c55bdd/analysis/index.Rmd" target="_blank">86ffddd</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-15
+</td>
+<td>
+wflow_publish(c(“analysis/index.Rmd”, “analysis/simulations.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/350353625a9f789887406985e0f5f8d575829b7d/docs/index.html" target="_blank">3503536</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1037,7 +1068,7 @@ Start workflowr project.
 <div id="weclome-to-the-cause-website" class="section level1">
 <h1>Weclome to the CAUSE website!</h1>
 <p>Here are some useful links</p>
-<p><a href="https://www.biorxiv.org/content/10.1101/682237v2">Pre-print</a></p>
+<p><a href="https://www.biorxiv.org/content/10.1101/682237v3">Pre-print</a></p>
 <p><a href="https://github.com/jean997/cause">R package</a></p>
 <p><a href="WNAR_2019.pdf">Slides!</a> from WNAR 2019</p>
 <p>CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models correlated and uncorrelated horizontal pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysi.</p>
