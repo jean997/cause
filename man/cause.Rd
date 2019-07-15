@@ -30,16 +30,37 @@ q ~ Beta(qalpha, qbeta)}
 \item{force}{If true, do not give an error if parameter estimates did not converge.}
 
 \item{n_start_gamma_eta, n_start_q}{Number of starting bins for grid approximation.
-You should not need to change these but if you are suspicious about your results, try increasing them.}
+You shouldn't need to change these but if you are suspicious about your results, you might try increasing them.
+It's best to use odd numbers.}
 }
 \value{
-A list with items conf, full, elpd, summary, and plot.
+An object of class "cause" that contains posterior estimates for causal and sharing models as well as
+results of the model comparison test. See Details.
 }
 \description{
-Fit CAUSE confounding only and full (causal) models,
+Fit CAUSE sharing and causal models,
 calculate ELPD test statistic and estimate posteriors
 
 Implementation of CAUSE described in Morrison et al. (2018)
+}
+\details{
+This function estimates posterior distributions for gamma, eta, and q under the sharing and causal models
+and computes a test statistic comparing the two models. The returned object contains
+
+sharing, causal: posterior estimates under model.
+
+elpd: A data frame giving estimated difference in elpd between pairs of sharing, causal and null model with standard errors.
+The null model is the model with gamma = eta = q = 0 and allows neither a causal effect nor correlated pleiotropy.
+
+data: The data used to compute the object. This data frame also contains posterior estimates for each variant of acting
+through U under both models.
+
+sigma_g: Prior variance of gamma and eta. This value is chosen based on the data by default but can be supplied using the
+sigma_g parameter in the function call.
+
+qalpha, qbeta: The prior distribution of q is Beta(qalpha, qbeta)
+
+Functions summary() and plot() can be used with cause objects. See ?summary.cause and ?plot.cause
 }
 \author{
 Jean Morrison <jeanm@uchicago.edu>

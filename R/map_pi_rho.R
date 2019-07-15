@@ -1,7 +1,7 @@
 
 #'@title Estimate pi and mixture proportions under null model
 #'@description Estimare the MAP for rho and the mixing proportions using
-#'coordinate descent. Causal and confounding effects are fixed at zero.
+#'coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
 #'@param X An object of class cause_data containing data for the two traits.
 #'@param mix_grid An object of class cause_grid containing variance pair candidates
 #'@param rho_start Starting value for rho
@@ -37,7 +37,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     matrix_lik <- exp(matrix_llik)
     w_res <- optfun(matrix_lik =matrix_lik,
                           prior=c(null_wt, rep(1, K-1)),
-                          weights=rep(1, nrow(matrix_lik))) 
+                          weights=rep(1, nrow(matrix_lik)))
     pi <- pi_old <- pmax(w_res$pihat, 0)
   }else{
     pi <- pi_old <- mix_grid$pi

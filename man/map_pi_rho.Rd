@@ -21,5 +21,5 @@ map_pi_rho(X, mix_grid, rho_start = 0, tol = 1e-07, n.iter = 20,
 }
 \description{
 Estimare the MAP for rho and the mixing proportions using
-coordinate descent. Causal and confounding effects are fixed at zero.
+coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
 }

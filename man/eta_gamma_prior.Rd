@@ -2,7 +2,7 @@
 % Please edit documentation in R/eta_gamma_prior.R
 \name{eta_gamma_prior}
 \alias{eta_gamma_prior}
-\title{eta/gamma prior}
+\title{Prior variance for gamma and eta}
 \usage{
 eta_gamma_prior(X, variants, prob = 0.05)
 }
@@ -14,10 +14,10 @@ eta_gamma_prior(X, variants, prob = 0.05)
 \item{prob}{See Details}
 }
 \value{
-A list with items conf, full, elpd, summary, and plot.
+A prior variance for gamma and eta (scalar)
 }
 \description{
-Choose prior variance for eta and gamma empirically from data
+Choose prior variance for eta and gamma based on the data
 }
 \details{
 The function will return a variance, sigma, such that

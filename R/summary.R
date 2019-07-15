@@ -8,7 +8,7 @@
 #'@export
 summary.cause <- function(res, ci_size=0.95, digits=2){
   ans <- list()
-  ans$quants <- lapply(c("conf", "full"), function(i){
+  ans$quants <- lapply(c("sharing", "causal"), function(i){
     fit <- res[[i]]
     gamma <- eta <- q <- NA
     full_params <- c("gamma", "eta", "q")
@@ -24,7 +24,7 @@ summary.cause <- function(res, ci_size=0.95, digits=2){
     })
     return(tt)
   })
-  ans$z <- with(res$elpd, z[model1=="conf" & model2=="full"])
+  ans$z <- with(res$elpd, z[model1=="sharing" & model2=="causal"])
   ans$p <- pnorm(ans$z)
   ans$tab <- sapply(ans$quants, function(y){
     apply(y, 2, function(z){
@@ -35,7 +35,7 @@ summary.cause <- function(res, ci_size=0.95, digits=2){
     })
   })
   ans$tab <- t(ans$tab)
-  ans$tab <- cbind(model=c("Confounding Only", "Causal"), ans$tab)
+  ans$tab <- cbind(model=c("Sharing", "Causal"), ans$tab)
   ans$ci_size <- ci_size
   class(ans) <- "cause_summary"
   return(ans)
@@ -93,7 +93,7 @@ print.cause_summary <- function(x, digits=2){
 print.summary_cause_post <- function(x){
   ix <- is.na(x$quants[1,])
   if(all(ix == FALSE)) cat("Full Model:\n")
-    else if(ix[1] == TRUE & ix[2]==FALSE & ix[3] == FALSE) cat("Confounding Only Model:\n")
+    else if(ix[1] == TRUE & ix[2]==FALSE & ix[3] == FALSE) cat("Sharing Model:\n")
       else cat("Unrecognized Model:\n")
   cat("Posterior medians and ", 100*x$ci_size, "% credible intervals:\n")
   print(x$tab)

@@ -8,7 +8,7 @@ new_cause_data_fit(x = data.frame())
 }
 \arguments{
 \item{x}{a data.frame that includes columns snp, beta_hat_1, seb1, beta_hat_2, seb2, delta_elpd,
-prob_Z1_conf, prob_Z1_full in any order.
+prob_Z1_sharing, prob_Z1_causal in any order.
 x may also contain other columns}
 }
 \value{

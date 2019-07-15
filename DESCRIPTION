@@ -1,7 +1,7 @@
 Package: cause
 Type: Package
 Title: CAUSE: Causal Analysis Using Summary Effect Estimates
-Version: 0.2.0.0161
+Version: 0.3.0
 Author: Jean Morrison
 Maintainer: Jean Morrison <jeanm@uchicago.edu>
 Description: Identify causal patterns using pairs of GWAS summary statistics. 
@@ -10,7 +10,7 @@ Encoding: UTF-8
 LazyData: false
 URL: http://github.com/jean997/cause
 BugReports: http://github.com/jean997/cause/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 LinkingTo: Rcpp, RcppParallel
 Imports: Rcpp,  RcppParallel, mixsqp,  numDeriv,  ashr,  dplyr, ggplot2,  scales,  gridExtra,   loo,  matrixStats,  purrr,  tidyr,  intervals
 SystemRequirements: GNU make

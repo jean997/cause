@@ -17,7 +17,7 @@
 \item{pval_thresh}{p-value threshold used if type=="data".}
 }
 \description{
-Plot posteriors for confounding and causal models, display summary tables
+Plot posteriors for sharing and causal models, display summary tables
 }
 \details{
 If type == "posteriors", the function will plot the posterior distributions of the parameters

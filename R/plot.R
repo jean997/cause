@@ -26,15 +26,15 @@ plot.cause_post <- function(fit, type=c("posteriors", "data"), data=NULL, pval_t
   if(type=="data"){
     stopifnot(inherits(data, "cause_data_fit"))
     if(all(c("gamma", "eta") %in% fit$params)){
-      #Full model
+      #Causal model
       medians <- data.frame(param = c("gamma", "eta"), med = summary(fit)$quants[1, c(1, 2)])
-      var <- "prob_Z1_full"
-      title <- "Full Model"
+      var <- "prob_Z1_causal"
+      title <- "Causal Model"
     }else if("eta" %in% fit$params){
-      #Confounding model
+      #Sharing model
       medians <- data.frame(param = c( "eta"), med = summary(fit)$quants[1, 2])
-      var <- "prob_Z1_conf"
-      title <- "Confounding Only Model"
+      var <- "prob_Z1_sharing"
+      title <- "Sharing Model"
     }
 
     plt <- data %>% mutate(pval1 = 2*pnorm(-abs(beta_hat_1/seb1))) %>%
@@ -53,7 +53,7 @@ plot.cause_post <- function(fit, type=c("posteriors", "data"), data=NULL, pval_t
 }
 
 #'@title Plot CAUSE
-#'@description Plot posteriors for confounding and causal models, display summary tables
+#'@description Plot posteriors for sharing and causal models, display summary tables
 #'@param res object of class cause
 #'@param intern If TRUE, function returns a list of grobs. Otherwise it plots.
 #'@param type Either "posteriors" or "data". See details.
@@ -65,7 +65,7 @@ plot.cause_post <- function(fit, type=c("posteriors", "data"), data=NULL, pval_t
 plot.cause <- function(res, intern=FALSE, type=c("posteriors", "data"), pval_thresh = 5e-8){
   type <- match.arg(type)
   if(type == "posteriors"){
-    plts <- lapply(c("conf", "full"), function(i){
+    plts <- lapply(c("sharing", "causal"), function(i){
       plt <- plot(res[[i]])
       return(plt)})
     elpd <- res$elpd %>% mutate(p = pnorm(z),
@@ -85,7 +85,7 @@ plot.cause <- function(res, intern=FALSE, type=c("posteriors", "data"), pval_thr
     plot(h)
   }
   if(type=="data"){
-    plts <- lapply(c("conf", "full"), function(i){
+    plts <- lapply(c("sharing", "causal"), function(i){
       plt <- plot(res[[i]], type="data", data=res$data, pval_thresh=pval_thresh)
       return(plt)})
     max_delta_elpd <- max(abs(res$data$delta_elpd))
