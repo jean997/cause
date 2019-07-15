@@ -450,7 +450,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-12
+<strong>Last updated:</strong> 2019-07-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -585,10 +585,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree81d18417738e6fe77a859dc6ed976634ac359abftargetblank81d1841a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/81d18417738e6fe77a859dc6ed976634ac359abf" target="_blank">81d1841</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree02aa566eb42e92315345923066a7fbdb9d921115targetblank02aa566a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/02aa566eb42e92315345923066a7fbdb9d921115" target="_blank">02aa566</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree81d18417738e6fe77a859dc6ed976634ac359abftargetblank81d1841a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree02aa566eb42e92315345923066a7fbdb9d921115targetblank02aa566a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -597,21 +597,18 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
+    Ignored:    sim_results/
+    Ignored:    src/RcppExports.o
+    Ignored:    src/cause.so
+    Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
-    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
+    Untracked:  analysis/figure/
+    Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
-    Untracked:  example_data/chr22_AF0.05_0.1.RDS
-    Untracked:  example_data/chr22_AF0.05_snpdata.RDS
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
-    Untracked:  sim_results/
-    Untracked:  src/RcppExports.o
-    Untracked:  src/log_likelihood_functions.o
-    Untracked:  temp.txt
 
 </code></pre>
 <p>
@@ -650,6 +647,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/02aa566eb42e92315345923066a7fbdb9d921115/analysis/ldl_cad.Rmd" target="_blank">02aa566</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-16
+</td>
+<td>
+wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/1702accf8cc1746a5c599ab18b712450765ba676/docs/ldl_cad.html" target="_blank">1702acc</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1320,27 +1351,27 @@ Of these,  22835  have LD information.</code></pre>
 </div>
 <div id="step-4-fit-cause" class="section level2">
 <h2>Step 4: Fit CAUSE</h2>
-<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause</code> estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a confounding effect. This might take 5-10 minutes.</p>
+<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause</code> estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes.</p>
 <pre class="r"><code>top_vars &lt;- readRDS(&quot;example_data/top_ldl_pruned_vars.RDS&quot;)
 res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <pre><code>Estimating CAUSE posteriors using  1215  variants.</code></pre>
 </div>
 <div id="step-5-look-at-results" class="section level2">
 <h2>Step 5: Look at Results</h2>
-<p>The resulting <code>cause</code> object contains an object for the partial sharing model fit (<code>conf</code>), and object for the causal model fit (<code>full</code>) and a table of ELPD results.</p>
+<p>The resulting <code>cause</code> object contains an object for the partial sharing model fit (<code>sharing</code>), and object for the causal model fit (<code>causal</code>) and a table of ELPD results.</p>
 <pre class="r"><code>class(res)</code></pre>
 <pre><code>[1] &quot;cause&quot;</code></pre>
 <pre class="r"><code>names(res)</code></pre>
-<pre><code>[1] &quot;conf&quot;    &quot;full&quot;    &quot;elpd&quot;    &quot;loos&quot;    &quot;data&quot;    &quot;sigma_g&quot; &quot;qalpha&quot; 
+<pre><code>[1] &quot;sharing&quot; &quot;causal&quot;  &quot;elpd&quot;    &quot;loos&quot;    &quot;data&quot;    &quot;sigma_g&quot; &quot;qalpha&quot; 
 [8] &quot;qbeta&quot;  </code></pre>
 <pre class="r"><code>res$elpd</code></pre>
-<pre><code>  model1 model2 delta_elpd se_delta_elpd         z
-1   null   conf -63.488710      7.978181 -7.957793
-2   null   full -71.880159      9.175262 -7.834126
-3   conf   full  -8.391449      1.285055 -6.530034</code></pre>
-<pre class="r"><code>class(res$conf)</code></pre>
+<pre><code>   model1  model2 delta_elpd se_delta_elpd         z
+1    null sharing -63.488710      7.978181 -7.957793
+2    null  causal -71.880159      9.175262 -7.834126
+3 sharing  causal  -8.391449      1.285055 -6.530034</code></pre>
+<pre class="r"><code>class(res$sharing)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
-<pre class="r"><code>class(res$full)</code></pre>
+<pre class="r"><code>class(res$causal)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <p>The <code>elpd</code> table has the following columns:</p>
 <ul>
@@ -1349,9 +1380,9 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the full (causal) model is significantly better than the confounding model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.53 corresponding to a p-value of 3.310^{-11}.</p>
+<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.53 corresponding to a p-value of 3.310^{-11}.</p>
 <p>For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
-<pre class="r"><code>plot(res$conf)</code></pre>
+<pre class="r"><code>plot(res$sharing)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot1-1">
@@ -1489,7 +1520,7 @@ Jean Morrison
 </table>
 </div>
 </div>
-<pre class="r"><code>plot(res$full)</code></pre>
+<pre class="r"><code>plot(res$causal)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot1-2">
@@ -1631,9 +1662,9 @@ Jean Morrison
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
 <pre><code>p-value testing that causal model is a better fit:  3.3e-11 
 Posterior medians and  95 % credible intervals:
-     model              gamma               eta                  
-[1,] &quot;Confounding Only&quot; NA                  &quot;0.38 (0.31, 0.45)&quot;  
-[2,] &quot;Causal&quot;           &quot;0.34 (0.28, 0.39)&quot; &quot;-0.01 (-0.66, 0.54)&quot;
+     model     gamma               eta                  
+[1,] &quot;Sharing&quot; NA                  &quot;0.38 (0.31, 0.45)&quot;  
+[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.39)&quot; &quot;-0.01 (-0.66, 0.54)&quot;
      q                  
 [1,] &quot;0.78 (0.64, 0.88)&quot;
 [2,] &quot;0.03 (0, 0.25)&quot;   </code></pre>
@@ -1776,7 +1807,7 @@ Jean Morrison
 </table>
 </div>
 </div>
-<p>The <code>plot</code> method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the confounder and the contribution of each variant to the ELPD test statistic.</p>
+<p>The <code>plot</code> method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor (<span class="math inline">\(U\)</span>) and the contribution of each variant to the ELPD test statistic.</p>
 <pre class="r"><code>plot(res, type=&quot;data&quot;)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1910,7 +1941,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_0.2.0.0126 dplyr_0.8.3      readr_1.3.1     
+[1] cause_0.2.0.0161 dplyr_0.8.3      readr_1.3.1     
 
 loaded via a namespace (and not attached):
  [1] tidyselect_0.2.5     xfun_0.8             ashr_2.2-32         
