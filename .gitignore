@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 src/*o
+example_data/
+sim_results/
