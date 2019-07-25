@@ -585,10 +585,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6aecf9160dae8320d1281d9d5ae5bf0d1d7e1c78targetblank6aecf91a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/6aecf9160dae8320d1281d9d5ae5bf0d1d7e1c78" target="_blank">6aecf91</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree112bcdee0633a4f6d155e402104e1527eca2d19atargetblank112bcdea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/112bcdee0633a4f6d155e402104e1527eca2d19a" target="_blank">112bcde</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6aecf9160dae8320d1281d9d5ae5bf0d1d7e1c78targetblank6aecf91a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree112bcdee0633a4f6d155e402104e1527eca2d19atargetblank112bcdea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -603,7 +603,8 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  analysis/figure/
+    Untracked:  analysis/figure/ldl_cad.Rmd/
+    Untracked:  analysis/figure/little_test.Rmd/
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
@@ -648,6 +649,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/112bcdee0633a4f6d155e402104e1527eca2d19a/analysis/simulations.Rmd" target="_blank">112bcde</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+<td>
+smally typo
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/simulations.html" target="_blank">b115414</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -944,8 +979,8 @@ wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “a
 </div>
 </div>
 </div>
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
 <p>This page gives instructions for running the simulations that we ran to evaluate CAUSE and will allow you to reproduce the results <a href="https://www.biorxiv.org/content/10.1101/682237v3">the paper</a>. It will hopefully also serve as a resource for explaining those results in more detail and allow you to modify simulations to run your own experiments. There are a lot of parameters that can be changed. We tried to explore a reasonable range of scenarios but there are many more variations that could be tried. Running the simulations involves multiple set-up steps, mostly software installation and may take a bit of time, especially if you are new to DSC. Additionally, completing the simulations requires several hours of computing and needs to be done on a cluster. If you don’t have access to that kind of computing resource you may still find this section useful. All of our results can be downloaded and we will include some discussions of the patterns that we observed as we go along.</p>
 </div>
 <div id="set-up" class="section level1">
@@ -1128,6 +1163,43 @@ pwr &lt;- res %&gt;%
 
 pwr</code></pre>
 <p><img src="figure/simulations.Rmd/plot_power-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_power-1">
+Past versions of plot_power-1.png
+</button>
+</p>
+<div id="fig-plot_power-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/plot_power-1.png" target="_blank">b115414</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>CAUSE has lower power than the other methods except when the power for trait <span class="math inline">\(M\)</span> is low and the power for trait <span class="math inline">\(Y\)</span> is high. This is expected since CAUSE uses a more stringent criterion to conclude that the data are consistent with a causal effect. It is able to achieve better power when <span class="math inline">\(M\)</span> is under-powered and <span class="math inline">\(Y\)</span> is well powered because it uses all variants genome-wide rather than only those that are highly significant for trait <span class="math inline">\(M\)</span>. This is an important setting because it may be applicable to scenarios when <span class="math inline">\(M\)</span> is a biomarker or molecular trait and <span class="math inline">\(Y\)</span> is a complex triat.</p>
 </div>
 <div id="false-positives" class="section level3">
@@ -1161,6 +1233,43 @@ res2 &lt;- bind_rows(res, z1, z2) %&gt;%
 
 fp</code></pre>
 <p><img src="figure/simulations.Rmd/plot_fp-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_fp-1">
+Past versions of plot_fp-1.png
+</button>
+</p>
+<div id="fig-plot_fp-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/plot_fp-1.png" target="_blank">b115414</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>In all cases CAUSE has a lower false positive rate than alternative methods. The false positive rate increases for large values of <span class="math inline">\(q\)</span> and is worse when the effect of the shared factor is stronger.</p>
 </div>
 <div id="roc-curves" class="section level3">
@@ -1257,6 +1366,43 @@ plt &lt;- roc_df %&gt;%
           facet_wrap(~n1*n2, nrow=2, labeller= label_parsed)
 plt</code></pre>
 <p><img src="figure/simulations.Rmd/roc_curves-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-roc_curves-1">
+Past versions of roc_curves-1.png
+</button>
+</p>
+<div id="fig-roc_curves-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/roc_curves-1.png" target="_blank">b115414</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="prior-robustness-results" class="section level2">
