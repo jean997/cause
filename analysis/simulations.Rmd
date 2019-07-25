@@ -6,7 +6,7 @@ output: workflowr::wflow_html
 ---
 
 
-## Introduction
+# Introduction
 
 This page gives instructions for running the simulations that we ran to evaluate CAUSE and will allow you to reproduce the results [the paper](https://www.biorxiv.org/content/10.1101/682237v3). It will hopefully also serve as a resource for explaining those results in more detail and allow you to modify simulations to run your own experiments. There are a lot of parameters that can be changed. We tried to explore a reasonable range of scenarios but there are many more variations that could be tried. Running the simulations involves multiple set-up steps, mostly software installation and may take a bit of time, especially if you are new to DSC. Additionally, completing the simulations requires several hours of computing and needs to be done on a cluster. If you don't have access to that kind of computing resource you may still find this section useful. All of our results can be downloaded and we will include some discussions of the patterns that we observed as we go along. 
 
