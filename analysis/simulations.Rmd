@@ -98,7 +98,7 @@ The frist 18 columns of the data frame are all simulation parameters, informatio
 + `tau`, `omega`: Transformations of $\gamma$ and $\eta$ respectively. $\tau$ is the proportion of $Y$ heritability explained by the causal effect of trait $M$, equal to $\tau = \gamma^2 h^2_{M}/h^2_Y$. In our case $h^2_M  = h^2_Y$ for all simulations so $\tau = \gamma^2$. $\omega$ is defined as $\omega = \eta^2 h^2_M/h^2_Y  = \eta^2$. 
 + `h1`, `h2`: Heritabilitites for trait $M$ and $Y$ respectively `h1` $ = h^2_M$ and `h2`$= h^2_Y$. In our case these are equal to 0.25 for all simulations.
 + `n1`, `n2`: Sample size for GWAS of traits $M$ and $Y$ respectively. These can be equal to 12,000 (low power) or 40,000 (high power).
-+ `neffect`, `neffect2`: Expected number of effect SNPS for trait $M$ and $Y$. In our case equal to 1000 for all simulations.
++ `neffect1`, `neffect2`: Expected number of effect SNPS for trait $M$ and $Y$. In our case equal to 1000 for all simulations.
 + `lcv_q1`, `lcv_q2`, `gcp`: True values of the LCV parameters $q_1$, $q_2$ and GCP. These are computed from $\gamma$, $\eta$ and $q$. 
 + `m_sig`: The number of genome-wide significant variants for trait $M$ after pruning for LD using an threshold of $r^2 < 0.1$
 
