@@ -5,6 +5,32 @@ date: "2019-06-25"
 output: workflowr::wflow_html
 ---
 
-## Coming Soon!
+# Introduction
+
+In this page we walk through an analysis of pairs of 16 traits with publicly available GWAS data using CAUSE. These results are also presented in [the paper](https://www.biorxiv.org/content/10.1101/682237v3) (Section 2.3) so this page will serve two functions. The first is that it allows an interested person to replicate those results. The second is that it is an example of how to set up a larger scale anlaysis using CAUSE and explains some of the technical differences from an analysis of a single pair of traits. In the paper, we present results for pairs of 20 traits. However, blood pressure results from Eheret et al (2011) (PMID: 21909115) must be obtained [through dbGAP](https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000585.v2.p1) and so aren't included here. 
+
+# Set Up
+
+We are using Snakemake and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or make sure that you have Python3, and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. 
+
+The first step is to create the conda environment
+
+```
+conda create -n cause_gwas python=3.6 snakemake
+```
+
+Next create a working directory that you would like to analyze the data in. Change to that directory using `cd` in Mac or Linux. For example
+
+```
+mkdir gwas_pairs
+cd gwas_pairs
+```
+
+Inside of R, run 
+
+```
+cause::setup_gwas_pairs()
+```
+This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. You can use the organizational structure of this analysis as a jumping off point even if you would like to use different data. 
 
 
