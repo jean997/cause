@@ -385,10 +385,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">Introduction</a>
 </li>
 <li>
-  <a href="ldl_cad.html">R Package Tutorial</a>
+  <a href="ldl_cad.html">Software Tutorial</a>
 </li>
 <li>
   <a href="simulations.html">Simulations</a>
@@ -432,7 +432,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -441,7 +441,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -450,13 +450,13 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-09
+<strong>Last updated:</strong> 2019-07-29
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>cause/gwas_data/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
@@ -481,10 +481,114 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreee9682b2190ef2cd7fa17814deafa80656994f89dtargetblanke9682b2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/e9682b2190ef2cd7fa17814deafa80656994f89d" target="_blank">e9682b2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongobjectspresent"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Environment:</strong> objects present </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreee9682b2190ef2cd7fa17814deafa80656994f89dtargetblanke9682b2a" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongobjectspresent" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+The global environment had objects present when the code in the R Markdown file was run. These objects can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment. Use <code>wflow_publish</code> or <code>wflow_build</code> to ensure that the code is always run in an empty environment.
+</p>
+<p>
+The following objects were defined in the global environment when these results were created:
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:left;">
+Class
+</th>
+<th style="text-align:left;">
+Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+data
+</td>
+<td style="text-align:left;">
+environment
+</td>
+<td style="text-align:left;">
+56 bytes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+env
+</td>
+<td style="text-align:left;">
+environment
+</td>
+<td style="text-align:left;">
+56 bytes
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20181014code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20181014)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20181014code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeded169320dba625535002b37986d526ba2f94daetargetblankded1693a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/ded169320dba625535002b37986d526ba2f94dae" target="_blank">ded1693</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeded169320dba625535002b37986d526ba2f94daetargetblankded1693a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -493,22 +597,20 @@ Great! You are using Git for version control. Tracking code development and conn
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    sim_results/
+    Ignored:    src/RcppExports.o
+    Ignored:    src/cause.so
+    Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:   (tumble-track's conflicted copy 2019-07-09).Rhistory
-    Untracked:  DESCRIPTION (tumble-track's conflicted copy 2019-07-09)
-    Untracked:  analysis/figure/
-    Untracked:  analysis/ldl_cad_cache/
-    Untracked:  example_data/chr22_AF0.05_0.1.RDS
-    Untracked:  example_data/chr22_AF0.05_snpdata.RDS
+    Untracked:  analysis/figure/ldl_cad.Rmd/
+    Untracked:  analysis/figure/little_test.Rmd/
+    Untracked:  cause.Rcheck/
+    Untracked:  docs/cause.bib
+    Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
-    Untracked:  src/RcppExports.o
-    Untracked:  src/log_likelihood_functions.o
-    Untracked:  temp.txt
-
-Unstaged changes:
-    Modified:   R/map_pi_rho.R
+    Untracked:  tests/
 
 </code></pre>
 <p>
@@ -552,6 +654,74 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/jean997/cause/blob/ded169320dba625535002b37986d526ba2f94dae/analysis/gwas_pairs.Rmd" target="_blank">ded1693</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-30
+</td>
+<td>
+wflow_publish(“analysis/gwas_pairs.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/ff51b982cfe73959bdf419b3f60d3da88b7fd554/analysis/gwas_pairs.Rmd" target="_blank">ff51b98</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-29
+</td>
+<td>
+Working on GWAS pairs documenation
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/e8c10f62a80fdf384bbc684f0ce328cdc0021b36/analysis/gwas_pairs.Rmd" target="_blank">e8c10f6</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-26
+</td>
+<td>
+Start writing instructions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/3b42836e19e6d6802cdd7aa7bc55b3c9b7703852/docs/gwas_pairs.html" target="_blank">3b42836</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/jean997/cause/blob/e9682b2190ef2cd7fa17814deafa80656994f89d/analysis/gwas_pairs.Rmd" target="_blank">e9682b2</a>
 </td>
 <td>
@@ -564,6 +734,40 @@ Jean Morrison
 wflow_publish(“analysis/gwas_pairs.Rmd”)
 </td>
 </tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/286f4e9e0a432565b96c38bba3a1b155c02f9a78/docs/gwas_pairs.html" target="_blank">286f4e9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/8f3b82e734b124b6d4d9d28b9defcce8d3726410/analysis/gwas_pairs.Rmd" target="_blank">8f3b82e</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-06-25
+</td>
+<td>
+wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “analysis/ldl_cad.Rmd”, “analysis/license.Rmd”,
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -571,8 +775,385 @@ wflow_publish(“analysis/gwas_pairs.Rmd”)
 </div>
 </div>
 </div>
-<div id="coming-soon" class="section level2">
-<h2>Coming Soon!</h2>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this page we walk through an analysis of pairs of 16 traits with publicly available GWAS data using CAUSE. These results are also presented in <a href="https://www.biorxiv.org/content/10.1101/682237v3">the paper</a> (Section 2.3) so this page will serve two functions. The first is that it allows an interested person to replicate those results. The second is that it is an example of how to set up a larger scale anlaysis using CAUSE and explains some of the technical differences from an analysis of a single pair of traits. In the paper, we present results for pairs of 20 traits. However, blood pressure results from Eheret et al (2011) (PMID: 21909115) must be obtained <a href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000585.v2.p1">through dbGAP</a> and so aren’t included here.</p>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set Up</h1>
+<p>We are using <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> and a conda environment to run this analysis. If you don’t have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the <code>cause</code> and <code>tidyverse</code> R packages installed and running. If you were able to work through the <a href="ldl_cad.html">package tutorial</a> you should be in good shape.</p>
+<p>Snakemake is a tool for creating scalable workflows. In our case we are using it to perform the same set of data processing and analysis steps for all pairs of traits. We will walk through exactly what the Snakemake analysis is doing in the next sections.</p>
+<p>The first set up step is to create the conda environment</p>
+<pre><code>conda create -n cause_large python=3.6 snakemake</code></pre>
+<p>Next create a working directory that you would like to analyze the data in. Change to that directory using <code>cd</code> in Mac or Linux. For example</p>
+<pre><code>mkdir gwas_pairs
+cd gwas_pairs</code></pre>
+<p>The last step is to download the data and code that we will use. Inside of R, run</p>
+<pre><code>cause::setup_gwas_pairs()</code></pre>
+<p>This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. Downloading the data might take up to half an hour depending on your network speed. Here is what the function downloads.</p>
+<ol style="list-style-type: decimal">
+<li><p>GWAS summary statistics, cleaned and formatted. We will talk about these more later on. These files go in the <code>data/</code> subdirectory.</p></li>
+<li><p>LD data estimated from 1000 Genomes CEU populatoin. This goes in the <code>ld/</code> subdirectory.</p></li>
+<li><p>Some R scripts that will be used to run the analysis. These are in the <code>R/</code> subdirectory.</p></li>
+<li><p>A Snakemake file called <code>pairs_snakemake.py</code>.</p></li>
+</ol>
+<p>In the rest of this document we will go through the Snakemake file in detail and explore the scripts that it calls. The analysis is designed to be run on a cluster and can be executed with a single command. First activate the conda environment.</p>
+<pre><code>source activate cause_large</code></pre>
+<p>The Snakemake command below assumes you are using a cluster with a Slurm workload manager. If your cluster uses something else you should edit the value that is given to the <code>--cluster</code> argument. You may need to edit this anyway to include necessary information. For example, if you are working on the University of Chicago Research Computing Center you will need to add <code>--account</code> and <code>--partition</code> arguments.</p>
+<pre><code>nohup snakemake -s pairs_snakemake.py --keep-going --jobs 96 --cluster &quot;sbatch --output={params.log}_%A.out --error={params.log}_%A.err --cpus-per-task={params.cpus} --ntasks=1 --mem-per-cpu={params.mem} --time=1:00:00 --job-name={params.jobname}&quot; &gt; pairs.out &amp;</code></pre>
+</div>
+<div id="data-format" class="section level1">
+<h1>Data format</h1>
+<p>Currently there is no standard format for GWAS summary statistics so when you are downloading summary statistics from different sources they are likely to have different formats and may not have effect alleles oriented the same way. Many analysis steps are faster and simpler if all the data files are in the same format and have effect alleles oriented consistently.</p>
+<p>The data files downloaded by <code>setup_gwas_pairs()</code> have been pre-formatted so they are ready to use. After running <code>setup_gwas_pairs()</code> you will find a file <code>data/gwas_info.csv</code> that gives information about each study and the original download source. Open up the file and take a look.</p>
+<pre class="r"><code>library(tidyverse)
+library(cause)</code></pre>
+<pre class="r"><code>info &lt;- read_csv(&quot;data/gwas_info.csv&quot;)</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  consortium = col_character(),
+  trait = col_character(),
+  full_trait_name = col_character(),
+  PMID = col_double(),
+  pub_sample_size = col_double(),
+  pub_cases = col_double(),
+  pub_controls = col_double(),
+  first_author = col_character(),
+  pub_year = col_double(),
+  summary_statistics_link = col_character(),
+  snp = col_character(),
+  a1 = col_character(),
+  a2 = col_character(),
+  beta_hat = col_character(),
+  se = col_character(),
+  p_value = col_character(),
+  sample_size = col_character(),
+  regression_type = col_character()
+)</code></pre>
+<pre class="r"><code>head(info) %&gt;% print(width = Inf)</code></pre>
+<pre><code># A tibble: 6 x 18
+  consortium trait  full_trait_name       PMID pub_sample_size pub_cases
+  &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;                &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;
+1 glg        tg     triglycerides     24097068          188577        NA
+2 glg        ldl    ldl               24097068          188577        NA
+3 glg        hdl    hdl               24097068          188577        NA
+4 glg        tc     total_cholesterol 24097068          188577        NA
+5 giant      height height            25282103          253288        NA
+6 giant      bmi    body_mass_index   25673413          339224        NA
+  pub_controls first_author pub_year
+         &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+1           NA Willer           2013
+2           NA Willer           2013
+3           NA Willer           2013
+4           NA Willer           2013
+5           NA Wood             2014
+6           NA Locke            2015
+  summary_statistics_link                                                  
+  &lt;chr&gt;                                                                    
+1 http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_TG.txt.gz
+2 http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.…
+3 http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_HDL.txt.…
+4 http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_TC.txt.gz
+5 http://portals.broadinstitute.org/collaboration/giant/images/0/01/GIANT_…
+6 http://portals.broadinstitute.org/collaboration/giant/images/1/15/SNP_gw…
+  snp        a1      a2      beta_hat se    p_value sample_size
+  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;      
+1 rsid       A1      A2      beta     se    P.value N          
+2 rsid       A1      A2      beta     se    P-value N          
+3 rsid       A1      A2      beta     se    P-value N          
+4 rsid       A1      A2      beta     se    P-value N          
+5 MarkerName Allele1 Allele2 b        SE    P.value N          
+6 SNP        A1      A2      b        se    P.value N          
+  regression_type
+  &lt;chr&gt;          
+1 linear         
+2 linear         
+3 linear         
+4 linear         
+5 linear         
+6 linear         </code></pre>
+<p>For each study we have recorded a short string to indicate the consortium or data set used (eg. <code>glg</code> = Global Lipid Genetics Consortium), a short string to inidicate the trait, the full trait name, information about the source publication (PMID, first author, and publication year), the total sample size from the publication and number of cases and controls if relevant and the original download link. The remaining columns give the column name in the original data of important fields. We don’t need this information for our analysis here. All of the formatted data files that have been downloaded are named <code>data/{consortium}_{trait}_summary_statistics.tsv.gz</code>. To convert the data from their original formats to a standard format, we used <a href="https://github.com/jhmarcus/gwass">a summary statistics processing tool</a> created by Joseph Marcus. This tool is a little more complicated than is required for CAUSE and uses a large external data reference. We hope to include a simpler data formatting function in the <code>cause</code> R package soon. Lets take a look at some of the formatted data. Use the following R commands</p>
+<pre class="r"><code>dat &lt;- read_tsv(&quot;data/ckdgen_egfrcrea_summary_statistics.tsv.gz&quot;, 
+                col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+head(dat) %&gt;% print(width = Inf)</code></pre>
+<pre><code># A tibble: 6 x 10
+  chrom    pos snp        ref_allele alt_allele beta_hat     se p_value
+  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 1     752566 rs3094315  G          A           -0.0013 0.0015   0.38 
+2 1     754192 rs3131968  A          G           -0.0013 0.0019   0.5  
+3 1     768448 rs12562034 G          A           -0.0014 0.0023   0.55 
+4 1     775659 rs2905035  A          G           -0.0022 0.0019   0.24 
+5 1     776546 rs12124819 A          G           -0.003  0.0018   0.092
+6 1     779322 rs4040617  A          G            0.0019 0.0019   0.33 
+  sample_size f_eur
+        &lt;dbl&gt; &lt;dbl&gt;
+1      114684 0.16 
+2      102660 0.128
+3      106355 0.908
+4      104963 0.128
+5      109251 0.771
+6       99471 0.882</code></pre>
+<p>In our analysis we will exploit the following features of the data format:</p>
+<ol style="list-style-type: decimal">
+<li><p>All the files have the same information fields in the same order and with the same column names.</p></li>
+<li><p>All of the alleles are oriented the same way. This means, for example, that if rs3094315 appears in another study, it will also have reference allele G and alternative allele A in that study.</p></li>
+</ol>
+<p>In the future, we will update this section with instructions on how to achieve this using CAUSE functions. If your data are formatted with the same columns we have used (and also saved as a tsv) then you will be able to analyze it using our code making only minimal changes to the <code>paires_snakemake.py</code> file.</p>
+</div>
+<div id="analysis-steps" class="section level1">
+<h1>Analysis Steps</h1>
+<p>We will now walk through all the steps in the Snakemake file and explain what they do in detail. If your data is formatted in the same way as ours (see above) you should be able to use all of this code and will only need to change the preamble portion so that your file names match. It will be helpful to familiarize yourself with Snakemake syntax a little before you begin.</p>
+<div id="preamble" class="section level2">
+<h2>Preamble</h2>
+<p>In the preamble section we set up the analysis we want to do. First we list some directories.</p>
+<pre><code>import pandas as pd
+
+data_dir = &quot;data/&quot; #where the data is
+ld_dir = &quot;ld/&quot; #where the ld data is
+cause_dir = &quot;cause/&quot; #where CAUSE results will go
+mr_dir = &quot;mr/&quot; #where other MR method results will go</code></pre>
+<p>Next we create a table of all the trait pairs we’d like to analyze.</p>
+<pre><code>consortia = [&quot;giant&quot;, &quot;giant&quot;, &quot;lu&quot;,
+            &quot;glg&quot;, &quot;glg&quot;, &quot;glg&quot;, &quot;glg&quot;, 
+            &quot;ckdgen&quot;, &quot;gefos&quot;,
+            &quot;egg&quot;, &quot;egg&quot;, &quot;egg&quot;,
+            &quot;vanderHarst&quot;, &quot;diagram&quot;,
+            &quot;megastroke&quot;, &quot;magic&quot;]
+            
+traits = [&quot;height&quot;, &quot;bmi&quot;, &quot;bfp&quot;,
+          &quot;tg&quot;, &quot;ldl&quot;, &quot;hdl&quot;, &quot;tc&quot;,
+          &quot;egfrcrea&quot;,   &quot;bone&quot;,
+          &quot;bl&quot;, &quot;bw&quot;, &quot;hc&quot;,
+          &quot;cad&quot;, &quot;t2d&quot;,
+          &quot;as&quot;, &quot;fg&quot;]
+          
+tags = [consortia[i] + &quot;_&quot; + traits[i] for i in range(len(traits))]
+
+tag_pairs = [(tag1, tag2) for tag1 in tags for tag2 in tags if tag1!=tag2]
+</code></pre>
+<p>We will refer to the string <code>{consortium}_{trait}</code> as a “tag” in the rest of this analysis. Finally, in Snakemake, the rule <code>all</code> lists all the files we should have at the end of the analysis. The rest of the file will explain how to produce these.</p>
+<pre><code>rule all:
+    input: expand(mr_dir + &#39;{tp[0]}__{tp[1]}_mr.RDS&#39;, tp = tag_pairs),
+           expand(mr_dir + &#39;{tp[0]}__{tp[1]}_mrpresso.RDS&#39;, tp = tag_pairs),
+           expand(mr_dir + &#39;{tp[0]}__{tp[1]}_mregger.RDS&#39;, tp = tag_pairs),
+           expand(cause_dir + &#39;{tp[0]}__{tp[1]}_cause.RDS&#39;, tp = tag_pairs)
+</code></pre>
+</div>
+<div id="data-overlap-with-awk" class="section level2">
+<h2>Data overlap with Awk</h2>
+<p>We use Awk to write out temporary files that will speed up some of the later analysis steps</p>
+<pre><code>rule data_overlap:
+    input: file1 = data_dir + &#39;{tag1}_summary_statistics.tsv.gz&#39;,
+           file2 = data_dir + &#39;{tag2}_summary_statistics.tsv.gz&#39;
+    output: out= temp(data_dir + &quot;{tag1}__{tag2}_overlap.tsv.gz&quot;)
+    params: log=&quot;tempov&quot;, mem=&quot;20G&quot;, cpus=&quot;1&quot;,
+            jobname=&#39;dataov&#39;
+    shell: &quot;&quot;&quot;
+           snps() {{ gzip -cd &quot;$@&quot; | awk &#39;{{ if ($7!=&quot;NA&quot; &amp;&amp; $7 &gt; 0 &amp;&amp; $6!=&quot;NA&quot;) print $3 }}&#39; ;}}
+           full() {{ gzip -cd &quot;$@&quot; | awk &#39;{{ if ($7!=&quot;NA&quot; &amp;&amp; $7 &gt; 0 &amp;&amp; $6!=&quot;NA&quot;) print $0 }}&#39; ;}}
+           snps {input.file2} | awk &#39;NR==FNR{{F1[$0];next}}$3 in F1{{print}}&#39; - &lt;(full {input.file1}) | gzip &gt; {output.out}
+           &quot;&quot;&quot;</code></pre>
+<p>This step takes as input two data files, one for tag1 (trait <span class="math inline">\(M\)</span>) and one for tag2 (trait <span class="math inline">\(Y\)</span>). It outputs a file that is simply the subset of the tag1 data for SNPs that are in both tag1 and tag2 GWAS. The <code>temp()</code> in the <code>output:</code> line tells Snakemake to delete these files when we are done with them. This step also filters out SNPs that have missing effect estimates or standard errors or who’s standard errors are non-positive.</p>
+</div>
+<div id="ld-pruning" class="section level2">
+<h2>LD Pruning</h2>
+<p>CAUSE estimates posteriors using a set of LD pruned variants. To maximize power, we LD prune preferentially choosing variants with low tarit <span class="math inline">\(M\)</span> <span class="math inline">\(p\)</span>-values. The next two rules in the Snakemake file write a list of LD pruned variants for each trait pair.</p>
+<p>First there is a rule that LD prunes a single chromosome:</p>
+<pre><code>rule ld_prune_one_chrom:
+    input: data = data_dir + &#39;{tag1}__{tag2}_overlap.tsv.gz&#39;,
+           ld1 = ld_dir + &#39;chr{chrom}_AF0.05_0.1.RDS&#39;,
+           ld2 = ld_dir + &#39;chr{chrom}_AF0.05_snpdata.RDS&#39;
+    output: out=temp(data_dir + &quot;snps_{tag1}__{tag2}.pruned.{chrom}.RDS&quot;)
+    params: log=&quot;ldprune&quot;, mem=&quot;10G&quot;, cpus=&quot;4&quot;,
+            pval_thresh = &quot;1e-3&quot;, r2_thresh = 0.1 ,
+            jobname=&#39;ldprune_{chrom}&#39;, partition=&quot;broadwl&quot;
+    shell:   &#39;Rscript R/ld_prune_one_chrom.R {input.data} {wildcards.chrom}  \
+                   {params.pval_thresh} {params.r2_thresh} {input.ld1} {input.ld2} {output.out}&#39;
+                                 </code></pre>
+<p>This rule takes as input the overlap data set for trait <span class="math inline">\(M\)</span> that we created previously and LD data. The output is a pruned list of SNPs on a given chromosome. The rule calls an R scirpt <code>R/ld_prune_one_chrom.R</code> that reads in the data, removes duplicated SNPs and then LD prunes using the function <code>cause::ld_prune</code>.</p>
+<p>The next rule concatonates pruned lists for all chromosomes for a single pair into one file.</p>
+<pre><code>rule ld_prune_combine:
+    input: fls = expand( data_dir + &quot;snps_{{tag1}}__{{tag2}}.pruned.{chr}.RDS&quot;, chr = range(1, 23))
+    output: out1 = data_dir + &quot;snps_{tag1}__{tag2}.pruned.txt&quot;
+    params: log=&quot;ld_comb&quot;, mem=&quot;2G&quot;, cpus=&quot;1&quot;,
+            jobname=&#39;combine&#39;, partition=&quot;broadwl&quot;
+    shell: &quot;Rscript R/ld_cat.R {output.out1} {input.fls}&quot;</code></pre>
+</div>
+<div id="cause" class="section level2">
+<h2>CAUSE</h2>
+<p>The next step is to run CAUSE</p>
+<pre><code>rule cause:
+    input: file1 = data_dir + &quot;{tag1}__{tag2}_overlap.tsv.gz&quot;,
+           file2 = data_dir + &#39;{tag2}__{tag1}_overlap.tsv.gz&#39;,
+           snps = data_dir + &#39;snps_{tag1}__{tag2}.pruned.txt&#39;
+    output: params = cause_dir + &#39;{tag1}__{tag2}_params.RDS&#39;,
+            cause = cause_dir + &#39;{tag1}__{tag2}_cause.RDS&#39;,
+            data = data_dir + &#39;{tag1}__{tag2}_data.RDS&#39;
+    params: log=&quot;cause&quot;, mem=&quot;5G&quot;, cpus=&quot;8&quot;,
+            jobname=&#39;cause&#39;, seed = 100
+    shell: &#39;Rscript R/cause.R {input.file1} {input.file2}  \
+                   {input.snps} {output.params} \
+                   {output.cause} {output.data} {params.seed}&#39;</code></pre>
+<p>This rule takes as input the overlap tag1 and tag2 data sets and the list of pruned snps. It uses the R script <code>R/cause.R</code> which we will go through below. We could have used the <code>*_summary_statistics.tsv.gz</code> files in place of the <code>*_overlap.tsv.gz</code> files. Using the overlap files saves reading some data into memory and can be especially helpful when one GWAS has many more variants measured than the other.The R script performs four steps:</p>
+<ol style="list-style-type: decimal">
+<li>Read in the data and filter out duplicated SNPs.</li>
+</ol>
+<pre class="r"><code>args &lt;- commandArgs(trailingOnly=TRUE)
+#Input files
+data_file_1 &lt;- args[1]
+data_file_2 &lt;- args[2]
+snp_file_asc &lt;- args[3]
+#Output files
+params_out &lt;- args[4]
+cause_out &lt;- args[5]
+data_out &lt;- args[6]
+seed &lt;- as.numeric(args[7])
+
+#if(is.na(seed)) seed &lt;- 100
+
+
+d1 &lt;- read_tsv(data_file_1, col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+
+dup1 &lt;- d1$snp[duplicated(d1$snp)]
+d1 &lt;- d1 %&gt;% filter(!snp %in% dup1)
+
+d2 &lt;- read_tsv(data_file_2, col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+
+dup2 &lt;- d1$snp[duplicated(d1$snp)]
+d2 &lt;- d2 %&gt;% filter(!snp %in% dup2)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Merge the data. Normally we would do this using <code>cause::gwas_format_cause</code>. However, this function performs steps to ensure that alleles are oriented in the same way that are unnecessary because the data has already been formated uniformly. If we skip these steps, the merging procedure is about eight times faster. We save the mreged data to use with other MR methods.</li>
+</ol>
+<pre class="r"><code>X &lt;- d1 %&gt;%
+     select(snp, beta_hat, se) %&gt;%
+     rename(beta_hat_1 = beta_hat, seb1 = se) %&gt;%
+     inner_join(., d2, by=&quot;snp&quot;) %&gt;%
+     rename(beta_hat_2 = beta_hat, seb2 = se,
+           A1 = ref_allele, A2 = alt_allele) %&gt;%
+     select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2) %&gt;%
+     new_cause_data(.)
+
+saveRDS(X, file=data_out)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Estimate CAUSE nuisance parameters using a random set of 1,000,000 variants.</li>
+</ol>
+<pre class="r"><code>set.seed(seed)
+if(nrow(X) &lt; 1e6){
+    snps_grid &lt;- X$snp
+}else{
+    snps_grid &lt;- sample(X$snp, size=1e6, replace=FALSE)
+}
+
+params &lt;- est_cause_params(X, snps_grid)
+saveRDS(params, params_out)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Run CAUSE</li>
+</ol>
+<pre class="r"><code>snps_asc &lt;- read_lines(snp_file_asc)
+res &lt;- cause(X =X, param_ests = params, variants=snps_asc,
+             qalpha = 1, qbeta = 10, force=TRUE)
+saveRDS(res, cause_out)</code></pre>
+<p>The <code>force = TRUE</code> argument ensures that CAUSE runs even if the parameter estimates didn’t converge. In our analysis this never happens.</p>
+</div>
+<div id="run-other-mr-methods" class="section level2">
+<h2>Run other MR methods</h2>
+<p>The remaining rules in the Snakemake file run alternative MR methods: IVW regression, Egger regression and MR-PRESSO. These rules all have the same format, each calling its own R script</p>
+<pre><code>rule ivw:
+    input: data = data_dir + &#39;{tag1}__{tag2}_data.RDS&#39;
+    output: out = mr_dir + &#39;{tag1}__{tag2}_mr.RDS&#39;,
+    params: log=&quot;mr&quot;, mem=&quot;1G&quot;, cpus=&quot;1&quot;,
+            jobname=&#39;mr_{tag1}__{tag2}&#39;
+    shell: &#39;Rscript R/ivw.R {input.data} 5e-8 {output.out} &#39;
+
+rule egger:
+    input: data = data_dir + &#39;{tag1}__{tag2}_data.RDS&#39;
+    output: out = mr_dir + &#39;{tag1}__{tag2}_mregger.RDS&#39;,
+    params: log=&quot;mr&quot;, mem=&quot;1G&quot;, cpus=&quot;1&quot;,
+            jobname=&#39;mr_{tag1}__{tag2}&#39;
+    shell: &#39;Rscript R/mregger.R {input.data} 5e-8 {output.out} &#39;
+
+rule mrpresso:
+    input: data = data_dir + &#39;{tag1}__{tag2}_data.RDS&#39;
+    output: out = mr_dir + &#39;{tag1}__{tag2}_mrpresso.RDS&#39;,
+    params: log=&quot;mrp&quot;, mem=&quot;1G&quot;, cpus=&quot;1&quot;,
+            jobname=&#39;mrp_{tag1}__{tag2}&#39;
+    shell: &#39;Rscript R/mrpresso.R {input.data} 5e-8 {output.out} &#39;
+</code></pre>
+</div>
+</div>
+<div id="plotting-and-looking-at-results" class="section level1">
+<h1>Plotting and looking at results</h1>
+<p>Coming Soon!</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.2 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] cause_0.3.0.0178 forcats_0.4.0    stringr_1.4.0    dplyr_0.8.3     
+ [5] purrr_0.3.2      readr_1.3.1      tidyr_0.8.3      tibble_2.1.3    
+ [9] ggplot2_3.2.0    tidyverse_1.2.1 
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.1           lubridate_1.7.4      lattice_0.20-38     
+ [4] utf8_1.1.4           assertthat_0.2.1     zeallot_0.1.0       
+ [7] rprojroot_1.3-2      digest_0.6.20        foreach_1.4.4       
+[10] truncnorm_1.0-8      R6_2.4.0             cellranger_1.1.0    
+[13] backports_1.1.4      evaluate_0.14        httr_1.4.0          
+[16] highr_0.8            pillar_1.4.2         rlang_0.4.0         
+[19] lazyeval_0.2.2       pscl_1.5.2           readxl_1.3.1        
+[22] rstudioapi_0.10      whisker_0.3-2        Matrix_1.2-17       
+[25] rmarkdown_1.13       loo_2.1.0            munsell_0.5.0       
+[28] mixsqp_0.1-97        broom_0.5.2          numDeriv_2016.8-1.1 
+[31] compiler_3.6.1       modelr_0.1.4         xfun_0.8            
+[34] pkgconfig_2.0.2      SQUAREM_2017.10-1    htmltools_0.3.6     
+[37] tidyselect_0.2.5     gridExtra_2.3        workflowr_1.4.0.9000
+[40] matrixStats_0.54.0   intervals_0.15.1     codetools_0.2-16    
+[43] fansi_0.4.0          crayon_1.3.4         withr_2.1.2         
+[46] MASS_7.3-51.4        grid_3.6.1           nlme_3.1-140        
+[49] jsonlite_1.6         gtable_0.3.0         git2r_0.26.1        
+[52] magrittr_1.5         scales_1.0.0         RcppParallel_4.4.3  
+[55] cli_1.1.0            stringi_1.4.3        fs_1.3.1            
+[58] doParallel_1.0.14    xml2_1.2.0           vctrs_0.2.0         
+[61] generics_0.0.2       iterators_1.0.10     tools_3.6.1         
+[64] glue_1.3.1           hms_0.5.0            parallel_3.6.1      
+[67] yaml_2.2.0           colorspace_1.4-1     ashr_2.2-32         
+[70] rvest_0.3.4          knitr_1.23           haven_2.1.1         </code></pre>
+</div>
 </div>
 
 
