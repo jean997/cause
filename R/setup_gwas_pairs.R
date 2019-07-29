@@ -33,4 +33,15 @@ setup_gwas_pairs <- function(){
     download.file(url=paste0("https://zenodo.org/record/1464357/files/chr", chr, "_AF0.05_snpdata.RDS?download=1"),
                   destfile=paste0("ld/chr", chr, "_AF0.05_snpdata.RDS"))
   }
+
+  #Download code
+  if(!dir.exists("ld/")) system("mkdir R")
+  files <- c("cause.R", "ivw.R", "ld_cat.R", "ld_prune_one_chrom.R",
+             "mregger.R", "mrpresso.R")
+  for(f in files){
+    download.file(url=paste0("https://raw.githubusercontent.com/jean997/cause/master/gwas_pairs_code/", f),
+                  destfile = paste0("R/", f))
+  }
+  download.file(url=paste0("https://raw.githubusercontent.com/jean997/cause/master/gwas_pairs_code/pairs_snakemake.py"),
+                destfile = "pairs_snakemake.py")
  }
