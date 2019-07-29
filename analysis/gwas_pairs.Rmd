@@ -35,7 +35,7 @@ The last step is to download the data and code that we will use. Inside of R, ru
 ```
 cause::setup_gwas_pairs()
 ```
-This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. You can use the organizational structure of this analysis as a jumping off point even if you would like to use different data. Downloading the data might take up to half an hour depending on your network speed. Here is what the function downloads.
+This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. Downloading the data might take up to half an hour depending on your network speed. Here is what the function downloads.
 
 1. GWAS summary statistics, cleaned and formatted. We will talk about these more later on. These files go in the `data/` subdirectory.
 
@@ -90,13 +90,15 @@ head(dat) %>% print(width = Inf)
 ```
 
 In our analysis we will exploit the following features of the data format:
+
 1. All the files have the same information fields in the same order and with the same column names.
+
 2. All of the alleles are oriented the same way. This means, for example, that if rs3094315 appears in another study, it will also have reference allele G and alternative allele A in that study. 
 
-In the future, we will update this section with instructions on how to achieve this using CAUSE functions.
+In the future, we will update this section with instructions on how to achieve this using CAUSE functions. If your data are formatted with the same columns we have used (and also saved as a tsv) then you will be able to analyze it using our code making only minimal changes to the `paires_snakemake.py` file. 
 
 # Analysis Steps
-We will now walk through all the steps in the Snakemake file and explain what they do in detail. If your data is formatted in the same way as ours (see above) you should be able to use all of this code and will only need to change the preamle portion so that your file names match. It will be helpful to familiarize yourself with Snakemake syntax a little before you begin. 
+We will now walk through all the steps in the Snakemake file and explain what they do in detail. If your data is formatted in the same way as ours (see above) you should be able to use all of this code and will only need to change the preamble portion so that your file names match. It will be helpful to familiarize yourself with Snakemake syntax a little before you begin. 
 
 ## Preamble
 
@@ -194,3 +196,136 @@ rule ld_prune_combine:
             jobname='combine', partition="broadwl"
     shell: "Rscript R/ld_cat.R {output.out1} {input.fls}"
 ```
+
+## CAUSE
+
+The next step is to run CAUSE
+
+```
+rule cause:
+    input: file1 = data_dir + "{tag1}__{tag2}_overlap.tsv.gz",
+           file2 = data_dir + '{tag2}__{tag1}_overlap.tsv.gz',
+           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+    output: params = cause_dir + '{tag1}__{tag2}_params.RDS',
+            cause = cause_dir + '{tag1}__{tag2}_cause.RDS',
+            data = data_dir + '{tag1}__{tag2}_data.RDS'
+    params: log="cause", mem="5G", cpus="8",
+            jobname='cause', seed = 100
+    shell: 'Rscript R/cause.R {input.file1} {input.file2}  \
+                   {input.snps} {output.params} \
+                   {output.cause} {output.data} {params.seed}'
+```
+
+This rule takes as input the overlap tag1 and tag2 data sets and the list of pruned snps. It uses the R script `R/cause.R` which we will go through below. We could have used the `*_summary_statistics.tsv.gz` files in place of the `*_overlap.tsv.gz` files. Using the overlap files saves reading some data into memory and can be especially helpful when one GWAS has many more variants measured than the other.The R script performs four steps: 
+
+1. Read in the data and filter out duplicated SNPs.
+```{r, eval=FALSE, cause1}
+args <- commandArgs(trailingOnly=TRUE)
+#Input files
+data_file_1 <- args[1]
+data_file_2 <- args[2]
+snp_file_asc <- args[3]
+#Output files
+params_out <- args[4]
+cause_out <- args[5]
+data_out <- args[6]
+seed <- as.numeric(args[7])
+
+#if(is.na(seed)) seed <- 100
+
+
+d1 <- read_tsv(data_file_1, col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+
+dup1 <- d1$snp[duplicated(d1$snp)]
+d1 <- d1 %>% filter(!snp %in% dup1)
+
+d2 <- read_tsv(data_file_2, col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+
+dup2 <- d1$snp[duplicated(d1$snp)]
+d2 <- d2 %>% filter(!snp %in% dup2)
+```
+
+
+2. Merge the data. Normally we would do this using `cause::gwas_format_cause`. However, this function performs steps to ensure that alleles are oriented in the same way that are unnecessary because the data has already been formated uniformly. If we skip these steps, the merging procedure is about eight times faster. We save the mreged data to use with other MR methods. 
+
+```{r, eval=FALSE, cause2}
+X <- d1 %>%
+     select(snp, beta_hat, se) %>%
+     rename(beta_hat_1 = beta_hat, seb1 = se) %>%
+     inner_join(., d2, by="snp") %>%
+     rename(beta_hat_2 = beta_hat, seb2 = se,
+           A1 = ref_allele, A2 = alt_allele) %>%
+     select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2) %>%
+     new_cause_data(.)
+
+saveRDS(X, file=data_out)
+
+```
+
+3. Estimate CAUSE nuisance parameters using a random set of 1,000,000 variants.
+
+```{r, eval=FALSE, cause3}
+set.seed(seed)
+if(nrow(X) < 1e6){
+    snps_grid <- X$snp
+}else{
+    snps_grid <- sample(X$snp, size=1e6, replace=FALSE)
+}
+
+params <- est_cause_params(X, snps_grid)
+saveRDS(params, params_out)
+```
+
+
+4. Run CAUSE
+
+```{r, eval=FALSE, cause4}
+snps_asc <- read_lines(snp_file_asc)
+res <- cause(X =X, param_ests = params, variants=snps_asc,
+             qalpha = 1, qbeta = 10, force=TRUE)
+saveRDS(res, cause_out)
+```
+The `force = TRUE` argument ensures that CAUSE runs even if the parameter estimates didn't converge. In our analysis this never happens.
+
+
+## Run other MR methods
+
+The remaining rules in the Snakemake file run alternative MR methods: IVW regression, Egger regression and MR-PRESSO. These rules all have the same format, each calling its own R script 
+
+
+```
+rule ivw:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS'
+    output: out = mr_dir + '{tag1}__{tag2}_mr.RDS',
+    params: log="mr", mem="1G", cpus="1",
+            jobname='mr_{tag1}__{tag2}'
+    shell: 'Rscript R/ivw.R {input.data} 5e-8 {output.out} '
+
+rule egger:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS'
+    output: out = mr_dir + '{tag1}__{tag2}_mregger.RDS',
+    params: log="mr", mem="1G", cpus="1",
+            jobname='mr_{tag1}__{tag2}'
+    shell: 'Rscript R/mregger.R {input.data} 5e-8 {output.out} '
+
+rule mrpresso:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS'
+    output: out = mr_dir + '{tag1}__{tag2}_mrpresso.RDS',
+    params: log="mrp", mem="1G", cpus="1",
+            jobname='mrp_{tag1}__{tag2}'
+    shell: 'Rscript R/mrpresso.R {input.data} 5e-8 {output.out} '
+
+```
+
+
+# Plotting and looking at results
+
+Coming Soon!
