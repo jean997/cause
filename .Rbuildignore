@@ -5,3 +5,5 @@
 ^example_data$
 ^code$
 ^output$
+^gwas_pairs_code$
+^sim_results$
