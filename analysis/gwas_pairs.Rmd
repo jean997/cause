@@ -3,6 +3,8 @@ title: "Analyze Pairs of GWAS Traits"
 author: "Jean Morrison"
 date: "2019-06-25"
 output: workflowr::wflow_html
+workflowr:
+  knit_root_dir: "../gwas_data"
 ---
 
 # Introduction
@@ -11,12 +13,14 @@ In this page we walk through an analysis of pairs of 16 traits with publicly ava
 
 # Set Up
 
-We are using Snakemake and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or make sure that you have Python3, and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. 
+We are using [Snakemake](https://snakemake.readthedocs.io/en/stable/) and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. 
 
-The first step is to create the conda environment
+Snakemake is a tool for creating scalable workflows. In our case we are using it to perform the same set of data processing and analysis steps for all pairs of traits. We will walk through exactly what the Snakemake analysis is doing in the next sections. 
+
+The first set up step is to create the conda environment
 
 ```
-conda create -n cause_gwas python=3.6 snakemake
+conda create -n cause_large python=3.6 snakemake
 ```
 
 Next create a working directory that you would like to analyze the data in. Change to that directory using `cd` in Mac or Linux. For example
@@ -26,11 +30,167 @@ mkdir gwas_pairs
 cd gwas_pairs
 ```
 
-Inside of R, run 
+The last step is to download the data and code that we will use. Inside of R, run 
 
 ```
 cause::setup_gwas_pairs()
 ```
-This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. You can use the organizational structure of this analysis as a jumping off point even if you would like to use different data. 
+This function sets up the analysis directory and is a shortcut to downloading all the data and code we will use in this analysis. You can use the organizational structure of this analysis as a jumping off point even if you would like to use different data. Downloading the data might take up to half an hour depending on your network speed. Here is what the function downloads.
+
+1. GWAS summary statistics, cleaned and formatted. We will talk about these more later on. These files go in the `data/` subdirectory.
+
+2. LD data estimated from 1000 Genomes CEU populatoin. This goes in the `ld/` subdirectory.
+
+3. Some R scripts that will be used to run the analysis. These are in the `R/` subdirectory. 
+
+4. A Snakemake file called `pairs_snakemake.py`. 
+
+In the rest of this document we will go through the Snakemake file in detail and explore the scripts that it calls. The analysis is designed to be run on a cluster and can be executed with a single command. First activate the conda environment. 
+
+```
+source activate cause_large
+```
+
+The Snakemake command below assumes you are using a cluster with a Slurm workload manager. If your cluster uses something else you should edit the value that is given to the `--cluster` argument. You may need to edit this anyway to include necessary information. For example, if you are working on the University of Chicago Research Computing Center you will need to add `--account` and `--partition` arguments.
+
+```
+nohup snakemake -s pairs_snakemake.py --keep-going --jobs 96 --cluster "sbatch --output={params.log}_%A.out --error={params.log}_%A.err --cpus-per-task={params.cpus} --ntasks=1 --mem-per-cpu={params.mem} --time=1:00:00 --job-name={params.jobname}" > pairs.out &
+```
+
+# Data format
+
+Currently there is no standard format for GWAS summary statistics so when you are downloading summary statistics from different sources they are likely to have different formats and may not have effect alleles oriented the same way. Many analysis steps are faster and simpler if all the data files are in the same format and have effect alleles oriented consistently. 
+
+The data files downloaded by `setup_gwas_pairs()` have been pre-formatted so they are ready to use. 
+After running `setup_gwas_pairs()` you will find a file `data/gwas_info.csv` that gives information about each study and the original download source. Open up the file and take a look. 
 
 
+```{r, message=FALSE, packages}
+library(tidyverse)
+library(cause)
+```
+
+```{r, info}
+info <- read_csv("data/gwas_info.csv")
+head(info) %>% print(width = Inf)
+```
+
+For each study we have recorded a short string to indicate the consortium or data set used (eg. `glg` = Global Lipid Genetics Consortium), a short string to inidicate the trait, the full trait name, information about the source publication (PMID, first author, and publication year), the total sample size from the publication and number of cases and controls if relevant and the original download link. The remaining columns give the column name in the original data of important fields. We don't need this information for our analysis here. All of the formatted data files that have been downloaded are named `data/{consortium}_{trait}_summary_statistics.tsv.gz`. 
+To convert the data from their original formats to a standard format, we used [a summary statistics processing tool](https://github.com/jhmarcus/gwass) created by Joseph Marcus. This tool is a little more complicated than is required for CAUSE and uses a large external data reference. We hope to include a simpler data formatting function in the `cause` R package soon. Lets take a look at some of the formatted data. Use the following R commands
+
+
+```{r, read1}
+dat <- read_tsv("data/ckdgen_egfrcrea_summary_statistics.tsv.gz", 
+                col_type=list(col_character(),col_integer(),
+                                 col_character(),col_character(),
+                                 col_character(),col_double(),col_double(),
+                                 col_double(),col_double(),
+                                 col_double()))
+head(dat) %>% print(width = Inf)
+```
+
+In our analysis we will exploit the following features of the data format:
+1. All the files have the same information fields in the same order and with the same column names.
+2. All of the alleles are oriented the same way. This means, for example, that if rs3094315 appears in another study, it will also have reference allele G and alternative allele A in that study. 
+
+In the future, we will update this section with instructions on how to achieve this using CAUSE functions.
+
+# Analysis Steps
+We will now walk through all the steps in the Snakemake file and explain what they do in detail. If your data is formatted in the same way as ours (see above) you should be able to use all of this code and will only need to change the preamle portion so that your file names match. It will be helpful to familiarize yourself with Snakemake syntax a little before you begin. 
+
+## Preamble
+
+In the preamble section we set up the analysis we want to do. First we list some directories.
+
+```
+import pandas as pd
+
+data_dir = "data/" #where the data is
+ld_dir = "ld/" #where the ld data is
+cause_dir = "cause/" #where CAUSE results will go
+mr_dir = "mr/" #where other MR method results will go
+```
+Next we create a table of all the trait pairs we'd like to analyze.
+
+```
+consortia = ["giant", "giant", "lu",
+            "glg", "glg", "glg", "glg", 
+            "ckdgen", "gefos",
+            "egg", "egg", "egg",
+            "vanderHarst", "diagram",
+            "megastroke", "magic"]
+            
+traits = ["height", "bmi", "bfp",
+          "tg", "ldl", "hdl", "tc",
+          "egfrcrea",   "bone",
+          "bl", "bw", "hc",
+          "cad", "t2d",
+          "as", "fg"]
+          
+tags = [consortia[i] + "_" + traits[i] for i in range(len(traits))]
+
+tag_pairs = [(tag1, tag2) for tag1 in tags for tag2 in tags if tag1!=tag2]
+
+```
+We will refer to the string `{consortium}_{trait}` as a "tag" in the rest of this analysis. 
+Finally, in Snakemake, the rule `all` lists all the files we should have at the end of the analysis. The rest of the file will explain how to produce these. 
+
+```
+rule all:
+    input: expand(mr_dir + '{tp[0]}__{tp[1]}_mr.RDS', tp = tag_pairs),
+           expand(mr_dir + '{tp[0]}__{tp[1]}_mrpresso.RDS', tp = tag_pairs),
+           expand(mr_dir + '{tp[0]}__{tp[1]}_mregger.RDS', tp = tag_pairs),
+           expand(cause_dir + '{tp[0]}__{tp[1]}_cause.RDS', tp = tag_pairs)
+
+```
+
+## Data overlap with Awk
+
+We use Awk to write out temporary files that will speed up some of the later analysis steps
+
+```
+rule data_overlap:
+    input: file1 = data_dir + '{tag1}_summary_statistics.tsv.gz',
+           file2 = data_dir + '{tag2}_summary_statistics.tsv.gz'
+    output: out= temp(data_dir + "{tag1}__{tag2}_overlap.tsv.gz")
+    params: log="tempov", mem="20G", cpus="1",
+            jobname='dataov'
+    shell: """
+           snps() {{ gzip -cd "$@" | awk '{{ if ($7!="NA" && $7 > 0 && $6!="NA") print $3 }}' ;}}
+           full() {{ gzip -cd "$@" | awk '{{ if ($7!="NA" && $7 > 0 && $6!="NA") print $0 }}' ;}}
+           snps {input.file2} | awk 'NR==FNR{{F1[$0];next}}$3 in F1{{print}}' - <(full {input.file1}) | gzip > {output.out}
+           """
+```
+This step takes as input two data files, one for tag1 (trait $M$) and one for tag2 (trait $Y$). It outputs a file that is simply the subset of the tag1 data for SNPs that are in both tag1 and tag2 GWAS. The `temp()` in the `output:` line tells Snakemake to delete these files when we are done with them. This step also filters out SNPs that have missing effect estimates or standard errors or who's standard errors are non-positive. 
+
+## LD Pruning
+
+CAUSE estimates posteriors using a set of LD pruned variants. To maximize power, we LD prune preferentially choosing variants with low tarit $M$ $p$-values. The next two rules in the Snakemake file write a list of LD pruned variants for each trait pair. 
+
+First there is a rule that LD prunes a single chromosome:
+
+```
+rule ld_prune_one_chrom:
+    input: data = data_dir + '{tag1}__{tag2}_overlap.tsv.gz',
+           ld1 = ld_dir + 'chr{chrom}_AF0.05_0.1.RDS',
+           ld2 = ld_dir + 'chr{chrom}_AF0.05_snpdata.RDS'
+    output: out=temp(data_dir + "snps_{tag1}__{tag2}.pruned.{chrom}.RDS")
+    params: log="ldprune", mem="10G", cpus="4",
+            pval_thresh = "1e-3", r2_thresh = 0.1 ,
+            jobname='ldprune_{chrom}', partition="broadwl"
+    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} {wildcards.chrom}  \
+                   {params.pval_thresh} {params.r2_thresh} {input.ld1} {input.ld2} {output.out}'
+                                 
+```
+
+This rule takes as input the overlap data set for trait $M$ that we created previously and LD data. The output is a pruned list of SNPs on a given chromosome. The rule calls an R scirpt `R/ld_prune_one_chrom.R` that reads in the data, removes duplicated SNPs and then LD prunes using the function `cause::ld_prune`. 
+
+The next rule concatonates pruned lists for all chromosomes for a single pair into one file. 
+```
+rule ld_prune_combine:
+    input: fls = expand( data_dir + "snps_{{tag1}}__{{tag2}}.pruned.{chr}.RDS", chr = range(1, 23))
+    output: out1 = data_dir + "snps_{tag1}__{tag2}.pruned.txt"
+    params: log="ld_comb", mem="2G", cpus="1",
+            jobname='combine', partition="broadwl"
+    shell: "Rscript R/ld_cat.R {output.out1} {input.fls}"
+```
