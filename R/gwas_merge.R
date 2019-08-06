@@ -18,89 +18,37 @@
 #'It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).
 #'@return An object of class cause_data and data.frame.
 #'@export
-gwas_format_cause <- function(X1, X2, snp_name_cols=c("snp", "snp"),
-                              beta_hat_cols = c("beta_hat", "beta_hat"),
-                              se_cols = c("se", "se"),
-                              A1_cols= c("A1", "A1"),
-                              A2_cols = c("A2", "A2")){
+gwas_merge <- function(X1, X2,
+                       X1_formatted=FALSE, X2_formatted = FALSE,
+                       snp_name_cols=c("snp", "snp"),
+                       beta_hat_cols = c("beta_hat", "beta_hat"),
+                       se_cols = c("se", "se"),
+                       A1_cols= c("A1", "A1"),
+                       A2_cols = c("A2", "A2")){
 
-  X1 <- X1 %>% rename(snp = snp_name_cols[1],
-                      beta_hat_1 = beta_hat_cols[1],
-                      seb1 = se_cols[1],
-                      A1 = A1_cols[1],
-                      A2 = A2_cols[1]) %>%
-        select(snp, beta_hat_1, seb1, A1, A2)
-
-  X2 <- X2 %>% rename(snp = snp_name_cols[2],
-                      beta_hat_2 = beta_hat_cols[2],
-                      seb2 = se_cols[2],
-                      A1 = A1_cols[2],
-                      A2 = A2_cols[2]) %>%
-        select(snp, beta_hat_2, seb2, A1, A2)
-  cat("There are ", nrow(X1), " variants in GWAS 1 and ", nrow(X2),
-      " variants in GWAS 2.\n")
-  #Check case of allele coding
-  upper1 <- X1$A1[1] == toupper(X1$A1[1])
-  upper2 <- X2$A1[1] == toupper(X2$A1[1])
-
-  if(upper1){
-    if(!all(X1$A1 %in% c("A", "C", "T", "G"))){
-      stop("Allele 1 in data set 1 contains illegal characters.")
-    }
-    if(!all(X1$A2 %in% c("A", "C", "T", "G"))){
-      stop("Allele 2 in data set 1 contains illegal characters.")
-    }
-  }else{
-    if(!all(X1$A1 %in% c("a", "c", "t", "g"))){
-      stop("Allele 1 in data set 1 contains illegal characters.")
-    }
-    if(!all(X1$A2 %in% c("a", "c", "t", "g"))){
-      stop("Allele 2 in data set 1 contains illegal characters.")
-    }
+  if(!X1_formatted){
+    cat("Formatting X1\n")
+    X1 <- gwas_format(X1, snp = snp_name_cols[1],
+                      beta_hat = beta_hat_cols[1], se = se_cols[1],
+                      A1 = A1_cols[1], A2 = A2_cols[1])
   }
-  if(upper2){
-    if(!all(X2$A1 %in% c("A", "C", "T", "G"))){
-      stop("Allele 1 in data set 2 contains illegal characters.")
-    }
-    if(!all(X2$A2 %in% c("A", "C", "T", "G"))){
-      stop("Allele 2 in data set 2 contains illegal characters.")
-    }
-  }else{
-    if(!all(X2$A1 %in% c("a", "c", "t", "g"))){
-      stop("Allele 1 in data set 2 contains illegal characters.")
-    }
-    if(!all(X2$A2 %in% c("a", "c", "t", "g"))){
-      stop("Allele 2 in data set 2 contains illegal characters.")
-    }
+  if(!X2_formatted){
+    cat("Formatting X2\n")
+    X2 <- gwas_format(X2, snp = snp_name_cols[2],
+                      beta_hat = beta_hat_cols[2], se = se_cols[2],
+                      A1 = A1_cols[2], A2 = A2_cols[2])
   }
-
-  X1 <- remove_ambiguous(X1, upper = upper1)
-  X2 <- remove_ambiguous(X2, upper = upper2)
-
-  X1 <- align_beta(X1, "beta_hat_1", upper1)
-  X2 <- align_beta(X2, "beta_hat_2", upper2)
-
-  cat("After removing ambiguous SNPs, there are ",
-      nrow(X1), " variants in GWAS 1 and ", nrow(X2),
-      " variants in GWAS 2.\n")
-
 
   X <-  inner_join(X1, X2, by="snp") %>%
         filter(!is.na(seb1) & !is.na(seb2) &
                  !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
         filter(is.finite(seb1) & is.finite(seb2) &
                  is.finite(beta_hat_1) & is.finite(beta_hat_2)) %>%
-        filter(seb1 > 0 & seb2 > 0)
-  if(!upper1){
-    X  <- X %>% mutate(A2.x = toupper(A2.x))
-  }
-  if(!upper2){
-    X  <- X %>% mutate(A2.y = toupper(A2.y))
-  }
-  X <- filter(X, toupper(A2.x) == toupper(A2.y)) %>%
-       select(-A1.y, -A2.y) %>%
-       rename(A1 = A1.x, A2 = A2.x) %>%
-      select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
+        filter(seb1 > 0 & seb2 > 0) %>%
+        filter(X, A2.x == A2.y) %>%
+        select(-A1.y, -A2.y) %>%
+        rename(A1 = A1.x, A2 = A2.x) %>%
+        select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
   cat("After merging and removing variants with inconsistent alleles, ",
       "there are ", nrow(X),
       " variants that are present in both studies and can be used with CAUSE.\n")

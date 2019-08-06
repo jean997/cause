@@ -14,6 +14,7 @@
 #' @importFrom loo loo compare
 #' @importFrom Rcpp sourceCpp
 #' @importFrom RcppParallel RcppParallelLibs
+#' @importFrom readr read_tsv write_tsv
 #' @useDynLib cause
 #' @name cause
 NULL

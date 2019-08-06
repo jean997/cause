@@ -4,7 +4,7 @@
 \alias{eta_gamma_prior}
 \title{Prior variance for gamma and eta}
 \usage{
-eta_gamma_prior(X, variants, prob = 0.05)
+eta_gamma_prior(X, variants, prob = 0.05, pval_thresh = 0.001)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
@@ -12,6 +12,8 @@ eta_gamma_prior(X, variants, prob = 0.05)
 \item{variants}{A vector of variants to include in the analysis.}
 
 \item{prob}{See Details}
+
+\item{pval_thresh}{A p-value threshold applied to trait 1 (M). This prevents}
 }
 \value{
 A prior variance for gamma and eta (scalar)
