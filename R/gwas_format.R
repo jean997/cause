@@ -34,7 +34,7 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
     X <- mutate(X, pos = NA)
     pos <- "pos"
   }
-  if(missing(po_value)){
+  if(missing(p_value)){
     X <- mutate(X, p_value = NA)
     p_value <- "p_value"
     p_val_missing <- TRUE
@@ -65,14 +65,6 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
   if(p_val_missing & compute_pval){
     X <- X %>% mutate(p_value = 2*pnorm(-abs(beta_hat/se)))
   }
-
-
-  cat("There are ", nrow(X1), " variants in GWAS 1 and ", nrow(X2),
-      " variants in GWAS 2.\n")
-  #Check case of allele coding
-  upper1 <- X1$A1[1] == toupper(X1$A1[1])
-  upper2 <- X2$A1[1] == toupper(X2$A1[1])
-
 
   cat("There are ", nrow(X), " variants.\n")
 

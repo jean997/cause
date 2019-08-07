@@ -39,13 +39,20 @@ gwas_merge <- function(X1, X2,
                       A1 = A1_cols[2], A2 = A2_cols[2])
   }
 
-  X <-  inner_join(X1, X2, by="snp") %>%
+  X <-  X1 %>%
+        select(snp, beta_hat, se, A1, A2) %>%
+        rename(beta_hat_1 = beta_hat,
+               seb1 = se) %>%
+        inner_join(., X2, by="snp") %>%
+        select(snp, beta_hat_1, seb1, beta_hat, se, A1.x, A2.x, A1.y, A2.y) %>%
+        rename(beta_hat_2 = beta_hat,
+               seb2 = se) %>%
         filter(!is.na(seb1) & !is.na(seb2) &
-                 !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
+              !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
         filter(is.finite(seb1) & is.finite(seb2) &
-                 is.finite(beta_hat_1) & is.finite(beta_hat_2)) %>%
+               is.finite(beta_hat_1) & is.finite(beta_hat_2)) %>%
         filter(seb1 > 0 & seb2 > 0) %>%
-        filter(X, A2.x == A2.y) %>%
+        filter(A2.x == A2.y) %>%
         select(-A1.y, -A2.y) %>%
         rename(A1 = A1.x, A2 = A2.x) %>%
         select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
