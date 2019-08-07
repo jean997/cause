@@ -26,22 +26,35 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
   if(missing(snp) | missing(beta_hat) | missing(se) | missing(A1) | missing(A2)){
     stop("snp, beta_hat, se, A1, and A2 are required.\n")
   }
-  if(missing(chrom) | is.na(chrom)){
+  if(missing(chrom)){
+    X <- mutate(X, chrom = NA)
+    chrom <- "chrom"
+  }else if(is.na(chrom)){
     X <- mutate(X, chrom = NA)
     chrom <- "chrom"
   }
-  if(missing(pos) | is.na(pos)){
+  if(missing(pos)){
+    X <- mutate(X, pos = NA)
+    pos <- "pos"
+  }else if(is.na(pos)){
     X <- mutate(X, pos = NA)
     pos <- "pos"
   }
-  if(missing(p_value) | is.na(p_value)){
+  if(missing(p_value)){
+    X <- mutate(X, p_value = NA)
+    p_value <- "p_value"
+    p_val_missing <- TRUE
+  }else if(is.na(p_value)){
     X <- mutate(X, p_value = NA)
     p_value <- "p_value"
     p_val_missing <- TRUE
   }else{
     p_val_missing <- FALSE
   }
-  if(missing(sample_size) | is.na(sample_size)){
+  if(missing(sample_size)){
+    X <- mutate(X, sample_size = NA)
+    sample_size <- "sample_size"
+  }else if(is.na(sample_size)){
     X <- mutate(X, sample_size = NA)
     sample_size <- "sample_size"
   }else if(is.numeric(sample_size)){
