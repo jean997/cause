@@ -52,7 +52,7 @@ X2 <- read_tsv("ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vander
 
 CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a `cause_data` object that can be used with later functions. This step and the rest of the analysis are done in R.
 
-The function `gwas_format_cause` will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other). 
+The function `gwas_merge` will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other). 
 
 LDL column headers:
 
@@ -71,7 +71,7 @@ CAD column headers:
 + Other Allele: Allele2
 
 ```{r, eval=FALSE}
-X <- gwas_format_cause(X1, X2, snp_name_cols = c("rsid", "oldID"), 
+X <- gwas_merge(X1, X2, snp_name_cols = c("rsid", "oldID"), 
                        beta_hat_cols = c("beta", "Effect"), 
                        se_cols = c("se", "StdErr"), 
                        A1_cols = c("A1", "Allele1"), 
