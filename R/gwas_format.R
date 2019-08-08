@@ -116,7 +116,7 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
 
 }
 
-
+#'@export
 read_standard_format <- function(file, extra_cols = list()){
   cols <- list(col_character(),col_integer(),
                col_character(),col_character(),
