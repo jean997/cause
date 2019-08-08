@@ -117,13 +117,8 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
 }
 
 #'@export
-read_standard_format <- function(file, extra_cols = list()){
-  cols <- list(col_character(),col_integer(),
-               col_character(),col_character(),
-               col_character(),col_double(),col_double(),
-               col_double(),col_double())
-  cols <- c(cols, extra_cols)
-  dat <- read_tsv(file,
-                  col_type=cols)
+read_standard_format <- function(file, ...){
+  dat <- read_tsv(file, col_types=list(chrom="c",pos="i", A1 = "c", A2 = "c",
+                       beta_hat="d", se = "d", p_value ="d", sample_size="d"), ...)
   return(dat)
 }
