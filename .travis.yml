@@ -4,3 +4,4 @@ language: R
 cache: packages
 os: osx
 latex: false
+warnings_are_errors: false
