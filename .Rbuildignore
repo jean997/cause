@@ -7,3 +7,7 @@
 ^output$
 ^gwas_pairs_code$
 ^sim_results$
+^\.travis\.yml$
+^appveyor\.yml$
+^\.circleci/config\.yml$
+^_workflowr\.yml$
