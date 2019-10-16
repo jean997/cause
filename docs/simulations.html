@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Jean Morrison" />
@@ -90,7 +91,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -251,48 +251,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -394,7 +355,7 @@ div.tocify {
   <a href="simulations.html">Simulations</a>
 </li>
 <li>
-  <a href="gwas_pairs.html">Analyze Pairs of GWAS Traits</a>
+  <a href="gwas_pairs_2.html">Pairs of GWAS Traits</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -432,7 +393,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -441,7 +402,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -450,10 +411,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-24
+<strong>Last updated:</strong> 2019-10-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -481,56 +442,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongobjectspresent"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Environment:</strong> objects present </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
-<div id="strongEnvironmentstrongobjectspresent" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-The global environment had objects present when the code in the R Markdown file was run. These objects can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment. Use <code>wflow_publish</code> or <code>wflow_build</code> to ensure that the code is always run in an empty environment.
-</p>
-<p>
-The following objects were defined in the global environment when these results were created:
-</p>
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th style="text-align:left;">
-Name
-</th>
-<th style="text-align:left;">
-Class
-</th>
-<th style="text-align:left;">
-Size
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-data
-</td>
-<td style="text-align:left;">
-environment
-</td>
-<td style="text-align:left;">
-56 bytes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-env
-</td>
-<td style="text-align:left;">
-environment
-</td>
-<td style="text-align:left;">
-56 bytes
-</td>
-</tr>
-</tbody>
-</table>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
 </div>
 </div>
 </div>
@@ -585,10 +502,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree112bcdee0633a4f6d155e402104e1527eca2d19atargetblank112bcdea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/112bcdee0633a4f6d155e402104e1527eca2d19a" target="_blank">112bcde</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed5d0a475811aca2ad52b5141ef0a4c896037b98atargetblankd5d0a47a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/d5d0a475811aca2ad52b5141ef0a4c896037b98a" target="_blank">d5d0a47</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree112bcdee0633a4f6d155e402104e1527eca2d19atargetblank112bcdea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed5d0a475811aca2ad52b5141ef0a4c896037b98atargetblankd5d0a47a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -603,14 +520,20 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  analysis/figure/ldl_cad.Rmd/
+    Untracked:  R/compute_genetic_correlation.R
+    Untracked:  R/map_pi_rho_nonnull.R
+    Untracked:  R/setup_cause_pipeline.R
     Untracked:  analysis/figure/little_test.Rmd/
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
+    Untracked:  temp.txt
     Untracked:  tests/
+
+Unstaged changes:
+    Modified:   example_data/LDL_CAD_merged.RDS
 
 </code></pre>
 <p>
@@ -649,6 +572,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/d5d0a475811aca2ad52b5141ef0a4c896037b98a/analysis/simulations.Rmd" target="_blank">d5d0a47</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-16
+</td>
+<td>
+wflow_publish(c(“analysis/simulations.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/12413f743c9642f36d2cf5a34a14105725a214e1/analysis/simulations.Rmd" target="_blank">12413f7</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-26
+</td>
+<td>
+small typo
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/9de7de67ae150f8230419f2137ec7fe0822dc2a3/docs/simulations.html" target="_blank">9de7de6</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -979,6 +953,10 @@ wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “a
 </div>
 </div>
 </div>
+<div id="click-here-to-look-at-simulation-results-interactively" class="section level1">
+<h1><a href="https://jean-loves-stats.shinyapps.io/simulations/">Click here to look at simulation results interactively</a></h1>
+<p>In the document below we describe how to reproduce these using DSC.</p>
+</div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>This page gives instructions for running the simulations that we ran to evaluate CAUSE and will allow you to reproduce the results <a href="https://www.biorxiv.org/content/10.1101/682237v3">the paper</a>. It will hopefully also serve as a resource for explaining those results in more detail and allow you to modify simulations to run your own experiments. There are a lot of parameters that can be changed. We tried to explore a reasonable range of scenarios but there are many more variations that could be tried. Running the simulations involves multiple set-up steps, mostly software installation and may take a bit of time, especially if you are new to DSC. Additionally, completing the simulations requires several hours of computing and needs to be done on a cluster. If you don’t have access to that kind of computing resource you may still find this section useful. All of our results can be downloaded and we will include some discussions of the patterns that we observed as we go along.</p>
@@ -1072,7 +1050,7 @@ dim(causedf)</code></pre>
 <li><code>tau</code>, <code>omega</code>: Transformations of <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span> respectively. <span class="math inline">\(\tau\)</span> is the proportion of <span class="math inline">\(Y\)</span> heritability explained by the causal effect of trait <span class="math inline">\(M\)</span>, equal to <span class="math inline">\(\tau = \gamma^2 h^2_{M}/h^2_Y\)</span>. In our case <span class="math inline">\(h^2_M = h^2_Y\)</span> for all simulations so <span class="math inline">\(\tau = \gamma^2\)</span>. <span class="math inline">\(\omega\)</span> is defined as <span class="math inline">\(\omega = \eta^2 h^2_M/h^2_Y = \eta^2\)</span>.</li>
 <li><code>h1</code>, <code>h2</code>: Heritabilitites for trait <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> respectively <code>h1</code> $ = h^2_M$ and <code>h2</code><span class="math inline">\(= h^2_Y\)</span>. In our case these are equal to 0.25 for all simulations.</li>
 <li><code>n1</code>, <code>n2</code>: Sample size for GWAS of traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> respectively. These can be equal to 12,000 (low power) or 40,000 (high power).</li>
-<li><code>neffect</code>, <code>neffect2</code>: Expected number of effect SNPS for trait <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>. In our case equal to 1000 for all simulations.</li>
+<li><code>neffect1</code>, <code>neffect2</code>: Expected number of effect SNPS for trait <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>. In our case equal to 1000 for all simulations.</li>
 <li><code>lcv_q1</code>, <code>lcv_q2</code>, <code>gcp</code>: True values of the LCV parameters <span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span> and GCP. These are computed from <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(q\)</span>.</li>
 <li><code>m_sig</code>: The number of genome-wide significant variants for trait <span class="math inline">\(M\)</span> after pruning for LD using an threshold of <span class="math inline">\(r^2 &lt; 0.1\)</span></li>
 </ul>
@@ -1711,7 +1689,7 @@ cause: R(library(causeSims);
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.6.1 (2019-07-05)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.2 LTS
+Running under: Ubuntu 18.04.3 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1729,29 +1707,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] jcolors_0.0.4   pROC_1.15.0     gridExtra_2.3   forcats_0.4.0  
+ [1] jcolors_0.0.4   pROC_1.15.3     gridExtra_2.3   forcats_0.4.0  
  [5] stringr_1.4.0   dplyr_0.8.3     purrr_0.3.2     readr_1.3.1    
- [9] tidyr_0.8.3     tibble_2.1.3    ggplot2_3.2.0   tidyverse_1.2.1
+ [9] tidyr_0.8.3     tibble_2.1.3    ggplot2_3.2.1   tidyverse_1.2.1
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.8             haven_2.1.1         
+ [1] tidyselect_0.2.5     xfun_0.9             haven_2.1.1         
  [4] lattice_0.20-38      colorspace_1.4-1     generics_0.0.2      
  [7] vctrs_0.2.0          htmltools_0.3.6      yaml_2.2.0          
 [10] rlang_0.4.0          pillar_1.4.2         glue_1.3.1          
-[13] withr_2.1.2          modelr_0.1.4         readxl_1.3.1        
+[13] withr_2.1.2          modelr_0.1.5         readxl_1.3.1        
 [16] plyr_1.8.4           munsell_0.5.0        gtable_0.3.0        
 [19] workflowr_1.4.0.9000 cellranger_1.1.0     rvest_0.3.4         
-[22] evaluate_0.14        labeling_0.3         knitr_1.23          
-[25] highr_0.8            broom_0.5.2          Rcpp_1.0.1          
-[28] scales_1.0.0         backports_1.1.4      jsonlite_1.6        
-[31] fs_1.3.1             hms_0.5.0            digest_0.6.20       
-[34] stringi_1.4.3        grid_3.6.1           rprojroot_1.3-2     
-[37] cli_1.1.0            tools_3.6.1          magrittr_1.5        
-[40] lazyeval_0.2.2       crayon_1.3.4         whisker_0.3-2       
-[43] pkgconfig_2.0.2      zeallot_0.1.0        xml2_1.2.0          
-[46] lubridate_1.7.4      assertthat_0.2.1     rmarkdown_1.13      
-[49] httr_1.4.0           rstudioapi_0.10      R6_2.4.0            
-[52] nlme_3.1-140         git2r_0.26.1         compiler_3.6.1      </code></pre>
+[22] evaluate_0.14        labeling_0.3         knitr_1.24          
+[25] broom_0.5.2          Rcpp_1.0.2           scales_1.0.0        
+[28] backports_1.1.4      jsonlite_1.6         fs_1.3.1            
+[31] hms_0.5.1            digest_0.6.20        stringi_1.4.3       
+[34] grid_3.6.1           rprojroot_1.3-2      cli_1.1.0           
+[37] tools_3.6.1          magrittr_1.5         lazyeval_0.2.2      
+[40] crayon_1.3.4         whisker_0.4          pkgconfig_2.0.2     
+[43] zeallot_0.1.0        xml2_1.2.2           lubridate_1.7.4     
+[46] assertthat_0.2.1     rmarkdown_1.15       httr_1.4.1          
+[49] rstudioapi_0.10      R6_2.4.0             nlme_3.1-141        
+[52] git2r_0.26.1         compiler_3.6.1      </code></pre>
 </div>
 </div>
 </div>
@@ -1786,6 +1764,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
