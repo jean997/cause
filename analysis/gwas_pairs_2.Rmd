@@ -1,0 +1,127 @@
+---
+title: "gwas_pairs_2"
+author: "Jean Morrison"
+date: "2019-10-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+## [Click here to look at results interactively](https://jean-loves-stats.shinyapps.io/gwas_pairs_2/)
+To reproduce these results or to learn how to use the CAUSE Snakemake pipeline, follow the tutorial below
+
+
+## Introduction
+
+We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline by reproducing the results above. 
+
+## Set Up
+
+We are using [Snakemake](https://snakemake.readthedocs.io/en/stable/) and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. For some alternative MR methods you will need the `MendelianRandomization` R package and the `MR-PRESSO` R package which can be installed [here](https://github.com/rondolab/MR-PRESSO).
+
+
+First create the conda environment
+
+```
+conda create -n cause_large python=3.6 snakemake
+```
+
+Next create a working directory that you would like to analyze the data in. Change to that directory using `cd` in Mac or Linux. For example
+
+```
+mkdir gwas_pairs
+cd gwas_pairs
+```
+
+Finally, inside the working directory and using R, setup a CAUSE pipeline. The `download_ld=TRUE` argument causes the function to download correctly formatted `ld` data computed using 1k genomes CEU individuals. If you've already downloaded this or you want to use different LD data, use `download_ld=FALSE`. 
+
+```
+cause::setup_cause_pipeline(download_ld=TRUE)
+```
+
+## How to Use the Pipeline
+
+The `setup_cause_pipeline()` function provides you with everything you need to run an  analysis except for data and a `.csv` file describing that data. The analysis is controlled by the `config.yaml` file which has four sections. You should edit the file to match your analysis desires.
+
+The `input` section gives the location of a `csv` file that describes each set of GWAS summary statistics. More on this file later.
+
+```
+# Path to data spreadsheed
+# csv format, columns include:
+# name, raw_data_path, snp, A1, A2, beta_hat, se, p_value, sample_size, delimeter
+input:
+    sum_stats: "gwas_pairs.csv"
+```
+
+The `analysis` section gives instructions about what analysis to run.
+
+```
+# What analysis to do
+# If all_pairs do all pairs of triats. Otherwise
+# use traits in trait1 as M and traits in trait2 as Y
+# methods should be a comma separated list with no spaces.
+# Optional methods should be one of
+# cause_*_*_*, mrpackage, lcv,  mrpresso
+analysis:
+    all_pairs: True
+    trait1: 1,2
+    trait2: 3,4,5
+    methods: cause_1_2_1,cause_1_10_1,cause_1_100_1,mrpackage,mrpresso,lcv
+    mr_pval: "5e-8"
+    cause_seed: 100
+```
+
+If `all_pairs` is `True` then the pipeline will run the desired methods for all pairs of traits in the csv. Otherwise it will use the `trait1` and `trait2` fields to determine which pairs to run. Numbers in these fields refer to line numbers (beginnin at 1 after the header) in the csv. The `methods` line lists the methods you would like to run. Options are listed above in the comments. The numbers following `cause` designate the prior on $q$. If the method is given as `cause_a_b_c` then a Beta(a,b) prior truncated at c will but used. The `mrpackage` option runs a set of six different methods using the `MendelianRandomization` R package. These are IVW and Egger regression both with random effects, the weighted median and the weighted mode with with values of phi equal to 1, 0.5, and 0.25. The `mr_pval` field gives the minimum p-value for variants used in methods besides CAUSE and LCV which use all variants. The `cause_seed` provides a random seed to CAUSE and ensures that results can be reproduced exactly. 
+
+
+The `ld` section tells the pipeline where to find correctly formatted LD data and what files are named. 
+```
+#Path to directory containing LD data
+ld:
+    dir: "ld/"
+    r2_file: "_AF0.05_0.1.RDS"
+    info_file: "_AF0.05_snpdata.RDS"
+```
+The pipeline will expect to find files in the directory given in `dir:` with names `{chr}_{r2_file}`  and `{chr}_{info_file}` where `{r2_file}` and `{info_file}` are the file endings given in those respective fields and `{chr}` is a chromosme (e.g. `chr1`, `chr2`) for chromosomes 1-22. 
+
+The `out` section tells the pipeline where to store output files.
+
+```
+out:
+    gwas_data_dir: "cause_standard_format/"
+    other_data_dir: "data/"
+    output_dir: "results/"
+```
+
+The `gwas_data_dir` field is a directory to store formatted summary statistics. It can be helpful to store these in a centralized location if you are running multiple pipelines ot save on work and storage. The `other_data_dir` lists a directory to store other data files. These include some temporary files that are removed at the end of the pipeline and lists of SNPs pruned for LD that are saved. `output_dir` is a directory to store analysis results. 
+
+
+
+The `cluster.yaml` file describes resources allocated for each kind of job. The default will work but if it requests more resources than are available on your cluster (e.g. memory) you may need to change it.
+
+The Snakemake command for submitting the pipeline is in the `run-snakemake.sh` file. You will need to modify it to match your cluster.
+
+Once you have downloaded summary statistics and created the csv file you are ready to run the pipeline. You can run with 
+```
+nohup ./run-snakemake.sh & 
+```
+The `nohup` is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.
+
+## Download data and build spreadsheet
+
+The next step is to acquire some GWAS summary statistics and to describe them in a spreadsheet so that the pipeline is able to format them properly. The spreadsheet has the following mandatory column headers in any order:
+
+`name`: a unique string naming the study
+`delimeter`: Field delimeter. One of "tab", ",", "space", or any symbol.
+`snp`: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on.
+`A1`: Column name of effect allele
+`A2`: Column name of other allele
+`beta_hat`: Column name of effect estimate
+`se`: Column name of standard error of effect estimate
+`p_value`: Column name of $p$-value
+`sample_size`: Column name of per-SNP sample size
+
+The `p_value` and `sample_size` fields may contain NAs if some studies don't have them. The rest are required. Most studies can be used exactly as downloaded but you may have to a little bit of formatting before you can use the pipeline. For example, some studies do not contain rs numbers or have atypical variant names. 
+
+The `cause::cause_download_gwas_data()` function downloads summary statistics for 16 traits analyzed in the paper from around the web. 13 of these are downloaded from their original source. Three (type 2 diabetes, systolic and diastolic blood pressure) are versions that we have modified to include all of the necessary information. The type 2 diabetes data were modified to add a standard error column and to log transform the odds ratio that is reported in the original data. The blood pressure data were modified to include an rs number and to only use high quality variants. This function may take some time to run. It will also download a spreadsheet matching each study. 
