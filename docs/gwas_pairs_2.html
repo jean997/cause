@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jean Morrison" />
+
+<meta name="date" content="2019-10-15" />
+
+<title>gwas_pairs_2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">CAUSE: Cauasl Analysis Using Summary Effects</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="ldl_cad.html">Software Tutorial</a>
+</li>
+<li>
+  <a href="simulations.html">Simulations</a>
+</li>
+<li>
+  <a href="gwas_pairs_2.html">Pairs of GWAS Traits</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jean997/cause">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">gwas_pairs_2</h1>
+<h4 class="author">Jean Morrison</h4>
+<h4 class="date">2019-10-15</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2019-10-15
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.4.0.9000). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree12192aa4622acfe814985b0c727dac9160fabe56targetblank12192aaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/12192aa4622acfe814985b0c727dac9160fabe56" target="_blank">12192aa</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree12192aa4622acfe814985b0c727dac9160fabe56targetblank12192aaa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    sim_results/
+    Ignored:    src/RcppExports.o
+    Ignored:    src/cause.so
+    Ignored:    src/log_likelihood_functions.o
+
+Untracked files:
+    Untracked:  R/compute_genetic_correlation.R
+    Untracked:  R/map_pi_rho_nonnull.R
+    Untracked:  R/setup_cause_pipeline.R
+    Untracked:  analysis/figure/little_test.Rmd/
+    Untracked:  cause.Rcheck/
+    Untracked:  docs/cause.bib
+    Untracked:  docs/figure/cause_figure_1_standalone.pdf
+    Untracked:  gwas_data/
+    Untracked:  ll_v7_notes.Rmd
+    Untracked:  temp.txt
+    Untracked:  tests/
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   example_data/LDL_CAD_merged.RDS
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/12192aa4622acfe814985b0c727dac9160fabe56/analysis/gwas_pairs_2.Rmd" target="_blank">12192aa</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-16
+</td>
+<td>
+wflow_publish(c(“analysis/index.Rmd”, “analysis/gwas_pairs_2.Rmd”))
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="click-here-to-look-at-results-interactively" class="section level2">
+<h2><a href="https://jean-loves-stats.shinyapps.io/gwas_pairs_2/">Click here to look at results interactively</a></h2>
+<p>To reproduce these results or to learn how to use the CAUSE Snakemake pipeline, follow the tutorial below</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline by reproducing the results above.</p>
+</div>
+<div id="set-up" class="section level2">
+<h2>Set Up</h2>
+<p>We are using <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> and a conda environment to run this analysis. If you don’t have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the <code>cause</code> and <code>tidyverse</code> R packages installed and running. If you were able to work through the <a href="ldl_cad.html">package tutorial</a> you should be in good shape. For some alternative MR methods you will need the <code>MendelianRandomization</code> R package and the <code>MR-PRESSO</code> R package which can be installed <a href="https://github.com/rondolab/MR-PRESSO">here</a>.</p>
+<p>First create the conda environment</p>
+<pre><code>conda create -n cause_large python=3.6 snakemake</code></pre>
+<p>Next create a working directory that you would like to analyze the data in. Change to that directory using <code>cd</code> in Mac or Linux. For example</p>
+<pre><code>mkdir gwas_pairs
+cd gwas_pairs</code></pre>
+<p>Finally, inside the working directory and using R, setup a CAUSE pipeline. The <code>download_ld=TRUE</code> argument causes the function to download correctly formatted <code>ld</code> data computed using 1k genomes CEU individuals. If you’ve already downloaded this or you want to use different LD data, use <code>download_ld=FALSE</code>.</p>
+<pre><code>cause::setup_cause_pipeline(download_ld=TRUE)</code></pre>
+</div>
+<div id="how-to-use-the-pipeline" class="section level2">
+<h2>How to Use the Pipeline</h2>
+<p>The <code>setup_cause_pipeline()</code> function provides you with everything you need to run an analysis except for data and a <code>.csv</code> file describing that data. The analysis is controlled by the <code>config.yaml</code> file which has four sections. You should edit the file to match your analysis desires.</p>
+<p>The <code>input</code> section gives the location of a <code>csv</code> file that describes each set of GWAS summary statistics. More on this file later.</p>
+<pre><code># Path to data spreadsheed
+# csv format, columns include:
+# name, raw_data_path, snp, A1, A2, beta_hat, se, p_value, sample_size, delimeter
+input:
+    sum_stats: &quot;gwas_pairs.csv&quot;</code></pre>
+<p>The <code>analysis</code> section gives instructions about what analysis to run.</p>
+<pre><code># What analysis to do
+# If all_pairs do all pairs of triats. Otherwise
+# use traits in trait1 as M and traits in trait2 as Y
+# methods should be a comma separated list with no spaces.
+# Optional methods should be one of
+# cause_*_*_*, mrpackage, lcv,  mrpresso
+analysis:
+    all_pairs: True
+    trait1: 1,2
+    trait2: 3,4,5
+    methods: cause_1_2_1,cause_1_10_1,cause_1_100_1,mrpackage,mrpresso,lcv
+    mr_pval: &quot;5e-8&quot;
+    cause_seed: 100</code></pre>
+<p>If <code>all_pairs</code> is <code>True</code> then the pipeline will run the desired methods for all pairs of traits in the csv. Otherwise it will use the <code>trait1</code> and <code>trait2</code> fields to determine which pairs to run. Numbers in these fields refer to line numbers (beginnin at 1 after the header) in the csv. The <code>methods</code> line lists the methods you would like to run. Options are listed above in the comments. The numbers following <code>cause</code> designate the prior on <span class="math inline">\(q\)</span>. If the method is given as <code>cause_a_b_c</code> then a Beta(a,b) prior truncated at c will but used. The <code>mrpackage</code> option runs a set of six different methods using the <code>MendelianRandomization</code> R package. These are IVW and Egger regression both with random effects, the weighted median and the weighted mode with with values of phi equal to 1, 0.5, and 0.25. The <code>mr_pval</code> field gives the minimum p-value for variants used in methods besides CAUSE and LCV which use all variants. The <code>cause_seed</code> provides a random seed to CAUSE and ensures that results can be reproduced exactly.</p>
+<p>The <code>ld</code> section tells the pipeline where to find correctly formatted LD data and what files are named.</p>
+<pre><code>#Path to directory containing LD data
+ld:
+    dir: &quot;ld/&quot;
+    r2_file: &quot;_AF0.05_0.1.RDS&quot;
+    info_file: &quot;_AF0.05_snpdata.RDS&quot;</code></pre>
+<p>The pipeline will expect to find files in the directory given in <code>dir:</code> with names <code>{chr}_{r2_file}</code> and <code>{chr}_{info_file}</code> where <code>{r2_file}</code> and <code>{info_file}</code> are the file endings given in those respective fields and <code>{chr}</code> is a chromosme (e.g. <code>chr1</code>, <code>chr2</code>) for chromosomes 1-22.</p>
+<p>The <code>out</code> section tells the pipeline where to store output files.</p>
+<pre><code>out:
+    gwas_data_dir: &quot;cause_standard_format/&quot;
+    other_data_dir: &quot;data/&quot;
+    output_dir: &quot;results/&quot;</code></pre>
+<p>The <code>gwas_data_dir</code> field is a directory to store formatted summary statistics. It can be helpful to store these in a centralized location if you are running multiple pipelines ot save on work and storage. The <code>other_data_dir</code> lists a directory to store other data files. These include some temporary files that are removed at the end of the pipeline and lists of SNPs pruned for LD that are saved. <code>output_dir</code> is a directory to store analysis results.</p>
+<p>The <code>cluster.yaml</code> file describes resources allocated for each kind of job. The default will work but if it requests more resources than are available on your cluster (e.g. memory) you may need to change it.</p>
+<p>The Snakemake command for submitting the pipeline is in the <code>run-snakemake.sh</code> file. You will need to modify it to match your cluster.</p>
+<p>Once you have downloaded summary statistics and created the csv file you are ready to run the pipeline. You can run with</p>
+<pre><code>nohup ./run-snakemake.sh &amp; </code></pre>
+<p>The <code>nohup</code> is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.</p>
+</div>
+<div id="download-data-and-build-spreadsheet" class="section level2">
+<h2>Download data and build spreadsheet</h2>
+<p>The next step is to acquire some GWAS summary statistics and to describe them in a spreadsheet so that the pipeline is able to format them properly. The spreadsheet has the following mandatory column headers in any order:</p>
+<p><code>name</code>: a unique string naming the study <code>delimeter</code>: Field delimeter. One of “tab”, “,”, “space”, or any symbol. <code>snp</code>: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on. <code>A1</code>: Column name of effect allele <code>A2</code>: Column name of other allele <code>beta_hat</code>: Column name of effect estimate <code>se</code>: Column name of standard error of effect estimate <code>p_value</code>: Column name of <span class="math inline">\(p\)</span>-value <code>sample_size</code>: Column name of per-SNP sample size</p>
+<p>The <code>p_value</code> and <code>sample_size</code> fields may contain NAs if some studies don’t have them. The rest are required. Most studies can be used exactly as downloaded but you may have to a little bit of formatting before you can use the pipeline. For example, some studies do not contain rs numbers or have atypical variant names.</p>
+<p>The <code>cause::cause_download_gwas_data()</code> function downloads summary statistics for 16 traits analyzed in the paper from around the web. 13 of these are downloaded from their original source. Three (type 2 diabetes, systolic and diastolic blood pressure) are versions that we have modified to include all of the necessary information. The type 2 diabetes data were modified to add a standard error column and to log transform the odds ratio that is reported in the original data. The blood pressure data were modified to include an rs number and to only use high quality variants. This function may take some time to run. It will also download a spreadsheet matching each study.</p>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
