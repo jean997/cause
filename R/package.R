@@ -1,6 +1,6 @@
 #' CAUSE
 #'
-#' Implementation of CAUSE described in Morrison et al. (2018)
+#' Implementation of CAUSE described in Morrison et al. (2019)
 #'
 #' @docType package
 #' @author Jean Morrison <jeanm@uchicago.edu>
