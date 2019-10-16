@@ -1,0 +1,30 @@
+# Path to data spreadsheed
+# csv format, columns include:
+# name, raw_data_path, snp, A1, A2, beta_hat, se, p_value, sample_size, delimeter
+input:
+    sum_stats: "gwas_pairs.csv"
+
+# What analysis to do
+# If all_pairs do all pairs of triats. Otherwise
+# use traits in trait1 as M and traits in trait2 as Y
+# methods should be a comma separated list with no spaces.
+# Optional methods should be one of
+# cause_*_*_*, mrpackage, lcv,  mrpresso
+analysis:
+    all_pairs: True
+    trait1: 1,2
+    trait2: 3,4,5
+    methods: cause_1_2_1,cause_1_10_1,cause_1_100_1,mrpackage,mrpresso,lcv
+    mr_pval: "5e-8"
+    cause_seed: 100
+
+#Path to directory containing LD data
+ld:
+    dir: "ld/"
+    r2_file: "_AF0.05_0.1.RDS"
+    info_file: "_AF0.05_snpdata.RDS"
+
+out:
+    gwas_data_dir: "cause_standard_format/"
+    other_data_dir: "data/"
+    output_dir: "results/"

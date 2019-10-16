@@ -1,0 +1,38 @@
+__default__:
+    mem: "1G"
+    cpus: "1"
+    name: "{rule}-{wildcards}"
+    log: "log/snake-{rule}-{wildcards}"
+    time: "50:00"
+
+format:
+    mem: "10G"
+
+data_merge:
+    mem: "20G"
+    time: "20:00"
+
+ld_prune_one_chrom:
+    mem: "10G"
+
+
+ld_prune_combine:
+    mem: "2G"
+
+cause:
+    mem: "10G"
+    cpus: "4"
+    time: "8:00:00"
+
+cause_params:
+    mem: "20G"
+    cpus: "4"
+    time: "8:00:00"
+
+mrpresso:
+    mem: "5G"
+    time: "10:00:00"
+
+mr_package:
+    mem: "10G"
+    time: "2:00:00"

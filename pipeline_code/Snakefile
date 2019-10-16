@@ -1,0 +1,145 @@
+# Snakemake pipeline for running CAUSE on pairs of GWAS traits
+#
+# This snakefile performs the following steps for each pair of traits:
+# * Format data
+# * Merge data
+# * Obtain LD pruned set of variants ascertaining on trait M p-value 
+# * Run CAUSE
+# * Run other MR methods if desired
+#
+# LICENSE: CC0. Do what you want with the code, but it has no guarantees.
+#          https://creativecommons.org/share-your-work/public-domain/cc0/
+#
+# Installation with conda package manager:
+#
+# conda create -n cause_large python=3.6  pandas snakemake
+# source activate cause_large
+
+
+#To run the full pipeline, submit the following line from within the
+#same directory as the Snakefile while on the head node (the paths to
+#        the data files are relative to the Snakefile):
+# nohup ./run-snakemake.sh & 
+#
+
+
+import pandas as pd
+from snakemake.utils import validate
+
+localrules: all, ivw, egger
+
+###### Load configuration file
+configfile: "config.yaml"
+#validate(config, schema="schemas/config.schema.yaml")
+ss = pd.read_csv(config["input"]["sum_stats"], na_filter=False)
+
+gwas_data_dir = config["out"]["gwas_data_dir"] #where formatted gwas data go
+data_dir = config["out"]["other_data_dir"] #where other data go
+ld_dir = config["ld"]["dir"] #where the ld data is
+out_dir = config["out"]["output_dir"] #where CAUSE results will go
+
+if config["analysis"]["all_pairs"]:
+   names1 = ss["name"] 
+   names2 = ss["name"]
+else:
+    names1 = [ss["name"][int(i)-1] for  i in str(config["analysis"]["trait1"]).split(",")]
+    names2 = [ss["name"][int(i)-1] for  i in str(config["analysis"]["trait2"]).split(",")]
+
+trait_pairs = [(n1, n2) for n1 in names1 for n2 in names2 if n1!=n2]
+
+methods = config["analysis"]["methods"].split(",")
+
+rule all:
+    input: expand(out_dir + "df_{method}.RDS", method=methods)
+
+# Format data
+rule format:
+    input: raw_data  = lambda wildcards: ss[ss['name'] == wildcards.name]['raw_data_path'].tolist()[0]
+    output: formatted_data = gwas_data_dir + '{name}_summary_statistics.tsv.gz'
+    params:
+        delim = lambda wildcards: ss[ss['name'] == wildcards.name]['delimeter'].tolist()[0],
+        snp = lambda wildcards: ss[ss['name'] == wildcards.name]['snp'].tolist()[0],
+        A1 = lambda wildcards: ss[ss['name'] == wildcards.name]['A1'].tolist()[0],
+        A2 = lambda wildcards: ss[ss['name'] == wildcards.name]['A2'].tolist()[0],
+        beta_hat = lambda wildcards: ss[ss['name'] == wildcards.name]['beta_hat'].tolist()[0],
+        se = lambda wildcards: ss[ss['name'] == wildcards.name]['se'].tolist()[0],
+        p_value = lambda wildcards: ss[ss['name'] == wildcards.name]['p_value'].tolist()[0],
+        sample_size = lambda wildcards: ss[ss['name'] == wildcards.name]['sample_size'].tolist()[0],
+        log = "format", cpus = 1, mem = "10G", time="50:00"
+    shell: "Rscript R/format_data.R {input.raw_data} {params.delim} {params.snp} {params.A1} {params.A2} {params.beta_hat} {params.se} {params.p_value}  {params.sample_size} {output.formatted_data}"
+               
+rule data_merge:
+    input: file1 = gwas_data_dir + '{n1}_summary_statistics.tsv.gz',
+           file2 = gwas_data_dir + '{n2}_summary_statistics.tsv.gz'
+    output: out= temp(data_dir + "{n1}__{n2}_data.RDS")
+    params: log="merge", mem="20G", cpus="1",
+            jobname='dataov', time="20:00"
+    shell: "Rscript R/merge_data.R {input.file1} {input.file2} {output.out} "
+
+rule ld_prune_one_chrom:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS',
+           r2 = ld_dir + 'chr{chrom}' + config["ld"]["r2_file"],
+           info = ld_dir + 'chr{chrom}' + config["ld"]["info_file"]
+    output: out=temp(data_dir + "snps_{tag1}__{tag2}.pruned.{chrom}.RDS")
+    params: log="ldprune", mem="10G", cpus="4", time="50:00",
+            pval_thresh = "1e-3", r2_thresh = 0.1 , jobname='ldprune_{chrom}' 
+    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} {wildcards.chrom}  \
+                   {params.pval_thresh} {params.r2_thresh} {input.r2} {input.info} {output.out}'
+
+rule ld_prune_combine:
+    input: fls = expand( data_dir + "snps_{{tag1}}__{{tag2}}.pruned.{chr}.RDS", chr = range(1, 23))
+    output: out1 = data_dir + "snps_{tag1}__{tag2}.pruned.txt"
+    params: log="ld_comb", mem="2G", cpus="1", time="10:00"
+    shell: "Rscript R/ld_cat.R {output.out1} {input.fls}"
+
+
+
+#Run CAUSE
+rule cause_params:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS',
+           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+    output: params = out_dir + '{tag1}__{tag2}_params.RDS',
+    params: seed = config["analysis"]["cause_seed"]
+    shell: 'Rscript R/cause_params.R {input.data}  {input.snps} {output.params} {params.seed}'
+
+rule cause:
+    input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
+           file2 = gwas_data_dir + '{tag2}_summary_statistics.tsv.gz',
+           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt',
+           params = out_dir + '{tag1}__{tag2}_params.RDS'
+    output: cause = out_dir + '{tag1}__{tag2}_cause_{qa}_{qb}_{maxq}.RDS'
+    params: seed = config["analysis"]["cause_seed"]
+    shell: 'Rscript R/cause.R {input.file1} {input.file2} {input.snps} {input.params} \
+                   {wildcards.qa} {wildcards.qb} {wildcards.maxq} \
+                   {output.cause} {params.seed}'
+
+mr_pval = config["analysis"]["mr_pval"]
+
+## Other MR
+rule mrpresso:
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS', 
+           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+    output: out = out_dir + '{tag1}__{tag2}_mrpresso.RDS',
+    params: mr_pval =  mr_pval
+    shell: 'Rscript R/mrpresso.R {input.data} {input.snps} {params.mr_pval} {output.out} '
+
+rule lcv:
+    input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
+           file2 = gwas_data_dir + '{tag2}_summary_statistics.tsv.gz'
+    output: out = out_dir + '{tag1}__{tag2}_lcv.RDS',
+    shell: 'Rscript R/lcv.R {input.file1} {input.file2} {output.out} '
+
+rule mr_package:
+    input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
+           file2 = gwas_data_dir + '{tag2}_summary_statistics.tsv.gz',
+           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+    params: mr_pval =  mr_pval
+    output: out = out_dir + '{tag1}__{tag2}_mrpackage.RDS',
+    shell: 'Rscript R/mr_package.R {input.file1} {input.file2} {input.snps} {params.mr_pval} {output.out} '
+    
+
+rule summary:
+    input:  expand(out_dir + '{tp[0]}__{tp[1]}_{{method}}.RDS', tp = trait_pairs)
+    output: out_dir + "df_{method}.RDS"
+    params: outdir = out_dir
+    shell: "Rscript R/extract_results.R {params.outdir} {wildcards.method}"
