@@ -9,8 +9,8 @@ navbar:
       href: ldl_cad.html
     - text: "Simulations"
       href: simulations.html
-    - text: "Analyze Pairs of GWAS Traits"
-      href: gwas_pairs.html
+    - text: "Pairs of GWAS Traits"
+      href: gwas_pairs_2.html
     - text: "License"
       href: license.html
   right:
