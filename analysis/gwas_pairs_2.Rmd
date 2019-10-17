@@ -1,5 +1,5 @@
 ---
-title: "gwas_pairs_2"
+title: "Analyze Pairs of GWAS Traits Using CAUSE Pipeline"
 author: "Jean Morrison"
 date: "2019-10-15"
 output: workflowr::wflow_html
@@ -8,7 +8,7 @@ editor_options:
 ---
 
 
-## [Click here to look at results interactively](https://jean-loves-stats.shinyapps.io/gwas_pairs_2/)
+## [Click here to explore results interactively](https://jean-loves-stats.shinyapps.io/gwas_pairs_2/)
 To reproduce these results or to learn how to use the CAUSE Snakemake pipeline, follow the tutorial below
 
 
