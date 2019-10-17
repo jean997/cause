@@ -14,11 +14,11 @@ To reproduce these results or to learn how to use the CAUSE Snakemake pipeline, 
 
 ## Introduction
 
-We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline by reproducing the results above. 
+We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline with an example that produces a subset of the results above. 
 
 ## Set Up
 
-We are using [Snakemake](https://snakemake.readthedocs.io/en/stable/) and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. For some alternative MR methods you will need the `MendelianRandomization` R package and the `MR-PRESSO` R package which can be installed [here](https://github.com/rondolab/MR-PRESSO).
+We use [Snakemake](https://snakemake.readthedocs.io/en/stable/) and a conda environment to run this analysis. If you don't have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the `cause` and `tidyverse` R packages installed and running. If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. For some alternative MR methods you will need the `MendelianRandomization` R package and the `MR-PRESSO` R package which can be installed [here](https://github.com/rondolab/MR-PRESSO).
 
 
 First create the conda environment
@@ -41,6 +41,12 @@ cause::setup_cause_pipeline(download_ld=TRUE)
 ```
 
 ## How to Use the Pipeline
+
+Set up a pipeline analysis. From the directory you want to use, in R run 
+
+```
+cause::setup_cause_pipeline()
+```
 
 The `setup_cause_pipeline()` function provides you with everything you need to run an  analysis except for data and a `.csv` file describing that data. The analysis is controlled by the `config.yaml` file which has four sections. You should edit the file to match your analysis desires.
 
@@ -113,15 +119,75 @@ The `nohup` is optional but is nice because the pipeline can run for a long time
 The next step is to acquire some GWAS summary statistics and to describe them in a spreadsheet so that the pipeline is able to format them properly. The spreadsheet has the following mandatory column headers in any order:
 
 `name`: a unique string naming the study
+
 `delimeter`: Field delimeter. One of "tab", ",", "space", or any symbol.
+
 `snp`: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on.
+
 `A1`: Column name of effect allele
+
 `A2`: Column name of other allele
+
 `beta_hat`: Column name of effect estimate
+
 `se`: Column name of standard error of effect estimate
+
 `p_value`: Column name of $p$-value
+
 `sample_size`: Column name of per-SNP sample size
 
 The `p_value` and `sample_size` fields may contain NAs if some studies don't have them. The rest are required. Most studies can be used exactly as downloaded but you may have to a little bit of formatting before you can use the pipeline. For example, some studies do not contain rs numbers or have atypical variant names. 
 
-The `cause::cause_download_gwas_data()` function downloads summary statistics for 16 traits analyzed in the paper from around the web. 13 of these are downloaded from their original source. Three (type 2 diabetes, systolic and diastolic blood pressure) are versions that we have modified to include all of the necessary information. The type 2 diabetes data were modified to add a standard error column and to log transform the odds ratio that is reported in the original data. The blood pressure data were modified to include an rs number and to only use high quality variants. This function may take some time to run. It will also download a spreadsheet matching each study. 
+
+## Example 
+
+To run an example, from inside of R run 
+
+```
+cause::cause_download_example_gwas_data()
+```
+
+This function will set up an example analysis of three traits LDL cholesterol (Willer et al 2013 PMID 24097068
+), coronary artery disease (van der Harst et al 2017 PMID 29212778), and asthma (Demenais et al 2018 PMID 29273806). The function will download summary statistics, and in these cases they are ready to use without any modifications. This isn't always the case. For example, some studies do not have rs ids included or report odds ratio rather than log odds ratio (the coefficient estimate from logistic regression). In these cases, you will need to modify the data so they contain the five mandatory colums of snp name, effect allele, other allele, coefficient (effect) estimate, and standard error of effect estimate. The function also downloads a `csv` file called `gwas_pairs.csv`. Take a look at the csv if you are having trouble making your own. This file has some extra (non-required) columns that we find useful for keeping track of studies. 
+
+Now to run an analysis all you need to do is
+
+1. Edit the `run-snakemake.sh` file so that the cluster command is compatible with your cluster setup.
+
+2. Edit the `config.yaml` file. You may not need to make any changes but you may need to change the location of the LD files or change where you would like data stored. Leave `all_pairs: True` or, alternatively to only run LDL -> CAD and LDL -> Asthma change to
+
+```
+analysis:
+  all_pairs: False
+  trait1: 1
+  trait2: 2,3
+```
+leave the other fields in the analysis section as they are. 
+
+3. Change the persmissions of `run-snakemake.sh` to make it an executable. Use `chmod a+x run-snakemake.sh`.
+
+4. Run (on a compute node if you like)
+
+```
+source activate cause_large
+nohup ./run-snakemake.sh & 
+```
+
+When the pipeline is done, in the results directory there will be a handful of files named `results/df_{method}.RDS` where `{method}` is one of the methods run above. Source these into R and take a look using
+
+```{r, eval=FALSE}
+df <- readRDS("results/cause_1_10_1.RDS")
+df
+```
+
+Additionally, the resuts folder will contain files named `results/{name1}__{name2}_{method}.RDS` containing results for each method. If the method is CAUSE, this will be a CAUSE object that you can look at using utilities in the `cause` package. Try
+
+```{r, eval=FALSE}
+library(cause)
+res <- readRDS("results/glg_ldl__vanderHarst_cad_cause_1_10_1.RDS")
+summary(res)
+plot(res, type="posteriors")
+plot(res, type="data")
+```
+
+
