@@ -1,0 +1,4 @@
+name,trait,full_trait_name,study_label,PMID,pub_sample_size,pub_cases,pub_controls,first_author,pub_year,raw_data_path,delimeter,snp,A1,A2,beta_hat,se,p_value,sample_size
+glg_ldl,ldl,ldl,glg,24097068,188577,,,Willer,2013,raw_data/jointGwasMc_LDL.txt.gz,tab,rsid,A1,A2,beta,se,P-value,N
+vanderHarst_cad,cad,cad,vanderHarst,29212778,547261,122733,424528,van der Harst,2017,raw_data/CAD_META.gz,tab,oldID,Allele1,Allele2,Effect,StdErr,P-value,NA
+tagc_asthma,asthma,asthma,tagc,29273806,142486,23948,118538,Demenais,2018,raw_data/TAGC_Multiancestry_and_European-Ancestry_Meta-analyses_Results.tsv,tab,rsid,alternate_allele,reference_allele,European_ancestry_beta_rand,European_ancestry_se_rand,European_ancestry_pval_rand,NA
