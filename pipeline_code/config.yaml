@@ -12,8 +12,8 @@ input:
 # cause_*_*_*, mrpackage, lcv,  mrpresso
 analysis:
     all_pairs: True
-    trait1: 1,2
-    trait2: 3,4,5
+    trait1: 1
+    trait2: 2,3
     methods: cause_1_2_1,cause_1_10_1,cause_1_100_1,mrpackage,mrpresso,lcv
     mr_pval: "5e-8"
     cause_seed: 100
