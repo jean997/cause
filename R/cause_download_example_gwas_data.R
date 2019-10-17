@@ -22,8 +22,9 @@ cause_download_example_gwas_data <- function(){
     download.file(url="ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/DemenaisF_29273806_GCST005212/TAGC_meta-analyses_results_for_asthma_risk.zip",
                   destfile="raw_data/TAGC_meta-analyses_results_for_asthma_risk.zip")
     system("unzip raw_data/TAGC_meta-analyses_results_for_asthma_risk.zip")
-    system("mv mv TAGC\ meta-analyses\ results\ for\ asthma\ risk/* raw_data/")
-    system("rmdir mv TAGC\ meta-analyses\ results\ for\ asthma\ risk/")
+    system("mv TAGC*/* raw_data/")
+    system("rmdir TAGC*/")
+
   }
   download.file(url="https://raw.githubusercontent.com/jean997/cause/master/pipeline_code/gwas_pairs.csv",
                 destfile="gwas_pairs.csv")
