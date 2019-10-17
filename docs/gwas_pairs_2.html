@@ -411,10 +411,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-10-15
+<strong>Last updated:</strong> 2019-10-17
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -442,10 +442,70 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree12192aa4622acfe814985b0c727dac9160fabe56targetblank12192aaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/12192aa4622acfe814985b0c727dac9160fabe56" target="_blank">12192aa</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree12192aa4622acfe814985b0c727dac9160fabe56targetblank12192aaa" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20181014code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20181014)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20181014code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree4a59a3fe3ed7fdc79a7e7dbcea4bfb3bc68995detargetblank4a59a3fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/4a59a3fe3ed7fdc79a7e7dbcea4bfb3bc68995de" target="_blank">4a59a3f</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree4a59a3fe3ed7fdc79a7e7dbcea4bfb3bc68995detargetblank4a59a3fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -460,9 +520,6 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  R/compute_genetic_correlation.R
-    Untracked:  R/map_pi_rho_nonnull.R
-    Untracked:  R/setup_cause_pipeline.R
     Untracked:  analysis/figure/little_test.Rmd/
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
@@ -473,7 +530,6 @@ Untracked files:
     Untracked:  tests/
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
     Modified:   example_data/LDL_CAD_merged.RDS
 
 </code></pre>
@@ -518,6 +574,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/jean997/cause/blob/4a59a3fe3ed7fdc79a7e7dbcea4bfb3bc68995de/analysis/gwas_pairs_2.Rmd" target="_blank">4a59a3f</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-18
+</td>
+<td>
+wflow_publish(“analysis/gwas_pairs_2.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/a1c2e0978c9b46baa71f4f3909ab7ceb9cffa371/docs/gwas_pairs_2.html" target="_blank">a1c2e09</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/jean997/cause/blob/12192aa4622acfe814985b0c727dac9160fabe56/analysis/gwas_pairs_2.Rmd" target="_blank">12192aa</a>
 </td>
 <td>
@@ -543,11 +633,11 @@ wflow_publish(c(“analysis/index.Rmd”, “analysis/gwas_pairs_2.Rmd”))
 </div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline by reproducing the results above.</p>
+<p>We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. We will demonstrate the pipeline with an example that produces a subset of the results above.</p>
 </div>
 <div id="set-up" class="section level2">
 <h2>Set Up</h2>
-<p>We are using <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> and a conda environment to run this analysis. If you don’t have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the <code>cause</code> and <code>tidyverse</code> R packages installed and running. If you were able to work through the <a href="ldl_cad.html">package tutorial</a> you should be in good shape. For some alternative MR methods you will need the <code>MendelianRandomization</code> R package and the <code>MR-PRESSO</code> R package which can be installed <a href="https://github.com/rondolab/MR-PRESSO">here</a>.</p>
+<p>We use <a href="https://snakemake.readthedocs.io/en/stable/">Snakemake</a> and a conda environment to run this analysis. If you don’t have Miniconda or Anaconda installed you can either install one of them (recomended) or just make sure that you have Python3, pandas and Snakemake installed. We have chosen to not include R in the conda environment so you will need to have R installed outside the environment and also have the <code>cause</code> and <code>tidyverse</code> R packages installed and running. If you were able to work through the <a href="ldl_cad.html">package tutorial</a> you should be in good shape. For some alternative MR methods you will need the <code>MendelianRandomization</code> R package and the <code>MR-PRESSO</code> R package which can be installed <a href="https://github.com/rondolab/MR-PRESSO">here</a>.</p>
 <p>First create the conda environment</p>
 <pre><code>conda create -n cause_large python=3.6 snakemake</code></pre>
 <p>Next create a working directory that you would like to analyze the data in. Change to that directory using <code>cd</code> in Mac or Linux. For example</p>
@@ -558,6 +648,8 @@ cd gwas_pairs</code></pre>
 </div>
 <div id="how-to-use-the-pipeline" class="section level2">
 <h2>How to Use the Pipeline</h2>
+<p>Set up a pipeline analysis. From the directory you want to use, in R run</p>
+<pre><code>cause::setup_cause_pipeline()</code></pre>
 <p>The <code>setup_cause_pipeline()</code> function provides you with everything you need to run an analysis except for data and a <code>.csv</code> file describing that data. The analysis is controlled by the <code>config.yaml</code> file which has four sections. You should edit the file to match your analysis desires.</p>
 <p>The <code>input</code> section gives the location of a <code>csv</code> file that describes each set of GWAS summary statistics. More on this file later.</p>
 <pre><code># Path to data spreadsheed
@@ -602,9 +694,83 @@ ld:
 <div id="download-data-and-build-spreadsheet" class="section level2">
 <h2>Download data and build spreadsheet</h2>
 <p>The next step is to acquire some GWAS summary statistics and to describe them in a spreadsheet so that the pipeline is able to format them properly. The spreadsheet has the following mandatory column headers in any order:</p>
-<p><code>name</code>: a unique string naming the study <code>delimeter</code>: Field delimeter. One of “tab”, “,”, “space”, or any symbol. <code>snp</code>: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on. <code>A1</code>: Column name of effect allele <code>A2</code>: Column name of other allele <code>beta_hat</code>: Column name of effect estimate <code>se</code>: Column name of standard error of effect estimate <code>p_value</code>: Column name of <span class="math inline">\(p\)</span>-value <code>sample_size</code>: Column name of per-SNP sample size</p>
+<p><code>name</code>: a unique string naming the study</p>
+<p><code>delimeter</code>: Field delimeter. One of “tab”, “,”, “space”, or any symbol.</p>
+<p><code>snp</code>: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on.</p>
+<p><code>A1</code>: Column name of effect allele</p>
+<p><code>A2</code>: Column name of other allele</p>
+<p><code>beta_hat</code>: Column name of effect estimate</p>
+<p><code>se</code>: Column name of standard error of effect estimate</p>
+<p><code>p_value</code>: Column name of <span class="math inline">\(p\)</span>-value</p>
+<p><code>sample_size</code>: Column name of per-SNP sample size</p>
 <p>The <code>p_value</code> and <code>sample_size</code> fields may contain NAs if some studies don’t have them. The rest are required. Most studies can be used exactly as downloaded but you may have to a little bit of formatting before you can use the pipeline. For example, some studies do not contain rs numbers or have atypical variant names.</p>
-<p>The <code>cause::cause_download_gwas_data()</code> function downloads summary statistics for 16 traits analyzed in the paper from around the web. 13 of these are downloaded from their original source. Three (type 2 diabetes, systolic and diastolic blood pressure) are versions that we have modified to include all of the necessary information. The type 2 diabetes data were modified to add a standard error column and to log transform the odds ratio that is reported in the original data. The blood pressure data were modified to include an rs number and to only use high quality variants. This function may take some time to run. It will also download a spreadsheet matching each study.</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>To run an example, from inside of R run</p>
+<pre><code>cause::cause_download_example_gwas_data()</code></pre>
+<p>This function will set up an example analysis of three traits LDL cholesterol (Willer et al 2013 PMID 24097068 ), coronary artery disease (van der Harst et al 2017 PMID 29212778), and asthma (Demenais et al 2018 PMID 29273806). The function will download summary statistics, and in these cases they are ready to use without any modifications. This isn’t always the case. For example, some studies do not have rs ids included or report odds ratio rather than log odds ratio (the coefficient estimate from logistic regression). In these cases, you will need to modify the data so they contain the five mandatory colums of snp name, effect allele, other allele, coefficient (effect) estimate, and standard error of effect estimate. The function also downloads a <code>csv</code> file called <code>gwas_pairs.csv</code>. Take a look at the csv if you are having trouble making your own. This file has some extra (non-required) columns that we find useful for keeping track of studies.</p>
+<p>Now to run an analysis all you need to do is</p>
+<ol style="list-style-type: decimal">
+<li><p>Edit the <code>run-snakemake.sh</code> file so that the cluster command is compatible with your cluster setup.</p></li>
+<li><p>Edit the <code>config.yaml</code> file. You may not need to make any changes but you may need to change the location of the LD files or change where you would like data stored. Leave <code>all_pairs: True</code> or, alternatively to only run LDL -&gt; CAD and LDL -&gt; Asthma change to</p></li>
+</ol>
+<pre><code>analysis:
+  all_pairs: False
+  trait1: 1
+  trait2: 2,3</code></pre>
+<p>leave the other fields in the analysis section as they are.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Change the persmissions of <code>run-snakemake.sh</code> to make it an executable. Use <code>chmod a+x run-snakemake.sh</code>.</p></li>
+<li><p>Run (on a compute node if you like)</p></li>
+</ol>
+<pre><code>source activate cause_large
+nohup ./run-snakemake.sh &amp; </code></pre>
+<p>When the pipeline is done, in the results directory there will be a handful of files named <code>results/df_{method}.RDS</code> where <code>{method}</code> is one of the methods run above. Source these into R and take a look using</p>
+<pre class="r"><code>df &lt;- readRDS(&quot;results/cause_1_10_1.RDS&quot;)
+df</code></pre>
+<p>Additionally, the resuts folder will contain files named <code>results/{name1}__{name2}_{method}.RDS</code> containing results for each method. If the method is CAUSE, this will be a CAUSE object that you can look at using utilities in the <code>cause</code> package. Try</p>
+<pre class="r"><code>library(cause)
+res &lt;- readRDS(&quot;results/glg_ldl__vanderHarst_cad_cause_1_10_1.RDS&quot;)
+summary(res)
+plot(res, type=&quot;posteriors&quot;)
+plot(res, type=&quot;data&quot;)</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.4.0.9000 Rcpp_1.0.2           digest_0.6.20       
+ [4] rprojroot_1.3-2      backports_1.1.4      git2r_0.26.1        
+ [7] magrittr_1.5         evaluate_0.14        stringi_1.4.3       
+[10] fs_1.3.1             whisker_0.4          rmarkdown_1.15      
+[13] tools_3.6.1          stringr_1.4.0        glue_1.3.1          
+[16] xfun_0.9             yaml_2.2.0           compiler_3.6.1      
+[19] htmltools_0.3.6      knitr_1.24          </code></pre>
+</div>
 </div>
 
 
