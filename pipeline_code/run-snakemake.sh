@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#source activate cause_large
-#module load R
-
+mkdir -p log
 snakemake \
    --keep-going \
    --jobs 96 \
