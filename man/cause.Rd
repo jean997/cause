@@ -41,7 +41,7 @@ results of the model comparison test. See Details.
 Fit CAUSE sharing and causal models,
 calculate ELPD test statistic and estimate posteriors
 
-Implementation of CAUSE described in Morrison et al. (2018)
+Implementation of CAUSE described in Morrison et al. (2019)
 }
 \details{
 This function estimates posterior distributions for gamma, eta, and q under the sharing and causal models
