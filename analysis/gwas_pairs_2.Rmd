@@ -34,10 +34,10 @@ mkdir gwas_pairs
 cd gwas_pairs
 ```
 
-Finally, inside the working directory and using R, setup a CAUSE pipeline. The `download_ld=TRUE` argument causes the function to download correctly formatted `ld` data computed using 1k genomes CEU individuals. If you've already downloaded this or you want to use different LD data, use `download_ld=FALSE`. 
+Finally, inside the working directory and using R, setup a CAUSE pipeline. The `download_ld=TRUE` argument causes the function to download correctly formatted `ld` data computed using 1k genomes CEU individuals. If you've already downloaded this or you want to use different LD data, use `download_ld=FALSE`. The `download_eur_ld_scores=TRUE` argument will download LD scores to use with LCV. If you have these already or don't want to run LCV, set it to false. 
 
 ```
-cause::setup_cause_pipeline(download_ld=TRUE)
+cause::setup_cause_pipeline(download_ld=TRUE, download_eur_ld_scores=TRUE)
 ```
 
 ## How to Use the Pipeline
@@ -84,12 +84,14 @@ If `all_pairs` is `True` then the pipeline will run the desired methods for all 
 The `ld` section tells the pipeline where to find correctly formatted LD data and what files are named. 
 ```
 #Path to directory containing LD data
+#ld_score_dir is used only by method lcv
 ld:
     dir: "ld/"
     r2_file: "_AF0.05_0.1.RDS"
     info_file: "_AF0.05_snpdata.RDS"
+    ld_score_dir: "ld_scores/eur_w_ld_chr/"
 ```
-The pipeline will expect to find files in the directory given in `dir:` with names `{chr}_{r2_file}`  and `{chr}_{info_file}` where `{r2_file}` and `{info_file}` are the file endings given in those respective fields and `{chr}` is a chromosme (e.g. `chr1`, `chr2`) for chromosomes 1-22. 
+The pipeline will expect to find files in the directory given in `dir:` with names `{chr}_{r2_file}`  and `{chr}_{info_file}` where `{r2_file}` and `{info_file}` are the file endings given in those respective fields and `{chr}` is a chromosme (e.g. `chr1`, `chr2`) for chromosomes 1-22. `ld_score_dir` is only necessary if you want to run LCV using method `lcv`.
 
 The `out` section tells the pipeline where to store output files.
 
