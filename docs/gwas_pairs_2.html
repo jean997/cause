@@ -502,10 +502,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreec2e7daf5fabfd14807ac6e12c6e76123e619207ctargetblankc2e7dafa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/c2e7daf5fabfd14807ac6e12c6e76123e619207c" target="_blank">c2e7daf</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree96d3d07e54796f11ac286701cebcf38df2405be4targetblank96d3d07a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/96d3d07e54796f11ac286701cebcf38df2405be4" target="_blank">96d3d07</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreec2e7daf5fabfd14807ac6e12c6e76123e619207ctargetblankc2e7dafa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree96d3d07e54796f11ac286701cebcf38df2405be4targetblank96d3d07a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -569,6 +569,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/96d3d07e54796f11ac286701cebcf38df2405be4/analysis/gwas_pairs_2.Rmd" target="_blank">96d3d07</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-18
+</td>
+<td>
+wflow_publish(“analysis/gwas_pairs_2.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/4cf522221f251caf872d99ac10770f9a2a06db1a/docs/gwas_pairs_2.html" target="_blank">4cf5222</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-10-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -677,8 +711,8 @@ wflow_publish(c(“analysis/index.Rmd”, “analysis/gwas_pairs_2.Rmd”))
 <p>Next create a working directory that you would like to analyze the data in. Change to that directory using <code>cd</code> in Mac or Linux. For example</p>
 <pre><code>mkdir gwas_pairs
 cd gwas_pairs</code></pre>
-<p>Finally, inside the working directory and using R, setup a CAUSE pipeline. The <code>download_ld=TRUE</code> argument causes the function to download correctly formatted <code>ld</code> data computed using 1k genomes CEU individuals. If you’ve already downloaded this or you want to use different LD data, use <code>download_ld=FALSE</code>.</p>
-<pre><code>cause::setup_cause_pipeline(download_ld=TRUE)</code></pre>
+<p>Finally, inside the working directory and using R, setup a CAUSE pipeline. The <code>download_ld=TRUE</code> argument causes the function to download correctly formatted <code>ld</code> data computed using 1k genomes CEU individuals. If you’ve already downloaded this or you want to use different LD data, use <code>download_ld=FALSE</code>. The <code>download_eur_ld_scores=TRUE</code> argument will download LD scores to use with LCV. If you have these already or don’t want to run LCV, set it to false.</p>
+<pre><code>cause::setup_cause_pipeline(download_ld=TRUE, download_eur_ld_scores=TRUE)</code></pre>
 </div>
 <div id="how-to-use-the-pipeline" class="section level2">
 <h2>How to Use the Pipeline</h2>
@@ -708,11 +742,13 @@ analysis:
 <p>If <code>all_pairs</code> is <code>True</code> then the pipeline will run the desired methods for all pairs of traits in the csv. Otherwise it will use the <code>trait1</code> and <code>trait2</code> fields to determine which pairs to run. Numbers in these fields refer to line numbers (beginnin at 1 after the header) in the csv. The <code>methods</code> line lists the methods you would like to run. Options are listed above in the comments. The numbers following <code>cause</code> designate the prior on <span class="math inline">\(q\)</span>. If the method is given as <code>cause_a_b_c</code> then a Beta(a,b) prior truncated at c will but used. The <code>mrpackage</code> option runs a set of six different methods using the <code>MendelianRandomization</code> R package. These are IVW and Egger regression both with random effects, the weighted median and the weighted mode with with values of phi equal to 1, 0.5, and 0.25. The <code>mr_pval</code> field gives the minimum p-value for variants used in methods besides CAUSE and LCV which use all variants. The <code>cause_seed</code> provides a random seed to CAUSE and ensures that results can be reproduced exactly.</p>
 <p>The <code>ld</code> section tells the pipeline where to find correctly formatted LD data and what files are named.</p>
 <pre><code>#Path to directory containing LD data
+#ld_score_dir is used only by method lcv
 ld:
     dir: &quot;ld/&quot;
     r2_file: &quot;_AF0.05_0.1.RDS&quot;
-    info_file: &quot;_AF0.05_snpdata.RDS&quot;</code></pre>
-<p>The pipeline will expect to find files in the directory given in <code>dir:</code> with names <code>{chr}_{r2_file}</code> and <code>{chr}_{info_file}</code> where <code>{r2_file}</code> and <code>{info_file}</code> are the file endings given in those respective fields and <code>{chr}</code> is a chromosme (e.g. <code>chr1</code>, <code>chr2</code>) for chromosomes 1-22.</p>
+    info_file: &quot;_AF0.05_snpdata.RDS&quot;
+    ld_score_dir: &quot;ld_scores/eur_w_ld_chr/&quot;</code></pre>
+<p>The pipeline will expect to find files in the directory given in <code>dir:</code> with names <code>{chr}_{r2_file}</code> and <code>{chr}_{info_file}</code> where <code>{r2_file}</code> and <code>{info_file}</code> are the file endings given in those respective fields and <code>{chr}</code> is a chromosme (e.g. <code>chr1</code>, <code>chr2</code>) for chromosomes 1-22. <code>ld_score_dir</code> is only necessary if you want to run LCV using method <code>lcv</code>.</p>
 <p>The <code>out</code> section tells the pipeline where to store output files.</p>
 <pre><code>out:
     gwas_data_dir: &quot;cause_standard_format/&quot;
