@@ -7,7 +7,7 @@ args <- commandArgs(trailingOnly=TRUE)
 file1 <- args[1]
 file2 <- args[2]
 ld_score_dir <- args[3]
-output_file <- args[3]
+output_file <- args[4]
 
 X1 <- read_standard_format(file1)
 X2 <- read_standard_format(file2)

@@ -128,7 +128,7 @@ rule lcv:
            file2 = gwas_data_dir + '{tag2}_summary_statistics.tsv.gz'
     output: out = out_dir + '{tag1}__{tag2}_lcv.RDS'
     params: ld_score_dir = config["ld"]["ld_score_dir"]
-    shell: 'Rscript R/lcv.R {input.file1} {input.file2} {output.out} {params.ld_score_dir} '
+    shell: 'Rscript R/lcv.R {input.file1} {input.file2} {params.ld_score_dir} {output.out}'
 
 rule mr_package:
     input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
