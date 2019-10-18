@@ -36,3 +36,7 @@ mrpresso:
 mr_package:
     mem: "10G"
     time: "2:00:00"
+
+lcv:
+    mem: "10G"
+    time: "2:00:00"
