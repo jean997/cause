@@ -19,10 +19,12 @@ analysis:
     cause_seed: 100
 
 #Path to directory containing LD data
+#ld_score_dir is used only by method lcv
 ld:
     dir: "ld/"
     r2_file: "_AF0.05_0.1.RDS"
     info_file: "_AF0.05_snpdata.RDS"
+    ld_score_dir: "ld_scores/eur_w_ld_chr/"
 
 out:
     gwas_data_dir: "cause_standard_format/"

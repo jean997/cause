@@ -3,7 +3,7 @@
 # This snakefile performs the following steps for each pair of traits:
 # * Format data
 # * Merge data
-# * Obtain LD pruned set of variants ascertaining on trait M p-value 
+# * Obtain LD pruned set of variants ascertaining on trait M p-value
 # * Run CAUSE
 # * Run other MR methods if desired
 #
@@ -19,7 +19,7 @@
 #To run the full pipeline, submit the following line from within the
 #same directory as the Snakefile while on the head node (the paths to
 #        the data files are relative to the Snakefile):
-# nohup ./run-snakemake.sh & 
+# nohup ./run-snakemake.sh &
 #
 
 
@@ -39,7 +39,7 @@ ld_dir = config["ld"]["dir"] #where the ld data is
 out_dir = config["out"]["output_dir"] #where CAUSE results will go
 
 if config["analysis"]["all_pairs"]:
-   names1 = ss["name"] 
+   names1 = ss["name"]
    names2 = ss["name"]
 else:
     names1 = [ss["name"][int(i)-1] for  i in str(config["analysis"]["trait1"]).split(",")]
@@ -67,7 +67,7 @@ rule format:
         sample_size = lambda wildcards: ss[ss['name'] == wildcards.name]['sample_size'].tolist()[0],
         log = "format", cpus = 1, mem = "10G", time="50:00"
     shell: "Rscript R/format_data.R {input.raw_data} {params.delim} {params.snp} {params.A1} {params.A2} {params.beta_hat} {params.se} {params.p_value}  {params.sample_size} {output.formatted_data}"
-               
+
 rule data_merge:
     input: file1 = gwas_data_dir + '{n1}_summary_statistics.tsv.gz',
            file2 = gwas_data_dir + '{n2}_summary_statistics.tsv.gz'
@@ -82,7 +82,7 @@ rule ld_prune_one_chrom:
            info = ld_dir + 'chr{chrom}' + config["ld"]["info_file"]
     output: out=temp(data_dir + "snps_{tag1}__{tag2}.pruned.{chrom}.RDS")
     params: log="ldprune", mem="10G", cpus="4", time="50:00",
-            pval_thresh = "1e-3", r2_thresh = 0.1 , jobname='ldprune_{chrom}' 
+            pval_thresh = "1e-3", r2_thresh = 0.1 , jobname='ldprune_{chrom}'
     shell:   'Rscript R/ld_prune_one_chrom.R {input.data} {wildcards.chrom}  \
                    {params.pval_thresh} {params.r2_thresh} {input.r2} {input.info} {output.out}'
 
@@ -117,7 +117,7 @@ mr_pval = config["analysis"]["mr_pval"]
 
 ## Other MR
 rule mrpresso:
-    input: data = data_dir + '{tag1}__{tag2}_data.RDS', 
+    input: data = data_dir + '{tag1}__{tag2}_data.RDS',
            snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
     output: out = out_dir + '{tag1}__{tag2}_mrpresso.RDS',
     params: mr_pval =  mr_pval
@@ -126,8 +126,9 @@ rule mrpresso:
 rule lcv:
     input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
            file2 = gwas_data_dir + '{tag2}_summary_statistics.tsv.gz'
-    output: out = out_dir + '{tag1}__{tag2}_lcv.RDS',
-    shell: 'Rscript R/lcv.R {input.file1} {input.file2} {output.out} '
+    output: out = out_dir + '{tag1}__{tag2}_lcv.RDS'
+    params: ld_score_dir = config["ld"]["ld_score_dir"]
+    shell: 'Rscript R/lcv.R {input.file1} {input.file2} {output.out} {params.ld_score_dir} '
 
 rule mr_package:
     input: file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
@@ -136,7 +137,7 @@ rule mr_package:
     params: mr_pval =  mr_pval
     output: out = out_dir + '{tag1}__{tag2}_mrpackage.RDS',
     shell: 'Rscript R/mr_package.R {input.file1} {input.file2} {input.snps} {params.mr_pval} {output.out} '
-    
+
 
 rule summary:
     input:  expand(out_dir + '{tp[0]}__{tp[1]}_{{method}}.RDS', tp = trait_pairs)
