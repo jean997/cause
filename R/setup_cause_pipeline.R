@@ -2,7 +2,7 @@
 #'@description A helper function that prepares a working directory for running an analysis with CAUSE.
 #'@details This function downloads Snakemake pipeline and R code needed to run CAUSE on many pairs of traits.
 #'@export
-setup_cause_pipleline <- function(download_ld=FALSE){
+setup_cause_pipleline <- function(download_ld=FALSE, download_eur_ld_scores=FALSE){
   #Download LD data
   if(download_ld){
     if(!dir.exists("ld/")) system("mkdir ld")
@@ -12,6 +12,12 @@ setup_cause_pipleline <- function(download_ld=FALSE){
       download.file(url=paste0("https://zenodo.org/record/1464357/files/chr", chr, "_AF0.05_snpdata.RDS?download=1"),
                   destfile=paste0("ld/chr", chr, "_AF0.05_snpdata.RDS"))
     }
+  }
+  if(download_eur_ld_scores){
+    if(!dir.exists("ld_scores/")) system("mkdir ld_scores")
+    download.file(url="https://data.broadinstitute.org/alkesgroup/LDSCORE/eur_w_ld_chr.tar.bz2",destfile="ld_scores/eur_w_ld_chr.tar.bz2")
+    system("tar -xjf ld_scores/eur_w_ld_chr.tar.bz2")
+    system("mv eur_w_ld_chr/ ld_socres/")
   }
 
   #Download code
