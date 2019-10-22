@@ -2,7 +2,7 @@
 #'@description A helper function that prepares a working directory for running an analysis with CAUSE.
 #'@details This function downloads Snakemake pipeline and R code needed to run CAUSE on many pairs of traits.
 #'@export
-setup_cause_pipleline <- function(download_ld=FALSE, download_eur_ld_scores=FALSE){
+setup_cause_pipeline <- function(download_ld=FALSE, download_eur_ld_scores=FALSE){
   #Download LD data
   if(download_ld){
     if(!dir.exists("ld/")) system("mkdir ld")
