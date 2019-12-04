@@ -1,7 +1,7 @@
 name: "cause"
 output_dir: "../docs"
 navbar:
-  title: "CAUSE: Cauasl Analysis Using Summary Effects"
+  title: "CAUSE"
   left:
     - text: "Introduction"
       href: index.html

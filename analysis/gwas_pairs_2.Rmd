@@ -150,7 +150,7 @@ cause::cause_download_example_gwas_data()
 ```
 
 This function will set up an example analysis of three traits LDL cholesterol (Willer et al 2013 PMID 24097068
-), coronary artery disease (van der Harst et al 2017 PMID 29212778), and asthma (Demenais et al 2018 PMID 29273806). The function will download summary statistics, and in these cases they are ready to use without any modifications. This isn't always the case. For example, some studies do not have rs ids included or report odds ratio rather than log odds ratio (the coefficient estimate from logistic regression). In these cases, you will need to modify the data so they contain the five mandatory colums of snp name, effect allele, other allele, coefficient (effect) estimate, and standard error of effect estimate. The function also downloads a `csv` file called `gwas_pairs.csv`. Take a look at the csv if you are having trouble making your own. This file has some extra (non-required) columns that we find useful for keeping track of studies. 
+), coronary artery disease (van der Harst et al 2017 PMID 29212778), and asthma (Demenais et al 2018 PMID 29273806). The function will download summary statistics directly from their sources. In these cases they are ready to use without any modifications, but this isn't always the case. For example, some studies do not have rs ids included or report odds ratio rather than log odds ratio (the coefficient estimate from logistic regression). In these cases, you will need to modify the data so they contain the five mandatory colums of snp name, effect allele, other allele, coefficient (effect) estimate, and standard error of effect estimate. The function also downloads a `csv` file called `gwas_pairs.csv`. Take a look at the csv if you are having trouble making your own. This file has some extra (non-required) columns that we find useful for keeping track of studies. 
 
 Now to run an analysis all you need to do is
 
@@ -174,6 +174,8 @@ leave the other fields in the analysis section as they are.
 source activate cause_large
 nohup ./run-snakemake.sh & 
 ```
+
+A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the `cluster.yaml` file and then simply re-run the command above. No work that has been completed will be repeated. 
 
 When the pipeline is done, in the results directory there will be a handful of files named `results/df_{method}.RDS` where `{method}` is one of the methods run above. Source these into R and take a look using
 
