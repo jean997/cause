@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Jean Morrison" />
@@ -90,7 +91,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -251,48 +251,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -380,7 +341,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">CAUSE: Cauasl Analysis Using Summary Effects</a>
+      <a class="navbar-brand" href="index.html">CAUSE</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -394,7 +355,7 @@ div.tocify {
   <a href="simulations.html">Simulations</a>
 </li>
 <li>
-  <a href="gwas_pairs.html">Analyze Pairs of GWAS Traits</a>
+  <a href="gwas_pairs_2.html">Pairs of GWAS Traits</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -432,7 +393,7 @@ div.section {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -441,7 +402,7 @@ div.section {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -450,10 +411,10 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-07-15
+<strong>Last updated:</strong> 2019-12-04
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>cause/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -481,56 +442,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongobjectspresent"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Environment:</strong> objects present </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
-<div id="strongEnvironmentstrongobjectspresent" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>
-The global environment had objects present when the code in the R Markdown file was run. These objects can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment. Use <code>wflow_publish</code> or <code>wflow_build</code> to ensure that the code is always run in an empty environment.
-</p>
-<p>
-The following objects were defined in the global environment when these results were created:
-</p>
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th style="text-align:left;">
-Name
-</th>
-<th style="text-align:left;">
-Class
-</th>
-<th style="text-align:left;">
-Size
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-data
-</td>
-<td style="text-align:left;">
-environment
-</td>
-<td style="text-align:left;">
-56 bytes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-env
-</td>
-<td style="text-align:left;">
-environment
-</td>
-<td style="text-align:left;">
-56 bytes
-</td>
-</tr>
-</tbody>
-</table>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
 </div>
 </div>
 </div>
@@ -585,10 +502,10 @@ environment
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree02aa566eb42e92315345923066a7fbdb9d921115targetblank02aa566a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/02aa566eb42e92315345923066a7fbdb9d921115" target="_blank">02aa566</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c76002bfcdb53d389eb915456c15ed4fd945189targetblank6c76002a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/6c76002bfcdb53d389eb915456c15ed4fd945189" target="_blank">6c76002</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree02aa566eb42e92315345923066a7fbdb9d921115targetblank02aa566a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c76002bfcdb53d389eb915456c15ed4fd945189targetblank6c76002a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -603,12 +520,17 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  analysis/figure/
+    Untracked:  analysis/figure/little_test.Rmd/
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
+    Untracked:  temp.txt
+    Untracked:  tests/
+
+Unstaged changes:
+    Modified:   example_data/LDL_CAD_merged.RDS
 
 </code></pre>
 <p>
@@ -647,6 +569,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/b1c1567b304381e18e1b7c824630be7f38cbde69/analysis/ldl_cad.Rmd" target="_blank">b1c1567</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-08-07
+</td>
+<td>
+update vignette to use new formatting code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/1a90dd649497a3c846f8abc2832de648ac881e80/docs/ldl_cad.html" target="_blank">1a90dd6</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1234,7 +1190,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <pre class="r"><code>X1 &lt;- read_tsv(&quot;http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz&quot;)
 X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005194/CAD_META.gz&quot;)</code></pre>
 <p>CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a <code>cause_data</code> object that can be used with later functions. This step and the rest of the analysis are done in R.</p>
-<p>The function <code>gwas_format_cause</code> will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).</p>
+<p>The function <code>gwas_merge</code> will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).</p>
 <p>LDL column headers:</p>
 <ul>
 <li>SNP: rsid</li>
@@ -1251,7 +1207,7 @@ X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistic
 <li>Effect Allele: Allele1</li>
 <li>Other Allele: Allele2</li>
 </ul>
-<pre class="r"><code>X &lt;- gwas_format_cause(X1, X2, snp_name_cols = c(&quot;rsid&quot;, &quot;oldID&quot;), 
+<pre class="r"><code>X &lt;- gwas_merge(X1, X2, snp_name_cols = c(&quot;rsid&quot;, &quot;oldID&quot;), 
                        beta_hat_cols = c(&quot;beta&quot;, &quot;Effect&quot;), 
                        se_cols = c(&quot;se&quot;, &quot;StdErr&quot;), 
                        A1_cols = c(&quot;A1&quot;, &quot;Allele1&quot;), 
@@ -1262,12 +1218,12 @@ download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/LD
 <pre class="r"><code>X &lt;- readRDS(&quot;example_data/LDL_CAD_merged.RDS&quot;)</code></pre>
 <pre class="r"><code>head(X)</code></pre>
 <pre><code>        snp beta_hat_1   seb1 beta_hat_2   seb2 A1 A2
-1 rs4747841     0.0037 0.0052     0.0106 0.0056  a  G
-2 rs4749917    -0.0033 0.0052    -0.0108 0.0056  a  G
-3  rs737656     0.0099 0.0054     0.0196 0.0058  a  G
-4  rs737657     0.0084 0.0054     0.0195 0.0058  a  G
-5 rs7086391    -0.0075 0.0067     0.0115 0.0072  a  G
-6  rs878177    -0.0073 0.0055    -0.0225 0.0059  a  G</code></pre>
+1 rs4747841     0.0037 0.0052     0.0106 0.0056  A  G
+2 rs4749917    -0.0033 0.0052    -0.0108 0.0056  A  G
+3  rs737656     0.0099 0.0054     0.0196 0.0058  A  G
+4  rs737657     0.0084 0.0054     0.0195 0.0058  A  G
+5 rs7086391    -0.0075 0.0067     0.0115 0.0072  A  G
+6  rs878177    -0.0073 0.0055    -0.0225 0.0059  A  G</code></pre>
 <p>There are likely more efficient ways to do this merge. If you would like to process the data yourself, you can construct a <code>cause_data</code> object from a data frame using the constructor <code>new_cause_data(X)</code> where <code>X</code> is any data frame that includes the columns <code>snp</code>, <code>beta_hat_1</code>, <code>seb1</code>, <code>beta_hat_2</code>, and <code>seb2</code>.</p>
 </div>
 <div id="step-2-calculate-nuisance-parameters" class="section level2">
@@ -1277,10 +1233,10 @@ download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/LD
 varlist &lt;- with(X, sample(snp, size=1000000, replace=FALSE))
 params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code>Estimating CAUSE parameters with  1000000  variants.
-1 0.1255649 
-2 0.000503845 
-3 6.082345e-06 
-4 7.406906e-08 </code></pre>
+1 0.218096 
+2 0.0006380991 
+3 7.440873e-06 
+4 8.605108e-08 </code></pre>
 <p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
 <pre class="r"><code>class(params)</code></pre>
 <pre><code>[1] &quot;cause_params&quot;</code></pre>
@@ -1288,16 +1244,16 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code> [1] &quot;rho&quot;       &quot;pi&quot;        &quot;mix_grid&quot;  &quot;loglik&quot;    &quot;PIS&quot;      
  [6] &quot;RHO&quot;       &quot;LLS&quot;       &quot;converged&quot; &quot;prior&quot;     &quot;var&quot;      </code></pre>
 <pre class="r"><code>params$rho</code></pre>
-<pre><code>[1] 0.06515036</code></pre>
+<pre><code>[1] 0.06465784</code></pre>
 <pre class="r"><code>head(params$mix_grid)</code></pre>
-<pre><code>           S1          S2         pi
-1 0.000000000 0.000000000 0.31994147
-2 0.000000000 0.003419647 0.20495624
-3 0.000000000 0.004836112 0.17805780
-4 0.003533615 0.004836112 0.16065491
-5 0.004997287 0.009672224 0.11635100
-6 0.009994574 0.009672224 0.00188234</code></pre>
-<p>So, for example, in this case, we have estimated that 32% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
+<pre><code>           S1          S2           pi
+1 0.000000000 0.000000000 0.3105286346
+2 0.000000000 0.003440730 0.2381082507
+3 0.000000000 0.004865928 0.1490899080
+4 0.003533615 0.004865928 0.1660235278
+5 0.004997287 0.009731855 0.1177553061
+6 0.019989147 0.009731855 0.0006522073</code></pre>
+<p>So, for example, in this case, we have estimated that 31% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
 <p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model comparisons.</p>
 </div>
 <div id="step-3-ld-pruning" class="section level2">
@@ -1335,7 +1291,7 @@ pruned &lt;- ld_prune(variants = variants,
                             ld = ld, total_ld_variants = snp_info$SNP, 
                             pval_cols = c(&quot;pval1&quot;), 
                             pval_thresh = c(1e-3))</code></pre>
-<pre><code>You have suppplied information for  2023362  variants.
+<pre><code>You have suppplied information for  2023354  variants.
 Of these,  22835  have LD information.</code></pre>
 <pre class="r"><code>length(pruned)</code></pre>
 <pre><code>[1] 15</code></pre>
@@ -1366,9 +1322,9 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 [8] &quot;qbeta&quot;  </code></pre>
 <pre class="r"><code>res$elpd</code></pre>
 <pre><code>   model1  model2 delta_elpd se_delta_elpd         z
-1    null sharing -63.488710      7.978181 -7.957793
-2    null  causal -71.880159      9.175262 -7.834126
-3 sharing  causal  -8.391449      1.285055 -6.530034</code></pre>
+1    null sharing -66.887780      8.350670 -8.009870
+2    null  causal -75.073163      9.497338 -7.904653
+3 sharing  causal  -8.185383      1.246103 -6.568786</code></pre>
 <pre class="r"><code>class(res$sharing)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <pre class="r"><code>class(res$causal)</code></pre>
@@ -1380,7 +1336,7 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.53 corresponding to a p-value of 3.310^{-11}.</p>
+<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.57 corresponding to a p-value of 2.510^{-11}.</p>
 <p>For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
 <pre class="r"><code>plot(res$sharing)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1660,13 +1616,13 @@ Jean Morrison
 </div>
 <p>The <code>summary</code> method will summarize the posterior medians and credible intervals.</p>
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
-<pre><code>p-value testing that causal model is a better fit:  3.3e-11 
+<pre><code>p-value testing that causal model is a better fit:  2.5e-11 
 Posterior medians and  95 % credible intervals:
-     model     gamma               eta                  
-[1,] &quot;Sharing&quot; NA                  &quot;0.38 (0.31, 0.45)&quot;  
-[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.39)&quot; &quot;-0.01 (-0.66, 0.54)&quot;
+     model     gamma              eta                  
+[1,] &quot;Sharing&quot; NA                 &quot;0.38 (0.31, 0.45)&quot;  
+[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.4)&quot; &quot;-0.01 (-0.66, 0.53)&quot;
      q                  
-[1,] &quot;0.78 (0.64, 0.88)&quot;
+[1,] &quot;0.78 (0.65, 0.89)&quot;
 [2,] &quot;0.03 (0, 0.25)&quot;   </code></pre>
 <p>The <code>plot</code> method applied to a <code>cause</code> object will arrange all of this information on one spread.</p>
 <pre class="r"><code>plot(res)</code></pre>
@@ -1693,6 +1649,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/1a90dd649497a3c846f8abc2832de648ac881e80/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">1a90dd6</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">bfa7d28</a>
@@ -1834,6 +1801,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/1a90dd649497a3c846f8abc2832de648ac881e80/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">1a90dd6</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-07-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/bfa7d2888b1ddb77a0b565246f2ba6b7c0a7d007/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">bfa7d28</a>
 </td>
 <td>
@@ -1923,7 +1901,7 @@ Jean Morrison
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.6.1 (2019-07-05)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.2 LTS
+Running under: Ubuntu 18.04.3 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1941,31 +1919,30 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_0.2.0.0161 dplyr_0.8.3      readr_1.3.1     
+[1] cause_0.3.0.0224 dplyr_0.8.3      readr_1.3.1     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.8             ashr_2.2-32         
+ [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-32         
  [4] purrr_0.3.2          lattice_0.20-38      colorspace_1.4-1    
  [7] vctrs_0.2.0          htmltools_0.3.6      loo_2.1.0           
 [10] yaml_2.2.0           utf8_1.1.4           rlang_0.4.0         
 [13] mixsqp_0.1-97        pillar_1.4.2         glue_1.3.1          
-[16] matrixStats_0.54.0   foreach_1.4.4        stringr_1.4.0       
+[16] matrixStats_0.54.0   foreach_1.4.7        stringr_1.4.0       
 [19] munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9000
 [22] codetools_0.2-16     evaluate_0.14        labeling_0.3        
-[25] knitr_1.23           doParallel_1.0.14    pscl_1.5.2          
-[28] parallel_3.6.1       fansi_0.4.0          highr_0.8           
-[31] Rcpp_1.0.1           backports_1.1.4      scales_1.0.0        
-[34] RcppParallel_4.4.3   truncnorm_1.0-8      fs_1.3.1            
-[37] gridExtra_2.3        ggplot2_3.2.0        hms_0.5.0           
-[40] digest_0.6.20        stringi_1.4.3        numDeriv_2016.8-1.1 
-[43] grid_3.6.1           rprojroot_1.3-2      cli_1.1.0           
-[46] tools_3.6.1          magrittr_1.5         lazyeval_0.2.2      
-[49] tibble_2.1.3         crayon_1.3.4         whisker_0.3-2       
-[52] tidyr_0.8.3          pkgconfig_2.0.2      zeallot_0.1.0       
-[55] MASS_7.3-51.4        Matrix_1.2-17        SQUAREM_2017.10-1   
-[58] assertthat_0.2.1     rmarkdown_1.13       iterators_1.0.10    
-[61] R6_2.4.0             intervals_0.15.1     git2r_0.26.1        
-[64] compiler_3.6.1      </code></pre>
+[25] knitr_1.24           doParallel_1.0.15    pscl_1.5.2          
+[28] parallel_3.6.1       fansi_0.4.0          Rcpp_1.0.2          
+[31] backports_1.1.4      scales_1.0.0         RcppParallel_4.4.3  
+[34] truncnorm_1.0-8      fs_1.3.1             gridExtra_2.3       
+[37] ggplot2_3.2.1        hms_0.5.1            digest_0.6.20       
+[40] stringi_1.4.3        numDeriv_2016.8-1.1  grid_3.6.1          
+[43] rprojroot_1.3-2      cli_1.1.0            tools_3.6.1         
+[46] magrittr_1.5         lazyeval_0.2.2       tibble_2.1.3        
+[49] crayon_1.3.4         whisker_0.4          tidyr_0.8.3         
+[52] pkgconfig_2.0.2      zeallot_0.1.0        MASS_7.3-51.4       
+[55] Matrix_1.2-17        SQUAREM_2017.10-1    assertthat_0.2.1    
+[58] rmarkdown_1.15       iterators_1.0.12     R6_2.4.0            
+[61] intervals_0.15.1     git2r_0.26.1         compiler_3.6.1      </code></pre>
 </div>
 </div>
 
@@ -1999,6 +1976,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
