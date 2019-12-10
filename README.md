@@ -9,7 +9,7 @@ Install notes beginning 10-17-2019:
 Two package dependencies `mixsqp` and `ashr` have recently been updated on CRAN. CAUSE has only been tested with the previous versions and there are reasons to believe that I might have to make some modifications for compatibility with the new ones. In the mean time, please use the following commands to install older versions. This will hopefully be sorted out in a few weeks.
 ```{r}
 devtools::install_version("mixsqp", version = "0.1-97", repos = "http://cran.us.r-project.org")
-devtools::install_version("ashr", version = "2.2-37", repos = "http://cran.us.r-project.org")
+devtools::install_version("ashr", version = "2.2-32", repos = "http://cran.us.r-project.org")
 ```
 _________________________________________
 

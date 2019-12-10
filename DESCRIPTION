@@ -1,7 +1,7 @@
 Package: cause
 Type: Package
 Title: CAUSE: Causal Analysis Using Summary Effect Estimates
-Version: 0.3.0.0230
+Version: 0.3.0.0231
 Author: Jean Morrison
 Maintainer: Jean Morrison <jeanm@uchicago.edu>
 Description: Identify causal patterns using pairs of GWAS summary statistics. 
