@@ -17,9 +17,6 @@ est_cause_params_future2 <- function(X, variants,
     warning("Warning: Not all `variants` are in data.", call.=FALSE)
   }
 
-  if(missing(sigma_g)){
-    sigma_g <- eta_gamma_prior(X, variants, pval_thresh = sigma_g_pval)
-  }
 
   X <- filter(X, snp %in% variants)
   X <- new_cause_data(X)
