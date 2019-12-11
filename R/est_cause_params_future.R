@@ -34,13 +34,19 @@ est_cause_params_future <- function(X, variants, sigma_g, qalpha =1, qbeta = 10,
   cat("Done with that.\n")
 
   cat("Fitting the modal estimator\n")
-  mr_dat <- X %>% filter(p_value < 5e-8 & ld_prune == TRUE) %>%
+  mr_dat <-try( X %>% filter(p_value < 5e-8 & ld_prune == TRUE) %>%
                          with(., MendelianRandomization::mr_input(bx = beta_hat_1, bxse = seb1,
                          by = beta_hat_2, byse = seb2,
-                         snps = snp))
-  mbe_fit <- MendelianRandomization::mr_mbe(mr_dat, weighting="weighted", stderror="delta", phi=1)
+                         snps = snp)), silent=TRUE)
+  mbe_fit <- try(MendelianRandomization::mr_mbe(mr_dat, weighting="weighted", stderror="delta", phi=1), silent=TRUE)
 
-  params <- map_pi_rho_nonnull_eqg(X, mix_grid,sigma_g, qalpha, qbeta, gamma_start = mbe_fit@Estimate)
+  if(class(mbe_fit) == "try-error"){
+    est <- 0
+  }else{
+    est <- mbe_fit@Estimate
+  }
+
+  params <- map_pi_rho_nonnull_eqg(X, mix_grid,sigma_g, qalpha, qbeta, gamma_start = est)
 
   #Filter out grid points with low mixing proportion
   params$mix_grid <- dplyr::filter(params$mix_grid, zapsmall(pi) > 0)
