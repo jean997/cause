@@ -40,7 +40,7 @@ est_cause_params_future <- function(X, variants, sigma_g, qalpha =1, qbeta = 10,
                          snps = snp))
   mbe_fit <- MendelianRandomization::mr_mbe(mr_dat, weighting="weighted", stderror="delta", phi=1)
 
-  params_eqg <- map_pi_rho_nonnull_eqg(X, mix_grid,sigma_g, qalpha, qbeta, gamma_start = mbe_fit@Estimate)
+  params <- map_pi_rho_nonnull_eqg(X, mix_grid,sigma_g, qalpha, qbeta, gamma_start = mbe_fit@Estimate)
 
   #Filter out grid points with low mixing proportion
   params$mix_grid <- dplyr::filter(params$mix_grid, zapsmall(pi) > 0)
