@@ -8,11 +8,11 @@
 #'@param z_prior_func Prior function for z = arctanh(rho)
 #'@param null_wt Specifies the prior weight on the first entry of grid
 #'@export
-map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
+map_pi_rho_nonnull2 <- function(X, mix_grid, sigma_g, qalpha, qbeta,
 			       q_start = qbeta(0.5, qalpha, qbeta),
 			       gamma_start = 0, eta_start = 0,
-             rho_start=0, tol=1e-5, n.iter=20, null_wt = 10,
-             z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)},
+                               rho_start=0, tol=1e-5, n.iter=20, null_wt = 10,
+                               z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)},
 			       q_prior_func = function(q){dbeta(q, qalpha, qbeta, log=TRUE)},
 			       gammaeta_prior_func = function(g){dnorm(g, 0, sigma_g, log=TRUE)},
                                optmethod = c("mixSQP", "mixIP")){
@@ -44,7 +44,8 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     matrix_lik <- exp(matrix_llik)
     w_res <- optfun(matrix_lik =matrix_lik,
                           prior=c(null_wt, rep(1, K-1)),
-                          weights=rep(1, nrow(matrix_lik)))
+                          weights=rep(1, nrow(matrix_lik)),
+			  control=list(maxiter.sqp=100))
     return(pmax(w_res$pihat, 0))
   }
 
@@ -54,8 +55,12 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
   arctanh <- function(rho){
     0.5*log((1+rho)/(1-rho))
   }
-  li_func <- function(rho, gamma, eta, q, pi){
-    z <- arctanh(rho)
+  li_func <- function(args=c(z, gamma, eta, q)){
+    z <- args[1]
+    gamma <- args[2]
+    eta <- args[3]
+    q <- args[4]
+    rho <- tanh(z)
     ll <- loglik(rho, gamma, eta, q,
                     mix_grid$S1, mix_grid$S2,
                     pi,X$beta_hat_1,
@@ -69,27 +74,6 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
 	   q_prior_func(q)
      return(ll)
 
-  }
-  #rho
-  li_func_rho <- function(rho){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
-  }
-  #gamma
-  li_func_gamma <- function(gamma){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
-  }
-  #eta
-  li_func_eta <- function(eta){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
-  }
-
-  #q
-  li_func_q <- function(q){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
   }
 
   #If there is no initial grid estimate
@@ -106,9 +90,10 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
   GAMMA <- c(gamma)
   ETA <- c(eta)
   Q <- c(q)
-  ll <- li_func(rho, gamma, eta, q, pi)
-  LLS <- c(-1*ll)
+  ll <- li_func(c(rho, gamma, eta, q))
+  LLS <- c(ll)
   ct <-1
+
 
   while(!converged & ct <= n.iter){
     #Update rho
@@ -116,29 +101,37 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     opt_rho <-  optimize(f = li_func_rho, lower=-1, upper = 1, maximum=FALSE)
     rho <- opt_rho$minimum
     RHO <- c(RHO, rho)
-    cat(rho, " gamma: ")
-    if(ct == 1){
-      #update gamma
-      opt_gamma <-  optimize(f = li_func_gamma, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
-      gamma <- opt_gamma$minimum
-      GAMMA <- c(GAMMA, gamma)
-      cat(gamma, " eta: ")
-      #update eta
-      opt_eta <-  optimize(f = li_func_eta, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
-      eta <- opt_eta$minimum
-      ETA <- c(ETA, eta)
-      cat(eta, " q: ")
-      #update q
-      opt_q <-  optimize(f = li_func_q, lower=0, upper =1, maximum=FALSE)
-      q <- opt_q$minimum
-      Q <- c(Q, q)
-      cat(q, "\n")
-    }
-    ll <- li_func(rho, gamma, eta, q, pi)
-    LLS <- c(LLS, ll)
+    cat(rho, " eta: ")
+    #update eta
+    opt_eta <-  optimize(f = li_func_eta, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
+    eta <- opt_eta$minimum
+    ETA <- c(ETA, eta)
+    cat(eta, " q: ")
+    #update q
+    opt_q <-  optimize(f = li_func_q, lower=0, upper =1, maximum=FALSE)
+    q <- opt_q$minimum
+    Q <- c(Q, q)
+    cat(q, " gamma: ")
+    #update gamma
+    opt_gamma <-  optimize(f = li_func_gamma, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
+    gamma <- opt_gamma$minimum
+    GAMMA <- c(GAMMA, gamma)
+    cat(gamma, "\n")
+    LLS <- c(LLS, -opt_gamma$objective)
 
     #Update pi
-    pi <- update_pi(rho, gamma, eta, q)
+    matrix_llik1 <- loglik_mat(rho, gamma, eta, q,
+                              mix_grid$S1, mix_grid$S2,
+                              X$beta_hat_1,
+                              X$beta_hat_2,
+                              X$seb1,
+                              X$seb2)
+    matrix_llik = matrix_llik1 - apply(matrix_llik1, 1, max)
+    matrix_lik = exp(matrix_llik)
+    w_res = optfun(matrix_lik =matrix_lik,
+                         prior=c(null_wt, rep(1, K-1)),
+                         weights=rep(1, nrow(matrix_lik)))
+    pi <- pmax(w_res$pihat, 0)
     ll <- li_func(rho, gamma, eta, q, pi)
 
     LLS <- c(LLS, -ll)

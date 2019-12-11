@@ -8,7 +8,7 @@
 #'@param z_prior_func Prior function for z = arctanh(rho)
 #'@param null_wt Specifies the prior weight on the first entry of grid
 #'@export
-map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
+map_pi_rho_nonnull_geq <- function(X, mix_grid, sigma_g, qalpha, qbeta,
 			       q_start = qbeta(0.5, qalpha, qbeta),
 			       gamma_start = 0, eta_start = 0,
              rho_start=0, tol=1e-5, n.iter=20, null_wt = 10,
@@ -116,23 +116,23 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     opt_rho <-  optimize(f = li_func_rho, lower=-1, upper = 1, maximum=FALSE)
     rho <- opt_rho$minimum
     RHO <- c(RHO, rho)
-    cat(rho, " gamma: ")
-    if(ct == 1){
+    cat(rho)
+    if(ct <= 2){
       #update gamma
       opt_gamma <-  optimize(f = li_func_gamma, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
       gamma <- opt_gamma$minimum
       GAMMA <- c(GAMMA, gamma)
-      cat(gamma, " eta: ")
+      cat(" gamma: ", gamma )
       #update eta
       opt_eta <-  optimize(f = li_func_eta, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
       eta <- opt_eta$minimum
       ETA <- c(ETA, eta)
-      cat(eta, " q: ")
+      cat(" eta: ", eta)
       #update q
       opt_q <-  optimize(f = li_func_q, lower=0, upper =1, maximum=FALSE)
       q <- opt_q$minimum
       Q <- c(Q, q)
-      cat(q, "\n")
+      cat(, " q: ", q, "\n")
     }
     ll <- li_func(rho, gamma, eta, q, pi)
     LLS <- c(LLS, ll)
@@ -141,7 +141,7 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     pi <- update_pi(rho, gamma, eta, q)
     ll <- li_func(rho, gamma, eta, q, pi)
 
-    LLS <- c(LLS, -ll)
+    LLS <- c(LLS, ll)
     PIS <- cbind(PIS, pi)
 
     #Test for convergence

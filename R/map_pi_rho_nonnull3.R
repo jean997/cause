@@ -8,7 +8,7 @@
 #'@param z_prior_func Prior function for z = arctanh(rho)
 #'@param null_wt Specifies the prior weight on the first entry of grid
 #'@export
-map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
+map_pi_rho_nonnull3 <- function(X, mix_grid, sigma_g, qalpha, qbeta,
 			       q_start = qbeta(0.5, qalpha, qbeta),
 			       gamma_start = 0, eta_start = 0,
              rho_start=0, tol=1e-5, n.iter=20, null_wt = 10,
@@ -47,7 +47,12 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
                           weights=rep(1, nrow(matrix_lik)))
     return(pmax(w_res$pihat, 0))
   }
-
+  ddirichlet1 <- function(x, alpha, minx = 1e-6) {
+    x <- pmax(x, minx)
+    logD <- sum(lgamma(alpha)) - lgamma(sum(alpha))
+    s <- sum((alpha - 1) * log(x))
+    return(sum(s) - logD)
+  }
   pi_prior_func <- function(pi){
 	  ddirichlet1(pi, c(null_wt, rep(1, K-1)))
   	}
@@ -75,40 +80,43 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     ll <- li_func(rho, gamma, eta, q, pi)
     return(-ll)
   }
-  #gamma
-  li_func_gamma <- function(gamma){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
-  }
-  #eta
-  li_func_eta <- function(eta){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
+  li_func_2 <- function(args = c(gamma, eta, q)){
+    gamma <- args[1]
+    eta <- args[2]
+    q <- args[3]
+    ll <- loglik(rho, gamma, eta, q,
+                    mix_grid$S1, mix_grid$S2,
+                    pi,X$beta_hat_1,
+                    X$beta_hat_2,
+                    X$seb1,
+                    X$seb2) +
+	   gammaeta_prior_func(gamma)+
+	   gammaeta_prior_func(eta) +
+	   q_prior_func(q)
+     return(ll)
   }
 
-  #q
-  li_func_q <- function(q){
-    ll <- li_func(rho, gamma, eta, q, pi)
-    return(-ll)
-  }
+  #Initialization
+  pi <- pi_old <- update_pi(rho, gamma, eta, q)
+  opt_rho <-  optimize(f = li_func_rho, lower=-1, upper = 1, maximum=FALSE)
+  rho <- rho_old <-  opt_rho$minimum
+  o <- optim(par = c(gamma, eta, q), fn = li_func_2, method="Nelder-Mead", control=list(fnscale=-1))
+  gamma <- gamma_old <-  o$par[1]
+  eta <- eta_old <-  o$par[2]
+  q <- q_old <- o$par[3]
+  cat(gamma, " ", eta, " ", q, "\n")
 
-  #If there is no initial grid estimate
-  cat("Initializing pi\n")
-  if(all(mix_grid$pi==0)){
-    pi <- pi_old <- update_pi(rho, gamma, eta, q)
-  }else{
-    pi <- pi_old <- mix_grid$pi
-  }
 
   converged <- FALSE
   PIS <- matrix(pi, nrow=K, ncol=1)
-  RHO <- c(rho)
-  GAMMA <- c(gamma)
-  ETA <- c(eta)
-  Q <- c(q)
+  RHO <- c(rho_start, rho)
+  GAMMA <- c(gamma_start, gamma)
+  ETA <- c(eta_start, eta)
+  Q <- c(q_start, q)
   ll <- li_func(rho, gamma, eta, q, pi)
   LLS <- c(-1*ll)
   ct <-1
+
 
   while(!converged & ct <= n.iter){
     #Update rho
@@ -116,41 +124,32 @@ map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
     opt_rho <-  optimize(f = li_func_rho, lower=-1, upper = 1, maximum=FALSE)
     rho <- opt_rho$minimum
     RHO <- c(RHO, rho)
-    cat(rho, " gamma: ")
-    if(ct == 1){
-      #update gamma
-      opt_gamma <-  optimize(f = li_func_gamma, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
-      gamma <- opt_gamma$minimum
-      GAMMA <- c(GAMMA, gamma)
-      cat(gamma, " eta: ")
-      #update eta
-      opt_eta <-  optimize(f = li_func_eta, lower=-3*sigma_g, upper = 3*sigma_g, maximum=FALSE)
-      eta <- opt_eta$minimum
-      ETA <- c(ETA, eta)
-      cat(eta, " q: ")
-      #update q
-      opt_q <-  optimize(f = li_func_q, lower=0, upper =1, maximum=FALSE)
-      q <- opt_q$minimum
-      Q <- c(Q, q)
-      cat(q, "\n")
-    }
+    #cat(rho, " eta: ")
+    #update gamma, eta, q
+    #o <- optim(par = c(gamma, eta, q), fn = li_func_2, method="Nelder-Mead", control=list(fnscale=-1))
+    #gamma <- o$par[1]
+    #eta <- o$par[2]
+    #q <- o$par[3]
+
+#    cat(gamma, " ", eta, " ", q, "\n")
     ll <- li_func(rho, gamma, eta, q, pi)
     LLS <- c(LLS, ll)
 
     #Update pi
     pi <- update_pi(rho, gamma, eta, q)
+
     ll <- li_func(rho, gamma, eta, q, pi)
 
-    LLS <- c(LLS, -ll)
+    LLS <- c(LLS, ll)
     PIS <- cbind(PIS, pi)
 
     #Test for convergence
     test <- max(abs(c(gamma, eta, q, rho, pi)-c(gamma_old, eta_old, q_old, rho_old, pi_old)))
     cat(ct, test, "\n")
     if(test < tol) converged <- TRUE
-    gamma_old <- gamma
-    eta_old <- eta
-    q_old <- q
+    #gamma_old <- gamma
+    #eta_old <- eta
+    #q_old <- q
     rho_old <- rho
     pi_old <- pi
     ct <- ct + 1
