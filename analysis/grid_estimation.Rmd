@@ -1,0 +1,181 @@
+---
+title: "Experiments with Prior Parameter Estimation"
+author: "Jean Morrison"
+date: "2019-12-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+These experiments came about in the course of looking at the behavior of CAUSE for very high sample size. The question I set out with was, when $q$ is large (say 0.4) and $\gamma = 0$, will CAUSE eventually be able to distinguish this from a causal scenario if the signal is strong enough? We would hope this would be the case. In the results we present in the paper, the highest sample size we use is 40,000 for each trait (this is the high power $M$/high power $Y$ condition) and the false positive rate is pretty large for larger values of $q$. 
+
+I started turning the sample size up to see what would happen. I looked at sizes of $10^5$, $10^6$ and $10^8$. At $10^8$ CAUSE was able to correctly estimate all the parameters and reject the causal model. However, at $10^6$ it was still getting false positives. When I visually inspected the data produced with the $10^6$ sample size, the signal looked clear to me and I thought that CAUSE should be doing a better job. This lead me to wonder if the prior distribution we estimate for SNP effects was too wide, making it hard to distinguish models. 
+
+## SNP effect prior estimation procedure/CAUSE model quick review
+
+Briefly stated, the CAUSE model for summary statistics is 
+
+$$
+\begin{pmatrix} \hat{\beta}_{M,j}\\ \hat{\beta}_{Y,j} \end{pmatrix} \sim N\left(\begin{pmatrix} \beta_{M,j}\ \\ \beta_{Y,j} \end{pmatrix}, 
+\begin{pmatrix} s_{M,j}^2 & \rho s_{M,j} s_{Y,j} \\ \rho s_{M,j}s_{Y,j} & s_{Y,j}^2 \end{pmatrix}\right)
+$$
+$$
+\beta_{Y,j} = \gamma \beta_{M,j} + \eta Z_j \beta_{M,j} + \theta_j 
+$$
+$$
+Z_j \sim Binom(q) 
+$$
+$$
+\begin{pmatrix} \beta_{M,j}\\ \theta_j \end{pmatrix} \sim  \sum_{k=0}^{K} \pi_k N\left(\begin{pmatrix}0 \\0  \end{pmatrix}, 
+\begin{pmatrix} t_{k,1}^2 & 0 \\ 0 & t_{k,2}^2 \end{pmatrix}\right)
+$$
+We assume the pairs $(t_{k,1}, t_{k,2})$ are fixed in advanced (referred to as "the grid" or "variance pair candidates").
+The CAUSE model has the following unknown parameters: $\gamma$, $\eta$, $q$, $\rho$, and $\pi$. The first four are all scalars and $\pi \in \mathbb{R}^{K+1}$ and deterimines the distribution of SNP effects.
+
+In our current method of estimation, we estimate $\pi$ and $\rho$ first and fix these and then compute posterior distributions for $\gamma$, $\eta$, and $q$. This estimation step is what I am investigating here. In what I will call "the original" estimation scheme, $\pi$ and $\rho$ are obtained by maximizing the likelihood with $\gamma$, $\eta$, and $q$ all fixed at zero. One consequence of this is that, if $\gamma$, $\eta$, and $q$ are not all zero, more weight will be given to larger variances than is necessary. In this document I will discuss these alternatives:
+
++ "fixed oracle": $\pi$ and $\rho$ are estimated by maximizing the likelihood with $\gamma$, $\eta$, and $q$ fixed at their true values. This is obviously only possible in simulations but is a useful comparison.
++ "fixed est": $\pi$ and $\rho$ are estimated by maximizing the likelihood with $\gamma$ fixed at the point estimate obtained from the weighted mode MR estimate, and  $\eta$, and $q$ fixed at zero.
++ "eqg": In the first two rounds of coordinate descent, $\eta$, $q$, and $\gamma$ are also updated (in that order). After these iterations, they are fixed. 
+
+$\rightarrow$ $\rightarrow$ The investigation came about because I discovered that using a scheme similar to eqg, I could almost entirely avoid false positives with large $q$ at lower sample sizes. However (spoiler) this method also lead to much lower power and therefore wasn't acceptable. To understand why, I then implemented the fixed oracle and fixed est methods. I found that these also had low power which surprised me, especially for fixed oracle which I would expect to do well. 
+
+
+## Comparisons with fixed oracle
+
+To understand the effect of the fixed oracle parameters I will go through a few examples. 
+
+### High sample size, $q=0.5$, $\gamma=0$
+
+```{r, include=FALSE}
+library(cause)
+library(tidyverse)
+library(gridExtra)
+```
+
+```{r, eval=FALSE, include=FALSE}
+m1 <- readRDS("upd_grid_test/high_sample_q0.5.rds")
+X <- m1$new_dat  %>%
+  select(snp, beta_hat_1, seb1, beta_hat_2, seb2) %>%
+  new_cause_data(.)
+optmethod <- "mixSQP"
+max_candidates <- 12
+null_wt <- 10
+mix_grid <- variance_pair_candidates(X, optmethod=optmethod, max_candidates=max_candidates)
+gamma <- 0; q <- 0.5; eta <- sqrt(0.05)
+params_orig <- map_pi_rho(X, mix_grid, optmethod=optmethod, null_wt = null_wt)
+params_fo <- map_pi_rho_nonnull_fixed(X, mix_grid, gamma, eta, q)
+
+qalpha <- 1
+qbeta <- 10
+thresh <- 1e-6
+vars <- filter(m1$new_dat, ld_prune == TRUE & p_value < thresh) %>% with(., snp)
+sigma_g <- cause:::eta_gamma_prior(X, vars)
+res_orig <- cause(X=X, variants = vars, param_ests = params_orig, sigma_g = sigma_g,
+                         qalpha = qalpha, qbeta = qbeta, force=TRUE)
+saveRDS(res_orig, file="upd_grid_test/high_sample_q0.5__res_orig.rds")
+
+res_fo <- cause::cause(X=X, variants = vars, param_ests = params_fo, sigma_g = sigma_g,
+                         qalpha = qalpha, qbeta = qbeta, force=TRUE)
+saveRDS(res_fo, file="upd_grid_test/high_sample_q0.5___res_fo.rds")
+```
+
+```{r, read1}
+res_orig <- readRDS("upd_grid_test/high_sample_q0.5__res_orig.rds")
+summary(res_orig)
+res_fo <- readRDS("upd_grid_test/high_sample_q0.5___res_fo.rds")
+summary(res_fo)
+```
+
+Using the original parameters we are getting a false positive. In the causal model we are estimating a causal effect that is between the true confounder effect (0.22) and 0. The sharing model is also not quite accurate, the proportion $q$ is too large, it is also trying to fit this comporomise causal model. Using the "oracle" grid we get the correct estimates from both models and no false positive. We can compare the ELPD contributions. 
+
+```{r, echo=FALSE}
+p_orig <- plot(res_orig, type="data", intern=TRUE)[[3]] + ggtitle("Original")
+p_fo <- plot(res_fo, type="data", intern=TRUE)[[3]] + ggtitle("Fixed Oracle")
+grid.arrange(p_orig, p_fo, ncol=2)
+```
+
+
+## True positive $\gamma \neq 0$, no shared factor
+
+My intuition is that I would also expect this method to improve power, but that was not my finding. Here is an example with a sample size of 40,000 for each trait and a true causal effect. 
+
+
+```{r, eval=FALSE, include=FALSE}
+m2 <- readRDS("upd_grid_test/pwr_example_data.rds")
+X <- m2$dat  %>%
+  select(snp, beta_hat_1, seb1, beta_hat_2, seb2) %>%
+  new_cause_data(.)
+optmethod <- "mixSQP"
+max_candidates <- 12
+null_wt <- 10
+mix_grid <- variance_pair_candidates(X, optmethod=optmethod, max_candidates=max_candidates)
+
+gamma <- as.numeric(sqrt(m2$sim_params["tau"]))
+q <- as.numeric(m2$sim_params["q"])
+eta <- as.numeric(sqrt(m2$sim_params["omega"]))
+params_orig <- map_pi_rho(X, mix_grid, optmethod=optmethod, null_wt = null_wt)
+params_fo <- map_pi_rho_nonnull_fixed(X, mix_grid, gamma, eta, q)
+
+qalpha <- 1
+qbeta <- 10
+thresh <- 1e-3
+vars <- filter(m2$dat, ld_prune == TRUE & p_value < thresh) %>% with(., snp)
+sigma_g <- cause:::eta_gamma_prior(X, vars)
+res_orig <- cause(X=X, variants = vars, param_ests = params_orig, sigma_g = sigma_g,
+                         qalpha = qalpha, qbeta = qbeta, force=TRUE)
+saveRDS(res_orig, file="upd_grid_test/pwr_example__res_orig.rds")
+
+res_fo <- cause::cause(X=X, variants = vars, param_ests = params_fo, sigma_g = sigma_g,
+                         qalpha = qalpha, qbeta = qbeta, force=TRUE)
+saveRDS(res_fo, file="upd_grid_test/pwr_example___res_fo.rds")
+```
+
+
+```{r, read2}
+res_orig <- readRDS("upd_grid_test/pwr_example__res_orig.rds")
+summary(res_orig)
+res_fo <- readRDS("upd_grid_test/pwr_example___res_fo.rds")
+summary(res_fo)
+```
+
+In this case the fits are almost the same. The sharing model estimates a relatively large proportion of shared variants and the causal model estimates a causal effect and almost no sharing. The estimates of $\eta$ are slightly different but the posterior in both cases is very wide. However, the significance is very different. Using the original parameters the $p$-value is 0.00011 while using the "fixed oracle" parameters it is 0.19. Plots can show why.
+
+```{r, echo=FALSE}
+p_orig <- plot(res_orig, type="data", intern=TRUE)[[3]] + ggtitle("Original")
+p_fo <- plot(res_fo, type="data", intern=TRUE)[[3]] + ggtitle("Fixed Oracle")
+grid.arrange(p_orig, p_fo, ncol=2)
+```
+
+Red points are votes for the causal model while blue points are votes against. The fixed oracle parameters aren't wide enough to accomodate the points with the largest excursions from the point estimate. These points (blue upper right on the right hand plot) are fit better by the sharing model which has a larger effect for the shared factor. 
+
+The plot below shows the difference in elpd contributions. Red points are more in favor of the causal model using the original parameters while blue points are more strongly in favor of the causal model using the fixed oracle paramters.
+
+```{r, echo=FALSE}
+xorig <- select(res_orig$data, beta_hat_1, beta_hat_2, seb1, seb2, snp, delta_elpd) %>% rename( delta_elpd_orig = delta_elpd)
+xfo <- select(res_fo$data, snp, delta_elpd) %>% rename( delta_elpd_fo = delta_elpd)
+x <- full_join(xfo, xorig, by="snp")
+x %>% mutate(p1 = 2*pnorm(-abs(beta_hat_1/seb1)), 
+             diff = delta_elpd_orig - delta_elpd_fo) %>%
+  ggplot(. ) + 
+  geom_vline(xintercept=0) + geom_hline(yintercept = 0) + 
+  geom_point(aes(x=beta_hat_1, y=beta_hat_2, size=-log10(p1), col=diff)) + 
+  scale_color_gradient2(low="red", high="blue", mid="grey") + 
+  theme_bw()
+```
+
+
+## Simulations
+
+As we might expect form the examples above, in simulations, fixed oracle parameters almost entirely eliminate false positives. However, the power is significantly reduced. What can we do to retain power but still eliminate false positives and get good parameter estimates? Note that the fixed estimate parameters ("CAUSE-fe") are also included in these plots. The fixed oracle are "CAUSE-fo". I haven't discussed these but the perform fairly simiarly to the oracle estimates but don't control the false positive rate quite as well. I got somewhat better false positive results from the eqg method which also has much worse power. 
+
+```{r, echo=FALSE}
+knitr::include_graphics("pwr_2019-12-13.png", dpi=NA)
+```
+
+
+```{r, echo=FALSE}
+knitr::include_graphics("fp_2019-12-13.png", dpi=NA)
+```
