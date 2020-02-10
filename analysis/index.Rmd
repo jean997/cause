@@ -18,7 +18,7 @@ Here are some useful links
  
  [Slides!](WNAR_2019.pdf) from WNAR 2019
 
-CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models correlated and uncorrelated horizontal pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysi.
+CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models correlated and uncorrelated horizontal pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysis.
 
 # Introduction to CAUSE
 
