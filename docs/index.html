@@ -411,7 +411,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-12-04
+<strong>Last updated:</strong> 2020-02-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -502,10 +502,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c76002bfcdb53d389eb915456c15ed4fd945189targetblank6c76002a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/6c76002bfcdb53d389eb915456c15ed4fd945189" target="_blank">6c76002</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeecffe6dbde2b122384ca39320e60c116a294fdc6targetblankecffe6da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/ecffe6dbde2b122384ca39320e60c116a294fdc6" target="_blank">ecffe6d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree6c76002bfcdb53d389eb915456c15ed4fd945189targetblank6c76002a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeecffe6dbde2b122384ca39320e60c116a294fdc6targetblankecffe6da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -520,16 +520,32 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
+    Untracked:  analysis/figure/grid_estimation.Rmd/
+    Untracked:  analysis/figure/ldl_cad.Rmd/
     Untracked:  analysis/figure/little_test.Rmd/
+    Untracked:  analysis/ldl_cad_future.Rmd
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
+    Untracked:  man/est_cause_params_future2.Rd
+    Untracked:  man/est_cause_params_indep.Rd
     Untracked:  temp.txt
     Untracked:  tests/
+    Untracked:  upd_grid_test/
+    Untracked:  upd_mixsqp_test/
 
 Unstaged changes:
+    Modified:   R/est_cause_params_future.R
+    Deleted:    R/est_cause_params_future2.R
+    Deleted:    R/est_cause_params_indep.R
+    Modified:   R/map_pi_rho.R
+    Modified:   R/map_pi_rho_nonnull.R
+    Deleted:    R/map_pi_rho_nonnull2.R
+    Deleted:    R/map_pi_rho_nonnull3.R
+    Modified:   R/plot.R
+    Modified:   analysis/grid_estimation.Rmd
     Modified:   example_data/LDL_CAD_merged.RDS
 
 </code></pre>
@@ -569,6 +585,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/ecffe6dbde2b122384ca39320e60c116a294fdc6/analysis/index.Rmd" target="_blank">ecffe6d</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-02-10
+</td>
+<td>
+wflow_publish(“analysis/index.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276/docs/index.html" target="_blank">70e2b97</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-12-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1024,7 +1074,7 @@ Start workflowr project.
 <p><a href="https://www.biorxiv.org/content/10.1101/682237v3">Pre-print</a></p>
 <p><a href="https://github.com/jean997/cause">R package</a></p>
 <p><a href="WNAR_2019.pdf">Slides!</a> from WNAR 2019</p>
-<p>CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models correlated and uncorrelated horizontal pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysi.</p>
+<p>CAUSE is a Mendelian Randomization method using genome-wide summary statistics. CAUSE models correlated and uncorrelated horizontal pleiotropy in order to avoid false positives that can occur using other methods. Read a short introduction to the method below. In the tabs you can find a tutorial about using our software, some simulation results and an example of a larger data analysis.</p>
 </div>
 <div id="introduction-to-cause" class="section level1">
 <h1>Introduction to CAUSE</h1>
@@ -1172,7 +1222,7 @@ Jean Morrison
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.1 (2019-07-05)
+<pre><code>R version 3.6.2 (2019-12-12)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 18.04.3 LTS
 
@@ -1192,12 +1242,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] workflowr_1.4.0.9000 Rcpp_1.0.2           digest_0.6.20       
- [4] rprojroot_1.3-2      backports_1.1.4      git2r_0.26.1        
+ [1] workflowr_1.4.0.9000 Rcpp_1.0.3           digest_0.6.23       
+ [4] rprojroot_1.3-2      backports_1.1.5      git2r_0.26.1        
  [7] magrittr_1.5         evaluate_0.14        stringi_1.4.3       
 [10] fs_1.3.1             whisker_0.4          rmarkdown_1.15      
-[13] tools_3.6.1          stringr_1.4.0        glue_1.3.1          
-[16] xfun_0.9             yaml_2.2.0           compiler_3.6.1      
+[13] tools_3.6.2          stringr_1.4.0        glue_1.3.1          
+[16] xfun_0.9             yaml_2.2.0           compiler_3.6.2      
 [19] htmltools_0.3.6      knitr_1.24          </code></pre>
 </div>
 </div>
