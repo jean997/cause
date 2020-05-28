@@ -4,16 +4,15 @@ library(MendelianRandomization)
 
 
 args <- commandArgs(trailingOnly=TRUE)
-file1 <- args[1]
-file2 <- args[2]
+data <- args[1]
+file1 <- args[2]
 snp_file_asc <- args[3]
 pval_thresh <- as.numeric(args[4])
 output_file <- args[5]
 
+X <- readRDS(data)
 X1 <- cause::read_standard_format(file1)
-X2 <- cause::read_standard_format(file2)
 
-X <- cause::gwas_merge(X1, X2, X1_formatted=TRUE, X2_formatted = TRUE)
 X$p_value <- with(X1, p_value[match(X$snp, snp)])
 
 snp_list <- read_lines(snp_file_asc)

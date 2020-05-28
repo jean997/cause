@@ -14,17 +14,17 @@ analysis:
     all_pairs: True
     trait1: 1
     trait2: 2,3
-    methods: cause_1_2_1,cause_1_10_1,cause_1_100_1,mrpackage,mrpresso,lcv
+    methods: lcv,mrpackage,mrpresso,cause_1_10_1,cause_1_100_1,cause_1_2_1
     mr_pval: "5e-8"
     cause_seed: 100
 
 #Path to directory containing LD data
 #ld_score_dir is used only by method lcv
 ld:
-    dir: "ld/"
+    dir: "../ld/"
     r2_file: "_AF0.05_0.1.RDS"
     info_file: "_AF0.05_snpdata.RDS"
-    ld_score_dir: "ld_scores/eur_w_ld_chr/"
+    ld_score_dir: "/project2/xinhe/ldsc_reference_files/ld_scores/eur_w_ld_chr/"
 
 out:
     gwas_data_dir: "cause_standard_format/"

@@ -5,11 +5,10 @@ library(cause)
 args <- commandArgs(trailingOnly=TRUE)
 #Input files
 data_file <- args[1]
-snp_file_asc <- args[2]
 #Output file
-params_out <- args[3]
+params_out <- args[2]
 #Seed
-seed <- as.numeric(args[4])
+seed <- as.numeric(args[3])
 
 
 X <- readRDS(data_file)

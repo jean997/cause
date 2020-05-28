@@ -51,16 +51,18 @@ if(method=="ivw"){
              res <- readRDS(f)
              if(is.null(res) | class(res) == "try-error"){
                  p <- NA
+                 se <- NA
                  est <- NA
              }else{
-                r <- res["Main MR results"]$`Main MR results`[2, c(3,6)]
+                r <- res["Main MR results"]$`Main MR results`[2, c(3,4,6)]
                 if(is.na(r[1])){
-                    r <- res["Main MR results"]$`Main MR results`[1, c(3,6)]
+                    r <- res["Main MR results"]$`Main MR results`[1, c(3,4,6)]
                 }
-                p <- as.numeric(r[2])
+                p <- as.numeric(r[3])
+                se <- as.numeric(r[2])
                 est <- as.numeric(r[1])
              }
-             xx <- tibble(file=f,  estimate=est, p=p)
+             xx <- tibble(file=f,  estimate=est, se = se,  p=p)
             return(xx)
        })
        dfres$method <- method
@@ -87,10 +89,12 @@ if(method=="ivw"){
              eta_median3 <- res_sum$quants[[2]][1,2]
              q_median2 <- res_sum$quants[[1]][1,3]
              eta_median2 <- res_sum$quants[[1]][1,2]
+             rho <- res$sharing$rho
 
              xx <- tibble(file=f, z=z, gamma_med3=gamma_median3, 
-                          q_me3 = q_median3, eta_med3 = eta_median3,
-                          q_med2 = q_median2, eta_med2 = eta_median2)
+                          q_med3 = q_median3, eta_med3 = eta_median3,
+                          q_med2 = q_median2, eta_med2 = eta_median2, 
+                          rho=rho)
             return(xx)
        })
     dfres$method <- method
