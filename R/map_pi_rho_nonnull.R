@@ -1,13 +1,13 @@
 
 #'@title Estimate pi and mixture proportions under a specified model
-#'@description Estimare the MAP for rho and the mixing proportions using
-#'coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
+#'@description Currently this function is not exported and is mostly for development purposes.
+#'It is just like map_pi_rho except that one can specify gamma, eta, and q rather than
+#'having them fixed at zero.
 #'@param X An object of class cause_data containing data for the two traits.
 #'@param mix_grid An object of class cause_grid containing variance pair candidates
 #'@param rho_start Starting value for rho
 #'@param z_prior_func Prior function for z = arctanh(rho)
 #'@param null_wt Specifies the prior weight on the first entry of grid
-#'@export
 map_pi_rho_nonnull <- function(X, mix_grid, sigma_g, qalpha, qbeta,
 			       q_start = qbeta(0.5, qalpha, qbeta),
 			       gamma_start = 0, eta_start = 0,
