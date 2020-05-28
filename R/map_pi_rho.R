@@ -1,12 +1,14 @@
 
 #'@title Estimate pi and mixture proportions under null model
-#'@description Estimare the MAP for rho and the mixing proportions using
+#'@description This function is called by est_cause_params and generally does not need to be
+#'directly accessed.
+#'Estimate the MAP for rho and the mixing proportions using
 #'coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
 #'@param X An object of class cause_data containing data for the two traits.
 #'@param mix_grid An object of class cause_grid containing variance pair candidates
 #'@param rho_start Starting value for rho
-#'@param z_prior_func Prior function for z = arctanh(rho)
 #'@param null_wt Specifies the prior weight on the first entry of grid
+#'@param z_prior_func Prior function for z = arctanh(rho)
 #'@export
 map_pi_rho <- function(X, mix_grid, rho_start=0,
                        tol=1e-7, n.iter=20, null_wt = 10,
