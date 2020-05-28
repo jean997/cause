@@ -1,12 +1,14 @@
 
 #'@title Estimate CAUSE Nuisance Parameters
-#'@description Estimates bivariate distribution of summary statistics and rho, the
+#'@description This is a development version of est_cause_params. It's performance is not as
+#'good as the exported function and we do not recomend that you use it. This function first estimates
+#'a causal effect using the modal estimator and then uses map_pi_rho_nonnull_eqg.
+#'Estimates bivariate distribution of summary statistics and rho, the
 #'correlation between summary statistics due to overlapping samples or population structure.
 #'@param X An object of class cause_data containing data for the two traits.
 #'@param variants A vector of variants to include. This list should be approximately LD
 #'pruned and include variants genome wide.
 #'@return An object of class cause_params
-#'@export
 est_cause_params_future <- function(X, variants, sigma_g, qalpha =1, qbeta = 10,
 				                            optmethod = c("mixSQP", "mixIP"), sigma_g_pval = 1e-3,
                                     null_wt = 10, max_candidates=Inf){
