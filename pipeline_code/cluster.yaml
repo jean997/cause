@@ -11,6 +11,10 @@ format:
 data_merge:
     mem: "20G"
     time: "20:00"
+        
+data_merge1:
+    mem: "20G"
+    time: "20:00"
 
 ld_prune_one_chrom:
     mem: "10G"
@@ -34,9 +38,9 @@ mrpresso:
     time: "10:00:00"
 
 mr_package:
-    mem: "10G"
+    mem: "5G"
     time: "2:00:00"
 
 lcv:
-    mem: "10G"
+    mem: "5G"
     time: "2:00:00"
