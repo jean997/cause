@@ -20,6 +20,8 @@ map_pi_rho(X, mix_grid, rho_start = 0, tol = 1e-07, n.iter = 20,
 \item{z_prior_func}{Prior function for z = arctanh(rho)}
 }
 \description{
-Estimare the MAP for rho and the mixing proportions using
+This function is called by est_cause_params and generally does not need to be
+directly accessed.
+Estimate the MAP for rho and the mixing proportions using
 coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
 }

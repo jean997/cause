@@ -18,6 +18,9 @@ pruned and include variants genome wide.}
 An object of class cause_params
 }
 \description{
+This is a development version of est_cause_params. It's performance is not as
+good as the exported function and we do not recomend that you use it. This function first estimates
+a causal effect using the modal estimator and then uses map_pi_rho_nonnull_eqg.
 Estimates bivariate distribution of summary statistics and rho, the
 correlation between summary statistics due to overlapping samples or population structure.
 }

@@ -24,6 +24,7 @@ map_pi_rho_nonnull(X, mix_grid, sigma_g, qalpha, qbeta,
 \item{z_prior_func}{Prior function for z = arctanh(rho)}
 }
 \description{
-Estimare the MAP for rho and the mixing proportions using
-coordinate descent. Causal effect (gamma) and the effect of U (eta) are fixed at zero.
+Currently this function is not exported and is mostly for development purposes.
+It is just like map_pi_rho except that one can specify gamma, eta, and q rather than
+having them fixed at zero.
 }
