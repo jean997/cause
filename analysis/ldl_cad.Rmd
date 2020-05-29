@@ -32,11 +32,11 @@ In R
 devtools::install_github("jean997/cause")
 ```
 
-Please be sure you are using `mixsqp-0-97` which is currently the version available in CRAN *not the latest version available on GitHub.
+This version of CAUSE rquires `mixsqp-0.1-97`.
 
 ## Step 1: Format Data for CAUSE
 
-We will use `read_tsv` to read in summary statistics for a GWAS of LDL cholesterol and a GWAS of coronary artery disease from the internet. We will then combine these and format them for use with CAUSE. First read in the data. For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068]. For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]
+We will use `read_tsv` to read in summary statistics for a GWAS of LDL cholesterol and a GWAS of coronary artery disease from the internet. We will then combine these and format them for use with CAUSE. First read in the data. For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068]. For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]. Downloading and formatting the data takes several minutes. If you want to skip this step, we provide a formatted data file that you can download below. 
 
 ```{r}
 library(readr)
@@ -233,4 +233,10 @@ The `plot` method can also produce scatter plots of the data showing for each mo
 
 ```{r, plot3}
 plot(res, type="data")
+```
+
+
+
+```{r}
+sessionInfo()
 ```
