@@ -36,4 +36,6 @@ setup_cause_pipeline <- function(download_ld=FALSE, download_eur_ld_scores=FALSE
                 destfile = "cluster.yaml")
   download.file(url=paste0("https://raw.githubusercontent.com/jean997/cause/master/pipeline_code/run-snakemake.sh"),
                 destfile = "run-snakemake.sh")
+  download.file(url="https://raw.githubusercontent.com/jean997/cause/master/pipeline_code/gwas_pairs.csv",
+                destfile="gwas_pairs.csv")
 }
