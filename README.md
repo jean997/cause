@@ -7,7 +7,7 @@ Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.ht
 
 To install:
 ```{r}
-devtools::install_github("jean997/cause")
+devtools::install_github("jean997/cause@v1.0.0")
 ```
 
 _________________________________________
