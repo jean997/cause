@@ -411,7 +411,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-12-04
+<strong>Last updated:</strong> 2020-05-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -502,10 +502,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree17dbaf7da9c1644291d47ea708d9ef068ba5a032targetblank17dbaf7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/17dbaf7da9c1644291d47ea708d9ef068ba5a032" target="_blank">17dbaf7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb1f84244621e2389b8d4d62b6a88b1ccd213d9e4targetblankb1f8424a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/b1f84244621e2389b8d4d62b6a88b1ccd213d9e4" target="_blank">b1f8424</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree17dbaf7da9c1644291d47ea708d9ef068ba5a032targetblank17dbaf7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb1f84244621e2389b8d4d62b6a88b1ccd213d9e4targetblankb1f8424a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -520,17 +520,26 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
+    Untracked:  analysis/figure/ldl_cad.Rmd/
     Untracked:  analysis/figure/little_test.Rmd/
     Untracked:  cause.Rcheck/
     Untracked:  docs/cause.bib
     Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
-    Untracked:  temp.txt
+    Untracked:  test_A.RDS
+    Untracked:  test_A_answer1.RDS
+    Untracked:  test_A_answer3.RDS
+    Untracked:  test_fit2.RDS
+    Untracked:  test_mix_grid_new.RDS
+    Untracked:  test_params3_warm.RDS
+    Untracked:  test_params_orig.RDS
+    Untracked:  test_w.RDS
     Untracked:  tests/
 
 Unstaged changes:
-    Modified:   example_data/LDL_CAD_merged.RDS
+    Modified:   R/est_cause_params.R
+    Modified:   R/map_pi_rho.R
 
 </code></pre>
 <p>
@@ -569,6 +578,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/b1f84244621e2389b8d4d62b6a88b1ccd213d9e4/analysis/gwas_pairs_2.Rmd" target="_blank">b1f8424</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-05-29
+</td>
+<td>
+wflow_publish(“analysis/gwas_pairs_2.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/6c76002bfcdb53d389eb915456c15ed4fd945189/docs/gwas_pairs_2.html" target="_blank">6c76002</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-12-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -752,7 +795,7 @@ cd gwas_pairs</code></pre>
 <h2>How to Use the Pipeline</h2>
 <p>Set up a pipeline analysis. From the directory you want to use, in R run</p>
 <pre><code>cause::setup_cause_pipeline()</code></pre>
-<p>The <code>setup_cause_pipeline()</code> function provides you with everything you need to run an analysis except for data and a <code>.csv</code> file describing that data. The analysis is controlled by the <code>config.yaml</code> file which has four sections. You should edit the file to match your analysis desires.</p>
+<p>The <code>setup_cause_pipeline()</code> function provides you with everything you need to run an analysis except for data and a <code>.csv</code> file describing that data. You can use this function to start any pipeline analysis, not just this example. The analysis is controlled by the <code>config.yaml</code> file which has four sections. You should edit the file to match your analysis desires.</p>
 <p>The <code>input</code> section gives the location of a <code>csv</code> file that describes each set of GWAS summary statistics. More on this file later.</p>
 <pre><code># Path to data spreadsheed
 # csv format, columns include:
@@ -793,7 +836,7 @@ ld:
 <p>The Snakemake command for submitting the pipeline is in the <code>run-snakemake.sh</code> file. You will need to modify it to match your cluster.</p>
 <p>Once you have downloaded summary statistics and created the csv file you are ready to run the pipeline. You can run with</p>
 <pre><code>nohup ./run-snakemake.sh &amp; </code></pre>
-<p>The <code>nohup</code> is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.</p>
+<p>You may need to change the permissons of <code>run-snakemake.sh</code> to be excecutable with <code>chmod a+x run-snakemake.sh</code>. The <code>nohup</code> is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.</p>
 </div>
 <div id="download-data-and-build-spreadsheet" class="section level2">
 <h2>Download data and build spreadsheet</h2>
@@ -817,22 +860,22 @@ ld:
 <p>Now to run an analysis all you need to do is</p>
 <ol style="list-style-type: decimal">
 <li><p>Edit the <code>run-snakemake.sh</code> file so that the cluster command is compatible with your cluster setup.</p></li>
-<li><p>Edit the <code>config.yaml</code> file. You may not need to make any changes but you may need to change the location of the LD files or change where you would like data stored. Leave <code>all_pairs: True</code> or, alternatively to only run LDL -&gt; CAD and LDL -&gt; Asthma change to</p></li>
+<li><p>Edit the <code>config.yaml</code> file. You may not need to make any changes but you might need to change the location of the LD files or change where you would like data stored. Leave <code>all_pairs: True</code> or, alternatively to only run LDL -&gt; CAD and LDL -&gt; Asthma change to</p></li>
 </ol>
 <pre><code>analysis:
   all_pairs: False
   trait1: 1
   trait2: 2,3</code></pre>
-<p>leave the other fields in the analysis section as they are.</p>
+<p>The numbers correspond to the index of each trait in <code>gwas_pairs.csv</code>. Leave the other fields in the analysis section as they are.</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Change the persmissions of <code>run-snakemake.sh</code> to make it an executable. Use <code>chmod a+x run-snakemake.sh</code>.</p></li>
 <li><p>Run (on a compute node if you like)</p></li>
 </ol>
 <pre><code>source activate cause_large
 nohup ./run-snakemake.sh &amp; </code></pre>
-<p>A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the <code>cluster.yaml</code> file and then simply re-run the command above. No work that has been completed will be repeated.</p>
+<p>A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the <code>cluster.yaml</code> file and then simply re-run the command above. No work that has been completed will be repeated. You can use <code>snakemake -n</code> to do a “dry run” which tells you what commands will be run.</p>
 <p>When the pipeline is done, in the results directory there will be a handful of files named <code>results/df_{method}.RDS</code> where <code>{method}</code> is one of the methods run above. Source these into R and take a look using</p>
-<pre class="r"><code>df &lt;- readRDS(&quot;results/cause_1_10_1.RDS&quot;)
+<pre class="r"><code>df &lt;- readRDS(&quot;results/df_cause_1_10_1.RDS&quot;)
 df</code></pre>
 <p>Additionally, the resuts folder will contain files named <code>results/{name1}__{name2}_{method}.RDS</code> containing results for each method. If the method is CAUSE, this will be a CAUSE object that you can look at using utilities in the <code>cause</code> package. Try</p>
 <pre class="r"><code>library(cause)
@@ -848,9 +891,9 @@ plot(res, type=&quot;data&quot;)</code></pre>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.1 (2019-07-05)
+<pre><code>R version 3.6.3 (2020-02-29)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.3 LTS
+Running under: Ubuntu 18.04.4 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -868,12 +911,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] workflowr_1.4.0.9000 Rcpp_1.0.2           digest_0.6.20       
- [4] rprojroot_1.3-2      backports_1.1.4      git2r_0.26.1        
+ [1] workflowr_1.4.0.9000 Rcpp_1.0.4.6         digest_0.6.23       
+ [4] rprojroot_1.3-2      backports_1.1.5      git2r_0.26.1        
  [7] magrittr_1.5         evaluate_0.14        stringi_1.4.3       
 [10] fs_1.3.1             whisker_0.4          rmarkdown_1.15      
-[13] tools_3.6.1          stringr_1.4.0        glue_1.3.1          
-[16] xfun_0.9             yaml_2.2.0           compiler_3.6.1      
+[13] tools_3.6.3          stringr_1.4.0        glue_1.3.1          
+[16] xfun_0.9             yaml_2.2.0           compiler_3.6.3      
 [19] htmltools_0.3.6      knitr_1.24          </code></pre>
 </div>
 </div>
