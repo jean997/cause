@@ -48,7 +48,7 @@ Set up a pipeline analysis. From the directory you want to use, in R run
 cause::setup_cause_pipeline()
 ```
 
-The `setup_cause_pipeline()` function provides you with everything you need to run an  analysis except for data and a `.csv` file describing that data. The analysis is controlled by the `config.yaml` file which has four sections. You should edit the file to match your analysis desires.
+The `setup_cause_pipeline()` function provides you with everything you need to run an  analysis except for data and a `.csv` file describing that data. You can use this function to start any pipeline analysis, not just this example. The analysis is controlled by the `config.yaml` file which has four sections. You should edit the file to match your analysis desires.
 
 The `input` section gives the location of a `csv` file that describes each set of GWAS summary statistics. More on this file later.
 
@@ -114,7 +114,7 @@ Once you have downloaded summary statistics and created the csv file you are rea
 ```
 nohup ./run-snakemake.sh & 
 ```
-The `nohup` is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.
+You may need to change the permissons of `run-snakemake.sh` to be excecutable with `chmod a+x run-snakemake.sh`. The `nohup` is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.
 
 ## Download data and build spreadsheet
 
@@ -156,7 +156,7 @@ Now to run an analysis all you need to do is
 
 1. Edit the `run-snakemake.sh` file so that the cluster command is compatible with your cluster setup.
 
-2. Edit the `config.yaml` file. You may not need to make any changes but you may need to change the location of the LD files or change where you would like data stored. Leave `all_pairs: True` or, alternatively to only run LDL -> CAD and LDL -> Asthma change to
+2. Edit the `config.yaml` file. You may not need to make any changes but you might need to change the location of the LD files or change where you would like data stored. Leave `all_pairs: True` or, alternatively to only run LDL -> CAD and LDL -> Asthma change to
 
 ```
 analysis:
@@ -164,7 +164,7 @@ analysis:
   trait1: 1
   trait2: 2,3
 ```
-leave the other fields in the analysis section as they are. 
+The numbers correspond to the index of each trait in `gwas_pairs.csv`. Leave the other fields in the analysis section as they are. 
 
 3. Change the persmissions of `run-snakemake.sh` to make it an executable. Use `chmod a+x run-snakemake.sh`.
 
@@ -175,12 +175,12 @@ source activate cause_large
 nohup ./run-snakemake.sh & 
 ```
 
-A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the `cluster.yaml` file and then simply re-run the command above. No work that has been completed will be repeated. 
+A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the `cluster.yaml` file and then simply re-run the command above. No work that has been completed will be repeated. You can use `snakemake -n` to do a "dry run" which tells you what commands will be run. 
 
 When the pipeline is done, in the results directory there will be a handful of files named `results/df_{method}.RDS` where `{method}` is one of the methods run above. Source these into R and take a look using
 
 ```{r, eval=FALSE}
-df <- readRDS("results/cause_1_10_1.RDS")
+df <- readRDS("results/df_cause_1_10_1.RDS")
 df
 ```
 
