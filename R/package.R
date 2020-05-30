@@ -1,6 +1,6 @@
 #' CAUSE
 #'
-#' Implementation of CAUSE described in Morrison et al. (2019)
+#' Implementation of CAUSE described in Morrison et al. (2020)
 #'
 #' @docType package
 #' @author Jean Morrison <jeanm@uchicago.edu>
@@ -8,7 +8,6 @@
 #' @import purrr tidyr mixsqp
 #' @importFrom scales muted
 #' @importFrom matrixStats logSumExp
-#' @importFrom numDeriv hessian
 #' @importFrom intervals Intervals interval_overlap
 #' @importFrom gridExtra arrangeGrob tableGrob
 #' @importFrom loo loo compare
