@@ -13,7 +13,7 @@
 map_pi_rho <- function(X, mix_grid, rho_start=0,
                        tol=1e-7, n.iter=20, null_wt = 10,
                        z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)},
-                       optmethod = c("mixSQP", "mixIP")){
+                       optmethod = c("mixSQP", "mixIP"), control=list(), warm=FALSE){
 
   stopifnot(inherits(X, "cause_data"))
   stopifnot(inherits(mix_grid, "cause_grid"))
@@ -38,8 +38,9 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     matrix_llik <- matrix_llik1 - apply(matrix_llik1, 1, max)
     matrix_lik <- exp(matrix_llik)
     w_res <- optfun(matrix_lik =matrix_lik,
-                          prior=c(null_wt, rep(1, K-1)),
-                          weights=rep(1, nrow(matrix_lik)))
+                    prior=c(null_wt, rep(1, K-1)),
+                    weights=rep(1, nrow(matrix_lik)),
+			              control=control)
     pi <- pi_old <- pmax(w_res$pihat, 0)
   }else{
     pi <- pi_old <- mix_grid$pi
@@ -52,11 +53,11 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
   li_func <- function(rho){
     z <- arctanh(rho)
     ll <- loglik(rho, 0, 0, 0,
-                    mix_grid$S1, mix_grid$S2,
-                    pi,X$beta_hat_1,
-                    X$beta_hat_2,
-                    X$seb1,
-                    X$seb2) +
+                 mix_grid$S1, mix_grid$S2,
+                 pi,X$beta_hat_1,
+                 X$beta_hat_2,
+                 X$seb1,
+                 X$seb2) +
       z_prior_func(z) + pi_prior
     return(-ll)
   }
@@ -67,13 +68,14 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
   LLS <- c(-1*li_func(rho))
   ct <-1
 
-
+  pi_start <- rep(1, K)
   while(!converged & ct <= n.iter){
     #Update rho
     opt_rho <-  optimize(f = li_func, lower=-1, upper = 1, maximum=FALSE)
     rho <- opt_rho$minimum
     LLS <- c(LLS, -opt_rho$objective)
     RHO <- c(RHO, rho)
+    if(warm) pi_start <- pi
     #Update pi
     matrix_llik1 <- loglik_mat(rho, 0, 0, 0,
                               mix_grid$S1, mix_grid$S2,
@@ -84,8 +86,10 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
     matrix_llik = matrix_llik1 - apply(matrix_llik1, 1, max)
     matrix_lik = exp(matrix_llik)
     w_res = optfun(matrix_lik =matrix_lik,
-                         prior=c(null_wt, rep(1, K-1)),
-                         weights=rep(1, nrow(matrix_lik)))
+                   prior=c(null_wt, rep(1, K-1)),
+                   weights=rep(1, nrow(matrix_lik)),
+			             control=control,
+			             pi_init = pi_start) #initialize at old solution
     pi <- pmax(w_res$pihat, 0)
     pi_prior <- ddirichlet1(pi, c(null_wt, rep(1, K-1)))
     ll <- li_func(rho)
