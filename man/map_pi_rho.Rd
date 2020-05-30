@@ -6,7 +6,8 @@
 \usage{
 map_pi_rho(X, mix_grid, rho_start = 0, tol = 1e-07, n.iter = 20,
   null_wt = 10, z_prior_func = function(z) {     dnorm(z, 0, 0.5, log =
-  TRUE) }, optmethod = c("mixSQP", "mixIP"))
+  TRUE) }, optmethod = c("mixSQP", "mixIP"), control = list(),
+  warm = FALSE)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
