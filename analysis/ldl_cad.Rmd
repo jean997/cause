@@ -26,13 +26,7 @@ Step 3 will require LD information estimated from the 1000 Genomes CEU populatio
 
 ## Step 0: Install CAUSE
 
-In R
-
-```{r, eval=FALSE}
-devtools::install_github("jean997/cause")
-```
-
-This version of CAUSE rquires `mixsqp-0.1-97`.
+Follow installation instructions [here](https://github.com/jean997/cause)
 
 ## Step 1: Format Data for CAUSE
 
