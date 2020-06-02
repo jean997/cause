@@ -411,7 +411,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-29
+<strong>Last updated:</strong> 2020-06-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -502,10 +502,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree3c9571d068a1c2cdc2caa3472b90157de6357eeatargetblank3c9571da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/3c9571d068a1c2cdc2caa3472b90157de6357eea" target="_blank">3c9571d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef8dff24eee9d6ea7ec83effa30317f2cc0240a1ftargetblankf8dff24a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/f8dff24eee9d6ea7ec83effa30317f2cc0240a1f" target="_blank">f8dff24</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree3c9571d068a1c2cdc2caa3472b90157de6357eeatargetblank3c9571da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef8dff24eee9d6ea7ec83effa30317f2cc0240a1ftargetblankf8dff24a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -529,18 +529,16 @@ Untracked files:
     Untracked:  test_A.RDS
     Untracked:  test_A_answer1.RDS
     Untracked:  test_A_answer3.RDS
+    Untracked:  test_Xsmall.RDS
     Untracked:  test_fit2.RDS
     Untracked:  test_mix_grid_new.RDS
+    Untracked:  test_params1_cold.RDS
+    Untracked:  test_params1_small.RDS
+    Untracked:  test_params3_small.RDS
     Untracked:  test_params3_warm.RDS
     Untracked:  test_params_orig.RDS
     Untracked:  test_w.RDS
     Untracked:  tests/
-
-Unstaged changes:
-    Modified:   R/est_cause_params.R
-    Modified:   R/map_pi_rho.R
-    Modified:   analysis/gwas_pairs_2.Rmd
-    Modified:   example_data/LDL_CAD_merged.RDS
 
 </code></pre>
 <p>
@@ -579,6 +577,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/f8dff24eee9d6ea7ec83effa30317f2cc0240a1f/analysis/ldl_cad.Rmd" target="_blank">f8dff24</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+<td>
+wflow_publish(“analysis/ldl_cad.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/1cfcb0b3cc513064b0fecc385bb2317e482c6718/docs/ldl_cad.html" target="_blank">1cfcb0b</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-05-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1213,9 +1245,7 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 </div>
 <div id="step-0-install-cause" class="section level2">
 <h2>Step 0: Install CAUSE</h2>
-<p>In R</p>
-<pre class="r"><code>devtools::install_github(&quot;jean997/cause&quot;)</code></pre>
-<p>This version of CAUSE rquires <code>mixsqp-0.1-97</code>.</p>
+<p>Follow installation instructions <a href="https://github.com/jean997/cause">here</a></p>
 </div>
 <div id="step-1-format-data-for-cause" class="section level2">
 <h2>Step 1: Format Data for CAUSE</h2>
@@ -1277,26 +1307,26 @@ download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/LD
 varlist &lt;- with(X, sample(snp, size=1000000, replace=FALSE))
 params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code>Estimating CAUSE parameters with  1000000  variants.
-1 0.218096 
-2 0.000638099 
-3 7.441002e-06 
-4 8.58628e-08 </code></pre>
+1 0.2180944 
+2 0.0006398994 
+3 7.445625e-06 
+4 4.878722e-08 </code></pre>
 <p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
 <pre class="r"><code>class(params)</code></pre>
 <pre><code>[1] &quot;cause_params&quot;</code></pre>
 <pre class="r"><code>names(params)</code></pre>
-<pre><code> [1] &quot;rho&quot;       &quot;pi&quot;        &quot;mix_grid&quot;  &quot;loglik&quot;    &quot;PIS&quot;      
- [6] &quot;RHO&quot;       &quot;LLS&quot;       &quot;converged&quot; &quot;prior&quot;     &quot;var&quot;      </code></pre>
+<pre><code>[1] &quot;rho&quot;       &quot;pi&quot;        &quot;mix_grid&quot;  &quot;loglik&quot;    &quot;PIS&quot;       &quot;RHO&quot;      
+[7] &quot;LLS&quot;       &quot;converged&quot; &quot;prior&quot;    </code></pre>
 <pre class="r"><code>params$rho</code></pre>
 <pre><code>[1] 0.06465784</code></pre>
 <pre class="r"><code>head(params$mix_grid)</code></pre>
 <pre><code>           S1          S2           pi
-1 0.000000000 0.000000000 0.3105286345
-2 0.000000000 0.003440730 0.2381082508
-3 0.000000000 0.004865928 0.1490899080
-4 0.003533615 0.004865928 0.1660235278
-5 0.004997287 0.009731855 0.1177553061
-6 0.019989147 0.009731855 0.0006522073</code></pre>
+1 0.000000000 0.000000000 0.3105286643
+2 0.000000000 0.003440730 0.2381082227
+3 0.000000000 0.004865928 0.1490899299
+4 0.003533615 0.004865928 0.1660234953
+5 0.004997287 0.009731855 0.1177553318
+6 0.019989147 0.009731855 0.0006521846</code></pre>
 <p>So, for example, in this case, we have estimated that 31% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
 <p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model comparisons.</p>
 </div>
@@ -1366,9 +1396,9 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 [8] &quot;qbeta&quot;  </code></pre>
 <pre class="r"><code>res$elpd</code></pre>
 <pre><code>   model1  model2 delta_elpd se_delta_elpd         z
-1    null sharing -66.887780      8.350670 -8.009870
-2    null  causal -75.073163      9.497338 -7.904653
-3 sharing  causal  -8.185383      1.246103 -6.568786</code></pre>
+1    null sharing -66.887583      8.350653 -8.009862
+2    null  causal -75.072952      9.497320 -7.904646
+3 sharing  causal  -8.185368      1.246101 -6.568783</code></pre>
 <pre class="r"><code>class(res$sharing)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <pre class="r"><code>class(res$causal)</code></pre>
@@ -1878,6 +1908,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/1cfcb0b3cc513064b0fecc385bb2317e482c6718/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">1cfcb0b</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-05-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">70e2b97</a>
 </td>
 <td>
@@ -2000,31 +2041,30 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.0.0 dplyr_0.8.3 readr_1.3.1
+[1] cause_1.0.0.0266 dplyr_0.8.3      readr_1.3.1     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-32         
+ [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-47         
  [4] purrr_0.3.3          lattice_0.20-38      colorspace_1.4-1    
  [7] vctrs_0.2.0          htmltools_0.3.6      loo_2.1.0           
 [10] yaml_2.2.0           utf8_1.1.4           rlang_0.4.2         
-[13] mixsqp_0.1-97        pillar_1.4.2         glue_1.3.1          
-[16] matrixStats_0.55.0   foreach_1.5.0        lifecycle_0.1.0     
-[19] stringr_1.4.0        munsell_0.5.0        gtable_0.3.0        
-[22] workflowr_1.4.0.9000 codetools_0.2-16     evaluate_0.14       
-[25] labeling_0.3         knitr_1.24           doParallel_1.0.15   
-[28] pscl_1.5.5           parallel_3.6.3       fansi_0.4.0         
-[31] Rcpp_1.0.4.6         backports_1.1.5      scales_1.1.0        
-[34] RcppParallel_4.4.4   truncnorm_1.0-8      farver_2.0.1        
-[37] fs_1.3.1             gridExtra_2.3        ggplot2_3.2.1       
-[40] hms_0.5.2            digest_0.6.23        stringi_1.4.3       
-[43] numDeriv_2016.8-1.1  grid_3.6.3           rprojroot_1.3-2     
-[46] cli_2.0.0            tools_3.6.3          magrittr_1.5        
-[49] lazyeval_0.2.2       tibble_2.1.3         crayon_1.3.4        
-[52] whisker_0.4          tidyr_1.0.0          pkgconfig_2.0.3     
-[55] zeallot_0.1.0        ellipsis_0.3.0       MASS_7.3-51.4       
-[58] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
-[61] rmarkdown_1.15       iterators_1.0.12     R6_2.4.1            
-[64] intervals_0.15.1     git2r_0.26.1         compiler_3.6.3      </code></pre>
+[13] mixsqp_0.3-43        pillar_1.4.2         glue_1.3.1          
+[16] matrixStats_0.55.0   lifecycle_0.1.0      stringr_1.4.0       
+[19] munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9000
+[22] evaluate_0.14        labeling_0.3         knitr_1.24          
+[25] invgamma_1.1         irlba_2.3.3          parallel_3.6.3      
+[28] fansi_0.4.0          Rcpp_1.0.4.6         backports_1.1.5     
+[31] scales_1.1.0         RcppParallel_4.4.4   truncnorm_1.0-8     
+[34] farver_2.0.1         fs_1.3.1             gridExtra_2.3       
+[37] ggplot2_3.2.1        hms_0.5.2            digest_0.6.23       
+[40] stringi_1.4.3        numDeriv_2016.8-1.1  grid_3.6.3          
+[43] rprojroot_1.3-2      cli_2.0.0            tools_3.6.3         
+[46] magrittr_1.5         lazyeval_0.2.2       tibble_2.1.3        
+[49] crayon_1.3.4         whisker_0.4          tidyr_1.0.0         
+[52] pkgconfig_2.0.3      zeallot_0.1.0        ellipsis_0.3.0      
+[55] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
+[58] rmarkdown_1.15       R6_2.4.1             intervals_0.15.1    
+[61] git2r_0.26.1         compiler_3.6.3      </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2053,31 +2093,30 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.0.0 dplyr_0.8.3 readr_1.3.1
+[1] cause_1.0.0.0266 dplyr_0.8.3      readr_1.3.1     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-32         
+ [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-47         
  [4] purrr_0.3.3          lattice_0.20-38      colorspace_1.4-1    
  [7] vctrs_0.2.0          htmltools_0.3.6      loo_2.1.0           
 [10] yaml_2.2.0           utf8_1.1.4           rlang_0.4.2         
-[13] mixsqp_0.1-97        pillar_1.4.2         glue_1.3.1          
-[16] matrixStats_0.55.0   foreach_1.5.0        lifecycle_0.1.0     
-[19] stringr_1.4.0        munsell_0.5.0        gtable_0.3.0        
-[22] workflowr_1.4.0.9000 codetools_0.2-16     evaluate_0.14       
-[25] labeling_0.3         knitr_1.24           doParallel_1.0.15   
-[28] pscl_1.5.5           parallel_3.6.3       fansi_0.4.0         
-[31] Rcpp_1.0.4.6         backports_1.1.5      scales_1.1.0        
-[34] RcppParallel_4.4.4   truncnorm_1.0-8      farver_2.0.1        
-[37] fs_1.3.1             gridExtra_2.3        ggplot2_3.2.1       
-[40] hms_0.5.2            digest_0.6.23        stringi_1.4.3       
-[43] numDeriv_2016.8-1.1  grid_3.6.3           rprojroot_1.3-2     
-[46] cli_2.0.0            tools_3.6.3          magrittr_1.5        
-[49] lazyeval_0.2.2       tibble_2.1.3         crayon_1.3.4        
-[52] whisker_0.4          tidyr_1.0.0          pkgconfig_2.0.3     
-[55] zeallot_0.1.0        ellipsis_0.3.0       MASS_7.3-51.4       
-[58] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
-[61] rmarkdown_1.15       iterators_1.0.12     R6_2.4.1            
-[64] intervals_0.15.1     git2r_0.26.1         compiler_3.6.3      </code></pre>
+[13] mixsqp_0.3-43        pillar_1.4.2         glue_1.3.1          
+[16] matrixStats_0.55.0   lifecycle_0.1.0      stringr_1.4.0       
+[19] munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9000
+[22] evaluate_0.14        labeling_0.3         knitr_1.24          
+[25] invgamma_1.1         irlba_2.3.3          parallel_3.6.3      
+[28] fansi_0.4.0          Rcpp_1.0.4.6         backports_1.1.5     
+[31] scales_1.1.0         RcppParallel_4.4.4   truncnorm_1.0-8     
+[34] farver_2.0.1         fs_1.3.1             gridExtra_2.3       
+[37] ggplot2_3.2.1        hms_0.5.2            digest_0.6.23       
+[40] stringi_1.4.3        numDeriv_2016.8-1.1  grid_3.6.3          
+[43] rprojroot_1.3-2      cli_2.0.0            tools_3.6.3         
+[46] magrittr_1.5         lazyeval_0.2.2       tibble_2.1.3        
+[49] crayon_1.3.4         whisker_0.4          tidyr_1.0.0         
+[52] pkgconfig_2.0.3      zeallot_0.1.0        ellipsis_0.3.0      
+[55] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
+[58] rmarkdown_1.15       R6_2.4.1             intervals_0.15.1    
+[61] git2r_0.26.1         compiler_3.6.3      </code></pre>
 </div>
 </div>
 
