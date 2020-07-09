@@ -40,7 +40,9 @@ cause <- function(X, param_ests, variants = X$snp,
                   sigma_g, qalpha = 1, qbeta=10,
                   max_q = 1, force=FALSE,
                   n_start_gamma_eta = 21, n_start_q = 11){
-  stopifnot(inherits(X, "cause_data"))
+  if(!inherits(X, "cause_data")){
+    X <- new_cause_data(X)
+  }
   stopifnot(inherits(param_ests, "cause_params"))
   if(!param_ests$converged){
     if(!force){

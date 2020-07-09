@@ -14,7 +14,9 @@ est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"),
      control0 <- list(verbose = FALSE, eps = 1e-08, numiter.em = 10, maxiter.activeset = 100, tol.svd = 0)
      control <- modifyList(control0, control, keep.null = TRUE)
   }
-  stopifnot(inherits(X, "cause_data"))
+  if(!inherits(X, "cause_data")){
+    X <- new_cause_data(X)
+  }
   if(!all(variants %in% X$snp)){
     warning("Warning: Not all `variants` are in data.", call.=FALSE)
   }
