@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -16,6 +15,7 @@
 
 <title>Simulations</title>
 
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,6 +30,16 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -239,6 +249,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -267,6 +278,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -373,13 +390,6 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
@@ -411,7 +421,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2019-12-04
+<strong>Last updated:</strong> 2020-07-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -421,7 +431,7 @@ div.section {
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.4.0.9000). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -459,7 +469,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongSeedstrongcodesetseed20181014code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
@@ -502,13 +512,19 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276targetblank70e2b97a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276" target="_blank">70e2b97</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb785efc43969e2444651864f6919292bead187fbtargetblankb785efca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/b785efc43969e2444651864f6919292bead187fb" target="_blank">b785efc</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276targetblank70e2b97a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb785efc43969e2444651864f6919292bead187fbtargetblankb785efca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/b785efc43969e2444651864f6919292bead187fb" target="_blank">b785efc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -520,18 +536,17 @@ Ignored files:
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  analysis/figure/ldl_cad.Rmd/
-    Untracked:  analysis/figure/little_test.Rmd/
+    Untracked:  analysis/mrcieu.Rmd
     Untracked:  cause.Rcheck/
-    Untracked:  docs/cause.bib
-    Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
-    Untracked:  temp.txt
+    Untracked:  ll_v7_notes.html
     Untracked:  tests/
 
 Unstaged changes:
-    Modified:   example_data/LDL_CAD_merged.RDS
+    Deleted:    analysis/figure/simulations.Rmd/plot_fp-1.png
+    Deleted:    analysis/figure/simulations.Rmd/plot_power-1.png
+    Deleted:    analysis/figure/simulations.Rmd/roc_curves-1.png
 
 </code></pre>
 <p>
@@ -546,7 +561,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/simulations.Rmd</code>) and HTML (<code>docs/simulations.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -572,6 +587,40 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/b785efc43969e2444651864f6919292bead187fb/analysis/simulations.Rmd" target="_blank">b785efc</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+<td>
+wflow_publish(“analysis/simulations.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/42dca679cef0e467f3aaf8030e05bddc2365914f/docs/simulations.html" target="_blank">42dca67</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2019-12-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
@@ -581,7 +630,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-10-16
+2019-10-15
 </td>
 <td>
 Build site.
@@ -598,7 +647,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-10-16
+2019-10-15
 </td>
 <td>
 wflow_publish(c(“analysis/simulations.Rmd”))
@@ -615,7 +664,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-26
+2019-07-25
 </td>
 <td>
 small typo
@@ -632,7 +681,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-25
+2019-07-24
 </td>
 <td>
 Build site.
@@ -649,7 +698,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-25
+2019-07-24
 </td>
 <td>
 smally typo
@@ -666,7 +715,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-25
+2019-07-24
 </td>
 <td>
 Build site.
@@ -683,7 +732,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-25
+2019-07-24
 </td>
 <td>
 change some wording and add extraction code
@@ -734,7 +783,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-12
+2019-07-11
 </td>
 <td>
 Build site.
@@ -751,7 +800,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-11
+2019-07-10
 </td>
 <td>
 more plotting details
@@ -768,7 +817,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-11
+2019-07-10
 </td>
 <td>
 lots of plotting details. still working
@@ -785,7 +834,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 Build site.
@@ -802,7 +851,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 wflow_publish(“analysis/simulations.Rmd”)
@@ -836,7 +885,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-09
+2019-07-08
 </td>
 <td>
 Build site.
@@ -853,7 +902,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-09
+2019-07-08
 </td>
 <td>
 wflow_publish(“analysis/simulations.Rmd”)
@@ -870,7 +919,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-09
+2019-07-08
 </td>
 <td>
 Build site.
@@ -887,7 +936,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-09
+2019-07-08
 </td>
 <td>
 wflow_publish(“analysis/simulations.Rmd”)
@@ -974,7 +1023,7 @@ wflow_publish(files = c(“analysis/about.Rmd”, “analysis/index.Rmd”, “a
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This page gives instructions for running the simulations that we ran to evaluate CAUSE and will allow you to reproduce the results <a href="https://www.biorxiv.org/content/10.1101/682237v3">the paper</a>. It will hopefully also serve as a resource for explaining those results in more detail and allow you to modify simulations to run your own experiments. There are a lot of parameters that can be changed. We tried to explore a reasonable range of scenarios but there are many more variations that could be tried. Running the simulations involves multiple set-up steps, mostly software installation and may take a bit of time, especially if you are new to DSC. Additionally, completing the simulations requires several hours of computing and needs to be done on a cluster. If you don’t have access to that kind of computing resource you may still find this section useful. All of our results can be downloaded and we will include some discussions of the patterns that we observed as we go along.</p>
+<p>This page gives instructions for running the simulations that we ran to evaluate CAUSE and will allow you to reproduce the results <a href="https://www.biorxiv.org/content/10.1101/682237v3">the paper</a>. It will hopefully also serve as a resource for explaining those results in more detail and allow you to modify simulations to run your own experiments. There are a lot of parameters that can be changed. We tried to explore a reasonable range of scenarios but there are many more variations that could be tried. Running the simulations involves multiple set-up steps, mostly software installation, and may take a bit of time, especially if you are new to DSC. Additionally, completing the simulations requires several hours of computing and needs to be done on a cluster. If you don’t have access to that kind of computing resource you may still find this section useful and all of our results can be downloaded.</p>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set Up</h1>
@@ -997,233 +1046,157 @@ setup_sims()</code></pre>
 <li><p>DSC files: These contain instructions for DSC on how to simulate data and analyze it. Jump to <a href="#details">this subsection</a> for a detailed description of the DSC files and simulation parameters. If you want to run your own experiments, these files should provide a good starting place for that. The set up function downloads three DSC files. One is for evaluating false positives in the presence of different levels of correlated pleiotropy, one is for evaluating power when there is a true causal effect, and one is for evaluating the robustness of CAUSE to different prior distributions on <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span> (see supplementary note of the paper).</p></li>
 <li><p>A configuration file for running DSC on a cluster. This file is set up for the University of Chicago Research Computing Cluster so you will need to change it to match your cluster set up. Even if you are using the U of C cluster, you will need to change the home directory and account lines of this file. Read about using DSC with a compute cluster <a href="https://stephenslab.github.io/dsc-wiki/advanced_course/Remote_Computations">here</a> (We are using the “On Host” option) and modify <code>config.yml</code> as needed.</p></li>
 <li><p>Some code for plotting and results summarization</p></li>
+<li><p>Data frames of results</p></li>
 </ul>
 </div>
 </div>
 <div id="run-dsc" class="section level1">
 <h1>Run DSC</h1>
+<p>Results in the paper are generated by the following DSC files:</p>
+<p>Figure 2a: <code>false_positives.dsc</code> Figure 2b: <code>power.dsc</code> Figure 3: <code>reverse.dsc</code> Supplementary Figure SN4: <code>mixture1.dsc</code></p>
 <p>To run DSC use the following commands at the command line</p>
-<pre><code>nohup dsc --replicate 100 --host config.yml -c 4 power.dsc &gt; pwr_dsc.out &amp;
-nohup dsc --replicate 100 --host config.yml -c 4 false_positives.dsc &gt; fp_dsc.out &amp;
-nohup dsc --replicate 100 --host config.yml -c 4 sigma_g.dsc &gt; sg_dsc.out &amp;</code></pre>
-<p>Depending on your computing resources and how many jobs you allow to run simultaneously, this could take several hours for each command. Errors can occur that stop DSC, usually a result of interfacing with the cluster. For example, DSC may fail to detect that a job has completed. If this happens, simply restart the failed job using the same command. DSC will pick up where it left off since all results are saved along the way. Running these commands will generate lots of <code>*.err</code> and <code>*.out</code> files all of which can be safely deleted. Results will be in directories named <code>fp</code> (false positives), <code>pwr</code> (power) and <code>sigma_g</code> (results for testing the prior on <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span>).</p>
+<pre><code>nohup dsc --replicate 100 --host config.yml -c 4 &lt;name&gt;.dsc &gt; &lt;name&gt;.out &amp;</code></pre>
+<p>where <code>&lt;name&gt;</code> is replaced by one of the four analysis names above.</p>
+<p>Depending on your computing resources and how many jobs you allow to run simultaneously, this could take several hours for each command. Errors can occur that stop DSC, usually a result of interfacing with the cluster. For example, DSC may fail to detect that a job has completed. If this happens, simply restart the failed job using the same command. DSC will pick up where it left off since all results are saved along the way. Running these commands will generate lots of <code>*.err</code> and <code>*.out</code> files all of which can be safely deleted. Results will be in directories named <code>fp</code>, <code>pwr</code>, <code>rev</code> and <code>mix1</code>. You can change these names by changing the <code>output:</code> line of the <code>.dsc</code> files.</p>
 </div>
 <div id="look-at-results-and-plot-them" class="section level1">
 <h1>Look at Results and Plot Them</h1>
-<div id="false-positive-and-power-results" class="section level2">
-<h2>False positive and power results</h2>
-<p>The script <code>extract_results_main.R</code> will use the <code>dscrutils</code> package to extract results from the false positive and power analyses. If you are modifying the analysis and have changed the names of the output directories, you will need to change them in this file also. Depending on the changes you have made, you may need to make other modifications. Read more about <a href="https://stephenslab.github.io/dsc-wiki/first_course/Intro_DSC.html#query-the-results">dscrutils here</a> and in the <code>dscrutils</code> documentation. This script will save R objects containing CAUSE, LCV, and other MR method results for both analyses. It will append the date so it won’t over-write the results downloaded by <code>setup_sims()</code>. Run it at the command line using</p>
-<pre><code>Rscript extract_results_main.R</code></pre>
-<p>or from inside R using <code>source(extract_results_main.R)</code>. It will take several minutes to extract all of the results. If you would like to use your own files to plot, change the file names in the code below which uses the downloaded results.</p>
-<pre class="r"><code>library(tidyverse)
-library(gridExtra)
-library(pROC)
-library(jcolors)</code></pre>
-<p>The results extraction script makes a data frame for CAUSE results and a data frame for all the other MR methods. There is also a data frame for results from LCV but this is discussed later on. We first read in results and look around a little</p>
-<pre class="r"><code>causedf &lt;- readRDS(&quot;sim_results/main_causedf.RDS&quot;)
-dim(causedf)</code></pre>
-<pre><code>[1] 6400   26</code></pre>
-<pre class="r"><code>head(causedf)</code></pre>
-<pre><code>  DSC simulate.output.file  tau     gamma q omega eta   h1   h2    n1
-1   1  simulate/simulate_1 0.00 0.0000000 0     0   0 0.25 0.25 12000
-2   1  simulate/simulate_2 0.01 0.1000000 0     0   0 0.25 0.25 12000
-3   1  simulate/simulate_3 0.02 0.1414214 0     0   0 0.25 0.25 12000
-4   1  simulate/simulate_4 0.03 0.1732051 0     0   0 0.25 0.25 12000
-5   1  simulate/simulate_5 0.04 0.2000000 0     0   0 0.25 0.25 12000
-6   1  simulate/simulate_6 0.05 0.2236068 0     0   0 0.25 0.25 12000
-     n2 neffect1 neffect2 lcv_q1 lcv_q2 gcp m_sig     params
-1 12000     1000     1000      0      0   0    10    (0,0,0)
-2 12000     1000     1000      1      0   1     5 (0.01,0,0)
-3 12000     1000     1000      1      0   1     7 (0.02,0,0)
-4 12000     1000     1000      1      0   1     8 (0.03,0,0)
-5 12000     1000     1000      1      0   1    15 (0.04,0,0)
-6 12000     1000     1000      1      0   1     6 (0.05,0,0)
-                        cause.output.file    cause.p cause.eta_sharing
-1 cause/simulate_1_cause_params_1_cause_1 1.00000000       0.011931561
-2 cause/simulate_2_cause_params_1_cause_1 0.99999998       0.002510281
-3 cause/simulate_3_cause_params_1_cause_1 0.17667815       0.130967317
-4 cause/simulate_4_cause_params_1_cause_1 0.09319743       0.275080972
-5 cause/simulate_5_cause_params_1_cause_1 0.13777660       0.201534222
-6 cause/simulate_6_cause_params_1_cause_1 0.03422957       0.285438995
-  cause.q_sharing cause.eta_causal cause.q_causal cause.gamma_causal
-1      0.04109263    -0.0038530765     0.04901066         0.00479154
-2      0.04354778    -0.0170810260     0.05051196         0.00754432
-3      0.06559798    -0.0003402543     0.04756247         0.08344094
-4      0.16287869    -0.0070851343     0.05040652         0.12319126
-5      0.11645133    -0.0099462311     0.04614923         0.08230970
-6      0.14942537     0.0079122698     0.04220322         0.13940896
-                      tag
-1 pwr_simulate/simulate_1
-2 pwr_simulate/simulate_2
-3 pwr_simulate/simulate_3
-4 pwr_simulate/simulate_4
-5 pwr_simulate/simulate_5
-6 pwr_simulate/simulate_6</code></pre>
-<p>The frist 18 columns of the data frame are all simulation parameters, information about the simulation files, or simple statistics computed about the simulated data. These include</p>
-<ul>
-<li><code>gamma</code>, <code>eta</code>, <code>q</code>: True values of <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(q\)</span> used to simulate data. <code>params</code> gives a character string listing <span class="math inline">\((\gamma, \eta, q)\)</span>.</li>
-<li><code>tau</code>, <code>omega</code>: Transformations of <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span> respectively. <span class="math inline">\(\tau\)</span> is the proportion of <span class="math inline">\(Y\)</span> heritability explained by the causal effect of trait <span class="math inline">\(M\)</span>, equal to <span class="math inline">\(\tau = \gamma^2 h^2_{M}/h^2_Y\)</span>. In our case <span class="math inline">\(h^2_M = h^2_Y\)</span> for all simulations so <span class="math inline">\(\tau = \gamma^2\)</span>. <span class="math inline">\(\omega\)</span> is defined as <span class="math inline">\(\omega = \eta^2 h^2_M/h^2_Y = \eta^2\)</span>.</li>
-<li><code>h1</code>, <code>h2</code>: Heritabilitites for trait <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> respectively <code>h1</code> $ = h^2_M$ and <code>h2</code><span class="math inline">\(= h^2_Y\)</span>. In our case these are equal to 0.25 for all simulations.</li>
-<li><code>n1</code>, <code>n2</code>: Sample size for GWAS of traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> respectively. These can be equal to 12,000 (low power) or 40,000 (high power).</li>
-<li><code>neffect1</code>, <code>neffect2</code>: Expected number of effect SNPS for trait <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>. In our case equal to 1000 for all simulations.</li>
-<li><code>lcv_q1</code>, <code>lcv_q2</code>, <code>gcp</code>: True values of the LCV parameters <span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span> and GCP. These are computed from <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(q\)</span>.</li>
-<li><code>m_sig</code>: The number of genome-wide significant variants for trait <span class="math inline">\(M\)</span> after pruning for LD using an threshold of <span class="math inline">\(r^2 &lt; 0.1\)</span></li>
-</ul>
-<p>Values extracted from the CAUSE results all begin with <code>cause.</code>. For example, <code>cause.p</code> is the CAUSE <span class="math inline">\(p\)</span>-value. Posterior medians for <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\eta\)</span> and <span class="math inline">\(q\)</span> are reported for the sharing and causal models (e.g. <code>cause.q_causal</code> is the posterior median of <span class="math inline">\(q\)</span> in the causal model).</p>
-<p>The <code>mrdf</code> data frame gives results for alternative MR methods. The first 18 columns are the same as in the <code>causedf</code> data frame. For these methods, we have extracted only the method name (in the <code>mr</code> column) and the <span class="math inline">\(p\)</span>-value (<code>mr.p</code>).</p>
-<pre class="r"><code>mrdf &lt;- readRDS(&quot;sim_results/main_mrdf.RDS&quot;)
-dim(mrdf)</code></pre>
-<pre><code>[1] 32000    21</code></pre>
-<pre class="r"><code>head(mrdf)</code></pre>
-<pre><code>  DSC simulate.output.file  tau gamma q omega eta   h1   h2    n1    n2
-1   1  simulate/simulate_1 0.00   0.0 0     0   0 0.25 0.25 12000 12000
-2   1  simulate/simulate_1 0.00   0.0 0     0   0 0.25 0.25 12000 12000
-3   1  simulate/simulate_1 0.00   0.0 0     0   0 0.25 0.25 12000 12000
-4   1  simulate/simulate_1 0.00   0.0 0     0   0 0.25 0.25 12000 12000
-5   1  simulate/simulate_1 0.00   0.0 0     0   0 0.25 0.25 12000 12000
-6   1  simulate/simulate_2 0.01   0.1 0     0   0 0.25 0.25 12000 12000
-  neffect1 neffect2 lcv_q1 lcv_q2 gcp m_sig     params    mr      mr.p
-1     1000     1000      0      0   0    10    (0,0,0)   ivw 0.9043105
-2     1000     1000      0      0   0    10    (0,0,0) egger 0.9970743
-3     1000     1000      0      0   0    10    (0,0,0)   mrp 0.9043105
-4     1000     1000      0      0   0    10    (0,0,0)    wm 0.2693825
-5     1000     1000      0      0   0    10    (0,0,0)  gsmr 0.8497915
-6     1000     1000      1      0   1     5 (0.01,0,0)   ivw 0.5163502
-                      tag
-1 pwr_simulate/simulate_1
-2 pwr_simulate/simulate_1
-3 pwr_simulate/simulate_1
-4 pwr_simulate/simulate_1
-5 pwr_simulate/simulate_1
-6 pwr_simulate/simulate_2</code></pre>
-<pre class="r"><code>with(mrdf, table(mr))</code></pre>
-<pre><code>mr
-egger  gsmr   ivw   mrp    wm 
- 6400  6400  6400  6400  6400 </code></pre>
-<p>We first summarize results grouping by sample size and simulation setting. Some of the MR methods will have missing results if there are too few variants. We consider this as not having rejected the null hypothesis or a non-significant result. CAUSE does not have any missing results.</p>
-<pre class="r"><code>cause_summ &lt;- causedf %&gt;% 
-              group_by(q, tau, omega,  n1, n2) %&gt;%
-              summarize(n_sig = sum(cause.p &lt; 0.05, na.rm=T),
-                        missing = sum(is.na(cause.p))) %&gt;% 
-              mutate(analysis = &quot;cause&quot;)
-
-mr_summ &lt;- mrdf %&gt;%
-           group_by(q, tau, omega,  n1, n2, mr) %&gt;%
-           summarize(n_sig = sum(mr.p &lt; 0.05, na.rm=T),
-                     missing = sum(is.na(mr.p))) %&gt;%
-           rename(analysis = &quot;mr&quot;)
-
-
-res &lt;- bind_rows(cause_summ, mr_summ) %&gt;%
-        ungroup() %&gt;%
-        mutate(label = fct_recode(analysis, &quot;CAUSE&quot;=&quot;cause&quot;,
-                                     &quot;Egger&quot; = &quot;egger&quot;, &quot;GSMR&quot;=&quot;gsmr&quot;,
-                                     &quot;IVW&quot;=&quot;ivw&quot;, 
-                                     &quot;MR-PRESSO&quot;=&quot;mrp&quot;, &quot;Wtd. Median&quot; = &quot;wm&quot;),
-                 n1 = factor(paste0(&quot;N[M]==&quot;, n1)),
-                 n2 = factor(paste0(&quot;N[Y]==&quot;, n2)))
-
-filter(res, analysis==&quot;cause&quot;) %&gt;% with(., all(missing == 0))</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<div id="power" class="section level3">
-<h3>Power</h3>
-<p>Now we can plot!</p>
+<pre class="r"><code>library(causeSims)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(purrr)
+library(pROC)</code></pre>
+<p>Tables of results can be retrieved using the <code>extract_dsc_results</code> function from <code>causeSims</code>. The first argument of this function is a directory name. The function returns a list of data frames. The first gives CAUSE results, the second LCV results, the third results from MR methods run through the <code>MendelianRandomization</code> package. You can toggle extraction of the second two data frames with <code>extract_mr</code> and <code>extract_lcv</code> arguments.</p>
+<pre class="r"><code>res_fp &lt;- extract_dsc_results(&quot;fp&quot;)</code></pre>
+<p>We can then summarize the results into a plottable format using the <code>summarize_dsc_results</code> function. Here we will use the results that are downloaded with the package.</p>
+<pre class="r"><code>res_fp &lt;- readRDS(&quot;sim_results/res_fp.RDS&quot;)
+summ_fp &lt;- with(res_fp, summarize_dsc_results(cause, lcv, mr))</code></pre>
+<pre><code>Adding missing grouping variables: `cause.qbeta`</code></pre>
+<pre class="r"><code>head(summ_fp)</code></pre>
+<pre><code># A tibble: 6 x 12
+  cause.qbeta     q   tau omega    n1    n2 neffect1 n_sig missing gamma   eta
+        &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1           2   0.1     0  0.02 12000 12000     1000     0       0     0 0.141
+2          10   0.1     0  0.02 12000 12000     1000     0       0     0 0.141
+3         100   0.1     0  0.02 12000 12000     1000     0       0     0 0.141
+4           2   0.1     0  0.02 12000 40000     1000     0       0     0 0.141
+5          10   0.1     0  0.02 12000 40000     1000     0       0     0 0.141
+6         100   0.1     0  0.02 12000 40000     1000     0       0     0 0.141
+# … with 1 more variable: analysis &lt;chr&gt;</code></pre>
+<pre class="r"><code>res_pwr &lt;- readRDS(&quot;sim_results/res_pwr.RDS&quot;)
+summ_pwr &lt;- with(res_pwr, summarize_dsc_results(cause, lcv, mr))</code></pre>
+<pre><code>Adding missing grouping variables: `cause.qbeta`</code></pre>
+<pre class="r"><code>head(summ_pwr)</code></pre>
+<pre><code># A tibble: 6 x 12
+  cause.qbeta     q   tau omega    n1    n2 neffect1 n_sig missing gamma   eta
+        &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1           2     0     0     0 12000 12000     1000     0       0     0     0
+2          10     0     0     0 12000 12000     1000     0       0     0     0
+3         100     0     0     0 12000 12000     1000     0       0     0     0
+4           2     0     0     0 12000 40000     1000     0       0     0     0
+5          10     0     0     0 12000 40000     1000     0       0     0     0
+6         100     0     0     0 12000 40000     1000     0       0     0     0
+# … with 1 more variable: analysis &lt;chr&gt;</code></pre>
+<p>This function groups the data by parameter and computes the number of significant results. The <code>p_thresh</code> and <code>gcp_thresh</code> results control the significance threshold. By default these are <span class="math inline">\(p &lt; 0.05\)</span> for MR methods and <span class="math inline">\(\hat{GCP} &gt; 0.6\)</span> for LCV. Now we can plot!</p>
 <p>First we plot power with <span class="math inline">\(\tau\)</span> on the horizontal axis and the number of times each method rejected the null hypothesis on the vertical axis.</p>
-<pre class="r"><code>#colors
-cc &lt;- as.character(jcolors(&quot;default&quot;))
-cols &lt;- c(cc[3], cc[1:2], cc[4:5],  &quot;#D590DA&quot;)
-#plot
-pwr &lt;- res %&gt;%
-       filter(tau != 0 | (tau == 0 &amp; omega == 0 &amp; q == 0)) %&gt;% #This line includes only the power simulations. 
-       ggplot(.) + 
-          geom_line(aes(x=tau, y=n_sig/100, color=label)) +  
-          geom_point(aes(x=tau, y=n_sig/100, color=label, shape=label)) +
-          scale_color_manual(values=cols) + 
-          scale_shape_manual(values= c(16, 3, 4, 0, 2, 6:8)) +
-          geom_hline(yintercept=0.05, linetype=2) +
-          xlab(expression(&quot;Percentage of Y heritability explained by M (&quot; ~ tau ~ &quot;=&quot; ~ gamma^2 ~ h[M]^2/h[Y]^2 ~ &quot;)&quot;)) +
-          ylab(&quot;Percent Significant&quot;) + 
-          theme_bw() + 
-          theme(legend.title = element_blank(), 
-                strip.text = element_text(size=14),
-                axis.title = element_text(size=16),
-                legend.text = element_text(size=12),
-                legend.position = &quot;bottom&quot;) +  
-          guides(color=guide_legend(nrow=1),  
-                 linetype=guide_legend(nrow=1),
-                 shape=guide_legend(nrow=1) )  + 
-          facet_wrap(~n1*n2, nrow=2, labeller = label_parsed)
-
+<pre class="r"><code>wong_colors &lt;- c(&quot;#000000&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;, &quot;#0072B2&quot;, 
+                &quot;#D55E00&quot;, &quot;#CC79A7&quot;, &quot;#F0E442&quot;)
+methods =c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+            &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;)
+p_thresh = 0.05
+gcp_thresh = 0.6
+shp &lt;- c(16, 3, 4, 15, 17, 25, 23, 8)[1:length(methods)]
+ix &lt;- match(methods,c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                          &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;, &quot;lcv_mean&quot;) )
+cols &lt;- wong_colors[ix]</code></pre>
+<pre class="r"><code>#plot
+pwr &lt;- summ_pwr %&gt;%
+    filter(q == 0) %&gt;%
+    filter(analysis %in% methods) %&gt;%
+    mutate(n1 = as.character(n1),
+           n1 = recode(n1, &quot;12000&quot; = &quot;M low power&quot;, 
+                       &quot;40000&quot; = &quot;M high power&quot;), 
+           n2 = as.character(n2),
+           n2 = recode(n2, &quot;12000&quot; = &quot;Y low power&quot;, 
+                       &quot;40000&quot; = &quot;Y high power&quot;),
+           analysis = factor(analysis, levels = methods),
+           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;,
+                             egger_MR = &quot;Egger Regression&quot;, 
+                             ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                             mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;)) %&gt;%
+    ungroup() %&gt;%
+    ggplot(.) +
+    geom_line(aes(x=tau, y=n_sig/100, color=analysis)) +
+    geom_point(aes(x=tau, y=n_sig/100, color=analysis, shape=analysis), size=3) +
+    scale_color_manual(values=cols) +
+    scale_shape_manual(values= shp) +
+    scale_y_continuous(limits=c(0, 1)) + 
+    geom_hline(yintercept=p_thresh, linetype=2) +
+    xlab(expression(&quot;Percentage of Y heritability explained by M (&quot; ~ tau ~ &quot;=&quot; ~ gamma^2 ~ h[M]^2/h[Y]^2 ~ &quot;)&quot;)) +
+    ylab(&quot;Percent Significant&quot;) +
+    #theme_bw() +
+    ggtitle(&quot;Power&quot;) +
+    theme_bw() + 
+    theme(legend.title = element_blank(),
+          strip.text = element_text(size=14),
+          axis.title = element_text(size=16),
+          legend.text = element_text(size=12),
+          plot.title = element_text(size=20),
+          legend.position = &quot;bottom&quot;) +
+    guides(color=guide_legend(nrow=1),
+           linetype=guide_legend(nrow=1),
+           shape=guide_legend(nrow=1) )  +
+    facet_wrap(~n1*n2, nrow=1)
 pwr</code></pre>
-<p><img src="figure/simulations.Rmd/plot_power-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_power-1">
-Past versions of plot_power-1.png
-</button>
-</p>
-<div id="fig-plot_power-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/plot_power-1.png" target="_blank">b115414</a>
-</td>
-<td>
-Jean Morrison
-</td>
-<td>
-2019-07-25
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>CAUSE has lower power than the other methods except when the power for trait <span class="math inline">\(M\)</span> is low and the power for trait <span class="math inline">\(Y\)</span> is high. This is expected since CAUSE uses a more stringent criterion to conclude that the data are consistent with a causal effect. It is able to achieve better power when <span class="math inline">\(M\)</span> is under-powered and <span class="math inline">\(Y\)</span> is well powered because it uses all variants genome-wide rather than only those that are highly significant for trait <span class="math inline">\(M\)</span>. This is an important setting because it may be applicable to scenarios when <span class="math inline">\(M\)</span> is a biomarker or molecular trait and <span class="math inline">\(Y\)</span> is a complex triat.</p>
-</div>
+<p><img src="figure/simulations.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>CAUSE has lower power than the other methods, except the weighted mode and Egger regression. When the power for trait <span class="math inline">\(M\)</span> is low and the power for trait <span class="math inline">\(Y\)</span> is high, CAUSE has better power for large causal effects. This is expected since CAUSE uses a more stringent criterion to conclude that the data are consistent with a causal effect. It is able to achieve better power when <span class="math inline">\(M\)</span> is under-powered and <span class="math inline">\(Y\)</span> is well powered because it uses all variants genome-wide rather than only those that are highly significant for trait <span class="math inline">\(M\)</span>. This is an important setting because it may be applicable to scenarios when <span class="math inline">\(M\)</span> is a biomarker or molecular trait and <span class="math inline">\(Y\)</span> is a complex triat.</p>
 <div id="false-positives" class="section level3">
 <h3>False Positives</h3>
 <p>Next we plot false positives. Our simulations include two values of <span class="math inline">\(\eta\)</span> (<span class="math inline">\(\sqrt{0.05}\)</span> and <span class="math inline">\(\sqrt{0.02}\)</span>). Although we only had space to present one set of results in the paper, we will make plots for both here. We plot the proportion of <span class="math inline">\(M\)</span> effect variants that display correlated pleiotropy, <span class="math inline">\(q\)</span>, on the horizontal axis and the number of discoveries on the vertical axis. The bottom row of plots are for the larger value of <span class="math inline">\(\eta\)</span> and are the ones shown in the paper. For convenience, in extracting results, we copy the results for <span class="math inline">\(q=0\)</span>.</p>
-<pre class="r"><code>z1 &lt;-  filter(res, omega == 0 &amp; tau == 0 &amp; q == 0) %&gt;% mutate(omega = 0.05)
-z2 &lt;-  filter(res, omega == 0 &amp; tau == 0 &amp; q == 0) %&gt;% mutate(omega = 0.02)
-res2 &lt;- bind_rows(res, z1, z2) %&gt;%
+<pre class="r"><code>z1 &lt;-  filter(summ_fp, omega == 0 &amp; tau == 0 &amp; q == 0) %&gt;% mutate(omega = 0.05)
+z2 &lt;-  filter(summ_fp, omega == 0 &amp; tau == 0 &amp; q == 0) %&gt;% mutate(omega = 0.02)
+summ_fp_copy &lt;- bind_rows(summ_fp, z1, z2) %&gt;%
         filter(!(q == 0 &amp; omega == 0 &amp; tau == 0))</code></pre>
-<pre class="r"><code>fp &lt;- res2 %&gt;%
-      filter(tau == 0) %&gt;%
-      ggplot(.) +
-        geom_line(aes(x=q, y=n_sig/100, color=label)) +
-        geom_point(aes(x=q, y=n_sig/100, color=label, shape=label)) +
-        geom_hline(yintercept=0.05, linetype=2) +
-        scale_color_manual(values=cols) +
-        scale_shape_manual(values= c(16, 3, 4, 0, 2, 6:8)) +
-        geom_hline(yintercept=0.05, linetype=2) +
-        xlab(&quot;Proportion of variants acting through U (q)&quot;) +
-        ylab(&quot;Percent Significant&quot;) +
-        theme_bw() +
-        theme(legend.title = element_blank(),
-            strip.text = element_text(size=14),
-            axis.title = element_text(size=16),
-            legend.text = element_text(size=12),
-            legend.position = &quot;bottom&quot;) +
-        guides(color=guide_legend(nrow=1),
-             linetype=guide_legend(nrow=1),
-             shape=guide_legend(nrow=1) )  +
-        facet_wrap(~omega*n1*n2, nrow=2, labeller=label_parsed)
-
+<pre class="r"><code>fp &lt;- summ_fp_copy %&gt;%
+    filter(tau == 0) %&gt;% # &amp; omega == input$roc_effect) %&gt;%
+    filter(analysis %in% methods) %&gt;%
+    mutate(n1 = as.character(n1),
+           n1 = recode(n1, &quot;12000&quot; = &quot;M low power&quot;, 
+                       &quot;40000&quot; = &quot;M high power&quot;), 
+           n2 = as.character(n2),
+           n2 = recode(n2, &quot;12000&quot; = &quot;Y low power&quot;, 
+                       &quot;40000&quot; = &quot;Y high power&quot;),
+           omega = recode(omega, `0.02` = &quot;Weak shared factor effect&quot;, `0.05` = &quot;Strong shared factor effect&quot;),
+           omega = factor(omega, levels = c(&quot;Weak shared factor effect&quot;, &quot;Strong shared factor effect&quot;)),
+           analysis = factor(analysis, levels = methods),
+           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;, causeeqg_10 = &quot;CAUSE-eqg&quot;,
+                             cause_fixedest_10 = &quot;CAUSE-fe&quot;, cause_fixedoracle_10 = &quot;CAUSE-fo&quot;,
+                             egger_MR = &quot;Egger Regression&quot;, 
+                             ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                             mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;)) %&gt;%
+    ggplot(.) + 
+      geom_line(aes(x=q, y=n_sig/100, color=analysis)) + 
+      geom_point(aes(x=q, y=n_sig/100, color=analysis, shape=analysis), size=3) + 
+      geom_hline(yintercept=as.numeric(p_thresh), linetype=2) + 
+      scale_color_manual(values=cols) +
+      scale_shape_manual(values= shp) +
+      scale_y_continuous(limits=c(0, 1)) + 
+      geom_hline(yintercept=0.05, linetype=2) + 
+      xlab(&quot;Proportion of variants acting through U (q)&quot;) + 
+      ylab(&quot;Percent Significant&quot;) + 
+      ggtitle(&quot;False Positive Rate&quot;) +
+      theme_bw() + 
+      theme(legend.title = element_blank(), 
+          strip.text = element_text(size=14), 
+          axis.title = element_text(size=16), 
+          legend.text = element_text(size=12), 
+          plot.title = element_text(size=20),
+          legend.position = &quot;bottom&quot;) + 
+      guides(color=guide_legend(nrow=1), 
+           linetype=guide_legend(nrow=1),
+           shape=guide_legend(nrow=1) )  + 
+      facet_wrap(~omega*n1*n2, nrow=2)
 fp</code></pre>
 <p><img src="figure/simulations.Rmd/plot_fp-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1256,254 +1229,268 @@ Date
 Jean Morrison
 </td>
 <td>
-2019-07-25
+2019-07-24
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>In all cases CAUSE has a lower false positive rate than alternative methods. The false positive rate increases for large values of <span class="math inline">\(q\)</span> and is worse when the effect of the shared factor is stronger.</p>
+<p>In all cases CAUSE has a lower false positive rate than alternative methods except the weighted mode and Egger regression. The false positive rate increases for large values of <span class="math inline">\(q\)</span> and is worse when the effect of the shared factor is stronger.</p>
 </div>
 <div id="roc-curves" class="section level3">
 <h3>ROC Curves</h3>
-<p>We use ROC curves to evaluate how well each method is able to distinguish simulations with a causal effect of size <span class="math inline">\(\gamma = \sqrt{0.05}\)</span> from simulations with a shared factor with an equal effect acconting for 30% of the trait <span class="math inline">\(M\)</span> vairants. Both of these parameters can be modified. The first step is to combine the CAUSE and alternative MR results into a single data frame</p>
-<pre class="r"><code>x1 &lt;- causedf %&gt;%
-      mutate(analysis = &quot;cause&quot;, stat = -log10(cause.p)) %&gt;%
-      select(tag, q, omega, tau, n1, n2, analysis, stat)
+<p>We use ROC curves to evaluate how well each method is able to distinguish simulations with a causal effect of size <span class="math inline">\(\gamma = \sqrt{0.05}\)</span> from simulations with a shared factor with an equal effect acconting for 30% of the trait <span class="math inline">\(M\)</span> vairants. Both of these parameters can be modified. Processing hte data to create the ROC curves is a bit complicated. We also add in LCV for these compairsons.</p>
+<pre class="r"><code>q = 0.3 #Can modify to 0, 0.1, 0.2, 0.4 or 0.5 to see alternative results
 
-x2 &lt;- mrdf %&gt;%
-      mutate(stat = -log10(mr.p)) %&gt;%
-      rename(analysis = mr) %&gt;%
-      select(tag, q, omega, tau, n1, n2, analysis, stat)
+roc_effect = 0.05 # Also try 0.02
 
-full_results &lt;- bind_rows(x1, x2)
+my_q &lt;-q
+if(my_q == 0){
+    eff2 &lt;- 0
+}else{
+    eff2 &lt;- roc_effect
+}
 
-full_results &lt;- full_results %&gt;% 
-                mutate(label = fct_recode(analysis, &quot;CAUSE&quot;=&quot;cause&quot;,
-                                     &quot;Egger&quot; = &quot;egger&quot;, &quot;GSMR&quot;=&quot;gsmr&quot;,
-                                     &quot;IVW&quot;=&quot;ivw&quot;,
-                                     &quot;MR-PRESSO&quot;=&quot;mrp&quot;, &quot;Wtd. Median&quot; = &quot;wm&quot;))</code></pre>
-<p>Next we use the <code>pROC</code> package.</p>
-<pre class="r"><code>eff &lt;- 0.05
-my_q &lt;- 0.3
+methods =c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                                &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;, &quot;lcv_mean&quot;)
+shp &lt;- c(16, 3, 4, 15, 17, 25, 23, 8)[1:length(methods)]
+ix &lt;- match(methods,c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                          &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;, &quot;lcv_mean&quot;) )
+cols &lt;- wong_colors[ix]
+  
+
+res_l &lt;- list(res_fp, res_pwr)
+cdf &lt;- purrr::map_df(res_l, function(r){r$cause})
+ldf &lt;- purrr::map_df(res_l, function(r){r$lcv})
+mdf &lt;- purrr::map_df(res_l, function(r){r$mr})
+
+#Combined data 
+dat &lt;- roc_data(cdf, ldf, mdf)
+head(dat)</code></pre>
+<pre><code>  simulate.output.file   q omega tau    n1    n2  analysis         stat
+1  simulate/simulate_1 0.1  0.02   0 12000 12000  cause_10 7.459915e-01
+2  simulate/simulate_1 0.1  0.02   0 12000 12000 cause_100 7.730339e-01
+3  simulate/simulate_1 0.1  0.02   0 12000 12000   cause_2 6.097030e-01
+4  simulate/simulate_2 0.2  0.02   0 12000 12000  cause_10 6.529461e-13
+5  simulate/simulate_2 0.2  0.02   0 12000 12000 cause_100 0.000000e+00
+6  simulate/simulate_2 0.2  0.02   0 12000 12000   cause_2 0.000000e+00</code></pre>
+<pre class="r"><code>#Combined summary for adding dots to graph
+res &lt;- summarize_dsc_results(cdf, ldf, mdf, 
+                             p_thresh=p_thresh, gcp_mean_thresh=gcp_thresh)</code></pre>
+<pre><code>Adding missing grouping variables: `cause.qbeta`</code></pre>
+<pre class="r"><code>pw &lt;- filter(res, tau == roc_effect ) %&gt;% ungroup()
+  f &lt;- filter(res, omega == eff2 &amp; q == my_q &amp; tau ==0) %&gt;% ungroup()
+  df &lt;- select(pw, analysis, n_sig, n1, n2) %&gt;% 
+    rename(power = n_sig) %&gt;% 
+    full_join(., f, c(&quot;analysis&quot;, &quot;n1&quot;, &quot;n2&quot;)) %&gt;% 
+    rename(fp = n_sig) %&gt;% 
+    select(analysis, power, fp, n1, n2) %&gt;%
+    filter(analysis %in% methods) %&gt;%
+    rename(method=analysis) %&gt;%
+    mutate(n1 = as.character(n1),
+           n1 = recode(n1, &quot;12000&quot; = &quot;M low power&quot;, 
+                       &quot;40000&quot; = &quot;M high power&quot;), 
+           n2 = as.character(n2),
+           n2 = recode(n2, &quot;12000&quot; = &quot;Y low power&quot;, 
+                       &quot;40000&quot; = &quot;Y high power&quot;),
+           method = factor(method, levels = methods),
+           method = recode(method, cause_10 = &quot;CAUSE&quot;, egger_MR = &quot;Egger Regression&quot;, 
+                           ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                           mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;,
+                           lcv_mean = &quot;LCV GCP&quot;)) 
+  
+  
+  
 n1s &lt;- c(12000, 12000, 40000, 40000)
 n2s &lt;- c(12000, 40000, 12000, 40000)
 
-methods &lt;- with(full_results, unique(label)) %&gt;%
-            as.vector(.)
-
-cc &lt;- as.character(jcolors(&quot;default&quot;))
-cols &lt;- c(cc[3], cc[1:2], cc[4:5],  &quot;#D590DA&quot;)
-
-
-roc_df &lt;-lapply(seq_along(n1s), function(i){
-                    my_n1 &lt;- n1s[i]
-                    my_n2 &lt;- n2s[i]
-                    rocs &lt;- lapply(methods, function(m){
-                       #cat(m, &quot; &quot;)
-                       xx &lt;- filter(full_results, n1 == my_n1 &amp; n2 == my_n2 &amp; label == m &amp;
-                                 ( tau == eff | (omega == eff &amp; q == my_q &amp; tau == 0)))
-                       xx$stat[is.na(xx$stat)] &lt;- 0
-                       with(xx, roc(predictor = stat, response = tau !=0)) %&gt;%
-                            with(., data.frame(thresh = thresholds, spec = specificities,
-                                            sens = sensitivities, method = m,
-                                            n1 = my_n1, n2 = my_n2,
-                                            stringsAsFactors=F)) %&gt;% 
-                            return()
-
-                })
-                do.call(rbind, rocs)
-            })
-roc_df &lt;- do.call(rbind, roc_df) %&gt;%
-          mutate(n1 = factor(paste0(&quot;N[M]==&quot;, n1)),
-                 n2 = factor(paste0(&quot;N[Y]==&quot;, n2)))
-head(roc_df)</code></pre>
-<pre><code>        thresh spec sens method          n1          n2
-1         -Inf 0.00    1  CAUSE N[M]==12000 N[Y]==12000
-2 1.928655e-16 0.05    1  CAUSE N[M]==12000 N[Y]==12000
-3 5.472558e-15 0.06    1  CAUSE N[M]==12000 N[Y]==12000
-4 2.472668e-11 0.07    1  CAUSE N[M]==12000 N[Y]==12000
-5 5.650660e-11 0.08    1  CAUSE N[M]==12000 N[Y]==12000
-6 9.814568e-11 0.09    1  CAUSE N[M]==12000 N[Y]==12000</code></pre>
-<pre class="r"><code># A data frame with points to add to the curve
-pw &lt;- filter(res, tau == eff ) 
-f &lt;- filter(res, omega == eff &amp; q == my_q &amp; tau ==0)
-df &lt;- select(pw, label, n_sig, n1, n2) %&gt;%
-      rename(power = n_sig) %&gt;%
-      full_join(., f, c(&quot;label&quot;, &quot;n1&quot;, &quot;n2&quot;)) %&gt;%
-      rename(fp = n_sig) %&gt;%
-      select(label, power, fp, n1, n2) %&gt;%
-      filter(label %in% methods) %&gt;%
-      rename(method=label)
-
-## Plotting!
-plt &lt;- roc_df %&gt;% 
-       arrange(sens) %&gt;%
-       ggplot(.) +
-          geom_line(aes(x=1-spec, y=sens, col=method, group=method, linetype=method)) +
-          geom_point(aes(x=fp/100, y = power/100, col=method, shape=method), size =4 , data=df) +
-          scale_color_manual(values=cols) +
-          scale_linetype_manual(values = rep(1, 6)) +
-          scale_shape_manual(values = c(rep(16, 6))) +
-          xlab(&quot;1 - Specificity (False Positive Rate)&quot;) + ylab(&quot;Sensitivity (Power)&quot;) +
-          theme_bw() +
-          theme(legend.title = element_blank(),
-                strip.text = element_text(size=14),
-                axis.title = element_text(size=16),
-                legend.text = element_text(size=12),
-                legend.position = &quot;bottom&quot;) +
-          guides(color=guide_legend(nrow=1),
-                 linetype=guide_legend(nrow=1),
-                 shape=guide_legend(nrow=1))  +
-          facet_wrap(~n1*n2, nrow=2, labeller= label_parsed)
+#Data frame of points along ROC curves  
+roc_df &lt;-map_dfr(seq_along(n1s), function(i){ 
+    my_n1 &lt;- n1s[i] 
+    my_n2 &lt;- n2s[i]
+    rocs &lt;- map_dfr(methods, function(m){
+      cat(m, &quot; &quot;)
+      xx &lt;- filter(dat, n1 == my_n1 &amp; n2 == my_n2 &amp; analysis == m &amp; 
+                     ( tau == roc_effect | (omega == eff2 &amp; q == my_q &amp; tau == 0))) 
+      xx$stat[is.na(xx$stat)] &lt;- 0
+      with(xx, roc(predictor = stat, response = tau !=0, 
+                   levels=c(FALSE, TRUE), direction=&quot;&lt;&quot;)) %&gt;% 
+        with(., data.frame(thresh = thresholds, spec = specificities, 
+                           sens = sensitivities, method = m, 
+                           n1 = my_n1, n2 = my_n2, auc=rep(auc, length(thresholds)),
+                           stringsAsFactors=F)) %&gt;% return()
+      
+    })
+  })%&gt;%   
+  mutate(n1 = recode(n1, `12000` = &quot;M low power&quot;, 
+                       `40000` = &quot;M high power&quot;), 
+           n2 = recode(n2, `12000` = &quot;Y low power&quot;, 
+                       `40000` = &quot;Y high power&quot;), 
+           n1 = factor(n1, levels=c(&quot;M low power&quot;, &quot;M high power&quot;)),
+           n2 = factor(n2, levels=c(&quot;Y low power&quot;, &quot;Y high power&quot;)))</code></pre>
+<pre><code>cause_10  ivw_MR  egger_MR  gsmr  wm_MR  mrp  mbe_MR_1  lcv_mean  cause_10  ivw_MR  egger_MR  gsmr  wm_MR  mrp  mbe_MR_1  lcv_mean  cause_10  ivw_MR  egger_MR  gsmr  wm_MR  mrp  mbe_MR_1  lcv_mean  cause_10  ivw_MR  egger_MR  gsmr  wm_MR  mrp  mbe_MR_1  lcv_mean  </code></pre>
+<pre class="r"><code>#Plot!  
+plt &lt;- roc_df %&gt;% arrange(sens) %&gt;%
+          mutate(
+           method = factor(method, levels = methods),
+           method = recode(method, cause_10 = &quot;CAUSE&quot;, egger_MR = &quot;Egger Regression&quot;, 
+                           ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                           mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;,
+                           lcv_mean = &quot;LCV GCP&quot;))  %&gt;%
+    ggplot(.) + 
+    geom_line(aes(x=1-spec, y=sens, col=method, group=method)) + 
+    geom_point(aes(x=fp/100, y = power/100, col=method, shape=method, fill = method), size =3 , data=df) + 
+    scale_color_manual(values=cols) + 
+    scale_fill_manual(values=cols) + 
+    scale_shape_manual(values = shp) + 
+    xlab(&quot;1-Specificity (False Positive Rate)&quot;) + ylab(&quot;Sensitivity (Power)&quot;) + 
+    ggtitle(&quot;False Positive Rate vs Power&quot;) +
+    theme_bw() + 
+    theme(legend.title = element_blank(), 
+          strip.text = element_text(size=14), 
+          axis.title = element_text(size=16), 
+          plot.title = element_text(size=20),
+          legend.text = element_text(size=12), 
+          legend.position = &quot;bottom&quot;) + 
+    guides(color=guide_legend(nrow=1), 
+           linetype=guide_legend(nrow=1),
+           shape=guide_legend(nrow=1) 
+    )  + 
+    facet_wrap(~n1*n2, ncol=4)
 plt</code></pre>
-<p><img src="figure/simulations.Rmd/roc_curves-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-roc_curves-1">
-Past versions of roc_curves-1.png
-</button>
-</p>
-<div id="fig-roc_curves-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/roc_curves-1.png" target="_blank">b115414</a>
-</td>
-<td>
-Jean Morrison
-</td>
-<td>
-2019-07-25
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/simulations.Rmd/roc-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>  auc_tab &lt;- filter(roc_df, thresh==-Inf) %&gt;%
+      select(-thresh, -spec, -sens) %&gt;%
+      mutate(q=q)
+  auc_tab &lt;- auc_tab %&gt;%
+    mutate(method = recode(method, cause_10 = &quot;CAUSE&quot;, egger_MR = &quot;Egger Regression&quot;, 
+                           ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                           mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;,
+                           lcv_mean = &quot;LCV GCP&quot;),
+      class = case_when(n1==&quot;M low power&quot; &amp; n2==&quot;Y low power&quot; ~ &quot;LL&quot;, 
+                             n1==&quot;M low power&quot; &amp; n2==&quot;Y high power&quot; ~ &quot;LH&quot;, 
+                             n1==&quot;M high power&quot; &amp; n2==&quot;Y low power&quot; ~ &quot;HL&quot;, 
+                             n1==&quot;M high power&quot; &amp; n2==&quot;Y high power&quot; ~ &quot;HH&quot;
+                             )) %&gt;%
+    select(-n1, -n2, -q) %&gt;%
+    spread(class, auc) %&gt;%
+    mutate(q = q)
+ 
+auc_tab</code></pre>
+<pre><code>            method     HH     HL     LH     LL   q
+1            CAUSE 1.0000 0.9970 0.9998 0.9925 0.3
+2 Egger Regression 0.9653 0.8094 0.5674 0.5470 0.3
+3             GSMR 1.0000 1.0000 0.8628 0.7849 0.3
+4   IVW Regression 1.0000 1.0000 0.9579 0.8636 0.3
+5          LCV GCP 0.9795 0.9862 0.9777 0.9601 0.3
+6        MR-PRESSO 1.0000 1.0000 0.9216 0.8240 0.3
+7  Weighted Median 1.0000 0.9993 0.9174 0.8121 0.3
+8    Weighted Mode 0.9976 0.9259 0.8731 0.7167 0.3</code></pre>
 </div>
-</div>
-</div>
-</div>
-<div id="prior-robustness-results" class="section level2">
-<h2>Prior robustness results</h2>
-<p>The <code>sigma_g</code> anlaysis is intended to evaluate how sensitive CAUSE is to changes in the prior on <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\eta\)</span>. These parameters have the same <span class="math inline">\(N(0, \sigma_{\gamma, \eta})\)</span> prior distribution. By default, <span class="math inline">\(\sigma_{\gamma \eta}\)</span> is chosen guided by the data. These results dmeonstrate that, within a wide range, CAUSE is insensitive to the value of <span class="math inline">\(\sigma_{\gamma \eta}\)</span>.</p>
-<p>The R script <code>extract_sigma_g.R</code> will use <code>dscrutils</code> to extract simulation results and store them in a data frame. Run it at the command line with</p>
-<pre><code>Rscript extract_sigma_g.R</code></pre>
-<p>or from inside an R session using <code>source</code>.</p>
-<p>This code will append the date to the file it saves so it won’t save over the results downloaded by <code>setup_sims()</code>. If you want to use your own data frame, change the file name in the commands below.</p>
-<pre class="r"><code>causedf &lt;- readRDS(&quot;sim_results/sg_causedf.RDS&quot;)
-head(causedf)</code></pre>
-<pre><code>  DSC simulate.output.file  tau     gamma q omega eta   h1   h2    n1
-1   1  simulate/simulate_1 0.00 0.0000000 0     0   0 0.25 0.25 12000
-2   1  simulate/simulate_1 0.00 0.0000000 0     0   0 0.25 0.25 12000
-3   1  simulate/simulate_1 0.00 0.0000000 0     0   0 0.25 0.25 12000
-4   1  simulate/simulate_2 0.05 0.2236068 0     0   0 0.25 0.25 12000
-5   1  simulate/simulate_2 0.05 0.2236068 0     0   0 0.25 0.25 12000
-6   1  simulate/simulate_2 0.05 0.2236068 0     0   0 0.25 0.25 12000
-     n2 neffect1 neffect2 lcv_q1 lcv_q2 gcp m_sig     params
-1 12000     1000     1000      0      0   0    12    (0,0,0)
-2 12000     1000     1000      0      0   0    12    (0,0,0)
-3 12000     1000     1000      0      0   0    12    (0,0,0)
-4 12000     1000     1000      1      0   1     9 (0.05,0,0)
-5 12000     1000     1000      1      0   1     9 (0.05,0,0)
-6 12000     1000     1000      1      0   1     9 (0.05,0,0)
-                                cause_sigma_g.output.file quant   sigma_g
-1 cause_sigma_g/simulate_1_cause_params_1_cause_sigma_g_1  0.51 8.9197112
-2 cause_sigma_g/simulate_1_cause_params_1_cause_sigma_g_2  0.65 0.5803009
-3 cause_sigma_g/simulate_1_cause_params_1_cause_sigma_g_3  0.80 0.2656855
-4 cause_sigma_g/simulate_2_cause_params_1_cause_sigma_g_1  0.51 8.9197112
-5 cause_sigma_g/simulate_2_cause_params_1_cause_sigma_g_2  0.65 0.5803009
-6 cause_sigma_g/simulate_2_cause_params_1_cause_sigma_g_3  0.80 0.2656855
-           z eta_sharing  q_sharing   eta_causal   q_causal gamma_causal
-1 -0.5461963 -0.08614480 0.03227185  0.028694201 0.03801121  -0.03322635
-2 -0.4892988 -0.07568029 0.04260754  0.018572988 0.04527922  -0.03298326
-3 -0.4297365 -0.05659584 0.05292346  0.007849239 0.05476068  -0.03219930
-4  1.4732631  0.27284495 0.16470454 -0.007890599 0.03751927   0.11590717
-5  1.6179259  0.26001457 0.17152739 -0.003179130 0.04402581   0.11544675
-6  1.5826705  0.22719281 0.18457916  0.002465637 0.05338622   0.11385987
-           p
-1 0.70753449
-2 0.68768490
-3 0.66630635
-4 0.07034006
-5 0.05283928
-6 0.05674829</code></pre>
-<pre class="r"><code>with(causedf, table(sigma_g))</code></pre>
-<pre><code>sigma_g
-0.265685475321082 0.580300937746447  8.91971124189946 
-             1200              1200              1200 </code></pre>
-<pre class="r"><code>with(causedf, table(params))</code></pre>
-<pre><code>params
-     (0,0,0) (0,0.05,0.3)   (0.05,0,0) 
-        1200         1200         1200 </code></pre>
-<p>The only columns that we have not seen previously are <code>quant</code> and <code>sigma_g</code>. <code>sigma_g</code> gives the value of <span class="math inline">\(\sigma_{\gamma \eta}\)</span> used in each simulation. These are large, medium and small values which are chosen so that <span class="math inline">\(\sqrt{0.05}\)</span> is the 51st, 65th and 80th quantile (<code>quant</code>) of the <span class="math inline">\(N(0, \sigma_{\gamma \eta})\)</span> distribution respectively. In this data frame we have ommited the <code>cause.</code> prefix on columns because CAUSE is the only method we are evaluating.</p>
-<p>There are three sets of parameters used in simulations. Below we calculate the correlation in <span class="math inline">\(p\)</span>-value and posterior median for each parameter in each setting across the three values of <span class="math inline">\(\sigma_{\gamma \eta}\)</span>. The following code only reports the minimum correlation for each parameter-simulation setting combination and the correlation between the medium and small values of <span class="math inline">\(\sigma_{\gamma \eta}\)</span>.</p>
-<pre class="r"><code>vars &lt;- c(&quot;z&quot;, &quot;p&quot;, &quot;eta_sharing&quot;, &quot;q_sharing&quot;,
-          &quot;eta_causal&quot;, &quot;q_causal&quot;, &quot;gamma_causal&quot;)
+<div id="reverse-direction-effects" class="section level3">
+<h3>Reverse direction effects</h3>
+<p>These results show the performance of each method when the data are simulated from the model <span class="math inline">\(Y \rightarrow M\)</span> but we test for an effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span>.</p>
+<pre class="r"><code>res_rev &lt;- readRDS(&quot;sim_results/res_rev.RDS&quot;)
+summ_rev &lt;- with(res_rev, summarize_dsc_results(cause, lcv, mr))</code></pre>
+<pre><code>Adding missing grouping variables: `cause.qbeta`</code></pre>
+<pre class="r"><code>methods =c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+            &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;)
+shp &lt;- c(16, 3, 4, 15, 17, 25, 23, 8)[1:length(methods)]
+ix &lt;- match(methods,c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                          &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;, &quot;lcv_mean&quot;) )
+cols &lt;- wong_colors[ix]
 
-min_cor &lt;- expand.grid(variable = vars,
-                       params = unique(causedf$params), stringsAsFactors=F)
-min_cor$min_cor &lt;- NA
-min_cor$cor_med_small &lt;- NA
-for(i in seq(nrow(min_cor))){
-    v &lt;- min_cor$variable[i]
-    X &lt;- select(causedf, simulate.output.file, params, quant, one_of(v)) %&gt;%
-         spread(quant, get(v))  %&gt;%
-         filter(params==min_cor$params[i]) %&gt;%
-         select(one_of(c(&quot;0.51&quot;, &quot;0.65&quot;, &quot;0.8&quot;)))
+rev &lt;- summ_rev %&gt;%
+    filter(analysis %in% methods) %&gt;%
+    mutate(analysis = factor(analysis, levels = c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                                                  &quot;mbe_MR_1&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;)),
+           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;, egger_MR = &quot;Egger Regression&quot;, 
+                             ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                             mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;)) %&gt;%
+    ungroup() %&gt;%
+    ggplot(.) +
+    geom_line(aes(x=neffect1, y=n_sig/100, color=analysis)) +
+    geom_point(aes(x=neffect1, y=n_sig/100, color=analysis, shape=analysis), size=3) +
+    scale_color_manual(values=cols) +
+    scale_shape_manual(values= shp) +
+    scale_y_continuous(limits=c(0, 1)) + 
+    scale_x_continuous(breaks=c(250, 500, 1000)) + 
+    geom_hline(yintercept=as.numeric(p_thresh), linetype=2) +
+    xlab(expression(&quot;Number of M effect variants independent of Y&quot;)) +
+    ylab(&quot;Percent Significant&quot;) +
+    theme_bw() +
+    ggtitle(&quot;Robustness to Reverse Effects&quot;) +
+    theme(legend.title = element_blank(),
+          strip.text = element_text(size=14),
+          axis.title = element_text(size=16),
+          legend.text = element_text(size=12),
+          legend.position = &quot;bottom&quot;, 
+          plot.title = element_text(size=20)) +
+    guides(color=guide_legend(nrow=2),
+           linetype=guide_legend(nrow=2),
+           shape=guide_legend(nrow=2) ) 
+ 
+rev</code></pre>
+<p><img src="figure/simulations.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="causal-effect-and-shared-factor" class="section level3">
+<h3>Causal effect and shared factor</h3>
+<p>These are the results in Section SN6.3</p>
+<pre class="r"><code>methods =c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+            &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;)
+shp &lt;- c(16, 3, 4, 15, 17, 25, 23, 8)[1:length(methods)]
+ix &lt;- match(methods,c(&quot;cause_10&quot;, &quot;ivw_MR&quot;, &quot;egger_MR&quot;, 
+                          &quot;gsmr&quot;, &quot;wm_MR&quot;, &quot;mrp&quot;, &quot;mbe_MR_1&quot;, &quot;lcv_mean&quot;) )
+cols &lt;- wong_colors[ix]
 
-    min_cor$min_cor[i] &lt;- min(cor(X))
-    min_cor$cor_med_small[i] &lt;- cor(X[,&quot;0.65&quot;], X[,&quot;0.8&quot;])
-
-}
-min_cor</code></pre>
-<pre><code>       variable       params   min_cor cor_med_small
-1             z      (0,0,0) 0.9413760     0.9488980
-2             p      (0,0,0) 0.9916459     0.9939591
-3   eta_sharing      (0,0,0) 0.3500210     0.9717212
-4     q_sharing      (0,0,0) 0.8413687     0.9872975
-5    eta_causal      (0,0,0) 0.3603472     0.9325197
-6      q_causal      (0,0,0) 0.7260232     0.9658187
-7  gamma_causal      (0,0,0) 0.9989405     0.9994984
-8             z   (0.05,0,0) 0.9979358     0.9982020
-9             p   (0.05,0,0) 0.9964440     0.9974132
-10  eta_sharing   (0.05,0,0) 0.6521383     0.8758111
-11    q_sharing   (0.05,0,0) 0.9996888     0.9998863
-12   eta_causal   (0.05,0,0) 0.2743656     0.9163213
-13     q_causal   (0.05,0,0) 0.6408410     0.9771773
-14 gamma_causal   (0.05,0,0) 0.9994321     0.9997125
-15            z (0,0.05,0.3) 0.9659368     0.9721875
-16            p (0,0.05,0.3) 0.9971477     0.9976421
-17  eta_sharing (0,0.05,0.3) 0.6150360     0.9564461
-18    q_sharing (0,0.05,0.3) 0.9949857     0.9987768
-19   eta_causal (0,0.05,0.3) 0.6098137     0.9237515
-20     q_causal (0,0.05,0.3) 0.7366983     0.9726195
-21 gamma_causal (0,0.05,0.3) 0.9987725     0.9994594</code></pre>
-<p>This code is also contained in <code>summarize_sigma_g.R</code>.</p>
+res_mix &lt;- readRDS(&quot;sim_results/res_mix1.RDS&quot;)
+summ_mix &lt;- with(res_mix, summarize_dsc_results(cause, lcv, mr, direction = &quot;pos&quot;))</code></pre>
+<pre><code>Adding missing grouping variables: `cause.qbeta`</code></pre>
+<pre class="r"><code>plt_mix &lt;- summ_mix %&gt;%
+    filter(analysis %in% methods) %&gt;%
+    mutate(analysis = factor(analysis, levels = methods),
+           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;, egger_MR = &quot;Egger Regression&quot;, 
+                             ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
+                             mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr=&quot;GSMR&quot;), 
+           n1 = as.character(n1),
+           n1 = recode(n1, &quot;12000&quot; = &quot;M low power&quot;, 
+                       &quot;40000&quot; = &quot;M high power&quot;), 
+           n2 = as.character(n2),
+           n2 = recode(n2, &quot;12000&quot; = &quot;Y low power&quot;, 
+                       &quot;40000&quot; = &quot;Y high power&quot;),
+           q = recode(q, `0.1` = &quot;q = 0.1&quot;, `0.3` = &quot;q = 0.3&quot;)) %&gt;%
+    ungroup() %&gt;%
+    ggplot(.) +
+    geom_line(aes(x=eta, y=n_sig/100, color=analysis)) +
+    geom_point(aes(x=eta, y=n_sig/100, group = analysis, color=analysis, shape=analysis)) +
+    scale_color_manual(values=cols) +
+    scale_shape_manual(values= shp) +
+    xlab(expression(eta)) +
+    ylab(&quot;Percent Significant&quot;) +
+    theme_bw() + 
+    theme(legend.title = element_blank(),
+          strip.text = element_text(size=14),
+          axis.title = element_text(size=16),
+          legend.text = element_text(size=12),
+          plot.title = element_text(size=16),
+          legend.position = &quot;bottom&quot;) +
+    guides(color=guide_legend(nrow=1),
+           linetype=guide_legend(nrow=1),
+           shape=guide_legend(nrow=1) )  +
+    facet_wrap(~q*n1*n2, nrow=2) 
+plt_mix</code></pre>
+<p><img src="figure/simulations.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="details" class="section level1">
+<div id="whats-in-the-dsc-files" class="section level1">
 <h1>What’s in the DSC Files?</h1>
-<p>We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. We will look at <code>false_positives.dsc</code> but <code>power.dsc</code> and <code>sigma_g.dsc</code> are similar.</p>
+<p>We will now go in detail through one of the DSC files so you can see what is happening and how to make changes to run your own experiments. The DSC files are all identical except for the first few module. <code>reverse.dsc</code> has an extra module that reverses the data (switching traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>).</p>
 <p>The DSC statement is at the top:</p>
 <pre><code>DSC:
     define:
-        mr: ivw, egger, mrp, wm, twas, wm, gsmr
-    run: simulate*gw_sig,
+      mr: ivw_MR, egger_MR, wm_MR, mbe_MR, mrp, gsmr
+    run: simulate*data_summ,
          simulate*LCV,
          simulate*mr,
          simulate*cause_params*cause
@@ -1542,8 +1529,8 @@ min_cor</code></pre>
 \]</span> and <code>omega</code> is the proportion of <span class="math inline">\(Y\)</span> heritability explained by <span class="math inline">\(U\)</span>, divided by <span class="math inline">\(q\)</span> and multiplied by the sign of <span class="math inline">\(\eta\)</span>. <span class="math display">\[
 \omega = sign(\eta)\frac{\eta^2 h^2_{M}}{h^{2}_{Y}}
 \]</span> This parameterization is sometimes more convenient for running simulations that using <span class="math inline">\(\eta\)</span> and <span class="math inline">\(\gamma\)</span>. However, the <code>sum_stats</code> function will accept either <code>omega</code> and <code>tau</code> arguments or <code>eta</code> and <code>gamma</code>. Note that here we have specified that the function can use 4 cores. This should match the <code>n_cpu</code> parameter in the <code>simulate</code> section of the config file. The <code>sum_stats</code> function generates data both with and without LD. In this file we only analyze the “with LD” data but we will describe how to make modifications to analyze both or only the “no LD” data.</p>
-<p>The <code>gw_sig</code> module is a helper module. This module computes the GCP (a parameter defined by LCV (O’Connor and Price 2019)) and computes the number of genome-wide significant variants. It also stores all the simulation parameters which makes it easier to extract them. Extracting parameters from the <code>simulate</code> module will require reading in the entire data set, objects created by the <code>gw_sig</code> module are smaller and faster to read.</p>
-<pre><code>gw_sig: R(library(causeSims);
+<p>The <code>data_summ</code> module is a helper module. This module computes the GCP (a parameter defined by LCV (O’Connor and Price 2019)) and computes the number of genome-wide significant variants. It also stores all the simulation parameters which makes it easier to extract them. Extracting parameters from the <code>simulate</code> module will require reading in the entire data set, objects created by the <code>data_summ</code> module are smaller and faster to read.</p>
+<pre><code>data_summ: R(library(causeSims);
            m_sig_nold &lt;- with($(dat), sum(p_value_nold &lt; thresh ));
            y_sig_nold &lt;- with($(dat), sum(2*pnorm(-abs(beta_hat_2_nold/seb2)) &lt; thresh ));
            m_sig &lt;- with($(dat), sum(p_value &lt; thresh &amp; ld_prune==TRUE));
@@ -1572,7 +1559,6 @@ min_cor</code></pre>
             q.2 &lt;- eta * sqrt(q) * sqrt(h1) / sqrt(h2);
             gcp = (log(q.2^2) - log(q.1^2)) / (log(q.2^2) + log(q.1^2));
           };
-          gcp_mom &lt;- gcp_moments($(dat), h1, h2)
           )
     thresh: 5e-8
     $m_sig: m_sig
@@ -1591,71 +1577,55 @@ min_cor</code></pre>
     $neffect2: as.numeric(params[&quot;neffect2&quot;])
     $lcv_q1: q.1
     $lcv_q2: q.2
-    $lcv_gcp: gcp
-    $lcv_gcp_mom: gcp_mom$gcp</code></pre>
+    $lcv_gcp: gcp</code></pre>
 </div>
 <div id="cause-modules" class="section level2">
 <h2>CAUSE Modules</h2>
 <p>We have divided CAUSE analysis into parameter estimation and model fitting steps. This makes it easier to experiment with changes only to the parameter estimation step.</p>
 <pre><code>cause_params: R(library(causeSims);
-                p1 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
+                p &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
                 )
     null_wt: 10
-    $cause_params_ld: p1
+    $cause_params_ld: p
 
 cause: R(library(causeSims);
          library(cause);
-         cause_res &lt;- cause_sims($(dat), $(cause_params_ld), no_ld = FALSE);
+         cause_res &lt;- cause_sims($(dat), $(cause_params_ld), no_ld = FALSE, 
+                                qalpha = 1, qbeta = qbeta);
          z &lt;- -1*summary(cause_res)$z;
          p &lt;- pnorm(-z);
-         quants &lt;- summary(cause_res)$quants)
+         qs &lt;- summary(cause_res)$quants)
+    qbeta: 10, 100, 2
     $cause_res: cause_res
     $sigma_g: cause_res$sigma_g
-    $eta_med_2: quants[[1]][1,2]
-    $q_med_2: quants[[1]][1,3]
-    $eta_med_3: quants[[2]][1,2]
-    $gamma_med_3: quants[[2]][1,1]
-    $q_med_3: quants[[2]][1,3]
     $z: z
-    $p: p</code></pre>
-<p>Both modules use wrapper functions from the <code>causeSims</code> package. These are very simple wrappers that make it easy to run CAUSE on the simulated data format. Note that here we use <code>no_ld = FALSE</code> in both modules. If you want to use the data that is simulated without LD instead you can change <code>no_ld = TRUE</code>. You could get results for both using the following set of modules.</p>
-<pre><code>cause_params: R(library(causeSims);
-                p1 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=FALSE);
-                p2 &lt;- cause_params_sims($(dat), null_wt = null_wt, no_ld=TRUE);
-                )
-    null_wt: 10
-    $cause_params_ld: p1
-    $cause_params_nold: p2
-
-cause: R(library(causeSims);
-         library(cause);
-         if(no_ld==FALSE){
-          cause_res &lt;- cause_sims($(dat), $(cause_params_ld), no_ld = no_ld);
-         else{
-          cause_res &lt;- cause_sims($(dat), $(cause_params_nold), no_ld = no_ld);
-         }
-         z &lt;- -1*summary(cause_res)$z;
-         p &lt;- pnorm(-z);
-         quants &lt;- summary(cause_res)$quants)
-    $no_ld: TRUE, FALSE
-    $cause_res: cause_res
-    $sigma_g: cause_res$sigma_g
-    $eta_med_2: quants[[1]][1,2]
-    $q_med_2: quants[[1]][1,3]
-    $eta_med_3: quants[[2]][1,2]
-    $gamma_med_3: quants[[2]][1,1]
-    $q_med_3: quants[[2]][1,3]
-    $z: z
-    $p: p</code></pre>
+    $p: p
+    $eta_2_upper: qs[[1]][3,2]
+    $q_2_upper: qs[[1]][3,3]
+    $eta_2_lower: qs[[1]][2,2]
+    $q_2_lower: qs[[1]][2,3]
+    $eta_2_med: qs[[1]][1,2]
+    $q_2_med: qs[[1]][1,3]
+    $eta_3_upper: qs[[2]][3,2]
+    $q_3_upper: qs[[2]][3,3]
+    $gamma_3_upper: qs[[2]][3,1]
+    $eta_3_lower: qs[[2]][2,2]
+    $q_3_lower: qs[[2]][2,3]
+    $gamma_3_lower: qs[[2]][2,1]
+    $eta_3_med: qs[[2]][1,2]
+    $q_3_med: qs[[2]][1,3]
+    $gamma_3_med: qs[[2]][1,1]</code></pre>
+<p>Both modules use wrapper functions from the <code>causeSims</code> package. These are very simple wrappers that make it easy to run CAUSE on the simulated data format. Note that here we use <code>no_ld = FALSE</code> in both modules. If you want to use the data that is simulated without LD instead you can change <code>no_ld = TRUE</code>.</p>
 </div>
 <div id="alternative-mr-modules" class="section level2">
 <h2>Alternative MR Modules</h2>
-<p>There are many modules for alternative MR methods. Modules for IVW regression, Egger regression, MR-PRESSO, and the weighted median method are very similar and rely on wrappers from <code>causeSims</code>. We can just look at one of these.</p>
-<pre><code>ivw: R(library(causeSims);
-       res &lt;- ivw($(dat), p_val_thresh=thresh, no_ld = no_ld);
+<p>There are several modules for alternative MR methods. Modules for IVW regression, Egger regression, MR-PRESSO, and the weighted median method are very similar and rely on wrappers from <code>causeSims</code>. We can just look at one of these.</p>
+<pre><code>ivw_MR: R(library(causeSims);
+       res &lt;- ivw_re_nonome_MR($(dat), p_val_thresh=thresh, no_ld = no_ld);
        )
     thresh: 5e-8
     no_ld: FALSE
+    $est: res$est
     $z: res$z
     $p: res$p</code></pre>
 <p>To run on the data without LD change the <code>no_ld</code> parameter to <code>no_ld: TRUE</code> or <code>no_ld: TRUE, FALSE</code> to run both.</p>
@@ -1674,7 +1644,7 @@ cause: R(library(causeSims);
     thresh: 5e-8
     $z: z
     $p: p
-    $est_gsmr: est
+    $est: est
     $gsmr: res</code></pre>
 <p>GSMR requires the LD structure and sometimes returns errors. In this case the <code>gsmr_sims</code> wrapper returns NULL and we set results to missing. If <code>no_ld = TRUE</code> the LD data in <code>evd_list</code> is simply ignored.</p>
 </div>
@@ -1702,9 +1672,9 @@ cause: R(library(causeSims);
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.1 (2019-07-05)
+<pre><code>R version 4.0.2 (2020-06-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.3 LTS
+Running under: Ubuntu 18.04.4 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1722,29 +1692,53 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] jcolors_0.0.4   pROC_1.15.3     gridExtra_2.3   forcats_0.4.0  
- [5] stringr_1.4.0   dplyr_0.8.3     purrr_0.3.2     readr_1.3.1    
- [9] tidyr_0.8.3     tibble_2.1.3    ggplot2_3.2.1   tidyverse_1.2.1
+[1] pROC_1.16.2     purrr_0.3.4     tidyr_1.1.0     ggplot2_3.3.2  
+[5] dplyr_1.0.0     causeSims_0.1.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.9             haven_2.1.1         
- [4] lattice_0.20-38      colorspace_1.4-1     generics_0.0.2      
- [7] vctrs_0.2.0          htmltools_0.3.6      yaml_2.2.0          
-[10] rlang_0.4.0          pillar_1.4.2         glue_1.3.1          
-[13] withr_2.1.2          modelr_0.1.5         readxl_1.3.1        
-[16] plyr_1.8.4           munsell_0.5.0        gtable_0.3.0        
-[19] workflowr_1.4.0.9000 cellranger_1.1.0     rvest_0.3.4         
-[22] evaluate_0.14        labeling_0.3         knitr_1.24          
-[25] broom_0.5.2          Rcpp_1.0.2           scales_1.0.0        
-[28] backports_1.1.4      jsonlite_1.6         fs_1.3.1            
-[31] hms_0.5.1            digest_0.6.20        stringi_1.4.3       
-[34] grid_3.6.1           rprojroot_1.3-2      cli_1.1.0           
-[37] tools_3.6.1          magrittr_1.5         lazyeval_0.2.2      
-[40] crayon_1.3.4         whisker_0.4          pkgconfig_2.0.2     
-[43] zeallot_0.1.0        xml2_1.2.2           lubridate_1.7.4     
-[46] assertthat_0.2.1     rmarkdown_1.15       httr_1.4.1          
-[49] rstudioapi_0.10      R6_2.4.0             nlme_3.1-141        
-[52] git2r_0.26.1         compiler_3.6.1      </code></pre>
+ [1] httr_1.4.1                   jsonlite_1.7.0              
+ [3] viridisLite_0.3.0            RcppParallel_5.0.2          
+ [5] assertthat_0.2.1             mixsqp_0.3-43               
+ [7] arrangements_1.1.8           yaml_2.2.1                  
+ [9] robustbase_0.93-6            globals_0.12.5              
+[11] numDeriv_2016.8-1.1          pillar_1.4.4                
+[13] backports_1.1.8              lattice_0.20-41             
+[15] glue_1.4.1                   digest_0.6.25               
+[17] promises_1.1.1               iterpc_0.4.2                
+[19] colorspace_1.4-1             MRPRESSO_1.0                
+[21] plyr_1.8.6                   htmltools_0.5.0             
+[23] httpuv_1.5.4                 Matrix_1.2-18               
+[25] pkgconfig_2.0.3              invgamma_1.1                
+[27] listenv_0.8.0                scales_1.1.1                
+[29] intervals_0.15.2             cause_1.0.0.0267            
+[31] whisker_0.4                  later_1.1.0.1               
+[33] git2r_0.27.1                 tibble_3.0.2                
+[35] MendelianRandomization_0.4.2 gmp_0.6-0                   
+[37] farver_2.0.3                 generics_0.0.2              
+[39] ellipsis_0.3.1               withr_2.2.0                 
+[41] furrr_0.1.0                  ashr_2.2-47                 
+[43] lazyeval_0.2.2               cli_2.0.2                   
+[45] magrittr_1.5                 crayon_1.3.4                
+[47] evaluate_0.14                fansi_0.4.1                 
+[49] fs_1.4.2                     future_1.18.0               
+[51] truncnorm_1.0-8              RcppZiggurat_0.1.5          
+[53] tools_4.0.2                  loo_2.3.0                   
+[55] data.table_1.12.8            hms_0.5.3                   
+[57] lifecycle_0.2.0              matrixStats_0.56.0          
+[59] stringr_1.4.0                plotly_4.9.2.1              
+[61] munsell_0.5.0                irlba_2.3.3                 
+[63] compiler_4.0.2               rlang_0.4.6                 
+[65] grid_4.0.2                   rstudioapi_0.11             
+[67] rjson_0.2.20                 htmlwidgets_1.5.1           
+[69] labeling_0.3                 rmarkdown_2.3               
+[71] gtable_0.3.0                 codetools_0.2-16            
+[73] R6_2.4.1                     gridExtra_2.3               
+[75] knitr_1.29                   utf8_1.1.4                  
+[77] rprojroot_1.3-2              readr_1.3.1                 
+[79] stringi_1.4.6                parallel_4.0.2              
+[81] SQUAREM_2020.3               Rcpp_1.0.5                  
+[83] vctrs_0.3.1                  DEoptimR_1.0-8              
+[85] tidyselect_1.1.0             xfun_0.15                   </code></pre>
 </div>
 </div>
 </div>
@@ -1761,6 +1755,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
@@ -1811,7 +1807,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
