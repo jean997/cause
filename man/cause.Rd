@@ -3,12 +3,20 @@
 \docType{package}
 \name{cause}
 \alias{cause}
-\alias{cause-package}
 \title{CAUSE}
 \usage{
-cause(X, param_ests, variants = X$snp, sigma_g, qalpha = 1,
-  qbeta = 10, max_q = 1, force = FALSE, n_start_gamma_eta = 21,
-  n_start_q = 11)
+cause(
+  X,
+  param_ests,
+  variants = X$snp,
+  sigma_g,
+  qalpha = 1,
+  qbeta = 10,
+  max_q = 1,
+  force = FALSE,
+  n_start_gamma_eta = 21,
+  n_start_q = 11
+)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}

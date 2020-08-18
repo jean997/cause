@@ -4,10 +4,15 @@
 \alias{cause_grid_adapt}
 \title{CAUSE posterior density estimation}
 \usage{
-cause_grid_adapt(X, param_ests, params = c("q", "gamma", "eta"),
-  priors = list(function(q) {     dbeta(q, 1, 10) }, function(b) {    
-  dnorm(b, 0, 0.6) }, function(b) {     dnorm(b, 0, 0.6) }),
-  n_start = c(10, 20, 20), max_post_per_bin = 0.001)
+cause_grid_adapt(
+  X,
+  param_ests,
+  params = c("q", "gamma", "eta"),
+  priors = list(function(q) {     dbeta(q, 1, 10) }, function(b) {     dnorm(b, 0, 0.6)
+    }, function(b) {     dnorm(b, 0, 0.6) }),
+  n_start = c(10, 20, 20),
+  max_post_per_bin = 0.001
+)
 }
 \arguments{
 \item{X}{An object of class cause_data}

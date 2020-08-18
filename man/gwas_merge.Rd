@@ -4,10 +4,17 @@
 \alias{gwas_merge}
 \title{Format data for CAUSE}
 \usage{
-gwas_merge(X1, X2, X1_formatted = FALSE, X2_formatted = FALSE,
-  snp_name_cols = c("snp", "snp"), beta_hat_cols = c("beta_hat",
-  "beta_hat"), se_cols = c("se", "se"), A1_cols = c("A1", "A1"),
-  A2_cols = c("A2", "A2"))
+gwas_merge(
+  X1,
+  X2,
+  X1_formatted = FALSE,
+  X2_formatted = FALSE,
+  snp_name_cols = c("snp", "snp"),
+  beta_hat_cols = c("beta_hat", "beta_hat"),
+  se_cols = c("se", "se"),
+  A1_cols = c("A1", "A1"),
+  A2_cols = c("A2", "A2")
+)
 }
 \arguments{
 \item{X1}{data.frame with data for GWAS 1}

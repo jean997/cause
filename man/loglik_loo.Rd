@@ -4,8 +4,19 @@
 \alias{loglik_loo}
 \title{Calculate likelihood matrix for LOO (SNPs by posterior samples)}
 \usage{
-loglik_loo(tg, tgp, tq, rho, tsigma1, tsigma2, tpi, tbeta_hat_1,
-  tbeta_hat_2, tseb1, tseb2)
+loglik_loo(
+  tg,
+  tgp,
+  tq,
+  rho,
+  tsigma1,
+  tsigma2,
+  tpi,
+  tbeta_hat_1,
+  tbeta_hat_2,
+  tseb1,
+  tseb2
+)
 }
 \value{
 A matrix that is p by L where p is the number of SNPs

@@ -4,10 +4,19 @@
 \alias{map_pi_rho_nonnull_fixed}
 \title{Estimate pi and mixture proportions under a specified model}
 \usage{
-map_pi_rho_nonnull_fixed(X, mix_grid, gamma, eta, q, rho_start = 0,
-  tol = 1e-05, n.iter = 20, null_wt = 10,
+map_pi_rho_nonnull_fixed(
+  X,
+  mix_grid,
+  gamma,
+  eta,
+  q,
+  rho_start = 0,
+  tol = 1e-05,
+  n.iter = 20,
+  null_wt = 10,
   z_prior_func = function(z) {     dnorm(z, 0, 0.5, log = TRUE) },
-  optmethod = c("mixSQP", "mixIP"))
+  optmethod = c("mixSQP", "mixIP")
+)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}

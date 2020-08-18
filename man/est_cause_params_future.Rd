@@ -4,9 +4,17 @@
 \alias{est_cause_params_future}
 \title{Estimate CAUSE Nuisance Parameters}
 \usage{
-est_cause_params_future(X, variants, sigma_g, qalpha = 1, qbeta = 10,
-  optmethod = c("mixSQP", "mixIP"), sigma_g_pval = 0.001,
-  null_wt = 10, max_candidates = Inf)
+est_cause_params_future(
+  X,
+  variants,
+  sigma_g,
+  qalpha = 1,
+  qbeta = 10,
+  optmethod = c("mixSQP", "mixIP"),
+  sigma_g_pval = 0.001,
+  null_wt = 10,
+  max_candidates = Inf
+)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}

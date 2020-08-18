@@ -4,14 +4,25 @@
 \alias{est_cause_params}
 \title{Estimate CAUSE Nuisance Parameters}
 \usage{
-est_cause_params(X, variants, optmethod = c("mixSQP", "mixIP"),
-  null_wt = 10, max_candidates = Inf, control = list())
+est_cause_params(
+  X,
+  variants,
+  optmethod = c("mixSQP", "mixIP"),
+  null_wt = 10,
+  max_candidates = Inf,
+  control = list()
+)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
 
 \item{variants}{A vector of variants to include. This list should be approximately LD
 pruned and include variants genome wide.}
+
+\item{max_candidates}{Maximum number of variance candidates for each trait. Maximum size of grid is
+max_candidates^2}
+
+\item{control}{control parameters to be passed to ashr. Primarily for development use, most users can leave this unaltered.}
 }
 \value{
 An object of class cause_params

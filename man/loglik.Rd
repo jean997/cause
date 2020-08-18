@@ -4,8 +4,19 @@
 \alias{loglik}
 \title{Calculate likelihood -- version 7}
 \usage{
-loglik(rho, g, gp, q, tsigma1, tsigma2, tpi, tbeta_hat_1, tbeta_hat_2,
-  tseb1, tseb2)
+loglik(
+  rho,
+  g,
+  gp,
+  q,
+  tsigma1,
+  tsigma2,
+  tpi,
+  tbeta_hat_1,
+  tbeta_hat_2,
+  tseb1,
+  tseb2
+)
 }
 \description{
 Calculate likelihood -- version 7

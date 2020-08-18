@@ -4,8 +4,18 @@
 \alias{loglik_mat}
 \title{Calculate likelihood matrix -- version 7}
 \usage{
-loglik_mat(rho, g, gp, q, tsigma1, tsigma2, tbeta_hat_1, tbeta_hat_2,
-  tseb1, tseb2)
+loglik_mat(
+  rho,
+  g,
+  gp,
+  q,
+  tsigma1,
+  tsigma2,
+  tbeta_hat_1,
+  tbeta_hat_2,
+  tseb1,
+  tseb2
+)
 }
 \value{
 A matrix that is p by K where p is the number of SNPs

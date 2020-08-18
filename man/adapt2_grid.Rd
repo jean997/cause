@@ -4,8 +4,17 @@
 \alias{adapt2_grid}
 \title{Adaptive grid estimation of posteriors}
 \usage{
-adapt2_grid(params, ranges, priors, n_start, range_fixed, mix_grid, rho, X,
-  max_post_per_bin)
+adapt2_grid(
+  params,
+  ranges,
+  priors,
+  n_start,
+  range_fixed,
+  mix_grid,
+  rho,
+  X,
+  max_post_per_bin
+)
 }
 \description{
 Workhorse for posterior adaptive grid approximation. Called from cause_grid_adapt.

@@ -4,8 +4,15 @@
 \alias{ld_prune}
 \title{Prune variants for LD}
 \usage{
-ld_prune(variants, ld, total_ld_variants, pval_cols, pval_thresh,
-  r2_thresh = 0.1, variant_name = "snp")
+ld_prune(
+  variants,
+  ld,
+  total_ld_variants,
+  pval_cols,
+  pval_thresh,
+  r2_thresh = 0.1,
+  variant_name = "snp"
+)
 }
 \arguments{
 \item{variants}{Either a vector of SNP names or a data.frame. If a data.frame, provide pval_cols

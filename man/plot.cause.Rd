@@ -4,8 +4,7 @@
 \alias{plot.cause}
 \title{Plot CAUSE}
 \usage{
-\method{plot}{cause}(res, intern = FALSE, type = c("posteriors",
-  "data"), pval_thresh = 5e-08)
+\method{plot}{cause}(res, intern = FALSE, type = c("posteriors", "data"), pval_thresh = 5e-08)
 }
 \arguments{
 \item{res}{object of class cause}

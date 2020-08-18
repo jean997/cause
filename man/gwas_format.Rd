@@ -4,8 +4,20 @@
 \alias{gwas_format}
 \title{Convert GWAS summary statistics to a standard format}
 \usage{
-gwas_format(X, snp, beta_hat, se, A1, A2, chrom, pos, p_value, sample_size,
-  output_file, compute_pval = TRUE)
+gwas_format(
+  X,
+  snp,
+  beta_hat,
+  se,
+  A1,
+  A2,
+  chrom,
+  pos,
+  p_value,
+  sample_size,
+  output_file,
+  compute_pval = TRUE
+)
 }
 \arguments{
 \item{X}{data.frame}

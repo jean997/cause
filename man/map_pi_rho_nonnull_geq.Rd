@@ -4,13 +4,24 @@
 \alias{map_pi_rho_nonnull_geq}
 \title{Estimate pi and mixture proportions under a specified model}
 \usage{
-map_pi_rho_nonnull_geq(X, mix_grid, sigma_g, qalpha, qbeta,
-  q_start = qbeta(0.5, qalpha, qbeta), gamma_start = 0,
-  eta_start = 0, rho_start = 0, tol = 1e-05, n.iter = 20,
-  null_wt = 10, z_prior_func = function(z) {     dnorm(z, 0, 0.5, log =
-  TRUE) }, q_prior_func = function(q) {     dbeta(q, qalpha, qbeta, log =
-  TRUE) }, gammaeta_prior_func = function(g) {     dnorm(g, 0, sigma_g,
-  log = TRUE) }, optmethod = c("mixSQP", "mixIP"))
+map_pi_rho_nonnull_geq(
+  X,
+  mix_grid,
+  sigma_g,
+  qalpha,
+  qbeta,
+  q_start = qbeta(0.5, qalpha, qbeta),
+  gamma_start = 0,
+  eta_start = 0,
+  rho_start = 0,
+  tol = 1e-05,
+  n.iter = 20,
+  null_wt = 10,
+  z_prior_func = function(z) {     dnorm(z, 0, 0.5, log = TRUE) },
+  q_prior_func = function(q) {     dbeta(q, qalpha, qbeta, log = TRUE) },
+  gammaeta_prior_func = function(g) {     dnorm(g, 0, sigma_g, log = TRUE) },
+  optmethod = c("mixSQP", "mixIP")
+)
 }
 \arguments{
 \item{X}{An object of class cause_data containing data for the two traits.}
