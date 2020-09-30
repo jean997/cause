@@ -55,8 +55,7 @@ cause <- function(X, param_ests, variants = X$snp,
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
   }
-  X <- filter(X, snp %in% variants)
-  X <- new_cause_data(X)
+  X <- dplyr::filter(X, snp %in% variants) %>% new_cause_data()
   cat("Estimating CAUSE posteriors using ", nrow(X), " variants.\n")
   stopifnot(inherits(param_ests, "cause_params"))
 
@@ -85,10 +84,11 @@ cause <- function(X, param_ests, variants = X$snp,
                                              qprior),
                                n_start = c(n_start_gamma_eta, n_start_gamma_eta, n_start_q))
   fit0 <- structure(list("joint_post"=NULL, rho = param_ests$rho, mix_grid=param_ests$mix_grid), class="cause_post")
-  fits <- list("null"=fit0, "sharing"=fit2, "causal" = fit3)
+  #fits <- list("null"=fit0, "sharing"=fit2, "causal" = fit3)
+  fits <- list("sharing"=fit2, "causal" = fit3)
   elpd <- in_sample_elpd_loo(X, fits)
 
-  X$delta_elpd <- with(elpd, loos[[2]]$pointwise[,1] - loos[[3]]$pointwise[,1])
+  X$delta_elpd <- with(elpd, loos[[1]]$pointwise[,1] - loos[[2]]$pointwise[,1])
 
   X$prob_Z1_sharing <- Z_post(X, fit2)
   X$prob_Z1_causal <- Z_post(X, fit3)
