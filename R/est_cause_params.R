@@ -23,7 +23,7 @@ est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"),
   if(!all(variants %in% X$snp)){
     warning("Warning: Not all `variants` are in data.", call.=FALSE)
   }
-  X <- filter(X, snp %in% variants) %>%
+  X <- dplyr::filter(X, snp %in% variants) %>%
        new_cause_data()
   if(nrow(X) < 1e5){
     warning("Fewer than 100,000 variants are being used to estimate parametrs. ",
