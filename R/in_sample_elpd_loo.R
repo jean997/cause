@@ -64,9 +64,9 @@ in_sample_elpd_loo <- function(X, fits, variants, nsamps=1000){
       est <- sum(diff)
       se <- sd(diff)*sqrt(nrow(X))
     }else{
-      comp <- compare(loos[[i2]], loos[[i1]])
-      est <- as.numeric(comp["elpd_diff"])
-      se <- as.numeric(comp["se"])
+      comp <- loo_compare(loos[[i1]], loos[[i2]])
+      est <- comp[2,1]
+      se <- comp[2,2]
     }
     mods$delta_elpd[j] <- est
     mods$se_delta_elpd[j] <- se
