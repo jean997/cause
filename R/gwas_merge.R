@@ -31,12 +31,16 @@ gwas_merge <- function(X1, X2,
     X1 <- gwas_format(X1, snp = snp_name_cols[1],
                       beta_hat = beta_hat_cols[1], se = se_cols[1],
                       A1 = A1_cols[1], A2 = A2_cols[1])
+  }else{
+    stopifnot(inherits(X1, "cause_data"))
   }
   if(!X2_formatted){
     cat("Formatting X2\n")
     X2 <- gwas_format(X2, snp = snp_name_cols[2],
                       beta_hat = beta_hat_cols[2], se = se_cols[2],
                       A1 = A1_cols[2], A2 = A2_cols[2])
+  }else{
+    stopifnot(inherits(X2, "cause_data"))
   }
 
   X <-  X1 %>%
