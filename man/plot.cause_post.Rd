@@ -4,8 +4,7 @@
 \alias{plot.cause_post}
 \title{Plot posteriors for one CAUSE fit}
 \usage{
-\method{plot}{cause_post}(fit, type = c("posteriors", "data"),
-  data = NULL, pval_thresh = 5e-08)
+\method{plot}{cause_post}(fit, type = c("posteriors", "data"), data = NULL, pval_thresh = 5e-08)
 }
 \arguments{
 \item{fit}{object of class cause_post `}

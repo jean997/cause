@@ -4,8 +4,7 @@
 \alias{setup_cause_pipeline}
 \title{Set up analysis directory for pairs of GWAS summary statistics}
 \usage{
-setup_cause_pipeline(download_ld = FALSE,
-  download_eur_ld_scores = FALSE)
+setup_cause_pipeline(download_ld = FALSE, download_eur_ld_scores = FALSE)
 }
 \description{
 A helper function that prepares a working directory for running an analysis with CAUSE.

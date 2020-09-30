@@ -71,5 +71,5 @@ qalpha, qbeta: The prior distribution of q is Beta(qalpha, qbeta)
 Functions summary() and plot() can be used with cause objects. See ?summary.cause and ?plot.cause
 }
 \author{
-Jean Morrison <jeanm@uchicago.edu>
+Jean Morrison <jvmorr@umich.edu>
 }
