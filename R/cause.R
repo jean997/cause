@@ -7,6 +7,8 @@
 #'This contains estimates of the mixing proportions and an estimate of rho,
 #'the correlation in test statistics that is due to overlapping samples or population structure.
 #'@param variants A vector of variants to include in the analysis.
+#'@param pval_thresh Argument supplying the trait M p-value threshold for including a variant.
+#'If you would like to use all variants in `variants` without a threshold, use pval_thresh = 1.
 #'@param sigma_g Parameter specifying the prior distribution of gamma and eta.
 #'gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).
 #'@param qalpha,qbeta Parameters defining the prior distribution of q.
@@ -21,10 +23,16 @@
 #'@details This function estimates posterior distributions for gamma, eta, and q under the sharing and causal models
 #'and computes a test statistic comparing the two models. The returned object contains
 #'
+#'A note about arguments: The SNPs used to compute posteriors can be specified through two arguments, `variants`
+#' and `pval_thresh`. `pval_thresh` was added in a later version and for compatibility with old code,
+#' the default value is set to 1. However, we recommend fitting posteriors with some p-value threshold in effect
+#' using either or both of the `variants` and `pval_thresh` arguments. The new argument makes it more convenient
+#' to do this without a separate step.
+#'
 #'sharing, causal: posterior estimates under model.
 #'
-#'elpd: A data frame giving estimated difference in elpd between pairs of sharing, causal and null model with standard errors.
-#'The null model is the model with gamma = eta = q = 0 and allows neither a causal effect nor correlated pleiotropy.
+#'elpd: A data frame giving estimated difference in elpd between the sharing and causal models. A negative
+#'delta_elpd favors the causal model.
 #'
 #'data: The data used to compute the object. This data frame also contains posterior estimates for each variant of acting
 #'through U under both models.
@@ -36,7 +44,7 @@
 #'
 #'Functions summary() and plot() can be used with cause objects. See ?summary.cause and ?plot.cause
 #'@export
-cause <- function(X, param_ests, variants = X$snp,
+cause <- function(X, param_ests, variants = X$snp, pval_thresh = 1,
                   sigma_g, qalpha = 1, qbeta=10,
                   max_q = 1, force=FALSE,
                   n_start_gamma_eta = 21, n_start_q = 11){
@@ -55,7 +63,9 @@ cause <- function(X, param_ests, variants = X$snp,
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
   }
-  X <- dplyr::filter(X, snp %in% variants) %>% new_cause_data()
+  X <- X %>% mutate(pval_m = 2*pnorm(-abs(beta_hat_1/seb1))) %>%
+       dplyr::filter(snp %in% variants & pval_m < pval_thresh) %>%
+       new_cause_data()
   cat("Estimating CAUSE posteriors using ", nrow(X), " variants.\n")
   stopifnot(inherits(param_ests, "cause_params"))
 
