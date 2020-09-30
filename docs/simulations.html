@@ -421,7 +421,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-07-13
+<strong>Last updated:</strong> 2020-09-30
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -512,16 +512,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb785efc43969e2444651864f6919292bead187fbtargetblankb785efca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/b785efc43969e2444651864f6919292bead187fb" target="_blank">b785efc</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed3a24078168ebf776b5cc9c32a760655e51ea25ctargetblankd3a2407a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/d3a24078168ebf776b5cc9c32a760655e51ea25c" target="_blank">d3a2407</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreeb785efc43969e2444651864f6919292bead187fbtargetblankb785efca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed3a24078168ebf776b5cc9c32a760655e51ea25ctargetblankd3a2407a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/b785efc43969e2444651864f6919292bead187fb" target="_blank">b785efc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/d3a24078168ebf776b5cc9c32a760655e51ea25c" target="_blank">d3a2407</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -530,6 +530,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/example_data/
     Ignored:    sim_results/
     Ignored:    src/RcppExports.o
     Ignored:    src/cause.so
@@ -545,8 +546,10 @@ Untracked files:
 
 Unstaged changes:
     Deleted:    analysis/figure/simulations.Rmd/plot_fp-1.png
-    Deleted:    analysis/figure/simulations.Rmd/plot_power-1.png
-    Deleted:    analysis/figure/simulations.Rmd/roc_curves-1.png
+    Deleted:    analysis/figure/simulations.Rmd/roc-1.png
+    Deleted:    analysis/figure/simulations.Rmd/unnamed-chunk-3-1.png
+    Deleted:    analysis/figure/simulations.Rmd/unnamed-chunk-5-1.png
+    Deleted:    analysis/figure/simulations.Rmd/unnamed-chunk-6-1.png
 
 </code></pre>
 <p>
@@ -585,6 +588,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/d3a24078168ebf776b5cc9c32a760655e51ea25c/analysis/simulations.Rmd" target="_blank">d3a2407</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-09-30
+</td>
+<td>
+wflow_publish(c(“analysis/simulations.Rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/simulations.html" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1150,6 +1187,43 @@ pwr &lt;- summ_pwr %&gt;%
     facet_wrap(~n1*n2, nrow=1)
 pwr</code></pre>
 <p><img src="figure/simulations.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/figure/simulations.Rmd/unnamed-chunk-3-1.png" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>CAUSE has lower power than the other methods, except the weighted mode and Egger regression. When the power for trait <span class="math inline">\(M\)</span> is low and the power for trait <span class="math inline">\(Y\)</span> is high, CAUSE has better power for large causal effects. This is expected since CAUSE uses a more stringent criterion to conclude that the data are consistent with a causal effect. It is able to achieve better power when <span class="math inline">\(M\)</span> is under-powered and <span class="math inline">\(Y\)</span> is well powered because it uses all variants genome-wide rather than only those that are highly significant for trait <span class="math inline">\(M\)</span>. This is an important setting because it may be applicable to scenarios when <span class="math inline">\(M\)</span> is a biomarker or molecular trait and <span class="math inline">\(Y\)</span> is a complex triat.</p>
 <div id="false-positives" class="section level3">
 <h3>False Positives</h3>
@@ -1170,8 +1244,7 @@ summ_fp_copy &lt;- bind_rows(summ_fp, z1, z2) %&gt;%
            omega = recode(omega, `0.02` = &quot;Weak shared factor effect&quot;, `0.05` = &quot;Strong shared factor effect&quot;),
            omega = factor(omega, levels = c(&quot;Weak shared factor effect&quot;, &quot;Strong shared factor effect&quot;)),
            analysis = factor(analysis, levels = methods),
-           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;, causeeqg_10 = &quot;CAUSE-eqg&quot;,
-                             cause_fixedest_10 = &quot;CAUSE-fe&quot;, cause_fixedoracle_10 = &quot;CAUSE-fo&quot;,
+           analysis = recode(analysis, cause_10 = &quot;CAUSE&quot;, 
                              egger_MR = &quot;Egger Regression&quot;, 
                              ivw_MR = &quot;IVW Regression&quot;, mbe_MR_1 = &quot;Weighted Mode&quot;, 
                              mrp = &quot;MR-PRESSO&quot;, wm_MR = &quot;Weighted Median&quot;, gsmr = &quot;GSMR&quot;)) %&gt;%
@@ -1221,6 +1294,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/figure/simulations.Rmd/plot_fp-1.png" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/b1154146bef8ee5f0a4b1471490734da51ba2f29/docs/figure/simulations.Rmd/plot_fp-1.png" target="_blank">b115414</a>
@@ -1360,6 +1444,43 @@ plt &lt;- roc_df %&gt;% arrange(sens) %&gt;%
     facet_wrap(~n1*n2, ncol=4)
 plt</code></pre>
 <p><img src="figure/simulations.Rmd/roc-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-roc-1">
+Past versions of roc-1.png
+</button>
+</p>
+<div id="fig-roc-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/figure/simulations.Rmd/roc-1.png" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>  auc_tab &lt;- filter(roc_df, thresh==-Inf) %&gt;%
       select(-thresh, -spec, -sens) %&gt;%
       mutate(q=q)
@@ -1433,6 +1554,43 @@ rev &lt;- summ_rev %&gt;%
  
 rev</code></pre>
 <p><img src="figure/simulations.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/figure/simulations.Rmd/unnamed-chunk-5-1.png" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="causal-effect-and-shared-factor" class="section level3">
 <h3>Causal effect and shared factor</h3>
@@ -1481,6 +1639,43 @@ summ_mix &lt;- with(res_mix, summarize_dsc_results(cause, lcv, mr, direction = &
     facet_wrap(~q*n1*n2, nrow=2) 
 plt_mix</code></pre>
 <p><img src="figure/simulations.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/746f80c01b0ad3132d78f69a00ad280e3204e404/docs/figure/simulations.Rmd/unnamed-chunk-6-1.png" target="_blank">746f80c</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-07-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="whats-in-the-dsc-files" class="section level1">
@@ -1674,7 +1869,7 @@ cause: R(library(causeSims);
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.0.2 (2020-06-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.4 LTS
+Running under: Ubuntu 18.04.5 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1692,53 +1887,53 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] pROC_1.16.2     purrr_0.3.4     tidyr_1.1.0     ggplot2_3.3.2  
-[5] dplyr_1.0.0     causeSims_0.1.0 workflowr_1.6.2
+[1] pROC_1.16.2     purrr_0.3.4     tidyr_1.1.2     ggplot2_3.3.2  
+[5] dplyr_1.0.2     causeSims_0.1.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.1                   jsonlite_1.7.0              
+ [1] httr_1.4.2                   jsonlite_1.7.1              
  [3] viridisLite_0.3.0            RcppParallel_5.0.2          
  [5] assertthat_0.2.1             mixsqp_0.3-43               
- [7] arrangements_1.1.8           yaml_2.2.1                  
+ [7] arrangements_1.1.9           yaml_2.2.1                  
  [9] robustbase_0.93-6            globals_0.12.5              
-[11] numDeriv_2016.8-1.1          pillar_1.4.4                
-[13] backports_1.1.8              lattice_0.20-41             
-[15] glue_1.4.1                   digest_0.6.25               
-[17] promises_1.1.1               iterpc_0.4.2                
-[19] colorspace_1.4-1             MRPRESSO_1.0                
-[21] plyr_1.8.6                   htmltools_0.5.0             
-[23] httpuv_1.5.4                 Matrix_1.2-18               
-[25] pkgconfig_2.0.3              invgamma_1.1                
-[27] listenv_0.8.0                scales_1.1.1                
-[29] intervals_0.15.2             cause_1.0.0.0267            
-[31] whisker_0.4                  later_1.1.0.1               
-[33] git2r_0.27.1                 tibble_3.0.2                
-[35] MendelianRandomization_0.4.2 gmp_0.6-0                   
-[37] farver_2.0.3                 generics_0.0.2              
-[39] ellipsis_0.3.1               withr_2.2.0                 
-[41] furrr_0.1.0                  ashr_2.2-47                 
-[43] lazyeval_0.2.2               cli_2.0.2                   
-[45] magrittr_1.5                 crayon_1.3.4                
-[47] evaluate_0.14                fansi_0.4.1                 
-[49] fs_1.4.2                     future_1.18.0               
-[51] truncnorm_1.0-8              RcppZiggurat_0.1.5          
-[53] tools_4.0.2                  loo_2.3.0                   
-[55] data.table_1.12.8            hms_0.5.3                   
-[57] lifecycle_0.2.0              matrixStats_0.56.0          
-[59] stringr_1.4.0                plotly_4.9.2.1              
-[61] munsell_0.5.0                irlba_2.3.3                 
-[63] compiler_4.0.2               rlang_0.4.6                 
-[65] grid_4.0.2                   rstudioapi_0.11             
-[67] rjson_0.2.20                 htmlwidgets_1.5.1           
-[69] labeling_0.3                 rmarkdown_2.3               
-[71] gtable_0.3.0                 codetools_0.2-16            
-[73] R6_2.4.1                     gridExtra_2.3               
-[75] knitr_1.29                   utf8_1.1.4                  
-[77] rprojroot_1.3-2              readr_1.3.1                 
-[79] stringi_1.4.6                parallel_4.0.2              
-[81] SQUAREM_2020.3               Rcpp_1.0.5                  
-[83] vctrs_0.3.1                  DEoptimR_1.0-8              
-[85] tidyselect_1.1.0             xfun_0.15                   </code></pre>
+[11] pillar_1.4.6                 backports_1.1.10            
+[13] lattice_0.20-41              glue_1.4.2                  
+[15] digest_0.6.25                promises_1.1.1              
+[17] iterpc_0.4.2                 colorspace_1.4-1            
+[19] MRPRESSO_1.0                 plyr_1.8.6                  
+[21] htmltools_0.5.0              httpuv_1.5.4                
+[23] Matrix_1.2-18                pkgconfig_2.0.3             
+[25] invgamma_1.1                 listenv_0.8.0               
+[27] scales_1.1.1                 intervals_0.15.2            
+[29] cause_1.0.0.0275             whisker_0.4                 
+[31] later_1.1.0.1                git2r_0.27.1                
+[33] tibble_3.0.3                 MendelianRandomization_0.4.3
+[35] gmp_0.6-0                    farver_2.0.3                
+[37] generics_0.0.2               ellipsis_0.3.1              
+[39] withr_2.3.0                  furrr_0.1.0                 
+[41] ashr_2.2-47                  lazyeval_0.2.2              
+[43] cli_2.0.2                    magrittr_1.5                
+[45] crayon_1.3.4                 evaluate_0.14               
+[47] fansi_0.4.1                  fs_1.5.0                    
+[49] future_1.18.0                truncnorm_1.0-8             
+[51] RcppZiggurat_0.1.5           tools_4.0.2                 
+[53] loo_2.3.0                    data.table_1.13.0           
+[55] hms_0.5.3                    lifecycle_0.2.0             
+[57] matrixStats_0.57.0           stringr_1.4.0               
+[59] plotly_4.9.2.1               munsell_0.5.0               
+[61] irlba_2.3.3                  compiler_4.0.2              
+[63] rlang_0.4.7                  grid_4.0.2                  
+[65] rstudioapi_0.11              rjson_0.2.20                
+[67] htmlwidgets_1.5.1            labeling_0.3                
+[69] rmarkdown_2.3                gtable_0.3.0                
+[71] codetools_0.2-16             R6_2.4.1                    
+[73] gridExtra_2.3                knitr_1.30                  
+[75] utf8_1.1.4                   rprojroot_1.3-2             
+[77] readr_1.3.1                  stringi_1.5.3               
+[79] parallel_4.0.2               SQUAREM_2020.3              
+[81] Rcpp_1.0.5                   vctrs_0.3.4                 
+[83] DEoptimR_1.0-8               tidyselect_1.1.0            
+[85] xfun_0.18                   </code></pre>
 </div>
 </div>
 </div>
