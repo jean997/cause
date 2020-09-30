@@ -200,8 +200,7 @@ fp <- summ_fp_copy %>%
            omega = recode(omega, `0.02` = "Weak shared factor effect", `0.05` = "Strong shared factor effect"),
            omega = factor(omega, levels = c("Weak shared factor effect", "Strong shared factor effect")),
            analysis = factor(analysis, levels = methods),
-           analysis = recode(analysis, cause_10 = "CAUSE", causeeqg_10 = "CAUSE-eqg",
-                             cause_fixedest_10 = "CAUSE-fe", cause_fixedoracle_10 = "CAUSE-fo",
+           analysis = recode(analysis, cause_10 = "CAUSE", 
                              egger_MR = "Egger Regression", 
                              ivw_MR = "IVW Regression", mbe_MR_1 = "Weighted Mode", 
                              mrp = "MR-PRESSO", wm_MR = "Weighted Median", gsmr = "GSMR")) %>%
