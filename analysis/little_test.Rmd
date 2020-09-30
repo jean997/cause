@@ -11,7 +11,7 @@ output: workflowr::wflow_html
 ```
 
 ## Introduction
-This is a mini version of the package walk through that runs quickly for doing tests. Right now the only difference is that we use fewer variants to compute the nuisance praameters and there is no supporting text. 
+This is a mini version of the package walk through that runs quickly for doing tests. Right now the only difference is that we use fewer variants to compute the nuisance parameters and there is no supporting text. 
 
 ## Step 1: Format Data for CAUSE
 
