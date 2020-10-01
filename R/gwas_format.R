@@ -61,17 +61,18 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
     X <- mutate(X, sample_size = sample_size)
     sample_size <- "sample_size"
   }
-
-  X <- X %>% rename(snp = snp,
-                    beta_hat =beta_hat,
-                    se = se,
-                    A1 = A1,
-                    A2 = A2,
-                    chrom = chrom,
-                    pos = pos,
-                    p_value = p_value,
-                    sample_size = sample_size) %>%
-      select(chrom, pos, snp, A1, A2, beta_hat, se, p_value, sample_size) %>%
+  keep_cols <- c(chrom, pos, snp, A1, A2, beta_hat, se, p_value, sample_size)
+  X <- X %>%
+      select(keep_cols)%>%
+      rename(snp = snp,
+            beta_hat =beta_hat,
+            se = se,
+            A1 = A1,
+            A2 = A2,
+            chrom = chrom,
+            pos = pos,
+            p_value = p_value,
+            sample_size = sample_size) %>%
       mutate(A1 = toupper(A1),
              A2 = toupper(A2))
 
