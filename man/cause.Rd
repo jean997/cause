@@ -9,6 +9,7 @@ cause(
   X,
   param_ests,
   variants = X$snp,
+  pval_thresh = 1,
   sigma_g,
   qalpha = 1,
   qbeta = 10,
@@ -26,6 +27,9 @@ This contains estimates of the mixing proportions and an estimate of rho,
 the correlation in test statistics that is due to overlapping samples or population structure.}
 
 \item{variants}{A vector of variants to include in the analysis.}
+
+\item{pval_thresh}{Argument supplying the trait M p-value threshold for including a variant.
+If you would like to use all variants in `variants` without a threshold, use pval_thresh = 1.}
 
 \item{sigma_g}{Parameter specifying the prior distribution of gamma and eta.
 gamma ~ N(0, sigma_g), eta ~ N(0, sigma_g).}
@@ -55,10 +59,16 @@ Implementation of CAUSE described in Morrison et al. (2020)
 This function estimates posterior distributions for gamma, eta, and q under the sharing and causal models
 and computes a test statistic comparing the two models. The returned object contains
 
+A note about arguments: The SNPs used to compute posteriors can be specified through two arguments, `variants`
+and `pval_thresh`. `pval_thresh` was added in a later version and for compatibility with old code,
+the default value is set to 1. However, we recommend fitting posteriors with some p-value threshold in effect
+using either or both of the `variants` and `pval_thresh` arguments. The new argument makes it more convenient
+to do this without a separate step.
+
 sharing, causal: posterior estimates under model.
 
-elpd: A data frame giving estimated difference in elpd between pairs of sharing, causal and null model with standard errors.
-The null model is the model with gamma = eta = q = 0 and allows neither a causal effect nor correlated pleiotropy.
+elpd: A data frame giving estimated difference in elpd between the sharing and causal models. A negative
+delta_elpd favors the model in the "model 2" column. A positive delta_elpd favors the model in the "model 1" column.
 
 data: The data used to compute the object. This data frame also contains posterior estimates for each variant of acting
 through U under both models.

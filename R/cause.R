@@ -32,7 +32,7 @@
 #'sharing, causal: posterior estimates under model.
 #'
 #'elpd: A data frame giving estimated difference in elpd between the sharing and causal models. A negative
-#'delta_elpd favors the causal model.
+#'delta_elpd favors the model in the "model 2" column. A positive delta_elpd favors the model in the "model 1" column.
 #'
 #'data: The data used to compute the object. This data frame also contains posterior estimates for each variant of acting
 #'through U under both models.

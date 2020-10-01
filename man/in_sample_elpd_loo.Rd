@@ -17,7 +17,8 @@ in_sample_elpd_loo(X, fits, variants, nsamps = 1000)
 }
 \value{
 A data frame with one row per pair of models giving the estimated
-difference in elpds and standard error of that difference.
+difference in elpds and standard error of that difference. If delta_elpd is negative
+this is in favor of model 2 in the table. A positive delta_elpd is in favor of model 1.
 }
 \description{
 Estimate delta elpd for pairs of models
