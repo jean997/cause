@@ -66,6 +66,18 @@ cause <- function(X, param_ests, variants = X$snp, pval_thresh = 1,
   X <- X %>% mutate(pval_m = 2*pnorm(-abs(beta_hat_1/seb1))) %>%
        dplyr::filter(snp %in% variants & pval_m < pval_thresh) %>%
        new_cause_data()
+
+  if(sum(X$pval_m > 0.01) & pval_thresh ==1 & !force){
+    stop("I noticed that some of the variants you are running with have large p-values (> 0.01).
+         We recomend fitting CAUSE posteriors using some kind of p-value threshold. You can do this
+         in two ways - either modifying the list of variants in the 'variants' argument or seting the
+         'pval_thresh' argument. If you are sure you want to run with this list of variants anyway,
+         re-run with force=TRUE.")
+  }else if(sum(X$pval_m > 0.01) & pval_thresh ==1){
+    warning("I noticed that some of the variants you are running with have large
+            p-values (> 0.01) but we are going forward anyway. ")
+  }
+
   cat("Estimating CAUSE posteriors using ", nrow(X), " variants.\n")
   stopifnot(inherits(param_ests, "cause_params"))
 
