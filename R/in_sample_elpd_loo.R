@@ -1,3 +1,47 @@
+#'@title Recompute elpd table for a CAUSE fit that is already computed
+#'@param res A cause fit from running the cause function
+#'@return A model table equivalent to res$elpd
+#'@export
+recompute_elpd_table <- function(res){
+  mods <- res$elpd
+  loos <- res$loos
+  X <- new_cause_data(res$data)
+  llmat_null <- loglik_loo(0, 0, 0,
+                      res$sharing$rho, res$sharing$mix_grid$S1,
+                      res$sharing$mix_grid$S2, res$sharing$mix_grid$pi,
+                      X$beta_hat_1, X$beta_hat_2, X$seb1, X$seb2)
+
+
+  for(j in seq(nrow(mods))){
+    i1 <- which(names(loos) == mods$model1[j])
+    i2 <- which(names(loos) == mods$model2[j])
+    if(is.null(loos[[i1]])){
+      diff <- llmat_null - loos[[i2]]$pointwise[,1]
+      est <- sum(diff)
+      se <- sd(diff)*sqrt(nrow(X))
+    }else if(is.null(loos[i2])){
+      diff <- loos[[i1]]$pointwise[,1] - llmat_null
+      est <- sum(diff)
+      se <- sd(diff)*sqrt(nrow(X))
+    }else{
+      comp <- loo_compare(loos[[i1]], loos[[i2]])
+      if(rownames(comp)[1]=="model2"){
+        est <- comp[2,1]
+        se <- comp[2,2]
+      }else{
+        est <- -1*comp[2,1]
+        se <- comp[2,2]
+      }
+    }
+    mods$delta_elpd[j] <- est
+    mods$se_delta_elpd[j] <- se
+  }
+  mods <- mods %>%
+          mutate(z = delta_elpd/se_delta_elpd) %>%
+          select(model1, model2, delta_elpd, se_delta_elpd, z)
+  class(mods) <- c("cause_elpd", "data.frame")
+  return(mods)
+}
 
 #'@title Estimate delta elpd for pairs of models
 #'@param X Data
@@ -66,8 +110,13 @@ in_sample_elpd_loo <- function(X, fits, variants, nsamps=1000){
       se <- sd(diff)*sqrt(nrow(X))
     }else{
       comp <- loo_compare(loos[[i1]], loos[[i2]])
-      est <- comp[2,1]
-      se <- comp[2,2]
+      if(rownames(comp)[1]=="model2"){
+        est <- comp[2,1]
+        se <- comp[2,2]
+      }else{
+        est <- -1*comp[2,1]
+        se <- comp[2,2]
+      }
     }
     mods$delta_elpd[j] <- est
     mods$se_delta_elpd[j] <- se
