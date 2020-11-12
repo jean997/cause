@@ -3,6 +3,7 @@
 #'@return A model table equivalent to res$elpd
 #'@export
 recompute_elpd_table <- function(res){
+  stopifnot(inherits(res, "cause"))
   mods <- res$elpd
   loos <- res$loos
   X <- new_cause_data(res$data)
