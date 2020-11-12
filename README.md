@@ -4,7 +4,27 @@ CAUSE: Causal Analysis Using Summary Effect Estimates
 This R package implements the CAUSE method described in Morrison et al 2019 (BioRxiv https://www.biorxiv.org/content/10.1101/682237v4).
 Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.html
 
+
+### Important Announcement!
+
+We have just discovered that there is an error introduced in cause elpd computations using newer versions of the loo package due to a change in the order of the `loo_compare` output. 
+
+If you are new to CAUSE please use the most recent github version. We will issue a new release soon. 
+
+If you have used cause version 1.1.0 or used cause with loo version 2.3.0 or 2.3.1 please do the following steps. 
+
+1. Download the most recent package version from github. 
+2. Recompute the elpd model table using the `recompute_elpd_table` function. 
+```
+elpd_table <- recompute_elpd_table(res)
+res$elpd <- elpd_table
+```
+Here `res` is an object produced by running the cause function. You may find that the new table and the old table are the same or the sign of the z-score comparing models will flip, changing the p-value. These changes should always make the p-value less significant. 
+
+
 ### Release Notes:
+
+
 
 #### v1.1.0:
 
