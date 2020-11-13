@@ -30,12 +30,12 @@ localrules: all
 
 ###### Load configuration file
 configfile: "config.yaml"
-#validate(config, schema="schemas/config.schema.yaml")
+# validate(config, schema="schemas/config.schema.yaml")
 ss = pd.read_csv(config["input"]["sum_stats"], na_filter=False)
 
 gwas_data_dir = config["out"]["gwas_data_dir"] #where formatted gwas data go
 data_dir = config["out"]["other_data_dir"] #where other data go
-ld_dir = config["ld"]["dir"] #where the ld data is
+
 out_dir = config["out"]["output_dir"] #where CAUSE results will go
 
 if config["analysis"]["all_pairs"]:
@@ -84,45 +84,55 @@ rule data_merge:
 
 
 ## LD pruning
+
+## Built in cause method (slow)
 rule ld_prune_one_chrom:
     input: data = data_dir + '{tag1}__{tag2}_data1.RDS',
-           r2 = ld_dir + 'chr{chrom}' + config["ld"]["r2_file"],
-           info = ld_dir + 'chr{chrom}' + config["ld"]["info_file"]
-    output: out=temp(data_dir + "snps_{tag1}__{tag2}.pruned.{chrom}.RDS")
-    params: pval_thresh = "1e-3", r2_thresh = 0.1 
-    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} {wildcards.chrom}  \
-                   {params.pval_thresh} {params.r2_thresh} {input.r2} {input.info} {output.out}'
+           r2 = config["ld"]["ld_dir"] + 'chr{chrom}' + config["ld"]["r2_file"],
+           info =  config["ld"]["ld_dir"] + 'chr{chrom}' + config["ld"]["info_file"]
+    output: out=temp(data_dir + "snps_{tag1}__{tag2}.cause.pruned.{chrom}.RDS")
+    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} \
+                   {config[analysis][cause_pval]} {config[ld][r2_thresh]} {input.r2} \
+                   {input.info} {output.out}'
 
 rule ld_prune_combine:
-    input: files = expand( data_dir + "snps_{{tag1}}__{{tag2}}.pruned.{chr}.RDS", chr = range(1, 23))
-    output: out1 = data_dir + "snps_{tag1}__{tag2}.pruned.txt"
-    shell: "Rscript R/ld_cat.R {output.out1} {input.files}"
+    input: files = expand( data_dir + "snps_{{tag1}}__{{tag2}}.cause.pruned.{chr}.RDS", chr = range(1, 23))
+    output: out = data_dir + "snps_{tag1}__{tag2}.cause.pruned.txt"
+    shell: "Rscript R/ld_cat.R {output.out} {input.files}"
 
+## Plink method (fast)
+rule ld_prune_plink:
+    input: data = data_dir + '{tag1}__{tag2}_data1.RDS',
+           ref_data = expand(config["ld"]["ref_path"] + '.{end}', end  = ["bim", "bed", "fam"])
+    output: out = data_dir + "snps_{tag1}__{tag2}.plink.pruned.txt"
+    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} \
+                   {config[analysis][cause_pval]} {config[ld][r2_thresh]} \
+                   {config[ld][ref_path]}  {output.out}'
 
 
 #Run CAUSE
 rule cause_params:
     input: data = data_dir + '{tag1}__{tag2}_data.RDS',
     output: params = out_dir + '{tag1}__{tag2}_params.RDS',
-    params: seed = config["analysis"]["cause_seed"]
-    shell: 'Rscript R/cause_params.R {input.data} {output.params} {params.seed}'
+    shell: 'Rscript R/cause_params.R {input.data} {output.params} {config[analysis][cause_seed]}'
 
+lm = config["ld"]["ld_prun_method"]
 rule cause:
     input: data = data_dir + '{tag1}__{tag2}_data.RDS',
-           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt',
+           snps = data_dir + 'snps_{tag1}__{tag2}.' + lm + '.pruned.txt',
            params = out_dir + '{tag1}__{tag2}_params.RDS'
-    output: cause = out_dir + '{tag1}__{tag2}_cause_{qa}_{qb}_{maxq}.RDS'
-    params: seed = config["analysis"]["cause_seed"]
+    output: cause = out_dir + '{tag1}__{tag2}_cause_{qa}_{qb}.RDS'
+    params: maxq = 1
     shell: 'Rscript R/cause.R {input.data} {input.snps} {input.params} \
-                   {wildcards.qa} {wildcards.qb} {wildcards.maxq} \
-                   {output.cause} {params.seed}'
+                   {wildcards.qa} {wildcards.qb} {params.maxq} \
+                   {output.cause} {config[analysis][cause_seed]}'
 
 
 ## Other MR
 mr_pval = config["analysis"]["mr_pval"]
 rule mrpresso:
     input: data = data_dir + '{tag1}__{tag2}_data.RDS',
-           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+           snps = data_dir + 'snps_{tag1}__{tag2}.' + lm + '.pruned.txt'
     output: out = out_dir + '{tag1}__{tag2}_mrpresso.RDS',
     params: mr_pval =  mr_pval
     shell: 'Rscript R/mrpresso.R {input.data} {input.snps} {params.mr_pval} {output.out} '
@@ -136,7 +146,7 @@ rule lcv:
 rule mr_package:
     input: data = data_dir + '{tag1}__{tag2}_data.RDS',
            file1 = gwas_data_dir + '{tag1}_summary_statistics.tsv.gz',
-           snps = data_dir + 'snps_{tag1}__{tag2}.pruned.txt'
+           snps = data_dir + 'snps_{tag1}__{tag2}.' + lm + '.pruned.txt'
     params: mr_pval =  mr_pval
     output: out = out_dir + '{tag1}__{tag2}_mrpackage.RDS',
     shell: 'Rscript R/mr_package.R {input.data} {input.file1} {input.snps} {params.mr_pval} {output.out} '

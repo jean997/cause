@@ -5,26 +5,46 @@ input:
     sum_stats: "gwas_pairs.csv"
 
 # What analysis to do
-# If all_pairs do all pairs of triats. Otherwise
-# use traits in trait1 as M and traits in trait2 as Y
-# methods should be a comma separated list with no spaces.
-# Optional methods should be one of
-# cause_*_*_*, mrpackage, lcv,  mrpresso
+# If all_pairs is True, the pipeline will analyze all pairs of triats. Otherwise
+# it will use traits in trait1 as M and traits in trait2 as Y. Indices correspond to
+# the trait's row index in the csv provided in input.
+#
+# methods: should be a python syntax list of strings.
+# Optional methods should be one of cause_*_*, mrpackage, lcv,  mrpresso
+# The two numbers in the cause method name indicate parameters for the beta prior on q.
+# For example, cause_1_10 indicates to run cause with a
+# Beta(1, 10) prior for q. This is our suggested default.
+#
+# mr_pval: gives the p-value threshold for including variants for methods besides LCV and CAUSE
+# cause_pval: gives the p-value threshold for computing cause posteriors. We recommend 1e-3
+# cause_seed: gives seed for running cause to ensure reproducibility.
 analysis:
     all_pairs: True
     trait1: 1
     trait2: 2,3
-    methods: lcv,mrpackage,mrpresso,cause_1_10_1,cause_1_100_1,cause_1_2_1
+    methods: ["lcv","mrpackage","mrpresso","cause_1_10_1","cause_1_100_1","cause_1_2_1"]
     mr_pval: "5e-8"
+    cause_pval: "1e-3"
     cause_seed: 100
 
-#Path to directory containing LD data
-#ld_score_dir is used only by method lcv
+# This section contains information about how to LD prune and the location of ld scores if using LCV
+# ld_prune_method can be "plink" or "cause"
+# If method is "cause" please provide ld_dir, r2_file, and info_file parameters
+#         ld_dir: Directory that contains pairwise r2 files and info files
+#         r2_file: Postfix for pairwise r2 files. For example if you provide r2_file: "_foo.RDS"
+#                  the pipeline will look for files named chr1_foo.RDS, chr2_foo.RDS etc.
+#         info_file: Postfix for SNP info file.
+# If method is "plink" please provide the ref_path giving the location of reference data
+# Options for the unused method can be omitted
+# r2_thresh is the r2 threshold for pruning.
 ld:
+    ld_prune_method: "plink"
     dir: "ld/"
     r2_file: "_AF0.05_0.1.RDS"
     info_file: "_AF0.05_snpdata.RDS"
     ld_score_dir: "ld_scores/eur_w_ld_chr/"
+    ref_path: "plink_reference/EUR"
+    r2_thresh: 0.01
 
 out:
     gwas_data_dir: "cause_standard_format/"
