@@ -150,7 +150,7 @@ validate_cause_data_single <- function(x){
   if(!inherits(x, "data.frame")){
     stop("`x` must inherit class data.frame", call.=FALSE)
   }
-  req_names <- c("snp", "beta_hat", "seb", "A1", "A2")
+  req_names <- c("snp", "beta_hat", "se", "A1", "A2")
   if(!all(req_names %in% names(x))){
     stop(paste0("`x` must contain variables ", req_names),
          call.=FALSE)
