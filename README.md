@@ -7,24 +7,28 @@ Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.ht
 
 ### Important Announcement!
 
-We have just discovered that there is an error introduced in cause elpd computations using newer versions of the loo package due to a change in the order of the `loo_compare` output. 
+We have discovered that there is an error introduced in cause elpd computations using newer versions of the loo package with cause version 1.1.0 due to a change in the order of the `loo_compare` output. 
 
-If you are new to CAUSE please use the most recent github version. We will issue a new release soon. 
+If you are new to CAUSE please use v1.2.0 or the most recent github version. We will issue a new release soon. 
 
 If you have used cause version 1.1.0 or used cause with loo version 2.3.0 or 2.3.1 please do the following steps. 
 
-1. Download the most recent package version from github. 
+1. Insall v1.2.0 or the most recent version from github. 
 2. Recompute the elpd model table using the `recompute_elpd_table` function. 
 ```
 elpd_table <- recompute_elpd_table(res)
 res$elpd <- elpd_table
 ```
-Here `res` is an object produced by running the cause function. You may find that the new table and the old table are the same or the sign of the z-score comparing models will flip, changing the p-value. These changes should always make the p-value less significant. 
+Here `res` is an object produced by running the cause function. You may find that the new table and the old table are the same or the sign of the z-score comparing models will flip, changing the p-value. The error only occurred in situations when the sharing model is better than the causal model. 
 
 
 ### Release Notes:
 
+#### v1.2.0:
 
++ Corrected bug that came from re-ordering of loo_compare output in >= 2.3.0.
++ Added function to recompute z-score for previously run analysis.
++ Minor updates to parameter checking in gwas_merge.
 
 #### v1.1.0:
 
@@ -48,11 +52,11 @@ devtools::install_github("jean997/cause@v1.0.0")
 ```
 Don't allow R to update `mixsqp` or `ashr`.
 
-#### 2. Latest version or version 1.1.0
+#### 2. Latest version or version 1.2.0
 
 For the release version
 ```{r}
-devtools::install_github("jean997/cause@v1.1.0")
+devtools::install_github("jean997/cause@v1.2.0")
 ```
 
 For the development version
