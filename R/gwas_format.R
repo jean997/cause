@@ -17,7 +17,8 @@
 #'data sets. It will remove variants with ambiguous alleles or where the alleles (G/C or A/T) or
 #'with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other).
 #'It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).
-#'@return An object of class cause_data and data.frame.
+#'@return A data frame with columns chrom, pos, snp, A1, A2, beta_hat, se, p_value, and sample_size with all SNPs
+#'aligned so that A is the effect allele. This is ready to be used with gwas_merge with formatted = TRUE.
 #'@export
 gwas_format <- function(X, snp, beta_hat, se, A1, A2,
                         chrom, pos, p_value,
