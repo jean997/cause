@@ -86,8 +86,8 @@ rule data_merge:
 ## Built in cause method (slow)
 rule ld_prune_one_chrom:
     input: data = data_dir + '{tag1}__{tag2}_data1.RDS',
-           r2 = config["ld"]["ld_dir"] + 'chr{chrom}' + config["ld"]["r2_file"],
-           info =  config["ld"]["ld_dir"] + 'chr{chrom}' + config["ld"]["info_file"]
+           r2 = config["ld"]["cause_opts"]["ld_dir"] + 'chr{chrom}' + config["ld"]["cause_opts"]["r2_file"],
+           info =  config["ld"]["cause_opts"]["ld_dir"] + 'chr{chrom}' + config["ld"]["cause_opts"]["info_file"]
     output: out=temp(data_dir + "snps_{tag1}__{tag2}.cause.pruned.{chrom}.RDS")
     shell:   'Rscript R/ld_prune_one_chrom.R {input.data} \
                    {config[analysis][cause_pval]} {config[ld][r2_thresh]} {input.r2} \
@@ -101,11 +101,11 @@ rule ld_prune_combine:
 ## Plink method (fast)
 rule ld_prune_plink:
     input: data = data_dir + '{tag1}__{tag2}_data1.RDS',
-           ref_data = expand(config["ld"]["ref_path"] + '.{end}', end  = ["bim", "bed", "fam"])
+           ref_data = expand(config["ld"]["plink_opts"]["ref_path"] + '.{end}', end  = ["bim", "bed", "fam"])
     output: out = data_dir + "snps_{tag1}__{tag2}.plink.pruned.txt"
     shell:   'Rscript R/ld_prune_one_chrom.R {input.data} \
                    {config[analysis][cause_pval]} {config[ld][r2_thresh]} \
-                   {config[ld][ref_path]}  {output.out}'
+                   {config[ld][plink_opts][ref_path]}  {output.out}'
 
 
 #Run CAUSE
