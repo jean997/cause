@@ -155,7 +155,7 @@ validate_cause_data_single <- function(x){
     stop(paste0("`x` must contain variables ", req_names),
          call.=FALSE)
   }
-  for(n in req_names[1:3]){
+  for(n in c("beta_hat", "se")){
     if(any(is.na(x[[n]]))){
       stop(paste0("Missing values in ", n), call.=FALSE)
     }
