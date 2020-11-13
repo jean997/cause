@@ -32,7 +32,7 @@ gwas_merge <- function(X1, X2,
                       beta_hat = beta_hat_cols[1], se = se_cols[1],
                       A1 = A1_cols[1], A2 = A2_cols[1])
   }else{
-    stopifnot(inherits(X1, "cause_data"))
+    X1 <- validate_cause_data_single(X1)
   }
   if(!X2_formatted){
     cat("Formatting X2\n")
@@ -40,7 +40,7 @@ gwas_merge <- function(X1, X2,
                       beta_hat = beta_hat_cols[2], se = se_cols[2],
                       A1 = A1_cols[2], A2 = A2_cols[2])
   }else{
-    stopifnot(inherits(X2, "cause_data"))
+    X2 <- validate_cause_data_single(X2)
   }
 
   X <-  X1 %>%
@@ -142,6 +142,32 @@ validate_cause_data <- function(x){
   }
   if(any(x$seb1 <= 0 | x$seb2 <=0)){
     stop("All of seb1 and seb2 must be positive", call.=FALSE)
+  }
+  x
+}
+
+validate_cause_data_single <- function(x){
+  if(!inherits(x, "data.frame")){
+    stop("`x` must inherit class data.frame", call.=FALSE)
+  }
+  req_names <- c("snp", "beta_hat", "seb", "A1", "A2")
+  if(!all(req_names %in% names(x))){
+    stop(paste0("`x` must contain variables ", req_names),
+         call.=FALSE)
+  }
+  for(n in req_names[-1]){
+    if(any(is.na(x[[n]]))){
+      stop(paste0("Missing values in ", n), call.=FALSE)
+    }
+    if(any(!is.finite(x[[n]]))){
+      stop(paste0("Infinite values in ", n), call.=FALSE)
+    }
+  }
+  if(any(x$se <= 0)){
+    stop("All se must be positive", call.=FALSE)
+  }
+  if(any(x$A1 != "A")){
+    stop("Alleles are not alligned. Use gwas_format to format data.", call.=FALSE)
   }
   x
 }
