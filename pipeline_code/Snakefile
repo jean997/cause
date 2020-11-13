@@ -47,10 +47,8 @@ else:
 
 trait_pairs = [(n1, n2) for n1 in names1 for n2 in names2 if n1!=n2]
 
-methods = config["analysis"]["methods"].split(",")
-
 rule all:
-    input: expand(out_dir + "df_{method}.RDS", method=methods)
+    input: expand(out_dir + "df_{method}.RDS", method=config["analysis"]["methods"])
 
 # Format data
 rule format:
@@ -116,7 +114,7 @@ rule cause_params:
     output: params = out_dir + '{tag1}__{tag2}_params.RDS',
     shell: 'Rscript R/cause_params.R {input.data} {output.params} {config[analysis][cause_seed]}'
 
-lm = config["ld"]["ld_prun_method"]
+lm = config["ld"]["ld_prune_method"]
 rule cause:
     input: data = data_dir + '{tag1}__{tag2}_data.RDS',
            snps = data_dir + 'snps_{tag1}__{tag2}.' + lm + '.pruned.txt',

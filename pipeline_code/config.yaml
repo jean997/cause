@@ -39,7 +39,7 @@ analysis:
 # r2_thresh is the r2 threshold for pruning.
 ld:
     ld_prune_method: "plink"
-    dir: "ld/"
+    ld_dir: "ld/"
     r2_file: "_AF0.05_0.1.RDS"
     info_file: "_AF0.05_snpdata.RDS"
     ld_score_dir: "ld_scores/eur_w_ld_chr/"
