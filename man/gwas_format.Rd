@@ -45,7 +45,8 @@ gwas_format(
 \item{compute_pval}{Logical, compute the p-value using a normal approximation if missing? Defaults to TRUE.}
 }
 \value{
-An object of class cause_data and data.frame.
+A data frame with columns chrom, pos, snp, A1, A2, beta_hat, se, p_value, and sample_size with all SNPs
+aligned so that A is the effect allele. This is ready to be used with gwas_merge with formatted = TRUE.
 }
 \description{
 Format GWAS summary statistics for CAUSE

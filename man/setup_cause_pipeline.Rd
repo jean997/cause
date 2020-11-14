@@ -4,7 +4,12 @@
 \alias{setup_cause_pipeline}
 \title{Set up analysis directory for pairs of GWAS summary statistics}
 \usage{
-setup_cause_pipeline(download_ld = FALSE, download_eur_ld_scores = FALSE)
+setup_cause_pipeline(download_ldshrink = FALSE, download_eur_ld_scores = FALSE)
+}
+\arguments{
+\item{download_ldshrink}{If TRUE the function will download LDshrink LD estimates for european subset of 1k genomes}
+
+\item{download_eur_ld_scores}{If TRUE the function will download LD scores needed for running LCV.}
 }
 \description{
 A helper function that prepares a working directory for running an analysis with CAUSE.
