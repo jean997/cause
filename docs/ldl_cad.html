@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -16,6 +15,7 @@
 
 <title>Example Analysis with CAUSE: LDL -&gt; CAD</title>
 
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,6 +30,16 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -239,6 +249,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -267,6 +278,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -352,10 +369,10 @@ div.tocify {
   <a href="ldl_cad.html">Software Tutorial</a>
 </li>
 <li>
-  <a href="simulations.html">Simulations</a>
+  <a href="pipeline.html">Pipeline</a>
 </li>
 <li>
-  <a href="gwas_pairs_2.html">Pairs of GWAS Traits</a>
+  <a href="explore.html">Explore Results</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -372,13 +389,6 @@ div.tocify {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
-
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
 
 <div class="fluid-row" id="header">
 
@@ -411,7 +421,7 @@ div.section {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-06-02
+<strong>Last updated:</strong> 2020-11-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -421,7 +431,7 @@ div.section {
 </p>
 <p>
 This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.4.0.9000). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -459,7 +469,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongSeedstrongcodesetseed20181014code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20181014)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
@@ -502,42 +512,41 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef8dff24eee9d6ea7ec83effa30317f2cc0240a1ftargetblankf8dff24a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/f8dff24eee9d6ea7ec83effa30317f2cc0240a1f" target="_blank">f8dff24</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef8dff24eee9d6ea7ec83effa30317f2cc0240a1ftargetblankf8dff24a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/example_data/
+    Ignored:    pipeline_code/plink_reference/
     Ignored:    sim_results/
     Ignored:    src/RcppExports.o
     Ignored:    src/cause.so
     Ignored:    src/log_likelihood_functions.o
 
 Untracked files:
-    Untracked:  analysis/figure/little_test.Rmd/
+    Untracked:  analysis/mrcieu.Rmd
     Untracked:  cause.Rcheck/
-    Untracked:  docs/cause.bib
-    Untracked:  docs/figure/cause_figure_1_standalone.pdf
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
-    Untracked:  test_A.RDS
-    Untracked:  test_A_answer1.RDS
-    Untracked:  test_A_answer3.RDS
-    Untracked:  test_Xsmall.RDS
-    Untracked:  test_fit2.RDS
-    Untracked:  test_mix_grid_new.RDS
-    Untracked:  test_params1_cold.RDS
-    Untracked:  test_params1_small.RDS
-    Untracked:  test_params3_small.RDS
-    Untracked:  test_params3_warm.RDS
-    Untracked:  test_params_orig.RDS
-    Untracked:  test_w.RDS
+    Untracked:  ll_v7_notes.html
+    Untracked:  pipeline_code/.snakemake/
+    Untracked:  pipeline_code/config.schema.yaml
+    Untracked:  pipeline_code/ld/
+    Untracked:  pipeline_code/raw_data/
     Untracked:  tests/
 
 </code></pre>
@@ -553,7 +562,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ldl_cad.Rmd</code>) and HTML (<code>docs/ldl_cad.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -577,6 +586,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/c7a1cb42f2d86d4fe0eff4c19ef2a001c75eec28/analysis/ldl_cad.Rmd" target="_blank">c7a1cb4</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-11-13
+</td>
+<td>
+refactor website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/81a1a48e3401219d0fea62242133be7117dc8656/docs/ldl_cad.html" target="_blank">81a1a48</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -639,7 +682,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-12-05
+2019-12-04
 </td>
 <td>
 Build site.
@@ -673,7 +716,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-16
+2019-07-15
 </td>
 <td>
 Build site.
@@ -690,7 +733,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-16
+2019-07-15
 </td>
 <td>
 wflow_publish(“analysis/ldl_cad.Rmd”)
@@ -724,7 +767,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 Build site.
@@ -741,7 +784,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 wflow_publish(“analysis/ldl_cad.Rmd”)
@@ -758,7 +801,7 @@ html
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 Build site.
@@ -775,7 +818,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 <td>
 wflow_publish(“analysis/ldl_cad.Rmd”)
@@ -928,7 +971,7 @@ html
 Jean Morrison
 </td>
 <td>
-2018-11-10
+2018-11-09
 </td>
 <td>
 update website
@@ -996,7 +1039,7 @@ html
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 build website
@@ -1013,7 +1056,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 fixing warnings
@@ -1030,7 +1073,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 build website
@@ -1047,7 +1090,7 @@ html
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 build website
@@ -1064,7 +1107,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 build website
@@ -1081,7 +1124,7 @@ html
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 <td>
 build website
@@ -1098,7 +1141,7 @@ html
 Jean Morrison
 </td>
 <td>
-2018-10-23
+2018-10-22
 </td>
 <td>
 Build site.
@@ -1115,7 +1158,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2018-10-23
+2018-10-22
 </td>
 <td>
 small language changes
@@ -1132,7 +1175,7 @@ Rmd
 Jean Morrison
 </td>
 <td>
-2018-10-23
+2018-10-22
 </td>
 <td>
 wflow_publish(“analysis/ldl_cad.Rmd”)
@@ -1249,7 +1292,7 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 </div>
 <div id="step-1-format-data-for-cause" class="section level2">
 <h2>Step 1: Format Data for CAUSE</h2>
-<p>We will use <code>read_tsv</code> to read in summary statistics for a GWAS of LDL cholesterol and a GWAS of coronary artery disease from the internet. We will then combine these and format them for use with CAUSE. First read in the data. For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068]. For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]. Downloading and formatting the data takes several minutes. If you want to skip this step, we provide a formatted data file that you can download below.</p>
+<p>We will use <code>read_tsv</code> to read in summary statistics for a GWAS of LDL cholesterol and a GWAS of coronary artery disease from the internet. We will then combine these and format them for use with CAUSE. First read in the data. For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068]. For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]. Downloading and formatting the data takes several minutes. If you want to skip this step, we provide a formatted data file that you can download below.</p>
 <pre class="r"><code>library(readr)
 library(dplyr)</code></pre>
 <pre><code>
@@ -1332,7 +1375,12 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 </div>
 <div id="step-3-ld-pruning" class="section level2">
 <h2>Step 3: LD Pruning</h2>
-<p>We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait <span class="math inline">\(M\)</span> (LDL) <span class="math inline">\(p\)</span>-values. The CAUSE R package contains a function to help do this. The function <code>ld_prune</code> uses a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
+<p>We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait <span class="math inline">\(M\)</span> (LDL) <span class="math inline">\(p\)</span>-values.</p>
+<p>There are two ways to do this step. The CAUSE R package contains a function that performs LD pruning given a file that contains pairwise estimates of <span class="math inline">\(r^2\)</span>. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrin. This method however, is very slow.</p>
+<p>An alternative is to use Plink to perform LD clumping. The <code>ieugwasr</code> package provides a convenient R interface to Plink. This method is much faster but requires a reference sample. You can download reference data from <a href="http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz">here</a>.</p>
+<div id="ld-pruning-using-plink-built-in-function" class="section level3">
+<h3>LD pruning using plink built in function</h3>
+<p>The function <code>ld_prune</code> uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
 <pre class="r"><code>download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1&quot;, destfile = &quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
 download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1&quot;, destfile=&quot;example_data/chr22_AF0.05_snpdata.RDS&quot;)</code></pre>
 <pre class="r"><code>ld &lt;- readRDS(&quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
@@ -1348,17 +1396,17 @@ head(ld)</code></pre>
 6 rs62224609  rs62224618 0.9907366</code></pre>
 <pre class="r"><code>head(snp_info)</code></pre>
 <pre><code># A tibble: 6 x 9
-     AF SNP        allele    chr      pos  snp_id region_id   map ld_snp_id
-  &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;    &lt;int&gt;   &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;     &lt;int&gt;
-1 0.884 rs62224609 T,C        22 16051249  7.98e7        22     0  79758556
-2 0.904 rs4965031  G,A        22 16052080  7.98e7        22     0  79758578
-3 0.646 rs3756846… A,AAAAC    22 16052167  7.98e7        22     0  79758584
-4 0.894 rs3762380… C,T        22 16052962  7.98e7        22     0  79758602
-5 0.934 rs2007775… C,A        22 16052986  7.98e7        22     0  79758604
-6 0.934 rs80167676 A,T        22 16053444  7.98e7        22     0  79758627</code></pre>
+     AF SNP         allele    chr      pos   snp_id region_id   map ld_snp_id
+  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;    &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;     &lt;int&gt;
+1 0.884 rs62224609  T,C        22 16051249 79758556        22     0  79758556
+2 0.904 rs4965031   G,A        22 16052080 79758578        22     0  79758578
+3 0.646 rs375684679 A,AAAAC    22 16052167 79758584        22     0  79758584
+4 0.894 rs376238049 C,T        22 16052962 79758602        22     0  79758602
+5 0.934 rs200777521 C,A        22 16052986 79758604        22     0  79758604
+6 0.934 rs80167676  A,T        22 16053444 79758627        22     0  79758627</code></pre>
 <p>The <code>ld</code> data frame should contain the column names <code>rowsnp</code>, <code>colsnp</code>, and <code>r2</code>. The <code>snp_info</code> data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants <code>snp_info$SNP</code> which provides the total list of variants used in the LD calculations.</p>
-<div id="ld-pruning-for-one-chromosome" class="section level3">
-<h3>LD pruning for one chromosome</h3>
+<div id="ld-pruning-for-one-chromosome" class="section level4">
+<h4>LD pruning for one chromosome</h4>
 <p>The <code>ld_prune</code> function is somewhat flexible in its arguments, see <code>help(ld_prune)</code>.</p>
 <pre class="r"><code>variants &lt;- X %&gt;% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
 pruned &lt;- ld_prune(variants = variants, 
@@ -1371,12 +1419,26 @@ Of these,  22835  have LD information.</code></pre>
 <pre><code>[1] 15</code></pre>
 <p>If <code>length(pval_cols) =1</code>, <code>ld_prune</code> returns a vector of selected variants. If There are multipld <span class="math inline">\(p\)</span>-value columns provided, <code>ld_prune</code> will return a list of vectors, one for each column. The length of <code>pval_thresh</code> should be equal to the length of <code>pval_cols</code> and provides a threshold for each column. Excluding variants with high <span class="math inline">\(p\)</span>-values speeds up the pruning step. We can fit CAUSE without high <span class="math inline">\(p\)</span>-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
 </div>
-<div id="parallelizing-over-chromosomes" class="section level3">
-<h3>Parallelizing over chromosomes</h3>
+<div id="parallelizing-over-chromosomes" class="section level4">
+<h4>Parallelizing over chromosomes</h4>
 <p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. A better option is to submit separate jobs to nodes of a compute cluster and then combine results.</p>
 <p>If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low <span class="math inline">\(p\)</span>-values for each traits (<span class="math inline">\(N\)</span> lists if there are <span class="math inline">\(N\)</span> phenotypes). In any analysis, you will use the list of variants prioritized for the trait <span class="math inline">\(M\)</span> phenotype.</p>
 <p>Download the LD-pruned variant list for our example analysis: <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
 <pre class="r"><code>download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS&quot;, destfile = &quot;example_data/top_ldl_pruned_vars.RDS&quot;)</code></pre>
+</div>
+</div>
+<div id="ld-pruning-using-plink" class="section level3">
+<h3>LD pruning using Plink</h3>
+<p>To perform LD pruning using the <code>ieugwasr</code> wrapper to Plink LD clumping function use</p>
+<pre class="r"><code>X_clump &lt;- X %&gt;% rename(rsid = snp,
+                  pval = p_value) %&gt;%
+           ieugwasr::ld_clump(dat = .,
+                     clump_r2 = r2_thresh,
+                     clump_p = pval_thresh,
+                     plink_bin = genetics.binaRies::get_plink_binary(),
+                     bfile = ref_path)
+keep_snps &lt;- X_clump$rsid</code></pre>
+<p>where <code>r2_thresh</code> is the <span class="math inline">\(r^2\)</span> threshold you would like to use, <code>pval_thresh</code> is the p-value threshold you will use to compute the CAUSE posteriors, and <code>ref_path</code> is a path to the reference data. We recomend using a lower <span class="math inline">\(r^2\)</span> threshold for plink LD clumping than for LD clumping based on estimates from LD shrink, since these are not shrunken.</p>
 </div>
 </div>
 <div id="step-4-fit-cause" class="section level2">
@@ -1410,7 +1472,7 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.57 corresponding to a p-value of 2.510^{-11}.</p>
+<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.57 corresponding to a p-value of 2.5^{-11}.</p>
 <p>For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
 <pre class="r"><code>plot(res$sharing)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1438,13 +1500,24 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/81a1a48e3401219d0fea62242133be7117dc8656/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">81a1a48</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276/docs/figure/ldl_cad.Rmd/plot1-1.png" target="_blank">70e2b97</a>
 </td>
 <td>
 Jean Morrison
 </td>
 <td>
-2019-12-05
+2019-12-04
 </td>
 </tr>
 <tr>
@@ -1455,7 +1528,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 </tr>
 <tr>
@@ -1499,7 +1572,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-11-10
+2018-11-09
 </td>
 </tr>
 <tr>
@@ -1532,7 +1605,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 </tr>
 <tr>
@@ -1587,13 +1660,24 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/81a1a48e3401219d0fea62242133be7117dc8656/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">81a1a48</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276/docs/figure/ldl_cad.Rmd/plot1-2.png" target="_blank">70e2b97</a>
 </td>
 <td>
 Jean Morrison
 </td>
 <td>
-2019-12-05
+2019-12-04
 </td>
 </tr>
 <tr>
@@ -1604,7 +1688,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 </tr>
 <tr>
@@ -1648,7 +1732,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-11-10
+2018-11-09
 </td>
 </tr>
 <tr>
@@ -1681,7 +1765,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 </tr>
 <tr>
@@ -1714,12 +1798,9 @@ Jean Morrison
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
 <pre><code>p-value testing that causal model is a better fit:  2.5e-11 
 Posterior medians and  95 % credible intervals:
-     model     gamma              eta                  
-[1,] &quot;Sharing&quot; NA                 &quot;0.38 (0.31, 0.45)&quot;  
-[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.4)&quot; &quot;-0.01 (-0.66, 0.53)&quot;
-     q                  
-[1,] &quot;0.78 (0.65, 0.89)&quot;
-[2,] &quot;0.03 (0, 0.25)&quot;   </code></pre>
+     model     gamma              eta                   q                  
+[1,] &quot;Sharing&quot; NA                 &quot;0.38 (0.31, 0.45)&quot;   &quot;0.78 (0.65, 0.89)&quot;
+[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.4)&quot; &quot;-0.01 (-0.66, 0.53)&quot; &quot;0.03 (0, 0.25)&quot;   </code></pre>
 <p>The <code>plot</code> method applied to a <code>cause</code> object will arrange all of this information on one spread.</p>
 <pre class="r"><code>plot(res)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot2-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1747,13 +1828,24 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/81a1a48e3401219d0fea62242133be7117dc8656/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">81a1a48</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/70e2b97cc2ac9ecda4f2c3bc9dd1aaae04e00276/docs/figure/ldl_cad.Rmd/plot2-1.png" target="_blank">70e2b97</a>
 </td>
 <td>
 Jean Morrison
 </td>
 <td>
-2019-12-05
+2019-12-04
 </td>
 </tr>
 <tr>
@@ -1764,7 +1856,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-16
+2019-07-15
 </td>
 </tr>
 <tr>
@@ -1775,7 +1867,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 </tr>
 <tr>
@@ -1819,7 +1911,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-11-10
+2018-11-09
 </td>
 </tr>
 <tr>
@@ -1852,7 +1944,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-10-25
+2018-10-24
 </td>
 </tr>
 <tr>
@@ -1908,6 +2000,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jean997/cause/blob/81a1a48e3401219d0fea62242133be7117dc8656/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">81a1a48</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-06-02
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jean997/cause/blob/1cfcb0b3cc513064b0fecc385bb2317e482c6718/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">1cfcb0b</a>
 </td>
 <td>
@@ -1925,7 +2028,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-12-05
+2019-12-04
 </td>
 </tr>
 <tr>
@@ -1936,7 +2039,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-16
+2019-07-15
 </td>
 </tr>
 <tr>
@@ -1947,7 +2050,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2019-07-10
+2019-07-09
 </td>
 </tr>
 <tr>
@@ -1991,7 +2094,7 @@ Jean Morrison
 Jean Morrison
 </td>
 <td>
-2018-11-10
+2018-11-09
 </td>
 </tr>
 <tr>
@@ -2021,9 +2124,9 @@ Jean Morrison
 </div>
 </div>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.3 (2020-02-29)
+<pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.4 LTS
+Running under: Ubuntu 18.04.5 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -2041,30 +2144,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.0.0.0266 dplyr_0.8.3      readr_1.3.1     
+[1] cause_1.2.0     dplyr_1.0.2     readr_1.4.0     workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-47         
- [4] purrr_0.3.3          lattice_0.20-38      colorspace_1.4-1    
- [7] vctrs_0.2.0          htmltools_0.3.6      loo_2.1.0           
-[10] yaml_2.2.0           utf8_1.1.4           rlang_0.4.2         
-[13] mixsqp_0.3-43        pillar_1.4.2         glue_1.3.1          
-[16] matrixStats_0.55.0   lifecycle_0.1.0      stringr_1.4.0       
-[19] munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9000
-[22] evaluate_0.14        labeling_0.3         knitr_1.24          
-[25] invgamma_1.1         irlba_2.3.3          parallel_3.6.3      
-[28] fansi_0.4.0          Rcpp_1.0.4.6         backports_1.1.5     
-[31] scales_1.1.0         RcppParallel_4.4.4   truncnorm_1.0-8     
-[34] farver_2.0.1         fs_1.3.1             gridExtra_2.3       
-[37] ggplot2_3.2.1        hms_0.5.2            digest_0.6.23       
-[40] stringi_1.4.3        numDeriv_2016.8-1.1  grid_3.6.3          
-[43] rprojroot_1.3-2      cli_2.0.0            tools_3.6.3         
-[46] magrittr_1.5         lazyeval_0.2.2       tibble_2.1.3        
-[49] crayon_1.3.4         whisker_0.4          tidyr_1.0.0         
-[52] pkgconfig_2.0.3      zeallot_0.1.0        ellipsis_0.3.0      
-[55] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
-[58] rmarkdown_1.15       R6_2.4.1             intervals_0.15.1    
-[61] git2r_0.26.1         compiler_3.6.3      </code></pre>
+ [1] tidyselect_1.1.0   xfun_0.18          ashr_2.2-47        purrr_0.3.4       
+ [5] lattice_0.20-41    colorspace_2.0-0   vctrs_0.3.4        generics_0.1.0    
+ [9] htmltools_0.5.0    loo_2.3.0          yaml_2.2.1         utf8_1.1.4        
+[13] rlang_0.4.8        mixsqp_0.3-43      later_1.1.0.1      pillar_1.4.6      
+[17] glue_1.4.2         matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0     
+[21] munsell_0.5.0      gtable_0.3.0       evaluate_0.14      labeling_0.4.2    
+[25] knitr_1.30         httpuv_1.5.4       invgamma_1.1       irlba_2.3.3       
+[29] parallel_4.0.3     fansi_0.4.1        Rcpp_1.0.5         promises_1.1.1    
+[33] backports_1.2.0    scales_1.1.1       RcppParallel_5.0.2 truncnorm_1.0-8   
+[37] farver_2.0.3       fs_1.5.0           gridExtra_2.3      ggplot2_3.3.2     
+[41] hms_0.5.3          digest_0.6.27      stringi_1.5.3      rprojroot_1.3-2   
+[45] grid_4.0.3         cli_2.1.0          tools_4.0.3        magrittr_1.5      
+[49] tibble_3.0.4       crayon_1.3.4       whisker_0.4        tidyr_1.1.2       
+[53] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.5    
+[57] assertthat_0.2.1   rmarkdown_2.3      rstudioapi_0.12    R6_2.5.0          
+[61] intervals_0.15.2   git2r_0.27.1       compiler_4.0.3    </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2073,9 +2171,9 @@ loaded via a namespace (and not attached):
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.6.3 (2020-02-29)
+<pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.4 LTS
+Running under: Ubuntu 18.04.5 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -2093,30 +2191,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.0.0.0266 dplyr_0.8.3      readr_1.3.1     
+[1] cause_1.2.0     dplyr_1.0.2     readr_1.4.0     workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5     xfun_0.9             ashr_2.2-47         
- [4] purrr_0.3.3          lattice_0.20-38      colorspace_1.4-1    
- [7] vctrs_0.2.0          htmltools_0.3.6      loo_2.1.0           
-[10] yaml_2.2.0           utf8_1.1.4           rlang_0.4.2         
-[13] mixsqp_0.3-43        pillar_1.4.2         glue_1.3.1          
-[16] matrixStats_0.55.0   lifecycle_0.1.0      stringr_1.4.0       
-[19] munsell_0.5.0        gtable_0.3.0         workflowr_1.4.0.9000
-[22] evaluate_0.14        labeling_0.3         knitr_1.24          
-[25] invgamma_1.1         irlba_2.3.3          parallel_3.6.3      
-[28] fansi_0.4.0          Rcpp_1.0.4.6         backports_1.1.5     
-[31] scales_1.1.0         RcppParallel_4.4.4   truncnorm_1.0-8     
-[34] farver_2.0.1         fs_1.3.1             gridExtra_2.3       
-[37] ggplot2_3.2.1        hms_0.5.2            digest_0.6.23       
-[40] stringi_1.4.3        numDeriv_2016.8-1.1  grid_3.6.3          
-[43] rprojroot_1.3-2      cli_2.0.0            tools_3.6.3         
-[46] magrittr_1.5         lazyeval_0.2.2       tibble_2.1.3        
-[49] crayon_1.3.4         whisker_0.4          tidyr_1.0.0         
-[52] pkgconfig_2.0.3      zeallot_0.1.0        ellipsis_0.3.0      
-[55] Matrix_1.2-17        SQUAREM_2020.2       assertthat_0.2.1    
-[58] rmarkdown_1.15       R6_2.4.1             intervals_0.15.1    
-[61] git2r_0.26.1         compiler_3.6.3      </code></pre>
+ [1] tidyselect_1.1.0   xfun_0.18          ashr_2.2-47        purrr_0.3.4       
+ [5] lattice_0.20-41    colorspace_2.0-0   vctrs_0.3.4        generics_0.1.0    
+ [9] htmltools_0.5.0    loo_2.3.0          yaml_2.2.1         utf8_1.1.4        
+[13] rlang_0.4.8        mixsqp_0.3-43      later_1.1.0.1      pillar_1.4.6      
+[17] glue_1.4.2         matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0     
+[21] munsell_0.5.0      gtable_0.3.0       evaluate_0.14      labeling_0.4.2    
+[25] knitr_1.30         httpuv_1.5.4       invgamma_1.1       irlba_2.3.3       
+[29] parallel_4.0.3     fansi_0.4.1        Rcpp_1.0.5         promises_1.1.1    
+[33] backports_1.2.0    scales_1.1.1       RcppParallel_5.0.2 truncnorm_1.0-8   
+[37] farver_2.0.3       fs_1.5.0           gridExtra_2.3      ggplot2_3.3.2     
+[41] hms_0.5.3          digest_0.6.27      stringi_1.5.3      rprojroot_1.3-2   
+[45] grid_4.0.3         cli_2.1.0          tools_4.0.3        magrittr_1.5      
+[49] tibble_3.0.4       crayon_1.3.4       whisker_0.4        tidyr_1.1.2       
+[53] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.5    
+[57] assertthat_0.2.1   rmarkdown_2.3      rstudioapi_0.12    R6_2.5.0          
+[61] intervals_0.15.2   git2r_0.27.1       compiler_4.0.3    </code></pre>
 </div>
 </div>
 
@@ -2132,6 +2225,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
@@ -2182,7 +2277,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

@@ -369,10 +369,10 @@ div.tocify {
   <a href="ldl_cad.html">Software Tutorial</a>
 </li>
 <li>
-  <a href="simulations.html">Simulations</a>
+  <a href="pipeline.html">Pipeline</a>
 </li>
 <li>
-  <a href="gwas_pairs_2.html">Pairs of GWAS Traits</a>
+  <a href="explore.html">Explore Results</a>
 </li>
 <li>
   <a href="license.html">License</a>
@@ -421,7 +421,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-30
+<strong>Last updated:</strong> 2020-11-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -512,16 +512,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed3a24078168ebf776b5cc9c32a760655e51ea25ctargetblankd3a2407a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/d3a24078168ebf776b5cc9c32a760655e51ea25c" target="_blank">d3a2407</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreed3a24078168ebf776b5cc9c32a760655e51ea25ctargetblankd3a2407a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/d3a24078168ebf776b5cc9c32a760655e51ea25c" target="_blank">d3a2407</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -531,6 +531,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/example_data/
+    Ignored:    pipeline_code/plink_reference/
     Ignored:    sim_results/
     Ignored:    src/RcppExports.o
     Ignored:    src/cause.so
@@ -542,6 +543,10 @@ Untracked files:
     Untracked:  gwas_data/
     Untracked:  ll_v7_notes.Rmd
     Untracked:  ll_v7_notes.html
+    Untracked:  pipeline_code/.snakemake/
+    Untracked:  pipeline_code/config.schema.yaml
+    Untracked:  pipeline_code/ld/
+    Untracked:  pipeline_code/raw_data/
     Untracked:  tests/
 
 Unstaged changes:
@@ -588,6 +593,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/1d96a4210272dabee55a12c2cb2ac39d808d7f27/docs/simulations.html" target="_blank">1d96a42</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-09-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1867,7 +1889,7 @@ cause: R(library(causeSims);
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.2 (2020-06-22)
+<pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Ubuntu 18.04.5 LTS
 
@@ -1896,41 +1918,41 @@ loaded via a namespace (and not attached):
  [5] assertthat_0.2.1             mixsqp_0.3-43               
  [7] arrangements_1.1.9           yaml_2.2.1                  
  [9] robustbase_0.93-6            globals_0.12.5              
-[11] pillar_1.4.6                 backports_1.1.10            
+[11] pillar_1.4.6                 backports_1.2.0             
 [13] lattice_0.20-41              glue_1.4.2                  
-[15] digest_0.6.25                promises_1.1.1              
-[17] iterpc_0.4.2                 colorspace_1.4-1            
+[15] digest_0.6.27                promises_1.1.1              
+[17] iterpc_0.4.2                 colorspace_2.0-0            
 [19] MRPRESSO_1.0                 plyr_1.8.6                  
 [21] htmltools_0.5.0              httpuv_1.5.4                
 [23] Matrix_1.2-18                pkgconfig_2.0.3             
 [25] invgamma_1.1                 listenv_0.8.0               
 [27] scales_1.1.1                 intervals_0.15.2            
-[29] cause_1.0.0.0275             whisker_0.4                 
+[29] cause_1.2.0                  whisker_0.4                 
 [31] later_1.1.0.1                git2r_0.27.1                
-[33] tibble_3.0.3                 MendelianRandomization_0.4.3
+[33] tibble_3.0.4                 MendelianRandomization_0.4.3
 [35] gmp_0.6-0                    farver_2.0.3                
-[37] generics_0.0.2               ellipsis_0.3.1              
+[37] generics_0.1.0               ellipsis_0.3.1              
 [39] withr_2.3.0                  furrr_0.1.0                 
 [41] ashr_2.2-47                  lazyeval_0.2.2              
-[43] cli_2.0.2                    magrittr_1.5                
+[43] cli_2.1.0                    magrittr_1.5                
 [45] crayon_1.3.4                 evaluate_0.14               
 [47] fansi_0.4.1                  fs_1.5.0                    
 [49] future_1.18.0                truncnorm_1.0-8             
-[51] RcppZiggurat_0.1.5           tools_4.0.2                 
+[51] RcppZiggurat_0.1.5           tools_4.0.3                 
 [53] loo_2.3.0                    data.table_1.13.0           
 [55] hms_0.5.3                    lifecycle_0.2.0             
 [57] matrixStats_0.57.0           stringr_1.4.0               
 [59] plotly_4.9.2.1               munsell_0.5.0               
-[61] irlba_2.3.3                  compiler_4.0.2              
-[63] rlang_0.4.7                  grid_4.0.2                  
-[65] rstudioapi_0.11              rjson_0.2.20                
-[67] htmlwidgets_1.5.1            labeling_0.3                
+[61] irlba_2.3.3                  compiler_4.0.3              
+[63] rlang_0.4.8                  grid_4.0.3                  
+[65] rstudioapi_0.12              rjson_0.2.20                
+[67] htmlwidgets_1.5.1            labeling_0.4.2              
 [69] rmarkdown_2.3                gtable_0.3.0                
-[71] codetools_0.2-16             R6_2.4.1                    
+[71] codetools_0.2-16             R6_2.5.0                    
 [73] gridExtra_2.3                knitr_1.30                  
 [75] utf8_1.1.4                   rprojroot_1.3-2             
-[77] readr_1.3.1                  stringi_1.5.3               
-[79] parallel_4.0.2               SQUAREM_2020.3              
+[77] readr_1.4.0                  stringi_1.5.3               
+[79] parallel_4.0.3               SQUAREM_2020.5              
 [81] Rcpp_1.0.5                   vctrs_0.3.4                 
 [83] DEoptimR_1.0-8               tidyselect_1.1.0            
 [85] xfun_0.18                   </code></pre>
