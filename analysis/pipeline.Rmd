@@ -1,0 +1,240 @@
+---
+title: "Analyze Pairs of GWAS Traits Using CAUSE Pipeline"
+author: "Jean Morrison"
+date: "2019-10-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+We have setup a Snakemake pipeline that will make it easy to run CAUSE (and a handful of other methods) on many pairs of traits. This document will describe how to use the pipeline and run an example. 
+
+## Requirements
+
+This pipeline uses [Snakemake](https://snakemake.readthedocs.io/en/stable/). Snakemake is easiest to use through a conda environment. Follow the installation instructions [here](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html). If you don't have Miniconda or Anaconda installed you can either install one of them (recommended) or just make sure that you have Python3, pandas and Snakemake installed. 
+
+You will also need R and the following R packages:
++ `cause` (>= v1.2.0)
++ `tidyverse`
++ `ieugwasr` If using plink method to prune for LD
++ `genetics.binaRies` If using plink method to prune for LD
+
+If you were able to work through the [package tutorial](ldl_cad.html) you should be in good shape. Optional packages for running alternate methods included in the pipeline:
+
++ [`MR-PRESSO`](https://github.com/rondolab/MR-PRESSO) (If you would like to compare to MR-PRESSO)
++ `MendelianRandomization` (If you would like to compare to other MR methods)
++ [`cuaseSims`](https://github.com/jean997/causeSims) contains an wrapper to LCV and is only required if you want to run LCV. 
+
+
+To run the example in this document, first create a working directory that you would like to analyze the data in. Change to that directory using `cd` in Mac or Linux. For example
+
+```
+mkdir gwas_pairs
+cd gwas_pairs
+```
+
+If you are running snakemake through a conda environment, activate that environment (e.g. `source activate snakemake`)
+
+Finally, inside the working directory and using R, setup a CAUSE pipeline using the function `cause::setup_cause_pipeline`. 
+This function will download necessary code and configuration files. It can also download the LD information that we used for analyses in the paper and LD scores for running LCV. If you wish to download these, set `download_ldshrink=TRUE` and `download_eur_ld_scores=TRUE` respectively. Both arguments default to FALSE.
+
+```{r, eval=FALSE}
+cause::setup_cause_pipeline(download_ldshrink=TRUE, download_eur_ld_scores=TRUE)
+```
+
+## Set up the pipeline
+
+Set up a pipeline analysis. From the directory you want to use, in R run 
+
+```
+cause::setup_cause_pipeline()
+```
+
+The `setup_cause_pipeline()` function provides you with everything you need to run an  analysis except for data and a `.csv` file describing that data. 
+
+## Configuration file
+
+The analysis is controlled by the `config.yaml` file which has four sections. You should edit the file to match your analysis desires.
+
+
+### Input section
+The `input` section gives the location of a `csv` file that describes each set of GWAS summary statistics.
+
+```
+input:
+    sum_stats: "gwas_pairs.csv"
+```
+
+The spreadsheet has the following mandatory column headers in any order:
+
+`name`: a unique string naming the study
+
+`delimeter`: Field delimeter. One of "tab", ",", "space", or any symbol.
+
+`snp`: Column name of SNP ID (generally rs number but anything that matches the other file). This will be the field that studies are joined on.
+
+`A1`: Column name of effect allele
+
+`A2`: Column name of other allele
+
+`beta_hat`: Column name of effect estimate
+
+`se`: Column name of standard error of effect estimate
+
+`p_value`: Column name of $p$-value
+
+`sample_size`: Column name of per-SNP sample size
+
+The `p_value` and `sample_size` fields may contain NAs if some studies don't have them. The rest are required. Most studies can be used exactly as downloaded but you may have to a little bit of formatting before you can use the pipeline. For example, some studies do not contain rs numbers or have atypical variant names. 
+
+
+
+### Analysis section
+The analysis section contains parameters that tell the pipeline which analyses to run.
+
+
+```
+analysis:
+    all_pairs: True
+    trait1: [1]
+    trait2: [2,3]
+    methods: ["lcv","mrpackage","mrpresso","cause_1_10","cause_1_100","cause_1_2"]
+    mr_pval: "5e-8"
+    cause_pval: "1e-3"
+    cause_seed: 100
+```
+
++ `all_pairs`, `trait1`, `trait2` specify which pairs of traits to analyze. If `all_pairs` is `True` (using python syntax here), the pipeline will evaluate all pairs of traits listed in ths csv file and ignore `trait1` and `trait2` fields. Otherwise
+it will use traits in `trait1` as M (exposure) and traits in `trait2` as Y (outcome). These should be python syntax lists of integers corresponding to the index of the traits in the csv file (beginning at 1 after the header). 
++ `methods` lists the methods you want to run. This is a python format list of strings. Options are "cause_*_*", "mrpackage", "lcv",  and "mrpresso". The two numbers in the cause method name indicate parameters for the beta prior on q. For example, cause_1_10 indicates to run cause with a Beta(1, 10) prior for q. This is our suggested default. The "mrpackage" option will run five methods using the `MendelianRandomization` R package. These are IVW with random effects, Egger regression with random effects, the weighted median, and the weighted mode with three different choices of the parameter $\phi$ (1, 0.5, and 0.25). 
++  `mr_pval`: gives the p-value threshold for including variants for methods besides LCV and CAUSE
++ `cause_pval`: gives the p-value threshold for computing cause posteriors. We recommend 1e-3
++ `cause_seed`: gives seed for running cause to ensure reproducibility.
+
+### LD section
+
+
+The `ld` section tells the pipeline how to prune for LD and the location of reference files. 
+```
+ld:
+    ld_prune_method: "plink"
+    r2_thresh: 0.01
+    plink_opts:
+        ref_path: "plink_reference/EUR"
+    cause_opts:
+        ld_dir: "ld/"
+        r2_file: "_AF0.05_0.1.RDS"
+        info_file: "_AF0.05_snpdata.RDS"
+    ld_score_dir: "ld_scores/eur_w_ld_chr/"
+```
+
++ `ld_prune_method` can be either "cause" or "plink". The plink method is fast. The cause method can take LD computed from a variety of methods and input as pairwise $r^2$ estimates. 
++ If the method chosen is "plink" then specify:
+    + `ref_path`: The location of bim/bed/fam files for reference data used for LD computations. Reference files can be downladed [here](http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz). 
++ If you use the "cause" method then specify:
+    + `ld_dir`
+    + `r2_file`
+    + `info_file`
+The pipeline will expect to find files in the directory given in `ld_dir:` with names `{chr}{r2_file}`  and `{chr}{info_file}` where `{r2_file}` and `{info_file}` are the file endings given in those respective fields and `{chr}` is a chromosme (e.g. `chr1`, `chr2`) for chromosomes 1-22. 
++ `ld_score_dir` is only necessary if you want to run LCV and gives the location of LD scores.
+
+
+### Output section 
+
+The `out` section tells the pipeline where to store output files.
+
+```
+out:
+    gwas_data_dir: "cause_standard_format/"
+    other_data_dir: "data/"
+    output_dir: "results/"
+```
+
++ `gwas_data_dir` is a directory to store formatted summary statistics. It can be helpful to store these in a centralized location if you are running multiple pipelines to save on work and storage. 
++ `other_data_dir` lists a directory to store other data files specific to this analysis. These include some temporary files that are removed at the end of the pipeline and lists of SNPs pruned for LD that are saved. 
++ `output_dir` is a directory to store analysis results. 
+
+
+## Cluster file 
+
+The `cluster.yaml` file describes resources allocated for each kind of job. The default should work for most cases but if the default requests more resources than are available on your cluster (e.g. memory) you may need to change it.
+
+
+## Run the pipeline
+
+The command for submitting the pipeline including the cluster submission is in the `run-snakemake.sh` file. You will need to modify it to match your cluster. The default version is written for a slurm cluster (using `sbatch`). If you are using a PBS cluster, you will need to change to `qsub`. Depending on your cluster, you may need to add options to specify the partition or account you want to use. 
+
+Once you have downloaded summary statistics and created the csv file you are ready to run the pipeline. You can run with 
+```
+nohup ./run-snakemake.sh & 
+```
+You may need to change the permissions of `run-snakemake.sh` to be executable with `chmod a+x run-snakemake.sh`. The `nohup` is optional but is nice because the pipeline can run for a long time. I generally prefer to run the pipeline from a compute node rather than the login node but this will depend on your setup.
+
+
+
+## Example 
+
+### Set up the pipeline
+From the directory you want to use, in R run 
+
+```
+cause::setup_cause_pipeline()
+```
+
+If you want to use the cause package to do LD pruning, use `download_ldshrink=TRUE` to download LDshrink $r^2$ estimates. If you don't already have LD scores stored, use `dowload_eur_ld_scores=TRUE`. 
+
+### Download example data
+From inside of R run 
+
+```
+cause::cause_download_example_gwas_data()
+```
+
+This function will set up an example analysis of three traits LDL cholesterol (Willer et al 2013 PMID 24097068
+), coronary artery disease (van der Harst et al 2017 PMID 29212778), and asthma (Demenais et al 2018 PMID 29273806). The function will download summary statistics directly from their sources. 
+
+These files are ready to use without any modifications, but this isn't always the case. For example, some studies do not have rs ids included or report odds ratio rather than log odds ratio (the coefficient estimate from logistic regression). If this happens, you will need to modify the data so they contain the five mandatory columns of snp name, effect allele, other allele, coefficient (effect) estimate, and standard error of effect estimate. 
+
+The function also downloads a `csv` file called `gwas_pairs.csv`. Take a look at the csv if you are having trouble making your own. This file has some extra (non-required) columns that we find useful for keeping track of studies. 
+
+### Download LD reference data
+
+To use plink for LD pruning, download reference data from [here](http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz) and unpack the `.tgz` file. 
+
+### Edit the config file
+ Leave the input and analysis, and output sections unchanged. In the LD section, make sure that directories match the location of your reference data. 
+
+### Edit the submission command
+Edit the `run-snakemake.sh` file so that the cluster command is compatible with your cluster setup. Change the permissions of `run-snakemake.sh` to make it an executable. Use `chmod a+x run-snakemake.sh`.
+
+### Run the analysis
+
+```
+source activate snakemake
+nohup ./run-snakemake.sh & 
+```
+
+A good thing to keep in mind is that Snakemake will pickup wherever it left off if a job fails or the analysis is interrupted. For example, suppose you find that you need to give one method more memory using the data you have. You can modify the `cluster.yaml` file and then simply re-run the command above. No work that has been completed will be repeated. You can use `snakemake -n` to do a "dry run" which tells you what commands will be run. 
+
+### Look at results
+
+When the pipeline is done, in the results directory there will be a handful of files named `results/df_{method}.RDS` where `{method}` is one of the methods run above. Load these into R and take a look using
+
+```{r, eval=FALSE}
+df <- readRDS("results/df_cause_1_10.RDS")
+df
+```
+
+Additionally, the results folder will contain files named `results/{name1}__{name2}_{method}.RDS` containing results for each method. If the method is CAUSE, this will be a CAUSE object that you can look at using utilities in the `cause` package. Try
+
+```{r, eval=FALSE}
+library(cause)
+res <- readRDS("results/glg_ldl__vanderHarst_cad_cause_1_10.RDS")
+summary(res)
+plot(res, type="posteriors")
+plot(res, type="data")
+```
+
+

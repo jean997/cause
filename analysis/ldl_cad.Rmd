@@ -120,8 +120,15 @@ whih leads to bad model comparisons.
 
 ## Step 3: LD Pruning
 
-We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait $M$ (LDL) $p$-values. The CAUSE R package contains a function to help do this.
-The function `ld_prune` uses a greedy algorithm that selects the variant wtih the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. 
+We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait $M$ (LDL) $p$-values. 
+
+There are two ways to do this step. The CAUSE R package contains a function that performs LD pruning given a file that contains pairwise estimates of $r^2$. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrin. This method however, is very slow.
+
+An alternative is to use Plink to perform LD clumping. The `ieugwasr` package provides a convenient R interface to Plink. This method is much faster but requires a reference sample. You can download reference data from [here](http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz). 
+
+### LD pruning using plink built in function
+
+The function `ld_prune` uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. 
 This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.  
 
 ```{r, eval=FALSE}
@@ -140,7 +147,7 @@ head(snp_info)
 
 The `ld` data frame should contain the column names `rowsnp`, `colsnp`, and `r2`. The `snp_info` data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants `snp_info$SNP` which provides the total list of variants used in the LD calculations. 
 
-### LD pruning for one chromosome
+#### LD pruning for one chromosome
 
 The `ld_prune` function is somewhat flexible in its arguments, see `help(ld_prune)`. 
 
@@ -156,7 +163,7 @@ length(pruned)
 
 If `length(pval_cols) =1`, `ld_prune` returns a vector of selected variants. If There are multipld $p$-value columns provided, `ld_prune` will return a list of vectors, one for each column. The length of `pval_thresh` should be equal to the length of `pval_cols` and provides a threshold for each column. Excluding variants with high $p$-values speeds up the pruning step. We can fit CAUSE without high $p$-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
 
-### Parallelizing over chromosomes 
+#### Parallelizing over chromosomes 
 
 We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
 A better option is to submit separate jobs to nodes of a compute cluster and then combine results. 
@@ -169,6 +176,23 @@ Download the LD-pruned variant list for our example analysis: [top LDL list](htt
 download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
 ```
 
+### LD pruning using Plink
+
+To perform LD pruning using the `ieugwasr` wrapper to Plink LD clumping function use
+
+```{r, eval=FALSE}
+
+X_clump <- X %>% rename(rsid = snp,
+                  pval = p_value) %>%
+           ieugwasr::ld_clump(dat = .,
+                     clump_r2 = r2_thresh,
+                     clump_p = pval_thresh,
+                     plink_bin = genetics.binaRies::get_plink_binary(),
+                     bfile = ref_path)
+keep_snps <- X_clump$rsid
+```
+
+where `r2_thresh` is the $r^2$ threshold you would like to use, `pval_thresh` is the p-value threshold you will use to compute the CAUSE posteriors, and `ref_path` is a path to the reference data. We recomend using a lower $r^2$ threshold for plink LD clumping than for LD clumping based on estimates from LD shrink, since these are not shrunken. 
 
 ## Step 4: Fit CAUSE
 

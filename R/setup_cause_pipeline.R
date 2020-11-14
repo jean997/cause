@@ -1,9 +1,10 @@
 #'@title Set up analysis directory for pairs of GWAS summary statistics
 #'@description A helper function that prepares a working directory for running an analysis with CAUSE.
 #'@details This function downloads Snakemake pipeline and R code needed to run CAUSE on many pairs of traits.
+#'@param download_ldshrink If TRUE the function will download LDshrink LD estimates for european subset of 1k genomes
+#'@param download_eur_ld_scores If TRUE the function will download LD scores needed for running LCV.
 #'@export
-setup_cause_pipeline <- function(download_ldshrink=FALSE, download_eur_ld_scores=FALSE,
-                                 download_plink_ref = FALSE){
+setup_cause_pipeline <- function(download_ldshrink=FALSE, download_eur_ld_scores=FALSE){
   #Download LD data
   if(download_ldshrink){
     if(!dir.exists("ld/")) system("mkdir ld")
@@ -20,13 +21,13 @@ setup_cause_pipeline <- function(download_ldshrink=FALSE, download_eur_ld_scores
     system("tar -xjf ld_scores/eur_w_ld_chr.tar.bz2")
     system("mv eur_w_ld_chr/ ld_socres/")
   }
-  if(download_plink_ref){
-    if(!dir.exists("plink_reference/")) system("mkdir plink_reference")
-    download.file(url = "http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz", destfile="plink_reference/1kg.v3.tgz")
-    setwd("plink_reference")
-    system("tar -xzf 1kg.v3.tgz")
-    setwd("..")
-  }
+  # if(download_plink_ref){
+  #   if(!dir.exists("plink_reference/")) system("mkdir plink_reference")
+  #   download.file(url = "http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz", destfile="plink_reference/1kg.v3.tgz")
+  #   setwd("plink_reference")
+  #   system("tar -xzf 1kg.v3.tgz")
+  #   setwd("..")
+  # }
 
   #Download code
   if(!dir.exists("R/")) system("mkdir R")

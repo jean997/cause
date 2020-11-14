@@ -7,10 +7,10 @@ navbar:
       href: index.html
     - text: "Software Tutorial"
       href: ldl_cad.html
-    - text: "Simulations"
-      href: simulations.html
-    - text: "Pairs of GWAS Traits"
-      href: gwas_pairs_2.html
+    - text: "Pipeline"
+      href: pipeline.html
+    - text: "Explore Results"
+      href: explore.html
     - text: "License"
       href: license.html
   right:

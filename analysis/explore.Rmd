@@ -1,0 +1,21 @@
+---
+title: "Explore Results from Morrison et al (2020)"
+author: "Jean Morrison"
+date: "2019-10-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Pairs of GWAS Traits
+
+[Click here to explore results interactively](https://jean-loves-stats.shinyapps.io/gwas_pairs_2/)
+
+To run your own analysis on a large number of traits, try the [pipeline](pipeline.html)
+
+
+## Simulations 
+
+[Click here to look at simulation results interactively](https://jean-loves-stats.shinyapps.io/simulations/)
+
+To replicate simulations or run a similar set, follow instructions [here](simulations.html)
