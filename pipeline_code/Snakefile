@@ -42,8 +42,8 @@ if config["analysis"]["all_pairs"]:
    names1 = ss["name"]
    names2 = ss["name"]
 else:
-    names1 = [ss["name"][int(i)-1] for  i in str(config["analysis"]["trait1"]).split(",")]
-    names2 = [ss["name"][int(i)-1] for  i in str(config["analysis"]["trait2"]).split(",")]
+    names1 = [ss["name"][i-1] for  i in config["analysis"]["trait1"])]
+    names2 = [ss["name"][i-1] for  i in config["analysis"]["trait2"]]
 
 trait_pairs = [(n1, n2) for n1 in names1 for n2 in names2 if n1!=n2]
 

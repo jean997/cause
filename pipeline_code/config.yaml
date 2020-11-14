@@ -20,8 +20,8 @@ input:
 # cause_seed: gives seed for running cause to ensure reproducibility.
 analysis:
     all_pairs: True
-    trait1: 1
-    trait2: 2,3
+    trait1: [1]
+    trait2: [2,3]
     methods: ["lcv","mrpackage","mrpresso","cause_1_10","cause_1_100","cause_1_2"]
     mr_pval: "5e-8"
     cause_pval: "1e-3"
