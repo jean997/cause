@@ -11,7 +11,7 @@
 #'@return An object of class cause_params
 #'@export
 est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"),
-                             null_wt = 10, max_candidates=Inf, control=list()){
+                             null_wt = 10, n_iter = 20, max_candidates=Inf, control=list()){
   optmethod <- match.arg(optmethod)
   if(optmethod == "mixSQP"){
      control0 <- list(verbose = FALSE, eps = 1e-08, numiter.em = 10, maxiter.activeset = 100, tol.svd = 0)
@@ -33,7 +33,8 @@ est_cause_params <- function(X, variants, optmethod = c("mixSQP", "mixIP"),
   cat("Estimating CAUSE parameters with ", nrow(X), " variants.\n")
   mix_grid <- variance_pair_candidates(X, optmethod=optmethod, max_candidates=max_candidates, control=control)
 
-  params <- map_pi_rho(X, mix_grid, optmethod=optmethod, null_wt = null_wt, control=control, warm=TRUE)
+  params <- map_pi_rho(X, mix_grid, optmethod=optmethod, null_wt = null_wt,
+                       control=control, n_iter = n_iter, warm=TRUE)
   #Filter out grid points with low mixing proportion
   params$mix_grid <- dplyr::filter(params$mix_grid, zapsmall(pi) > 0)
 

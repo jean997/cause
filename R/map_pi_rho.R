@@ -11,7 +11,7 @@
 #'@param z_prior_func Prior function for z = arctanh(rho)
 #'@export
 map_pi_rho <- function(X, mix_grid, rho_start=0,
-                       tol=1e-7, n.iter=20, null_wt = 10,
+                       tol=1e-7, n_iter=20, null_wt = 10,
                        z_prior_func = function(z){ dnorm(z, 0, 0.5, log=TRUE)},
                        optmethod = c("mixSQP", "mixIP"), control=list(), warm=FALSE){
 
@@ -69,7 +69,7 @@ map_pi_rho <- function(X, mix_grid, rho_start=0,
   ct <-1
 
   pi_start <- rep(1, K)
-  while(!converged & ct <= n.iter){
+  while(!converged & ct <= n_iter){
     #Update rho
     opt_rho <-  optimize(f = li_func, lower=-1, upper = 1, maximum=FALSE)
     rho <- opt_rho$minimum
