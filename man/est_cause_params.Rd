@@ -9,6 +9,7 @@ est_cause_params(
   variants,
   optmethod = c("mixSQP", "mixIP"),
   null_wt = 10,
+  n_iter = 20,
   max_candidates = Inf,
   control = list()
 )

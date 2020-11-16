@@ -9,7 +9,7 @@ map_pi_rho(
   mix_grid,
   rho_start = 0,
   tol = 1e-07,
-  n.iter = 20,
+  n_iter = 20,
   null_wt = 10,
   z_prior_func = function(z) {     dnorm(z, 0, 0.5, log = TRUE) },
   optmethod = c("mixSQP", "mixIP"),
