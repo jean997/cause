@@ -88,11 +88,13 @@ gwas_format <- function(X, snp, beta_hat, se, A1, A2,
   X <- X %>% filter(!snp %in% dup_vars)
   cat("Removing ", length(dup_vars), " duplicated variants leaving ", nrow(X), "variants.\n")
 
-  #Illelegal alleles
-  illegal_vars <- which(!X$A1 %in% c("A", "C", "T", "G") | !X$A1 %in% c("A", "C", "T", "G") )
+  #Illegal alleles
+  illegal_vars <- X %>%
+                  filter((!A1 %in% c("A", "C", "T", "G") | !A2 %in% c("A", "C", "T", "G") )) %>%
+                  select(snp)
   if(length(illegal_vars) > 0){
-    X <- X %>% filter(!snp %in% illegal_vars)
-    cat("Removing ", length(illegal_vars), " variants with illegal allelse leaving ", nrow(X), "variants.\n")
+    X <- X %>% filter(!snp %in% illegal_vars$snp)
+    cat("Removing ", length(illegal_vars), " variants with illegal alleles leaving ", nrow(X), "variants.\n")
   }else{
     cat("No variants have illegal alleles.\n")
   }
