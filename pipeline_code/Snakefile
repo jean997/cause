@@ -42,7 +42,7 @@ if config["analysis"]["all_pairs"]:
    names1 = ss["name"]
    names2 = ss["name"]
 else:
-    names1 = [ss["name"][i-1] for  i in config["analysis"]["trait1"])]
+    names1 = [ss["name"][i-1] for  i in config["analysis"]["trait1"]]
     names2 = [ss["name"][i-1] for  i in config["analysis"]["trait2"]]
 
 trait_pairs = [(n1, n2) for n1 in names1 for n2 in names2 if n1!=n2]
@@ -103,7 +103,7 @@ rule ld_prune_plink:
     input: data = data_dir + '{tag1}__{tag2}_data1.RDS',
            ref_data = expand(config["ld"]["plink_opts"]["ref_path"] + '.{end}', end  = ["bim", "bed", "fam"])
     output: out = data_dir + "snps_{tag1}__{tag2}.plink.pruned.txt"
-    shell:   'Rscript R/ld_prune_one_chrom.R {input.data} \
+    shell:   'Rscript R/ld_prune_plink.R {input.data} \
                    {config[analysis][cause_pval]} {config[ld][r2_thresh]} \
                    {config[ld][plink_opts][ref_path]}  {output.out}'
 
