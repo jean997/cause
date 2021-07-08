@@ -4,13 +4,16 @@
 #'@param X2 data.frame with data for GWAS 2
 #'@param snp_name_cols A vector of length 2 specifying the name of the snp column
 #'in X1 and X2 respectively. This is the column on which the data will be merged.
-#'@param beta_hat_col A vector of length 2 specifying the name of the snp column
+#'@param beta_hat_cols A vector of length 2 specifying the name of the snp column
 #'in X1 and X2 respectively. If effect sizes are provided as odds ratios they must be converted
 #'back into coeffecient estimates by taking the log.
 #'@param se_cols A vector of length 2 specifying the name of the snp column
 #'in X1 and X2 respectively.
 #'@param A1_cols Column names for effect allele
 #'@param A2_cols Column names for other allele
+#'@param pval_cols Column names for p-values. Can be ommitted or either element can be NA.
+#'@param compute_pvals If p-values are missing in one or both studies, should the function
+#'compute them. If true, p-values will be computed as `2*pnorm(-abs(beta_hat/se))`.
 #'@details This function will try to merge data sets X1 and X2 on the specified columns. Where
 #'necessary, it will flip the sign of effects so that the effect allele is the same in both
 #'data sets. It will remove variants with ambiguous alleles or where the alleles (G/C or A/T) or
@@ -24,13 +27,17 @@ gwas_merge <- function(X1, X2,
                        beta_hat_cols = c("beta_hat", "beta_hat"),
                        se_cols = c("se", "se"),
                        A1_cols= c("A1", "A1"),
-                       A2_cols = c("A2", "A2")){
+                       A2_cols = c("A2", "A2"),
+                       pval_cols  = c(NA,NA),
+                       compute_pvals = TRUE){
 
   if(!X1_formatted){
     cat("Formatting X1\n")
     X1 <- gwas_format(X1, snp = snp_name_cols[1],
                       beta_hat = beta_hat_cols[1], se = se_cols[1],
-                      A1 = A1_cols[1], A2 = A2_cols[1])
+                      A1 = A1_cols[1], A2 = A2_cols[1],
+                      p_value = pval_cols[1],
+                      compute_pval = compute_pvals)
   }else{
     X1 <- validate_cause_data_single(X1)
   }
@@ -38,19 +45,23 @@ gwas_merge <- function(X1, X2,
     cat("Formatting X2\n")
     X2 <- gwas_format(X2, snp = snp_name_cols[2],
                       beta_hat = beta_hat_cols[2], se = se_cols[2],
-                      A1 = A1_cols[2], A2 = A2_cols[2])
+                      A1 = A1_cols[2], A2 = A2_cols[2],
+                      p_value = pval_cols[2],
+                      compute_pval = compute_pvals)
   }else{
     X2 <- validate_cause_data_single(X2)
   }
 
   X <-  X1 %>%
-        select(snp, beta_hat, se, A1, A2) %>%
+        select(snp, beta_hat, se, A1, A2, p_value) %>%
         rename(beta_hat_1 = beta_hat,
-               seb1 = se) %>%
+               seb1 = se,
+               p1 = p_value) %>%
         inner_join(., X2, by="snp") %>%
-        select(snp, beta_hat_1, seb1, beta_hat, se, A1.x, A2.x, A1.y, A2.y) %>%
+        select(snp, beta_hat_1, seb1, p1, beta_hat, se, p_value, A1.x, A2.x, A1.y, A2.y) %>%
         rename(beta_hat_2 = beta_hat,
-               seb2 = se) %>%
+               seb2 = se,
+               p2 = p_value) %>%
         filter(!is.na(seb1) & !is.na(seb2) &
               !is.na(beta_hat_1) & !is.na(beta_hat_2)) %>%
         filter(is.finite(seb1) & is.finite(seb2) &
@@ -59,7 +70,7 @@ gwas_merge <- function(X1, X2,
         filter(A2.x == A2.y) %>%
         select(-A1.y, -A2.y) %>%
         rename(A1 = A1.x, A2 = A2.x) %>%
-        select(snp, beta_hat_1, seb1, beta_hat_2, seb2, A1, A2)
+        select(snp, beta_hat_1, seb1, p1, beta_hat_2, seb2, A1, A2, p2)
   cat("After merging and removing variants with inconsistent alleles, ",
       "there are ", nrow(X),
       " variants that are present in both studies and can be used with CAUSE.\n")

@@ -13,7 +13,9 @@ gwas_merge(
   beta_hat_cols = c("beta_hat", "beta_hat"),
   se_cols = c("se", "se"),
   A1_cols = c("A1", "A1"),
-  A2_cols = c("A2", "A2")
+  A2_cols = c("A2", "A2"),
+  pval_cols = c(NA, NA),
+  compute_pvals = TRUE
 )
 }
 \arguments{
@@ -24,6 +26,10 @@ gwas_merge(
 \item{snp_name_cols}{A vector of length 2 specifying the name of the snp column
 in X1 and X2 respectively. This is the column on which the data will be merged.}
 
+\item{beta_hat_cols}{A vector of length 2 specifying the name of the snp column
+in X1 and X2 respectively. If effect sizes are provided as odds ratios they must be converted
+back into coeffecient estimates by taking the log.}
+
 \item{se_cols}{A vector of length 2 specifying the name of the snp column
 in X1 and X2 respectively.}
 
@@ -31,9 +37,10 @@ in X1 and X2 respectively.}
 
 \item{A2_cols}{Column names for other allele}
 
-\item{beta_hat_col}{A vector of length 2 specifying the name of the snp column
-in X1 and X2 respectively. If effect sizes are provided as odds ratios they must be converted
-back into coeffecient estimates by taking the log.}
+\item{pval_cols}{Column names for p-values. Can be ommitted or either element can be NA.}
+
+\item{compute_pvals}{If p-values are missing in one or both studies, should the function
+compute them. If true, p-values will be computed as `2*pnorm(-abs(beta_hat/se))`.}
 }
 \value{
 An object of class cause_data and data.frame.
