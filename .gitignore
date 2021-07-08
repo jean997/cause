@@ -2,6 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+ll_v7_notes.*
 src/*o
-example_data/
 sim_results/
+tests/
+pipeline_code/ld
+pipeline_code/raw_data
+pipeline_code/plink_reference
