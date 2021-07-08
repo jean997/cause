@@ -12,7 +12,7 @@ output: workflowr::wflow_html
 
 ## Introduction
 
-This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. The LD pruning steps will benefit from access to a cluster or multiple cores. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example. 
+This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example. 
 
 We will be analyzing GWAS data for LDL cholesterol and for coronary artery disease to test for a causal relationship of LDL on CAD. The analysis will have the following steps:
 
@@ -22,7 +22,10 @@ We will be analyzing GWAS data for LDL cholesterol and for coronary artery disea
 4. Fit CAUSE
 5. Look at results
 
-Step 3 will require LD information estimated from the 1000 Genomes CEU population using LDshrink [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). LD data are about 11 Gb. The GWAS data we will use are about 320 Gb. However, in this tutorial you will be able to skip the large data steps and simply download the results.
+
+There are two ways to do the LD pruning in step 3. The easiest way is to use Plink which is the method we use here. There are also built-in functions in the `cause` package that allow you to do LD pruning with pre-computed pairwise LD files. This could let you use an alternate LD calculation. The last section of this document shows how to do that using LD information estimated from the 1000 Genomes CEU population using LDshrink [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). These data are about 11 Gb. 
+
+The GWAS data we will use are about 320 Gb. However, in this tutorial you will be able to skip the large data steps and simply download the results.
 
 ## Step 0: Install CAUSE
 
@@ -39,14 +42,14 @@ library(cause)
 ```
 
 
-```{r, readdata, eval=FALSE}
+```{r, readdata}
 X1 <- read_tsv("http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz")
 X2 <- read_tsv("ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005194/CAD_META.gz")
 ```
 
-CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a `cause_data` object that can be used with later functions. This step and the rest of the analysis are done in R.
+CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. We provide a simple function that will merge data sets and produce a `cause_data` object that can be used with later functions. This step and the rest of the analysis are done in R.
 
-The function `gwas_merge` will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other). 
+The function `gwas_merge` will merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other). If p-values are available it will accept those but they are not required. If p-values are missing, be default they will be computed using a normal approximation but this can be bypassed by setting `compute_._pval = FALSE`. p-values are only used in the LD pruning step. 
 
 LDL column headers:
 
@@ -55,6 +58,7 @@ LDL column headers:
 + Standard Error: se
 + Effect Allele: A1
 + Other Allele: A2
++ p-value (optional): P-value
 
 CAD column headers:
 
@@ -63,13 +67,17 @@ CAD column headers:
 + Standard Error: StdErr
 + Effect Allele: Allele1
 + Other Allele: Allele2
++ p-value (optional): P-value
 
-```{r, eval=FALSE}
+If the p-value column in either data set is missing, the `pval_cols` argument can be omitted or one of the elements can be NA.
+
+```{r}
 X <- gwas_merge(X1, X2, snp_name_cols = c("rsid", "oldID"), 
                        beta_hat_cols = c("beta", "Effect"), 
                        se_cols = c("se", "StdErr"), 
                        A1_cols = c("A1", "Allele1"), 
-                       A2_cols = c("A2", "Allele2"))
+                       A2_cols = c("A2", "Allele2"), 
+                       pval_cols = c("P-value", "P-value"))
 
 ```
 
@@ -80,7 +88,7 @@ system("mkdir example_data/")
 download.file("https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS", destfile = "example_data/LDL_CAD_merged.RDS")
 ```
 
-```{r, readdata2}
+```{r, eval = FALSE}
 X <- readRDS("example_data/LDL_CAD_merged.RDS")
 ```
 
@@ -111,99 +119,71 @@ names(params)
 params$rho
 head(params$mix_grid)
 ```
-So, for example, in this case, we have estimated that `r round(params$mix_grid$pi[1]*100)`\% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait. 
+In this case, we have estimated that `r round(params$mix_grid$pi[1]*100)`\% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait. 
 
 Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters
 whih leads to bad model comparisons. 
 
+If you don't want to wait for this step, the parameters object can be downloaded from  [here](https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_params.RDS) using
 
+```{r, eval=FALSE}
+download.file("https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_params.RDS", destfile = "example_data/LDL_CAD_params.RDS")
+params <- readRDS("example_data/LDL_CAD_params.RDS")
+```
 
 ## Step 3: LD Pruning
 
 We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait $M$ (LDL) $p$-values. 
 
-There are two ways to do this step. The CAUSE R package contains a function that performs LD pruning given a file that contains pairwise estimates of $r^2$. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrin. This method however, is very slow.
-
-An alternative is to use Plink to perform LD clumping. The `ieugwasr` package provides a convenient R interface to Plink. This method is much faster but requires a reference sample. You can download reference data from [here](http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz). 
-
-### LD pruning using plink built in function
-
-The function `ld_prune` uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. 
-This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.  
-
-```{r, eval=FALSE}
-download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1", destfile = "example_data/chr22_AF0.05_0.1.RDS")
-download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1", destfile="example_data/chr22_AF0.05_snpdata.RDS")
-```
-
-```{r, lookatlddata}
-ld <- readRDS("example_data/chr22_AF0.05_0.1.RDS")
-snp_info <- readRDS("example_data/chr22_AF0.05_snpdata.RDS")
-
-head(ld)
-head(snp_info)
-
-```
-
-The `ld` data frame should contain the column names `rowsnp`, `colsnp`, and `r2`. The `snp_info` data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants `snp_info$SNP` which provides the total list of variants used in the LD calculations. 
-
-#### LD pruning for one chromosome
-
-The `ld_prune` function is somewhat flexible in its arguments, see `help(ld_prune)`. 
-
-```{r, ldprune1}
-variants <- X %>% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
-pruned <- ld_prune(variants = variants, 
-                            ld = ld, total_ld_variants = snp_info$SNP, 
-                            pval_cols = c("pval1"), 
-                            pval_thresh = c(1e-3))
-length(pruned)
-```
+The easiest way is to use Plink to perform LD clumping. The `ieugwasr` package provides a convenient R interface to Plink. This method is fast but requires a reference sample which can be accessed through an API using `ieugwasr::ld_clump` (see help for that function). You can download also download reference data from [here](http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz). That file will need to be unzipped.
 
 
-If `length(pval_cols) =1`, `ld_prune` returns a vector of selected variants. If There are multipld $p$-value columns provided, `ld_prune` will return a list of vectors, one for each column. The length of `pval_thresh` should be equal to the length of `pval_cols` and provides a threshold for each column. Excluding variants with high $p$-values speeds up the pruning step. We can fit CAUSE without high $p$-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
+An alternative is to use a built in function in the CAUSE R pacakge and precomputed pairwise estimates of $r^2$. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrink. This method is slow but lets you use any LD estimates you want. We show how to do this in a section at the end of this document.
 
-#### Parallelizing over chromosomes 
-
-We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
-A better option is to submit separate jobs to nodes of a compute cluster and then combine results. 
-
-If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low $p$-values for each traits ($N$ lists if there are $N$ phenotypes). In any analysis, you will use the list of variants prioritized for the trait $M$ phenotype.
-
-Download the LD-pruned variant list for our example analysis: [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
-
-```{r, eval=FALSE}
-download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
-```
+In either case, we prioritize variants based on their trait 1 p-value. We can limit ourselves to SNPs with trait 1 p-value less than 0.001 since we will use that threshold for estimating the CAUSE posteriors in the next step. If you use a higher threshold in the next step, you should also use a higher threshold in the pruning step. It is ok to have a lower threshold in the posterior estimation step than in the pruning step. In this case, the original GWAS data for LDL contains p-values se we use these. However, if these are missing you can compute approximate p-values using a normal approximation. 
 
 ### LD pruning using Plink
 
-To perform LD pruning using the `ieugwasr` wrapper to Plink LD clumping function use
+The following code performs LD pruning using the `ieugwasr` wrapper to Plink LD clumping function. If you have Plink already installed, you can replace the path in `plink_bin` with a path to your local installation. To use the code below, you will need the `genetics.binaRies` package which can be installed with `devtools::install_github("explodecomputer/genetics.binaRies")`. If you want to use local reference data, you can set the `bfile` option of `ld_clump` (see `?ld_clump`).
 
-```{r, eval=FALSE}
+```{r}
+r2_thresh = 0.01
+pval_thresh = 1e-3
 
-X_clump <- X %>% rename(rsid = snp,
-                  pval = p_value) %>%
+X_clump <- X %>%
+           rename(rsid = snp,
+                  pval = p1) %>%
            ieugwasr::ld_clump(dat = .,
                      clump_r2 = r2_thresh,
                      clump_p = pval_thresh,
-                     plink_bin = genetics.binaRies::get_plink_binary(),
-                     bfile = ref_path)
-keep_snps <- X_clump$rsid
+                     plink_bin = genetics.binaRies::get_plink_binary(), 
+                     pop = "EUR")
+top_vars <- X_clump$rsid
 ```
 
-where `r2_thresh` is the $r^2$ threshold you would like to use, `pval_thresh` is the p-value threshold you will use to compute the CAUSE posteriors, and `ref_path` is a path to the reference data. We recomend using a lower $r^2$ threshold for plink LD clumping than for LD clumping based on estimates from LD shrink, since these are not shrunken. 
+Here `r2_thresh` is the $r^2$ threshold you would like to use and `pval_thresh` is the p-value threshold you will use to compute the CAUSE posteriors. We recomend using a lower $r^2$ threshold for plink LD clumping than for LD clumping based on estimates from LDshrink, since these are not shrunken. 
 
 ## Step 4: Fit CAUSE
 
-Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes. 
+Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE. The function `cause` estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes. 
 
 ```{r, cause}
-top_vars <- readRDS("example_data/top_ldl_pruned_vars.RDS")
 res <- cause(X=X, variants = top_vars, param_ests = params)
 ```
 
 
+### Pareto k diagnostics warning
+
+Occaisionally we see a warining about Pareto k diagnostics. This comes from the estimate of the elpd from the `loo` package.  Usually we do not worry about it if there are few problematic samples for more details see help('pareto-k-diagnostic'). The `loo` objects are stored in a three element list `res$loos`. The first element is empty, the second element corresponds to the sharing model and the third element corresponds to the causal model. To print the Pareto k tables for the CAUSE models use
+
+```{r, pareto}
+res$loos[[2]]
+loo::pareto_k_table(res$loos[[2]])
+res$loos[[3]]
+loo::pareto_k_table(res$loos[[3]])
+```
+
+In some cases the problem can be resolved by fitting with more variants. If you are fitting with fewer than 1000 variants you could consider raising the p-value or $r^2$ thresholds and verifying that both studies have genome-wide coverage.
 
 ## Step 5: Look at Results 
 
@@ -246,13 +226,64 @@ The  `plot` method applied to a `cause` object will arrange all of this informat
 plot(res)
 ```
 
-The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor ($U$) and the contribution of each variant to the ELPD test statistic.
+
+The `plot` method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor and the contribution of each variant to the ELPD test statistic.
 
 
 ```{r, plot3}
 plot(res, type="data")
 ```
 
+
+## LD pruning using built in function
+
+The function `ld_prune` uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. 
+This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population [here](https://zenodo.org/record/1464357#.W8a-fxROmV4). We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.  
+
+```{r, eval=FALSE}
+download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1", destfile = "example_data/chr22_AF0.05_0.1.RDS")
+download.file("https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1", destfile="example_data/chr22_AF0.05_snpdata.RDS")
+```
+
+```{r, lookatlddata}
+ld <- readRDS("example_data/chr22_AF0.05_0.1.RDS")
+snp_info <- readRDS("example_data/chr22_AF0.05_snpdata.RDS")
+
+head(ld)
+head(snp_info)
+
+```
+
+The `ld` data frame should contain the column names `rowsnp`, `colsnp`, and `r2`. The `snp_info` data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants `snp_info$SNP` which provides the total list of variants used in the LD calculations. 
+
+### LD pruning for one chromosome
+
+The `ld_prune` function is somewhat flexible in its arguments, see `help(ld_prune)`. 
+
+```{r, eval = FALSE}
+variants <- X %>% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
+pruned <- ld_prune(variants = variants, 
+                            ld = ld, total_ld_variants = snp_info$SNP, 
+                            pval_cols = c("pval1"), 
+                            pval_thresh = c(1e-3))
+length(pruned)
+```
+
+
+If `length(pval_cols) =1`, `ld_prune` returns a vector of selected variants. If There are multipld $p$-value columns provided, `ld_prune` will return a list of vectors, one for each column. The length of `pval_thresh` should be equal to the length of `pval_cols` and provides a threshold for each column. Excluding variants with high $p$-values speeds up the pruning step. We can fit CAUSE without high $p$-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn't important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn't change the results
+
+### Parallelizing over chromosomes 
+
+We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. 
+A better option is to submit separate jobs to nodes of a compute cluster and then combine results. 
+
+If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low $p$-values for each traits ($N$ lists if there are $N$ phenotypes). In any analysis, you will use the list of variants prioritized for the trait $M$ phenotype.
+
+Download the LD-pruned variant list for our example analysis: [top LDL list](https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS)
+
+```{r, eval=FALSE}
+download.file("https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS", destfile = "example_data/top_ldl_pruned_vars.RDS")
+```
 
 
 ```{r}
