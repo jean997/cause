@@ -421,7 +421,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-11-13
+<strong>Last updated:</strong> 2021-07-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -512,16 +512,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5a9f66db2cde3939aa8c29371bd340fdf425b7c8targetblank5a9f66da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/5a9f66db2cde3939aa8c29371bd340fdf425b7c8" target="_blank">5a9f66d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5f67e0ac805197e5f74ac6d62484f7202a536214targetblank5f67e0aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree5a9f66db2cde3939aa8c29371bd340fdf425b7c8targetblank5a9f66da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/5f67e0ac805197e5f74ac6d62484f7202a536214" target="_blank">5f67e0a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/5a9f66db2cde3939aa8c29371bd340fdf425b7c8" target="_blank">5a9f66d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -530,24 +530,25 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/example_data/
+    Ignored:    ll_v7_notes.Rmd
+    Ignored:    ll_v7_notes.html
+    Ignored:    pipeline_code/ld/
     Ignored:    pipeline_code/plink_reference/
+    Ignored:    pipeline_code/raw_data/
     Ignored:    sim_results/
     Ignored:    src/RcppExports.o
     Ignored:    src/cause.so
     Ignored:    src/log_likelihood_functions.o
+    Ignored:    tests/
 
 Untracked files:
     Untracked:  analysis/mrcieu.Rmd
     Untracked:  cause.Rcheck/
-    Untracked:  gwas_data/
-    Untracked:  ll_v7_notes.Rmd
-    Untracked:  ll_v7_notes.html
-    Untracked:  pipeline_code/.snakemake/
-    Untracked:  pipeline_code/config.schema.yaml
-    Untracked:  pipeline_code/ld/
-    Untracked:  pipeline_code/raw_data/
-    Untracked:  tests/
+    Untracked:  example_data/chr22_AF0.05_0.1.RDS
+    Untracked:  example_data/chr22_AF0.05_snpdata.RDS
+
+Unstaged changes:
+    Modified:   README.md
 
 </code></pre>
 <p>
@@ -586,6 +587,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/78949fc2e9967f8587db709e932f8db95f0fadab/analysis/ldl_cad.Rmd" target="_blank">78949fc</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2021-07-08
+</td>
+<td>
+update tutorial
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/da5b784adce5647fa0d8d5ef8dc7dd8ecc6a92a4/docs/ldl_cad.html" target="_blank">da5b784</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-11-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1275,7 +1310,7 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 </div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. The LD pruning steps will benefit from access to a cluster or multiple cores. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example.</p>
+<p>This document will walk through a real genome-sized example of how to use CAUSE. Some of the steps will take 5-10 minutes. For steps that require long computation we also provide output files that can be downloaded to make it easier to run through the example.</p>
 <p>We will be analyzing GWAS data for LDL cholesterol and for coronary artery disease to test for a causal relationship of LDL on CAD. The analysis will have the following steps:</p>
 <ol style="list-style-type: decimal">
 <li>Format the data for use with CAUSE</li>
@@ -1284,7 +1319,8 @@ wflow_git_commit(“analysis/ldl_cad.Rmd”)
 <li>Fit CAUSE</li>
 <li>Look at results</li>
 </ol>
-<p>Step 3 will require LD information estimated from the 1000 Genomes CEU population using LDshrink <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. LD data are about 11 Gb. The GWAS data we will use are about 320 Gb. However, in this tutorial you will be able to skip the large data steps and simply download the results.</p>
+<p>There are two ways to do the LD pruning in step 3. The easiest way is to use Plink which is the method we use here. There are also built-in functions in the <code>cause</code> package that allow you to do LD pruning with pre-computed pairwise LD files. This could let you use an alternate LD calculation. The last section of this document shows how to do that using LD information estimated from the 1000 Genomes CEU population using LDshrink <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. These data are about 11 Gb.</p>
+<p>The GWAS data we will use are about 320 Gb. However, in this tutorial you will be able to skip the large data steps and simply download the results.</p>
 </div>
 <div id="step-0-install-cause" class="section level2">
 <h2>Step 0: Install CAUSE</h2>
@@ -1304,10 +1340,46 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(cause)</code></pre>
-<pre class="r"><code>X1 &lt;- read_tsv(&quot;http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz&quot;)
-X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005194/CAD_META.gz&quot;)</code></pre>
-<p>CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. For convenience, we provide a simple function that will merge data sets and produce a <code>cause_data</code> object that can be used with later functions. This step and the rest of the analysis are done in R.</p>
-<p>The function <code>gwas_merge</code> will try to merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other).</p>
+<pre class="r"><code>X1 &lt;- read_tsv(&quot;http://csg.sph.umich.edu/abecasis/public/lipids2013/jointGwasMc_LDL.txt.gz&quot;)</code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  SNP_hg18 = col_character(),
+  SNP_hg19 = col_character(),
+  rsid = col_character(),
+  A1 = col_character(),
+  A2 = col_character(),
+  beta = col_double(),
+  se = col_double(),
+  N = col_double(),
+  `P-value` = col_double(),
+  Freq.A1.1000G.EUR = col_double()
+)</code></pre>
+<pre class="r"><code>X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistics/vanderHarstP_29212778_GCST005194/CAD_META.gz&quot;)</code></pre>
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  MarkerName = col_character(),
+  Allele1 = col_character(),
+  Allele2 = col_character(),
+  Freq1 = col_double(),
+  FreqSE = col_double(),
+  MinFreq = col_double(),
+  MaxFreq = col_double(),
+  Effect = col_double(),
+  StdErr = col_double(),
+  `P-value` = col_double(),
+  Direction = col_character(),
+  HetISq = col_double(),
+  HetChiSq = col_double(),
+  HetDf = col_double(),
+  HetPVal = col_double(),
+  oldID = col_character(),
+  CHR = col_double(),
+  BP = col_double()
+)</code></pre>
+<p>CAUSE needs the following information from each data set: SNP or variant ID, effect size, and standard error, effect allele and other allele. We provide a simple function that will merge data sets and produce a <code>cause_data</code> object that can be used with later functions. This step and the rest of the analysis are done in R.</p>
+<p>The function <code>gwas_merge</code> will merge two data sets and and align effect sizes to correspond to the same allele. It will remove variants with ambiguous alleles (G/C or A/T) or with alleles that do not match between data sets (e.g A/G in one data set and A/C in the other). It will also remove variants that are duplicated in either data set. It will not remove variants that are simply strand flipped between the two data sets (e. g. A/C in one data set, T/G in the other). If p-values are available it will accept those but they are not required. If p-values are missing, be default they will be computed using a normal approximation but this can be bypassed by setting <code>compute_._pval = FALSE</code>. p-values are only used in the LD pruning step.</p>
 <p>LDL column headers:</p>
 <ul>
 <li>SNP: rsid</li>
@@ -1315,6 +1387,7 @@ X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistic
 <li>Standard Error: se</li>
 <li>Effect Allele: A1</li>
 <li>Other Allele: A2</li>
+<li>p-value (optional): P-value</li>
 </ul>
 <p>CAD column headers:</p>
 <ul>
@@ -1323,24 +1396,42 @@ X2 &lt;- read_tsv(&quot;ftp://ftp.ebi.ac.uk/pub/databases/gwas/summary_statistic
 <li>Standard Error: StdErr</li>
 <li>Effect Allele: Allele1</li>
 <li>Other Allele: Allele2</li>
+<li>p-value (optional): P-value</li>
 </ul>
+<p>If the p-value column in either data set is missing, the <code>pval_cols</code> argument can be omitted or one of the elements can be NA.</p>
 <pre class="r"><code>X &lt;- gwas_merge(X1, X2, snp_name_cols = c(&quot;rsid&quot;, &quot;oldID&quot;), 
                        beta_hat_cols = c(&quot;beta&quot;, &quot;Effect&quot;), 
                        se_cols = c(&quot;se&quot;, &quot;StdErr&quot;), 
                        A1_cols = c(&quot;A1&quot;, &quot;Allele1&quot;), 
-                       A2_cols = c(&quot;A2&quot;, &quot;Allele2&quot;))</code></pre>
+                       A2_cols = c(&quot;A2&quot;, &quot;Allele2&quot;), 
+                       pval_cols = c(&quot;P-value&quot;, &quot;P-value&quot;))</code></pre>
+<pre><code>Formatting X1
+There are  2437751  variants.
+Removing  794  duplicated variants leaving  2436956 variants.
+Removing  1  variants with illegal alleles leaving  2436956 variants.
+Removed  375645  variants with ambiguous strand.
+Flipping strand and effect allele so A1 is always A
+Returning  2061311  variants.
+Formatting X2
+There are  7947837  variants.
+Removing  13  duplicated variants leaving  7947811 variants.
+Removing  1  variants with illegal alleles leaving  7947811 variants.
+Removed  1202723  variants with ambiguous strand.
+Flipping strand and effect allele so A1 is always A
+Returning  6745088  variants.
+After merging and removing variants with inconsistent alleles,  there are  2023354  variants that are present in both studies and can be used with CAUSE.</code></pre>
 <p>Alternatively, you can download already formatted data <a href="https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS">here</a> and read it in using <code>readRDS</code>.</p>
 <pre class="r"><code>system(&quot;mkdir example_data/&quot;)
 download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_merged.RDS&quot;, destfile = &quot;example_data/LDL_CAD_merged.RDS&quot;)</code></pre>
 <pre class="r"><code>X &lt;- readRDS(&quot;example_data/LDL_CAD_merged.RDS&quot;)</code></pre>
 <pre class="r"><code>head(X)</code></pre>
-<pre><code>        snp beta_hat_1   seb1 beta_hat_2   seb2 A1 A2
-1 rs4747841     0.0037 0.0052     0.0106 0.0056  A  G
-2 rs4749917    -0.0033 0.0052    -0.0108 0.0056  A  G
-3  rs737656     0.0099 0.0054     0.0196 0.0058  A  G
-4  rs737657     0.0084 0.0054     0.0195 0.0058  A  G
-5 rs7086391    -0.0075 0.0067     0.0115 0.0072  A  G
-6  rs878177    -0.0073 0.0055    -0.0225 0.0059  A  G</code></pre>
+<pre><code>        snp beta_hat_1   seb1      p1 beta_hat_2   seb2 A1 A2        p2
+1 rs4747841     0.0037 0.0052 0.71580     0.0106 0.0056  A  G 0.0587000
+2 rs4749917    -0.0033 0.0052 0.77480    -0.0108 0.0056  A  G 0.0538200
+3  rs737656     0.0099 0.0054 0.04000     0.0196 0.0058  A  G 0.0007217
+4  rs737657     0.0084 0.0054 0.08428     0.0195 0.0058  A  G 0.0007519
+5 rs7086391    -0.0075 0.0067 0.26890     0.0115 0.0072  A  G 0.1088000
+6  rs878177    -0.0073 0.0055 0.13760    -0.0225 0.0059  A  G 0.0001398</code></pre>
 <p>There are likely more efficient ways to do this merge. If you would like to process the data yourself, you can construct a <code>cause_data</code> object from a data frame using the constructor <code>new_cause_data(X)</code> where <code>X</code> is any data frame that includes the columns <code>snp</code>, <code>beta_hat_1</code>, <code>seb1</code>, <code>beta_hat_2</code>, and <code>seb2</code>.</p>
 </div>
 <div id="step-2-calculate-nuisance-parameters" class="section level2">
@@ -1351,9 +1442,9 @@ varlist &lt;- with(X, sample(snp, size=1000000, replace=FALSE))
 params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre><code>Estimating CAUSE parameters with  1000000  variants.
 1 0.2180944 
-2 0.0006398994 
-3 7.445625e-06 
-4 4.878722e-08 </code></pre>
+2 0.0006398997 
+3 7.445511e-06 
+4 4.879196e-08 </code></pre>
 <p>The object <code>params</code> is of class <code>cause_params</code> and contains information about the fit as well as the maximum a posteriori estimates of the mixing parameters (<span class="math inline">\(\pi\)</span>) and <span class="math inline">\(\rho\)</span>. The object <code>params$mix_grid</code> is a data frame defining the distribution of summary statistics. The column <code>S1</code> is the variance for trait 1 (<span class="math inline">\(M\)</span>), the column <code>S2</code> is the variance for trait 2 (<span class="math inline">\(Y\)</span>) and the column <code>pi</code> is the mixture proportion assigned to that variance combination.</p>
 <pre class="r"><code>class(params)</code></pre>
 <pre><code>[1] &quot;cause_params&quot;</code></pre>
@@ -1365,88 +1456,87 @@ params &lt;- est_cause_params(X, varlist)</code></pre>
 <pre class="r"><code>head(params$mix_grid)</code></pre>
 <pre><code>           S1          S2           pi
 1 0.000000000 0.000000000 0.3105286643
-2 0.000000000 0.003440730 0.2381082227
+2 0.000000000 0.003440730 0.2381082228
 3 0.000000000 0.004865928 0.1490899299
 4 0.003533615 0.004865928 0.1660234953
 5 0.004997287 0.009731855 0.1177553318
 6 0.019989147 0.009731855 0.0006521846</code></pre>
-<p>So, for example, in this case, we have estimated that 31% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
+<p>In this case, we have estimated that 31% of variants have trait 1 variance and trait 2 equal to 0 meaning that they have no association with either trait.</p>
 <p>Tip: Do not try to estimate the nuisance parameters with substantially fewer than 100,000 variants. This can lead to poor estimates of the mixing parameters whih leads to bad model comparisons.</p>
+<p>If you don’t want to wait for this step, the parameters object can be downloaded from <a href="https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_params.RDS">here</a> using</p>
+<pre class="r"><code>download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/LDL_CAD_params.RDS&quot;, destfile = &quot;example_data/LDL_CAD_params.RDS&quot;)
+params &lt;- readRDS(&quot;example_data/LDL_CAD_params.RDS&quot;)</code></pre>
 </div>
 <div id="step-3-ld-pruning" class="section level2">
 <h2>Step 3: LD Pruning</h2>
 <p>We estimate CAUSE posterior distributions using an LD pruned set of variants, prioritizing variants with low trait <span class="math inline">\(M\)</span> (LDL) <span class="math inline">\(p\)</span>-values.</p>
-<p>There are two ways to do this step. The CAUSE R package contains a function that performs LD pruning given a file that contains pairwise estimates of <span class="math inline">\(r^2\)</span>. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrin. This method however, is very slow.</p>
-<p>An alternative is to use Plink to perform LD clumping. The <code>ieugwasr</code> package provides a convenient R interface to Plink. This method is much faster but requires a reference sample. You can download reference data from <a href="http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz">here</a>.</p>
-<div id="ld-pruning-using-plink-built-in-function" class="section level3">
-<h3>LD pruning using plink built in function</h3>
-<p>The function <code>ld_prune</code> uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
-<pre class="r"><code>download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1&quot;, destfile = &quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
-download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1&quot;, destfile=&quot;example_data/chr22_AF0.05_snpdata.RDS&quot;)</code></pre>
-<pre class="r"><code>ld &lt;- readRDS(&quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
-snp_info &lt;- readRDS(&quot;example_data/chr22_AF0.05_snpdata.RDS&quot;)
-
-head(ld)</code></pre>
-<pre><code>      rowsnp      colsnp        r2
-1 rs62224609 rs376238049 0.9012642
-2 rs62224609  rs62224614 0.9907366
-3 rs62224609   rs7286962 0.9907366
-4 rs62224609  rs55926024 0.1103000
-5 rs62224609 rs117246541 0.9012642
-6 rs62224609  rs62224618 0.9907366</code></pre>
-<pre class="r"><code>head(snp_info)</code></pre>
-<pre><code># A tibble: 6 x 9
-     AF SNP         allele    chr      pos   snp_id region_id   map ld_snp_id
-  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;    &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;     &lt;int&gt;
-1 0.884 rs62224609  T,C        22 16051249 79758556        22     0  79758556
-2 0.904 rs4965031   G,A        22 16052080 79758578        22     0  79758578
-3 0.646 rs375684679 A,AAAAC    22 16052167 79758584        22     0  79758584
-4 0.894 rs376238049 C,T        22 16052962 79758602        22     0  79758602
-5 0.934 rs200777521 C,A        22 16052986 79758604        22     0  79758604
-6 0.934 rs80167676  A,T        22 16053444 79758627        22     0  79758627</code></pre>
-<p>The <code>ld</code> data frame should contain the column names <code>rowsnp</code>, <code>colsnp</code>, and <code>r2</code>. The <code>snp_info</code> data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants <code>snp_info$SNP</code> which provides the total list of variants used in the LD calculations.</p>
-<div id="ld-pruning-for-one-chromosome" class="section level4">
-<h4>LD pruning for one chromosome</h4>
-<p>The <code>ld_prune</code> function is somewhat flexible in its arguments, see <code>help(ld_prune)</code>.</p>
-<pre class="r"><code>variants &lt;- X %&gt;% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
-pruned &lt;- ld_prune(variants = variants, 
-                            ld = ld, total_ld_variants = snp_info$SNP, 
-                            pval_cols = c(&quot;pval1&quot;), 
-                            pval_thresh = c(1e-3))</code></pre>
-<pre><code>You have suppplied information for  2023354  variants.
-Of these,  22835  have LD information.</code></pre>
-<pre class="r"><code>length(pruned)</code></pre>
-<pre><code>[1] 15</code></pre>
-<p>If <code>length(pval_cols) =1</code>, <code>ld_prune</code> returns a vector of selected variants. If There are multipld <span class="math inline">\(p\)</span>-value columns provided, <code>ld_prune</code> will return a list of vectors, one for each column. The length of <code>pval_thresh</code> should be equal to the length of <code>pval_cols</code> and provides a threshold for each column. Excluding variants with high <span class="math inline">\(p\)</span>-values speeds up the pruning step. We can fit CAUSE without high <span class="math inline">\(p\)</span>-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
-</div>
-<div id="parallelizing-over-chromosomes" class="section level4">
-<h4>Parallelizing over chromosomes</h4>
-<p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. A better option is to submit separate jobs to nodes of a compute cluster and then combine results.</p>
-<p>If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low <span class="math inline">\(p\)</span>-values for each traits (<span class="math inline">\(N\)</span> lists if there are <span class="math inline">\(N\)</span> phenotypes). In any analysis, you will use the list of variants prioritized for the trait <span class="math inline">\(M\)</span> phenotype.</p>
-<p>Download the LD-pruned variant list for our example analysis: <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
-<pre class="r"><code>download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS&quot;, destfile = &quot;example_data/top_ldl_pruned_vars.RDS&quot;)</code></pre>
-</div>
-</div>
+<p>The easiest way is to use Plink to perform LD clumping. The <code>ieugwasr</code> package provides a convenient R interface to Plink. This method is fast but requires a reference sample which can be accessed through an API using <code>ieugwasr::ld_clump</code> (see help for that function). You can download also download reference data from <a href="http://fileserve.mrcieu.ac.uk/ld/1kg.v3.tgz">here</a>. That file will need to be unzipped.</p>
+<p>An alternative is to use a built in function in the CAUSE R pacakge and precomputed pairwise estimates of <span class="math inline">\(r^2\)</span>. This is the method we used in our paper, coupled with LD estimates 1000 Genomes European samples computed via LDshrink. This method is slow but lets you use any LD estimates you want. We show how to do this in a section at the end of this document.</p>
+<p>In either case, we prioritize variants based on their trait 1 p-value. We can limit ourselves to SNPs with trait 1 p-value less than 0.001 since we will use that threshold for estimating the CAUSE posteriors in the next step. If you use a higher threshold in the next step, you should also use a higher threshold in the pruning step. It is ok to have a lower threshold in the posterior estimation step than in the pruning step. In this case, the original GWAS data for LDL contains p-values se we use these. However, if these are missing you can compute approximate p-values using a normal approximation.</p>
 <div id="ld-pruning-using-plink" class="section level3">
 <h3>LD pruning using Plink</h3>
-<p>To perform LD pruning using the <code>ieugwasr</code> wrapper to Plink LD clumping function use</p>
-<pre class="r"><code>X_clump &lt;- X %&gt;% rename(rsid = snp,
-                  pval = p_value) %&gt;%
+<p>The following code performs LD pruning using the <code>ieugwasr</code> wrapper to Plink LD clumping function. If you have Plink already installed, you can replace the path in <code>plink_bin</code> with a path to your local installation. To use the code below, you will need the <code>genetics.binaRies</code> package which can be installed with <code>devtools::install_github("explodecomputer/genetics.binaRies")</code>. If you want to use local reference data, you can set the <code>bfile</code> option of <code>ld_clump</code> (see <code>?ld_clump</code>).</p>
+<pre class="r"><code>r2_thresh = 0.01
+pval_thresh = 1e-3
+
+X_clump &lt;- X %&gt;%
+           rename(rsid = snp,
+                  pval = p1) %&gt;%
            ieugwasr::ld_clump(dat = .,
                      clump_r2 = r2_thresh,
                      clump_p = pval_thresh,
-                     plink_bin = genetics.binaRies::get_plink_binary(),
-                     bfile = ref_path)
-keep_snps &lt;- X_clump$rsid</code></pre>
-<p>where <code>r2_thresh</code> is the <span class="math inline">\(r^2\)</span> threshold you would like to use, <code>pval_thresh</code> is the p-value threshold you will use to compute the CAUSE posteriors, and <code>ref_path</code> is a path to the reference data. We recomend using a lower <span class="math inline">\(r^2\)</span> threshold for plink LD clumping than for LD clumping based on estimates from LD shrink, since these are not shrunken.</p>
+                     plink_bin = genetics.binaRies::get_plink_binary(), 
+                     pop = &quot;EUR&quot;)</code></pre>
+<pre><code>API: public: http://gwas-api.mrcieu.ac.uk/</code></pre>
+<pre><code>Please look at vignettes for options on running this locally if you need to run many instances of this command.</code></pre>
+<pre><code>Clumping Zieg5o, 2023354 variants, using EUR population reference</code></pre>
+<pre><code>Removing 2022635 of 2023354 variants due to LD with other variants or absence from LD reference panel</code></pre>
+<pre class="r"><code>top_vars &lt;- X_clump$rsid</code></pre>
+<p>Here <code>r2_thresh</code> is the <span class="math inline">\(r^2\)</span> threshold you would like to use and <code>pval_thresh</code> is the p-value threshold you will use to compute the CAUSE posteriors. We recomend using a lower <span class="math inline">\(r^2\)</span> threshold for plink LD clumping than for LD clumping based on estimates from LDshrink, since these are not shrunken.</p>
 </div>
 </div>
 <div id="step-4-fit-cause" class="section level2">
 <h2>Step 4: Fit CAUSE</h2>
-<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE! The function <code>cause</code> estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes.</p>
-<pre class="r"><code>top_vars &lt;- readRDS(&quot;example_data/top_ldl_pruned_vars.RDS&quot;)
-res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
-<pre><code>Estimating CAUSE posteriors using  1215  variants.</code></pre>
+<p>Now that we have formatted data, an LD pruned set of variants, and nuisance parameters estimated, we can fit CAUSE. The function <code>cause</code> estimates posterior distributions under the sharing and causal models and calculates the ELPD for both models as well as for the null model in which there is neither a causal or a shared factor effect. This might take 5-10 minutes.</p>
+<pre class="r"><code>res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
+<pre><code>Estimating CAUSE posteriors using  719  variants.</code></pre>
+<div id="pareto-k-diagnostics-warning" class="section level3">
+<h3>Pareto k diagnostics warning</h3>
+<p>Occaisionally we see a warining about Pareto k diagnostics. This comes from the estimate of the elpd from the <code>loo</code> package. Usually we do not worry about it if there are few problematic samples for more details see help(‘pareto-k-diagnostic’). The <code>loo</code> objects are stored in a three element list <code>res$loos</code>. The first element is empty, the second element corresponds to the sharing model and the third element corresponds to the causal model. To print the Pareto k tables for the CAUSE models use</p>
+<pre class="r"><code>res$loos[[2]]</code></pre>
+<pre><code>
+Computed from 1000 by 719 log-likelihood matrix
+
+         Estimate    SE
+elpd_loo    988.3  58.9
+p_loo         0.7   0.1
+looic     -1976.5 117.8
+------
+Monte Carlo SE of elpd_loo is 0.0.
+
+All Pareto k estimates are good (k &lt; 0.5).
+See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<pre class="r"><code>loo::pareto_k_table(res$loos[[2]])</code></pre>
+<pre><code>
+All Pareto k estimates are good (k &lt; 0.5).</code></pre>
+<pre class="r"><code>res$loos[[3]]</code></pre>
+<pre><code>
+Computed from 1000 by 719 log-likelihood matrix
+
+         Estimate    SE
+elpd_loo    995.6  58.5
+p_loo         0.5   0.0
+looic     -1991.2 117.0
+------
+Monte Carlo SE of elpd_loo is 0.0.
+
+All Pareto k estimates are good (k &lt; 0.5).
+See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<pre class="r"><code>loo::pareto_k_table(res$loos[[3]])</code></pre>
+<pre><code>
+All Pareto k estimates are good (k &lt; 0.5).</code></pre>
+<p>In some cases the problem can be resolved by fitting with more variants. If you are fitting with fewer than 1000 variants you could consider raising the p-value or <span class="math inline">\(r^2\)</span> thresholds and verifying that both studies have genome-wide coverage.</p>
+</div>
 </div>
 <div id="step-5-look-at-results" class="section level2">
 <h2>Step 5: Look at Results</h2>
@@ -1458,9 +1548,9 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 [8] &quot;qbeta&quot;  </code></pre>
 <pre class="r"><code>res$elpd</code></pre>
 <pre><code>   model1  model2 delta_elpd se_delta_elpd         z
-1    null sharing -66.887583      8.350653 -8.009862
-2    null  causal -75.072952      9.497320 -7.904646
-3 sharing  causal  -8.185368      1.246101 -6.568783</code></pre>
+1    null sharing -29.514383      5.482362 -5.383516
+2    null  causal -36.856250      7.083619 -5.203025
+3 sharing  causal  -7.341867      1.719869 -4.268853</code></pre>
 <pre class="r"><code>class(res$sharing)</code></pre>
 <pre><code>[1] &quot;cause_post&quot;</code></pre>
 <pre class="r"><code>class(res$causal)</code></pre>
@@ -1472,7 +1562,7 @@ res &lt;- cause(X=X, variants = top_vars, param_ests = params)</code></pre>
 <li>se_delta_elpd: Estimated standard error of delta_elpd</li>
 <li>z: delta_elpd/se_delta_elpd. A z-score that can be compared to a normal distribution to test if the difference in model fit is significant.</li>
 </ul>
-<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -6.57 corresponding to a p-value of 2.5^{-11}.</p>
+<p>In this case we see that the causal model is significantly better than the sharing model from the thrid line of the table. The <span class="math inline">\(z\)</span>-score is -4.27 corresponding to a p-value of 9.8^{-6}.</p>
 <p>For each model (partial sharing and full) we can plot the posterior distributions of the parameters. Dotted lines show the prior distributions.</p>
 <pre class="r"><code>plot(res$sharing)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot1-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1796,11 +1886,11 @@ Jean Morrison
 </div>
 <p>The <code>summary</code> method will summarize the posterior medians and credible intervals.</p>
 <pre class="r"><code>summary(res, ci_size=0.95)</code></pre>
-<pre><code>p-value testing that causal model is a better fit:  2.5e-11 
+<pre><code>p-value testing that causal model is a better fit:  9.8e-06 
 Posterior medians and  95 % credible intervals:
-     model     gamma              eta                   q                  
-[1,] &quot;Sharing&quot; NA                 &quot;0.38 (0.31, 0.45)&quot;   &quot;0.78 (0.65, 0.89)&quot;
-[2,] &quot;Causal&quot;  &quot;0.34 (0.28, 0.4)&quot; &quot;-0.01 (-0.66, 0.53)&quot; &quot;0.03 (0, 0.25)&quot;   </code></pre>
+     model     gamma               eta                   q                  
+[1,] &quot;Sharing&quot; NA                  &quot;0.39 (0.29, 0.5)&quot;    &quot;0.62 (0.43, 0.79)&quot;
+[2,] &quot;Causal&quot;  &quot;0.32 (0.24, 0.39)&quot; &quot;-0.03 (-0.89, 0.66)&quot; &quot;0.03 (0, 0.25)&quot;   </code></pre>
 <p>The <code>plot</code> method applied to a <code>cause</code> object will arrange all of this information on one spread.</p>
 <pre class="r"><code>plot(res)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot2-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1973,7 +2063,7 @@ Jean Morrison
 </table>
 </div>
 </div>
-<p>The <code>plot</code> method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor (<span class="math inline">\(U\)</span>) and the contribution of each variant to the ELPD test statistic.</p>
+<p>The <code>plot</code> method can also produce scatter plots of the data showing for each model, the probability that each variant is acting through the shared factor and the contribution of each variant to the ELPD test statistic.</p>
 <pre class="r"><code>plot(res, type=&quot;data&quot;)</code></pre>
 <p><img src="figure/ldl_cad.Rmd/plot3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1998,6 +2088,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jean997/cause/blob/da5b784adce5647fa0d8d5ef8dc7dd8ecc6a92a4/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">da5b784</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2020-11-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jean997/cause/blob/81a1a48e3401219d0fea62242133be7117dc8656/docs/figure/ldl_cad.Rmd/plot3-1.png" target="_blank">81a1a48</a>
@@ -2123,14 +2224,59 @@ Jean Morrison
 </table>
 </div>
 </div>
+</div>
+<div id="ld-pruning-using-built-in-function" class="section level2">
+<h2>LD pruning using built in function</h2>
+<p>The function <code>ld_prune</code> uses a greedy algorithm that selects the variant with the lowest LDL p-value and removes all variants in LD with the selected variant and then repeats until no variants are left. This step requires LD estimates. You can download estimates made in the 1000 Genomes CEU population <a href="https://zenodo.org/record/1464357#.W8a-fxROmV4">here</a>. We first demonstrate use of the function for one chromosome and then show an example of how to parallelize the analysis over all 22 autosomes.</p>
+<pre class="r"><code>download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_0.1.RDS?download=1&quot;, destfile = &quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
+download.file(&quot;https://zenodo.org/record/1464357/files/chr22_AF0.05_snpdata.RDS?download=1&quot;, destfile=&quot;example_data/chr22_AF0.05_snpdata.RDS&quot;)</code></pre>
+<pre class="r"><code>ld &lt;- readRDS(&quot;example_data/chr22_AF0.05_0.1.RDS&quot;)
+snp_info &lt;- readRDS(&quot;example_data/chr22_AF0.05_snpdata.RDS&quot;)
+
+head(ld)</code></pre>
+<pre><code>      rowsnp      colsnp        r2
+1 rs62224609 rs376238049 0.9012642
+2 rs62224609  rs62224614 0.9907366
+3 rs62224609   rs7286962 0.9907366
+4 rs62224609  rs55926024 0.1103000
+5 rs62224609 rs117246541 0.9012642
+6 rs62224609  rs62224618 0.9907366</code></pre>
+<pre class="r"><code>head(snp_info)</code></pre>
+<pre><code># A tibble: 6 x 9
+     AF SNP         allele    chr      pos   snp_id region_id   map ld_snp_id
+  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;    &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;dbl&gt;     &lt;int&gt;
+1 0.884 rs62224609  T,C        22 16051249 79758556        22     0  79758556
+2 0.904 rs4965031   G,A        22 16052080 79758578        22     0  79758578
+3 0.646 rs375684679 A,AAAAC    22 16052167 79758584        22     0  79758584
+4 0.894 rs376238049 C,T        22 16052962 79758602        22     0  79758602
+5 0.934 rs200777521 C,A        22 16052986 79758604        22     0  79758604
+6 0.934 rs80167676  A,T        22 16053444 79758627        22     0  79758627</code></pre>
+<p>The <code>ld</code> data frame should contain the column names <code>rowsnp</code>, <code>colsnp</code>, and <code>r2</code>. The <code>snp_info</code> data frame contains information about all of the chromosome 22 variants with allele frequency greater than 0.05. The only piece of information we need from this data frame is the list of variants <code>snp_info$SNP</code> which provides the total list of variants used in the LD calculations.</p>
+<div id="ld-pruning-for-one-chromosome" class="section level3">
+<h3>LD pruning for one chromosome</h3>
+<p>The <code>ld_prune</code> function is somewhat flexible in its arguments, see <code>help(ld_prune)</code>.</p>
+<pre class="r"><code>variants &lt;- X %&gt;% mutate(pval1 = 2*pnorm(abs(beta_hat_1/seb1), lower.tail=FALSE))
+pruned &lt;- ld_prune(variants = variants, 
+                            ld = ld, total_ld_variants = snp_info$SNP, 
+                            pval_cols = c(&quot;pval1&quot;), 
+                            pval_thresh = c(1e-3))
+length(pruned)</code></pre>
+<p>If <code>length(pval_cols) =1</code>, <code>ld_prune</code> returns a vector of selected variants. If There are multipld <span class="math inline">\(p\)</span>-value columns provided, <code>ld_prune</code> will return a list of vectors, one for each column. The length of <code>pval_thresh</code> should be equal to the length of <code>pval_cols</code> and provides a threshold for each column. Excluding variants with high <span class="math inline">\(p\)</span>-values speeds up the pruning step. We can fit CAUSE without high <span class="math inline">\(p\)</span>-value variants because these variants have almost no influence on the posterior distributions or the ELPD test statistic. The exact value of the threshold isn’t important as long as it is fairly lenient. Including additional variants may slow down computation but shouldn’t change the results</p>
+</div>
+<div id="parallelizing-over-chromosomes" class="section level3">
+<h3>Parallelizing over chromosomes</h3>
+<p>We highly recommend parallelizing for whole genome LD pruning. One way to do this is with the parallel pacakge, though this option uses a lot of memory. A better option is to submit separate jobs to nodes of a compute cluster and then combine results.</p>
+<p>If you are analyzing many phenotypes, the most efficient way to complete this step is to first obtain a list of variants present in all data sets and use only these variants in your analysis. You can then obtain an LD-pruned set of variants prioritized for low <span class="math inline">\(p\)</span>-values for each traits (<span class="math inline">\(N\)</span> lists if there are <span class="math inline">\(N\)</span> phenotypes). In any analysis, you will use the list of variants prioritized for the trait <span class="math inline">\(M\)</span> phenotype.</p>
+<p>Download the LD-pruned variant list for our example analysis: <a href="https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS">top LDL list</a></p>
+<pre class="r"><code>download.file(&quot;https://github.com/jean997/cause/blob/master/example_data/top_ldl_pruned_vars.RDS&quot;, destfile = &quot;example_data/top_ldl_pruned_vars.RDS&quot;)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.5 LTS
+Running under: Ubuntu 20.04.2 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
-LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -2144,25 +2290,27 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.2.0     dplyr_1.0.2     readr_1.4.0     workflowr_1.6.2
+[1] cause_1.2.0.0314 dplyr_1.0.7      readr_1.4.0      workflowr_1.6.2 
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.0   xfun_0.18          ashr_2.2-47        purrr_0.3.4       
- [5] lattice_0.20-41    colorspace_2.0-0   vctrs_0.3.4        generics_0.1.0    
- [9] htmltools_0.5.0    loo_2.3.0          yaml_2.2.1         utf8_1.1.4        
-[13] rlang_0.4.8        mixsqp_0.3-43      later_1.1.0.1      pillar_1.4.6      
-[17] glue_1.4.2         matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0     
-[21] munsell_0.5.0      gtable_0.3.0       evaluate_0.14      labeling_0.4.2    
-[25] knitr_1.30         httpuv_1.5.4       invgamma_1.1       irlba_2.3.3       
-[29] parallel_4.0.3     fansi_0.4.1        Rcpp_1.0.5         promises_1.1.1    
-[33] backports_1.2.0    scales_1.1.1       RcppParallel_5.0.2 truncnorm_1.0-8   
-[37] farver_2.0.3       fs_1.5.0           gridExtra_2.3      ggplot2_3.3.2     
-[41] hms_0.5.3          digest_0.6.27      stringi_1.5.3      rprojroot_1.3-2   
-[45] grid_4.0.3         cli_2.1.0          tools_4.0.3        magrittr_1.5      
-[49] tibble_3.0.4       crayon_1.3.4       whisker_0.4        tidyr_1.1.2       
-[53] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.5    
-[57] assertthat_0.2.1   rmarkdown_2.3      rstudioapi_0.12    R6_2.5.0          
-[61] intervals_0.15.2   git2r_0.27.1       compiler_4.0.3    </code></pre>
+ [1] Rcpp_1.0.7         invgamma_1.1       lattice_0.20-41    tidyr_1.1.3       
+ [5] assertthat_0.2.1   rprojroot_1.3-2    digest_0.6.27      utf8_1.2.1        
+ [9] truncnorm_1.0-8    R6_2.5.0           backports_1.2.1    evaluate_0.14     
+[13] httr_1.4.2         ggplot2_3.3.5      pillar_1.6.1       rlang_0.4.11      
+[17] curl_4.3           rstudioapi_0.12    irlba_2.3.3        whisker_0.4       
+[21] blob_1.2.1         Matrix_1.2-18      rmarkdown_2.3      labeling_0.4.2    
+[25] stringr_1.4.0      loo_2.4.1          munsell_0.5.0      mixsqp_0.3-43     
+[29] compiler_4.0.3     httpuv_1.5.4       xfun_0.18          pkgconfig_2.0.3   
+[33] SQUAREM_2021.1     ieugwasr_0.1.5     htmltools_0.5.0    tidyselect_1.1.1  
+[37] tibble_3.1.2       gridExtra_2.3      intervals_0.15.2   matrixStats_0.59.0
+[41] fansi_0.5.0        crayon_1.4.1       later_1.1.0.1      grid_4.0.3        
+[45] jsonlite_1.7.1     gtable_0.3.0       lifecycle_1.0.0    DBI_1.1.0         
+[49] git2r_0.27.1       magrittr_2.0.1     scales_1.1.1       RcppParallel_5.1.4
+[53] cli_3.0.0          stringi_1.5.3      farver_2.1.0       fs_1.5.0          
+[57] promises_1.1.1     ellipsis_0.3.2     generics_0.1.0     vctrs_0.3.8       
+[61] tools_4.0.3        glue_1.4.2         purrr_0.3.4        hms_1.1.0         
+[65] parallel_4.0.3     yaml_2.2.1         colorspace_2.0-2   ashr_2.2-47       
+[69] knitr_1.30        </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2173,11 +2321,11 @@ loaded via a namespace (and not attached):
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.5 LTS
+Running under: Ubuntu 20.04.2 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
-LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -2191,25 +2339,28 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] cause_1.2.0     dplyr_1.0.2     readr_1.4.0     workflowr_1.6.2
+[1] cause_1.2.0.0314 dplyr_1.0.7      readr_1.4.0      workflowr_1.6.2 
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.0   xfun_0.18          ashr_2.2-47        purrr_0.3.4       
- [5] lattice_0.20-41    colorspace_2.0-0   vctrs_0.3.4        generics_0.1.0    
- [9] htmltools_0.5.0    loo_2.3.0          yaml_2.2.1         utf8_1.1.4        
-[13] rlang_0.4.8        mixsqp_0.3-43      later_1.1.0.1      pillar_1.4.6      
-[17] glue_1.4.2         matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0     
-[21] munsell_0.5.0      gtable_0.3.0       evaluate_0.14      labeling_0.4.2    
-[25] knitr_1.30         httpuv_1.5.4       invgamma_1.1       irlba_2.3.3       
-[29] parallel_4.0.3     fansi_0.4.1        Rcpp_1.0.5         promises_1.1.1    
-[33] backports_1.2.0    scales_1.1.1       RcppParallel_5.0.2 truncnorm_1.0-8   
-[37] farver_2.0.3       fs_1.5.0           gridExtra_2.3      ggplot2_3.3.2     
-[41] hms_0.5.3          digest_0.6.27      stringi_1.5.3      rprojroot_1.3-2   
-[45] grid_4.0.3         cli_2.1.0          tools_4.0.3        magrittr_1.5      
-[49] tibble_3.0.4       crayon_1.3.4       whisker_0.4        tidyr_1.1.2       
-[53] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.5    
-[57] assertthat_0.2.1   rmarkdown_2.3      rstudioapi_0.12    R6_2.5.0          
-[61] intervals_0.15.2   git2r_0.27.1       compiler_4.0.3    </code></pre>
+ [1] Rcpp_1.0.7         invgamma_1.1       lattice_0.20-41    tidyr_1.1.3       
+ [5] assertthat_0.2.1   rprojroot_1.3-2    digest_0.6.27      utf8_1.2.1        
+ [9] truncnorm_1.0-8    R6_2.5.0           backports_1.2.1    evaluate_0.14     
+[13] httr_1.4.2         ggplot2_3.3.5      pillar_1.6.1       rlang_0.4.11      
+[17] curl_4.3           rstudioapi_0.12    irlba_2.3.3        whisker_0.4       
+[21] blob_1.2.1         Matrix_1.2-18      rmarkdown_2.3      labeling_0.4.2    
+[25] stringr_1.4.0      loo_2.4.1          munsell_0.5.0      mixsqp_0.3-43     
+[29] compiler_4.0.3     httpuv_1.5.4       xfun_0.18          pkgconfig_2.0.3   
+[33] SQUAREM_2021.1     ieugwasr_0.1.5     htmltools_0.5.0    tidyselect_1.1.1  
+[37] tibble_3.1.2       gridExtra_2.3      intervals_0.15.2   matrixStats_0.59.0
+[41] fansi_0.5.0        crayon_1.4.1       later_1.1.0.1      grid_4.0.3        
+[45] jsonlite_1.7.1     gtable_0.3.0       lifecycle_1.0.0    DBI_1.1.0         
+[49] git2r_0.27.1       magrittr_2.0.1     scales_1.1.1       RcppParallel_5.1.4
+[53] cli_3.0.0          stringi_1.5.3      farver_2.1.0       fs_1.5.0          
+[57] promises_1.1.1     ellipsis_0.3.2     generics_0.1.0     vctrs_0.3.8       
+[61] tools_4.0.3        glue_1.4.2         purrr_0.3.4        hms_1.1.0         
+[65] parallel_4.0.3     yaml_2.2.1         colorspace_2.0-2   ashr_2.2-47       
+[69] knitr_1.30        </code></pre>
+</div>
 </div>
 </div>
 
