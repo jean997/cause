@@ -39,7 +39,7 @@ Here `res` is an object produced by running the cause function. You may find tha
 
 
 
-### Installation Notes:
+### Installation Instructions:
 
 The original version of the `cause` R package is only compatible with earlier versions of `mixsqp` and `ashr`. The latest version is compatible with newer versions of those packages. If you want to exactly replicate the results in the paper you should use version 1.0.0. It is possible that the newer version is slightly faster. This gives two installation options:
 
