@@ -5,7 +5,7 @@ This R package implements the CAUSE method described in Morrison et al 2019 (Bio
 Get started with an example analysis: https://jean997.github.io/cause/ldl_cad.html
 
 
-### Important Announcement!
+### Important announcement for v1.1.0 and earlier
 
 We have discovered that there is an error introduced in cause elpd computations using newer versions of the loo package with cause version 1.1.0 due to a change in the order of the `loo_compare` output. 
 
@@ -23,6 +23,10 @@ Here `res` is an object produced by running the cause function. You may find tha
 
 
 ### Release Notes:
+
+### Latest
+
++ The `pval_cols` option in `gwas_merge` is available as of version `1.2.0.0320`.
 
 #### v1.2.0:
 
