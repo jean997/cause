@@ -4,6 +4,7 @@ author: "Jean Morrison"
 date: "2019-07-11"
 output: workflowr::wflow_html
 bibliography: cause.bib
+site: workflowr::wflow_site
 editor_options:
   chunk_output_type: console
 ---
@@ -35,9 +36,7 @@ The simplest MR methods assume that we can identify a genetic variant $G_j$, tha
 
 These assumptions are illustrated in the following figure:
 
-```{r, echo=FALSE}
-knitr::include_graphics("docs/cause_figure_1_standalone.png", dpi=NA)
-```
+![](cause_figure_1_standalone.png){ width=30% }
 
 Here we have divided assumption 2 into two parts. First the variant may not affect any confounders/shared factors that act on both $M$ and $Y$ (correlated pleiotropy) and second, the variant cannot have any affects on $Y$ through a non-shared mechanism (uncorrelated pleiotropy). 
 
@@ -53,7 +52,7 @@ estimate $\gamma$ by regressing the estimates of $\beta_{Y,j}$ on the estimates 
 
 ## Violating MR Assumptions
 
-Correlated and uncorrelated pleiotropy are both forms of what has been previously termed horizontal pleiotropy. However, they have different effects on MR estimators. In uncorrelated pleiotropy, horizontal pleiotropic effects of variants are uncorrelated with effects on $M$. Thas adds a noise term to the relationship above. On the other hand, when some variants exhibit correlated pleiotropy, this can induce an average correaltion between effect estimates even when the causal effect is equal to zero. This makes correlated pleiotropy more difficult to account for. 
+Correlated and uncorrelated pleiotropy are both forms of what has been previously termed horizontal pleiotropy. However, they have different effects on MR estimators. In uncorrelated pleiotropy, horizontal pleiotropic effects of variants are uncorrelated with effects on $M$. This adds a noise term to the relationship above. On the other hand, when some variants exhibit correlated pleiotropy, this can induce an average correaltion between effect estimates even when the causal effect is equal to zero. This makes correlated pleiotropy more difficult to account for. 
 
 Several proposals have been made for accounting for horizontal pleiotropy in MR. However, most of these rely on the assumption that all horizontal pleiotropy is uncorrelated. These include 
  Egger regression (@Bowden2015,@Barfield2017) which adds an intercept term to the regression of $\hat{\beta}_{Y,j}$ on $\hat{\beta}_{M,j}$, 
@@ -71,9 +70,7 @@ The purpose of CASUE is to distinguish the patterns created by correlated pleiot
 
 CAUSE uses a mixture model for variants included in the analysis. We assume that a proportion $q$ of variants exhibit correlated pleiotropy (the blue triangles in the figure above) while the rest do not. Correlated pleiotropic variants have the causal diagram on the right in the figure below. The remaining variants have the causal diagram on the left. 
 
-```{r, echo=FALSE}
-knitr::include_graphics("docs/cause_figure_3_standalone.png", dpi=NA)
-```
+![](cause_figure_3_standalone.png){ width=50% } 
 
 Note that we allow all variants to have uncorrelated pleiotropic effects ($\theta_j$). To make the model identifiable and to encourage parsimoniuos solutions, we assume that $q$ is small. This assumption is encoded in a prior on $q$ that places most of its weight on small values ($q\sim~$Beta$(1, 10)$ by default). If $Z_j$ is an indicator that variant $G_j$ is a correlated pleiotropic variant then the model above implies that
 
