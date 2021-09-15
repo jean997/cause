@@ -443,16 +443,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef183b4c4bc07b5606fd59a6974075d23e2351de1targetblankf183b4ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/f183b4c4bc07b5606fd59a6974075d23e2351de1" target="_blank">f183b4c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree8542fb97127a9e914896d6ff5a25663ff55021dctargetblank8542fb9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jean997/cause/tree/8542fb97127a9e914896d6ff5a25663ff55021dc" target="_blank">8542fb9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetreef183b4c4bc07b5606fd59a6974075d23e2351de1targetblankf183b4ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjean997causetree8542fb97127a9e914896d6ff5a25663ff55021dctargetblank8542fb9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/f183b4c4bc07b5606fd59a6974075d23e2351de1" target="_blank">f183b4c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jean997/cause/tree/8542fb97127a9e914896d6ff5a25663ff55021dc" target="_blank">8542fb9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -524,6 +524,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jean997/cause/blob/8542fb97127a9e914896d6ff5a25663ff55021dc/analysis/index.Rmd" target="_blank">8542fb9</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2021-09-14
+</td>
+<td>
+wflow_publish(“analysis/index.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jean997/cause/97bfd10a5e1556540b5feca594a1292555b34866/docs/index.html" target="_blank">97bfd10</a>
+</td>
+<td>
+Jean Morrison
+</td>
+<td>
+2021-09-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1093,7 +1127,7 @@ Start workflowr project.
 <li><span class="math inline">\(G_j\)</span> has no affects on <span class="math inline">\(Y\)</span> that are not mediated through <span class="math inline">\(M\)</span></li>
 </ol>
 <p>These assumptions are illustrated in the following figure:</p>
-<p><img src="cause_figure_1_standalone.png" style="width:30.0%" /></p>
+<p><img src="cause_figure_1_standalone.png" /></p>
 <p>Here we have divided assumption 2 into two parts. First the variant may not affect any confounders/shared factors that act on both <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> (correlated pleiotropy) and second, the variant cannot have any affects on <span class="math inline">\(Y\)</span> through a non-shared mechanism (uncorrelated pleiotropy).</p>
 <p>If these assumptions hold thenthe associations of <span class="math inline">\(G_j\)</span> with traits <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> will satisfy</p>
 <p><span class="math display">\[
@@ -1110,7 +1144,7 @@ Start workflowr project.
 <div id="cause-model-overview" class="section level2">
 <h2>CAUSE Model overview</h2>
 <p>CAUSE uses a mixture model for variants included in the analysis. We assume that a proportion <span class="math inline">\(q\)</span> of variants exhibit correlated pleiotropy (the blue triangles in the figure above) while the rest do not. Correlated pleiotropic variants have the causal diagram on the right in the figure below. The remaining variants have the causal diagram on the left.</p>
-<p><img src="cause_figure_3_standalone.png" style="width:50.0%" /></p>
+<p><img src="cause_figure_3_standalone.png" /></p>
 <p>Note that we allow all variants to have uncorrelated pleiotropic effects (<span class="math inline">\(\theta_j\)</span>). To make the model identifiable and to encourage parsimoniuos solutions, we assume that <span class="math inline">\(q\)</span> is small. This assumption is encoded in a prior on <span class="math inline">\(q\)</span> that places most of its weight on small values (<span class="math inline">\(q\sim~\)</span>Beta<span class="math inline">\((1, 10)\)</span> by default). If <span class="math inline">\(Z_j\)</span> is an indicator that variant <span class="math inline">\(G_j\)</span> is a correlated pleiotropic variant then the model above implies that</p>
 <p><span class="math display">\[
   \beta_{Y,j} = \underbrace{\gamma \beta_{M,j}}_{\text{causal effect}} + \underbrace{Z_j \eta \beta_{M,j}}_{\substack{\text{correlated}\\ \text{pleiotropy}}} + \underbrace{\theta_j}_{\substack{\text{uncorrelated}\\ \text{pleiotropy}}}.
