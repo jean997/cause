@@ -63,7 +63,12 @@ cause <- function(X, param_ests, variants = X$snp, pval_thresh = 1,
   if(!all(variants %in% X$snp)){
     stop("Not all `variants` are in data.", call.=FALSE)
   }
-  X <- X %>% mutate(pval_m = 2*pnorm(-abs(beta_hat_1/seb1))) %>%
+  if("p1" %in% names(X)){
+    X <- X %>% mutate(pval_m = p1)
+  }else{
+    X <- X %>% mutate(pval_m = 2*pnorm(-abs(beta_hat_1/seb1)))
+  }
+  X <- X %>%
        dplyr::filter(snp %in% variants & pval_m < pval_thresh) %>%
        new_cause_data()
 
@@ -92,12 +97,14 @@ cause <- function(X, param_ests, variants = X$snp, pval_thresh = 1,
     sigma_g <- eta_gamma_prior(X)
   }
 
+  cat("Fitting confounder only model.\n")
   fit2 <- cause_grid_adapt(X, param_ests,
                            max_post_per_bin = 0.001,
                            params = c("eta", "q"),
                            priors = list(function(b){dnorm(b, 0, sigma_g)},
                                          qprior),
                            n_start = c(n_start_gamma_eta, n_start_q))
+  cat("Fitting causal model.\n")
   fit3 <- cause_grid_adapt(X, param_ests,
                                max_post_per_bin = 0.001,
                                params = c("gamma", "eta", "q"),
