@@ -27,7 +27,8 @@ cause_grid_adapt <-  function(X, param_ests,
 
   ranges <- lapply(params, function(x){
     if(x == "q") return(c(0, 1))
-    return(c(-1, 1))
+    return(with(X, range(beta_hat_2/beta_hat_1)))
+    # return(c(-1, 1))
   })
   range_fixed <- sapply(params, function(x){
     if(x=="q") return(TRUE)
@@ -70,11 +71,10 @@ adapt2_grid <- function(params, ranges, priors, n_start,
   n_add <- ceiling(n_start/2)
   end_bin_thresh <- sapply(post_marge, function(x){1/(nrow(x)*100)})
   #Set range first then refine the grid
-  cat("Setting Range\n")
+  cat("Setting ranges\n")
   while(!range_set){
     range_set <- TRUE
     for(i in seq_along(params)){
-      cat(params[i], "\n")
       if(range_fixed[i]) next
       n_new <- n_start
       n_new[i] <- n_add[i]
@@ -111,7 +111,7 @@ adapt2_grid <- function(params, ranges, priors, n_start,
     post_marge <-marge_dists(res, params, priors, ranges)
     end_bin_thresh <- sapply(post_marge, function(x){1/(nrow(x)*100)})
   }
-  cat("Refining\n")
+  cat("Refining grid\n")
   #Refine grid
   thresh <- log(max_post_per_bin)
   n <- 3
