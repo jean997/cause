@@ -161,7 +161,7 @@ X_clump <- X %>%
 top_vars <- X_clump$rsid
 ```
 
-Here `r2_thresh` is the $r^2$ threshold you would like to use and `pval_thresh` is the p-value threshold you will use to compute the CAUSE posteriors. We recomend using a lower $r^2$ threshold for plink LD clumping than for LD clumping based on estimates from LDshrink, since these are not shrunken. 
+Here `r2_thresh` is the $r^2$ threshold you would like to use and `pval_thresh` is the p-value threshold you will use to compute the CAUSE posteriors. We recommend using a lower $r^2$ threshold for plink LD clumping than for LD clumping based on estimates from LDshrink, since these are not shrunken. 
 
 ## Step 4: Fit CAUSE
 
@@ -174,7 +174,7 @@ res <- cause(X=X, variants = top_vars, param_ests = params)
 
 ### Pareto k diagnostics warning
 
-Occaisionally we see a warining about Pareto k diagnostics. This comes from the estimate of the elpd from the `loo` package.  Usually we do not worry about it if there are few problematic samples for more details see help('pareto-k-diagnostic'). The `loo` objects are stored in a three element list `res$loos`. The first element is empty, the second element corresponds to the sharing model and the third element corresponds to the causal model. To print the Pareto k tables for the CAUSE models use
+Occasionally we see a warining about Pareto k diagnostics. This comes from the estimate of the elpd from the `loo` package.  Usually we do not worry about it if there are few problematic samples for more details see help('pareto-k-diagnostic'). The `loo` objects are stored in a three element list `res$loos`. The first element is empty, the second element corresponds to the sharing model and the third element corresponds to the causal model. To print the Pareto k tables for the CAUSE models use
 
 ```{r, pareto}
 res$loos[[2]]
