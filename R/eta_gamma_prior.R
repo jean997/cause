@@ -13,10 +13,17 @@
 #'@return A prior variance for gamma and eta (scalar)
 eta_gamma_prior <- function(X, variants, prob = 0.05, pval_thresh = 1e-3){
   stopifnot(inherits(X, "cause_data"))
-  if(! missing(variants)){
-    X <- filter(X, snp %in% variants)
+  if("p1" %in% names(X)){
+    X <- X %>% mutate(pval_m = p1)
+  }else{
+    X <- X %>% mutate(pval_m = 2*pnorm(-abs(beta_hat_1/seb1)))
   }
-  X <- X %>% filter(2*pnorm(-abs(beta_hat_1/seb1)) < pval_thresh)
+  if(!missing(variants)){
+    X <- X %>% dplyr::filter(snp %in% variants)
+  }
+  X <- X %>%
+    dplyr::filter(pval_m < pval_thresh) %>%
+    new_cause_data()
   z <- with(X, max(abs(beta_hat_2/beta_hat_1), na.rm=TRUE))
   f <- function(sd){
     abs(prob/2 - pnorm(-z, sd=sd))
