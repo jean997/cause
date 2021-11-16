@@ -82,6 +82,9 @@ cause <- function(X, param_ests, variants = X$snp, pval_thresh = 1,
     warning("I noticed that some of the variants you are running with have large
             p-values (> 0.01) but we are going forward anyway. ")
   }
+  if(sum(X$pval_m < 0.001) < 5){
+    stop("There are fewer than 5 SNPs with exposure p-value < 0.001.")
+  }
 
   cat("Estimating CAUSE posteriors using ", nrow(X), " variants.\n")
   stopifnot(inherits(param_ests, "cause_params"))
