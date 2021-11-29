@@ -33,6 +33,8 @@ Follow installation instructions [here](https://github.com/jean997/cause)
 
 ## Step 1: Format Data for CAUSE
 
+This section describes formatting for data that are available in a flat file. If you have vcf files downloaded from the IEU Open GWAS project see [here](mrcieu.html) for formatting instructions.
+
 We will use `read_tsv` to read in summary statistics for a GWAS of LDL cholesterol and a GWAS of coronary artery disease from the internet. We will then combine these and format them for use with CAUSE. First read in the data. For LDL Cholesterol, we use summary statistics from Willer et al (2013) [PMID: 24097068]. For CAD we use summary statistics from van der Harst et al. (2017) [PMID: 29212778]. Downloading and formatting the data takes several minutes. If you want to skip this step, we provide a formatted data file that you can download below. 
 
 ```{r}

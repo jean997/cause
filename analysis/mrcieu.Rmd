@@ -1,0 +1,76 @@
+---
+title: "Data Processing for CAUSE Using MRC IEU Packages"
+author: "Jean Morrison"
+date: "2020-07-07"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+The [IEU Open GWAS Project](https://gwas.mrcieu.ac.uk/) is a fantastic resource of GWAS summary statistics. This database contains most of the summary statistics available in the GWAS Catalog, several sets of UK Biobank derived summary statistics and results from a few other sources, all of which can be queried without downloading or downloaded in a uniform VCF format. In this document we will show how to make use of this resource along with the associated R packages [`gwasvcf`](https://github.com/mrcieu/gwasvcf) and [`ieugwasr`](https://github.com/mrcieu/ieugwasr).
+
+
+
+## Install Packages
+
+We will need the following pacakages:
+
+[`VariantAnnotation`](https://www.bioconductor.org/packages/release/bioc/html/VariantAnnotation.html)
+[`gwasvcf`](https://github.com/mrcieu/gwasvcf)
+[`ieugwasr`](https://github.com/mrcieu/ieugwasr)
+
+We also use `cause` and `dplyr`. This analysis includes optionally using PLINK to prune for LD rather than using the function in the CAUSE pacakage. To do this you will also need to have PLINK installed and know the path the the PLINK binary. 
+
+
+```{r, eval=FALSE}
+library(gwasvcf)
+library(ieugwasr)
+library(VariantAnnotation)
+library(dplyr)
+library(cause)
+```
+## Download some data
+
+For this analysis, we will use the same LDL cholesterol/coronary artery disease example used in the software introduction but we will process it using the MRC IEU tools. First download the data
+
+```
+wget https://gwas.mrcieu.ac.uk/files/ebi-a-GCST002222/ebi-a-GCST002222.vcf.gz 
+wget https://gwas.mrcieu.ac.uk/files/ebi-a-GCST005195/ebi-a-GCST005194.vcf.gz
+```
+
+## Read in data
+
+We read the data into a data frame and then add a column for $p$-value since, the $p$-value is stored as $-log(p)$ in the resulting data frame. 
+
+```{r, eval=FALSE}
+ldl <- VariantAnnotation::readVcf("example_data/ebi-a-GCST002222.vcf.gz") %>%
+       gwasvcf::vcf_to_granges() %>%
+       dplyr::as_tibble() %>%
+       dplyr::mutate(p = exp(-LP))
+
+cad <- VariantAnnotation::readVcf("example_data/ebi-a-GCST005194.vcf.gz") %>%
+       gwasvcf::vcf_to_granges() %>%
+       dplyr::as_tibble() %>%
+       dplyr::mutate(p = exp(-LP))
+```
+
+
+These commands may take several minutes.
+
+## Merge data
+
+Now we need to merge the data sets. Because the IEU data are all in the same format, the command below will work for any data sets.
+
+```{r, eval=FALSE}
+X <- gwas_merge(ldl, cad, snp_name_cols = c("ID", "ID"), 
+                       beta_hat_cols = c("ES", "ES"), 
+                       se_cols = c("SE", "SE"), 
+                       A1_cols = c("ALT", "ALT"), 
+                       A2_cols = c("REF", "REF"), 
+                       pval_cols = c("p", "p"))
+```
+
+
+From here, the analysis follows the same path as used for [data from a flat file](ldl_cad.html). You can pick up at step 2 in that document.
