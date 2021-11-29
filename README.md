@@ -26,6 +26,7 @@ Here `res` is an object produced by running the cause function. You may find tha
 
 ### Latest
 
++ Posterior estimation algorithm is updated which should be faster for traits on very different scales: Version `1.2.0.0331` and later.
 + The `pval_cols` option in `gwas_merge` is available as of version `1.2.0.0320`.
 
 #### v1.2.0:
