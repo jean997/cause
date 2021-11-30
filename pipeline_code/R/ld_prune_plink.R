@@ -17,4 +17,5 @@ X_clump <- ld_clump(dat = X,
                      plink_bin = genetics.binaRies::get_plink_binary(),
                      bfile = ref_path)
 keep_snps <- X_clump$rsid
-saveRDS(keep_snps, file=out_file)
+write_lines(keep_snps, file=out_file)
+#saveRDS(keep_snps, file=out_file)
