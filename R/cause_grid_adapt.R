@@ -204,7 +204,8 @@ get_vals2 <- function(ranges, n, priors){
   stopifnot(length(priors)==k)
   vals <- list()
   for(i in seq_along(n)){
-    s <- seq(ranges[[i]][1], ranges[[i]][2], length.out=n[i]+1)
+    s <- seq(ranges[[i]][1], ranges[[i]][2], length.out=n[i]+1) %>%
+	   round(., digits = 6)
     vals[[i]] <- data.frame("begin"=s[-(n[i]+1)], "end"=s[-1]) %>%
       mutate( width = end-begin, mid = begin + (width/2))
     vals[[i]]$prior <- apply(vals[[i]][,c("begin", "end")], 1, function(x){
